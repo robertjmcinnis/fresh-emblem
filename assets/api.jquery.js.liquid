@@ -1,0 +1,561 @@
+function floatToString(e, t) {
+    var n = e.toFixed(t).toString();
+    return n.match(/^\.\d+/) ? "0" + n : n
+}
+
+function attributeToString(e) {
+    return "string" != typeof e && (e += "", "undefined" === e && (e = "")), jQuery.trim(e)
+}
+"undefined" == typeof window.Shopify && (window.Shopify = {}), Shopify.KT_money_format = "${{amount}}", Shopify.KT_onError = function(e, t) {
+    var n = eval("(" + e.responseText + ")");
+    n.message ? alert(n.message + "(" + n.status + "): " + n.description) : alert("Error : " + Shopify.KT_fullMessagesFromErrors(n).join("; ") + ".")
+},
+Shopify.KT_fullMessagesFromErrors = function(e) {
+    var t = [];
+    return jQuery.each(e, function(e, n) {
+        jQuery.each(n, function(n, r) {
+            t.push(e + " " + r)
+        })
+    }), t
+},
+Shopify.KT_onCartUpdate = function(e,remove) {
+    // alert("There are now " + e.item_count + " items in the cart.");
+    Shopify.KT_onCartUpdate_(e,remove);
+},
+Shopify.KT_onCartShippingRatesUpdate = function(e, t) {
+  var n = "";
+  t.zip && (n += t.zip + ", "), t.province && (n += t.province + ", "), n += t.country;
+  if(e.length > 0){
+    $('.shippingText').html("<span>" + e[0].name + "</span><span class='price'>" + Shopify.KT_formatMoney(e[0].price, theme.moneyFormat)+"</span>");
+    Shopify.KT_ShippingCalculator(e);
+  }else{
+    $('.shippingText').html("<span>" + theme.strings.no_shopping+"</span>");
+    Shopify.KT_ShippingCalculator(0);
+  }
+},
+Shopify.KT_onItemAdded = function(e) {
+    // alert(e.title + " was added to your shopping cart.");
+    Shopify.KT_getCart();
+},
+Shopify.KT_onProduct = function(e) {
+    alert("Received everything we ever wanted to know about " + e.title)
+},
+Shopify.KT_formatMoney = function(e, t) {
+    function n(e, t) {
+        return "undefined" == typeof e ? t : e
+    }
+
+    function r(e, t, r, i) {
+        if (t = n(t, 2), r = n(r, ","), i = n(i, "."), isNaN(e) || null == e) return 0;
+        e = (e / 100).toFixed(t);
+        var o = e.split("."),
+            a = o[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + r),
+            s = o[1] ? i + o[1] : "";
+        return a + s
+    }
+    "string" == typeof e && (e = e.replace(".", ""));
+    var i = "",
+        o = /\{\{\s*(\w+)\s*\}\}/,
+        a = t || this.money_format;
+    switch (a.match(o)[1]) {
+        case "amount":
+            i = r(e, 2);
+            break;
+        case "amount_no_decimals":
+            i = r(e, 0);
+            break;
+        case "amount_with_comma_separator":
+            i = r(e, 2, ".", ",");
+            break;
+        case "amount_with_space_separator":
+            i = r(e, 2, " ", ",");
+            break;
+        case "amount_with_period_and_space_separator":
+            i = r(e, 2, " ", ".");
+            break;
+        case "amount_no_decimals_with_comma_separator":
+            i = r(e, 0, ".", ",");
+            break;
+        case "amount_no_decimals_with_space_separator":
+            i = r(e, 0, ".", "");
+            break;
+        case "amount_with_space_separator":
+            i = r(e, 2, ",", "");
+            break;
+        case "amount_with_apostrophe_separator":
+            i = r(e, 2, "'", ".")
+    }
+    return a.replace(o, i)
+},
+Shopify.KT_resizeImage = function(e, t) {
+    try {
+        if ("original" == t) return e;
+        var n = e.match(/(.*\/[\w\-\_\.]+)\.(\w{2,4})/);
+        return n[1] + "_" + t + "." + n[2]
+    } catch (r) {
+        return e
+    }
+},
+Shopify.KT_addItem = function(e, t, n) {
+    var itemChange = e;
+    var t = t || 1,
+        r = {
+            type: "POST",
+            url: "/cart/add.js",
+            data: "quantity=" + t + "&id=" + e,
+            dataType: "json",
+            success: function(e) {
+                "function" == typeof n ? n(itemChange,e,'undo') : Shopify.KT_onItemAdded(e)
+            },
+            error: function(e, t) {
+                Shopify.KT_onError(e, t)
+            }
+        };
+    jQuery.ajax(r)
+},
+Shopify.KT_addItemFromForm = function(e, t) {
+  var el = e;
+  var n = {
+    type: "POST",
+    url: "/cart/add.js",
+    data: jQuery("#" + e).serialize(),
+    dataType: "json",
+    success: function(e) {
+      if(jQuery("#"+el+" .itemGroupProducts").length > 0){            
+        jQuery.each(jQuery("#"+el+" .itemGroupProducts"), function(index, item) {
+          var id = $(this).find('input[type="number"]').attr('data-id'),
+              qtt = $(this).find('input[type="number"]').val();
+          jQuery.ajax({
+            type: "POST",
+            url: "/cart/add.js",
+            data: "quantity=" + qtt + "&id=" + id,
+            dataType: "json",
+            success: function(e) {
+              if(index == jQuery("#"+el+" .itemGroupProducts").length - 1){
+                "function" == typeof t ? t(e) : Shopify.KT_onItemAdded(e)
+              }
+            },
+            error: function(e, t) {
+              Shopify.KT_onError(e, t)
+            }
+          });
+        });
+      }else{
+        "function" == typeof t ? t(e) : Shopify.KT_onItemAdded(e)
+      }
+    },
+    error: function(e, t) {
+      Shopify.KT_onError(e, t)
+    }
+  };
+  jQuery.ajax(n)
+},
+Shopify.KT_getCart = function(e) {
+    jQuery.getJSON("/cart.js", function(t, n) {
+        "function" == typeof e ? e(t) : Shopify.KT_onCartUpdate(t)
+    })
+},
+Shopify.KT_pollForCartShippingRatesForDestination = function(e, t, n) {
+  n = n || Shopify.KT_onError;
+  var getShipping = function(){
+    jQuery.ajax({
+      url: '/cart/async_shipping_rates',
+      type: 'GET',
+      complete: function(xhr, textStatus) {
+        //called when complete
+      },
+      success: function(data, textStatus, xhr) {
+        //called when successful
+        200 === xhr.status ? "function" == typeof t ? t(data.shipping_rates, e) : Shopify.KT_onCartShippingRatesUpdate(data.shipping_rates, e) : setTimeout(getShipping, 500)
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        // console.log("error");
+        n;
+      }
+    });
+  }
+ return getShipping(); 
+},
+Shopify.KT_getCartShippingRatesForDestination = function(e, t, n) {
+  n = n || Shopify.KT_onError;
+  // console.log(e);
+  jQuery.ajax({
+    url: '/cart/prepare_shipping_rates',
+    type: 'POST',
+    data: Shopify.KT_param({
+      shipping_address: e
+    })
+  })
+  .done(function() {
+    // console.log("success");
+    Shopify.KT_pollForCartShippingRatesForDestination(e, t, n);
+  })
+  .fail(function() {
+    // console.log("error");
+    $('.shippingText').html("<span>" + theme.strings.no_shopping+"</span>");
+    Shopify.KT_ShippingCalculator(0);
+    n;
+  });
+},
+Shopify.KT_getProduct = function(e, t) {
+    jQuery.getJSON("/products/" + e + ".js", function(e, n) {
+        "function" == typeof t ? t(e) : Shopify.KT_onProduct(e)
+    })
+},
+Shopify.KT_changeItem = function(e, t, n) {
+    var itemChange = e;
+    var r = {
+        type: "POST",
+        url: "/cart/change.js",
+        data: "quantity=" + t + "&id=" + e,
+        dataType: "json",
+        success: function(e) {
+            "function" == typeof n ? n(itemChange,e) : Shopify.KT_onCartUpdate(e)
+        },
+        error: function(e, t) {
+            Shopify.KT_onError(e, t)
+        }
+    };
+    jQuery.ajax(r)
+},
+Shopify.KT_removeItem = function(e, t) {
+    var itemChange = e;
+    var n = {
+        type: "POST",
+        url: "/cart/change.js",
+        data: "quantity=0&id=" + e,
+        dataType: "json",
+        success: function(e) {
+            "function" == typeof t ? t(itemChange,e,'remove item') : Shopify.KT_onCartUpdate(e,'remove item')
+        },
+        error: function(e, t) {
+            Shopify.KT_onError(e, t)
+        }
+    };
+    jQuery.ajax(n)
+},
+Shopify.KT_clear = function(e) {
+    var t = {
+        type: "POST",
+        url: "/cart/clear.js",
+        data: "",
+        dataType: "json",
+        success: function(t) {
+            "function" == typeof e ? e(t) : Shopify.KT_onCartUpdate(t)
+        },
+        error: function(e, t) {
+            Shopify.KT_onError(e, t)
+        }
+    };
+    jQuery.ajax(t)
+},
+Shopify.KT_updateCartFromForm = function(e, t) {
+    var n = {
+        type: "POST",
+        url: "/cart/update.js",
+        data: jQuery("#" + e).serialize(),
+        dataType: "json",
+        success: function(e) {
+            "function" == typeof t ? t(e) : Shopify.KT_onCartUpdate(e);
+        },
+        error: function(e, t) {
+            Shopify.KT_onError(e, t)
+        }
+    };
+    jQuery.ajax(n)
+},
+Shopify.KT_addItemFromMoreAttr = function(el, t) {
+  var count = 0,
+      item = jQuery("#" + el + " .itemGroupProducts"),
+      length = item.length;
+  var addItem = function(count) {
+    var id = item.eq(count).find('input[type="number"]').attr('data-id'),
+        qtt = item.eq(count).find('[name="quantity__'+id+'"]').val();
+        last_checked = item.find('input[type="checkbox"]:checked').last().closest('li.itemGroupProducts').attr('data-nth-child');
+    if(item.eq(count).find('input[type="checkbox"]')[0].checked && _.toNumber(qtt) > 0 && count <= _.toNumber(last_checked)) {
+      jQuery.ajax({
+        type: "POST",
+        url: "/cart/add.js",
+        data: "quantity=" + qtt + "&id=" + id,
+        dataType: "json",
+        success: function(e) {
+          ++count;
+          count < _.toNumber(last_checked) ? addItem(count) : "function" == typeof t ? t(e) : Shopify.KT_onItemAdded(e)
+        },
+        error: function(e, t) {
+          Shopify.KT_onError(e, t)
+        }
+      });
+    } else if(count < _.toNumber(last_checked)) {
+      ++count;
+      addItem(count);
+    }
+  }
+  return addItem(count);
+},
+Shopify.KT_updateCartAttributes = function(e, t) {
+    var n = "";
+    jQuery.isArray(e) ? jQuery.each(e, function(e, t) {
+        var r = attributeToString(t.key);
+        "" !== r && (n += "attributes[" + r + "]=" + attributeToString(t.value) + "&")
+    }) : "object" == typeof e && null !== e && jQuery.each(e, function(e, t) {
+        n += "attributes[" + attributeToString(e) + "]=" + attributeToString(t) + "&"
+    });
+    var r = {
+        type: "POST",
+        url: "/cart/update.js",
+        data: n,
+        dataType: "json",
+        success: function(e) {
+            "function" == typeof t ? t(e) : Shopify.KT_onCartUpdate(e)
+        },
+        error: function(e, t) {
+            Shopify.KT_onError(e, t)
+        }
+    };
+    jQuery.ajax(r)
+},
+Shopify.KT_updateCartNote = function(e, t) {
+    var n = {
+        type: "POST",
+        url: "/cart/update.js",
+        data: "note=" + attributeToString(e),
+        dataType: "json",
+        success: function(e) {
+            "function" == typeof t ? t(e) : Shopify.KT_onCartUpdate(e)
+        },
+        error: function(e, t) {
+            Shopify.KT_onError(e, t)
+        }
+    };
+    jQuery.ajax(n)
+},
+jQuery.fn.jquery >= "1.4" ? Shopify.KT_param = jQuery.param : (Shopify.KT_param = function(e) {
+    var t = [],
+        n = function(e, n) {
+            n = jQuery.isFunction(n) ? n() : n, t[t.length] = encodeURIComponent(e) + "=" + encodeURIComponent(n)
+        };
+    if (jQuery.isArray(e) || e.jquery) jQuery.each(e, function() {
+        n(this.name, this.value)
+    });
+    else
+        for (var r in e) Shopify.KT_buildParams(r, e[r], n);
+    return t.join("&").replace(/%20/g, "+")
+},
+Shopify.KT_buildParams = function(e, t, n) {
+    jQuery.isArray(t) && t.length ? jQuery.each(t, function(t, r) {
+        rbracket.test(e) ? n(e, r) : Shopify.KT_buildParams(e + "[" + ("object" == typeof r || jQuery.isArray(r) ? t : "") + "]", r, n)
+    }) : null != t && "object" == typeof t ? Shopify.KT_isEmptyObject(t) ? n(e, "") : jQuery.each(t, function(t, r) {
+        Shopify.KT_buildParams(e + "[" + t + "]", r, n)
+    }) : n(e, t)
+},
+Shopify.KT_isEmptyObject = function(e) {
+    for (var t in e) return !1;
+    return !0
+});
+
+/* ----------- onCartUpdate customize for theme
+---------------*/
+
+Shopify.KT_getAddress = function() {
+  $.ajax({
+    type: 'get',
+    url: '//api.teathemes.net/currency',
+    success: function(data) {
+      var zipcode = data.postal.code != '' ? data.postal.code : data.region;
+      var province = data.province[0] !== undefined ? data.province[0].names.en : '';
+      var address = {
+        'zip': zipcode !== undefined ? zipcode : 'kt0711',
+        'country': data.country,
+        'province': province
+      }
+      Shopify.KT_getCartShippingRatesForDestination(address,'',Shopify.KT_ShippingCalculator);
+    }
+  });
+}
+
+Shopify.KT_onCartUpdate_ = function(cart,remove_action) {
+  var table = $(".cart_list.product_list_widget");
+  var table_content = '';
+  // console.log(cart)
+  $.ajax({
+    type: 'get',
+    url: '/cart?view=json',
+    beforeSend: function() {
+      if (cart.item_count > 0) {
+        if ( $( ".has-item" ).is( ":hidden" ) ) {
+          $('.has-item').css({'display':'block'});
+          $('.no-item').css({'display':'none'});
+        }
+      }
+      else {
+        if ( $( ".no-item" ).is( ":hidden" ) ) {
+          $('.has-item').css({'display':'none'});
+          $('.no-item').css({'display':'block'});
+        }
+      }
+      if (cart.item_count > 0 && theme.function.cartPopupEnable == true) {
+        Shopify.KT_getAddress()
+      }
+      if($('.show-shopping-cart').length >0){
+        $(".cart_list").mCustomScrollbar("disable",true);
+        if($(window).height() > 500){          
+          // $(".header .categorys-menu").mCustomScrollbar("destroy");
+        }
+      }
+    },
+    success: function(table_content) {
+      table.find('.mCSB_container').length >= 1 ? table.find('.mCSB_container').html(table_content) : table.html(table_content);
+      if($('.show-shopping-cart').length >0){
+        if($(window).height() > 500){
+          $('.cart_list').mCustomScrollbar("update");
+        }
+      }
+      $('.cart__popup-stotal').attr('data-price',cart.total_price);
+      $('.cartCost, .mini-cart .amout, .cart__popup-stotal').html(Shopify.KT_formatMoney(cart.total_price, theme.moneyFormat));
+      $('.cartCount').text(cart.item_count);
+      // .animate({fontSize: "170%", width: '35px',height: '35px', 'line-height': '35px', top: '-5px', right: '-5px'}, 400).animate({fontSize: "100%", width: '20px',height: '20px', 'line-height': '20px', top: 'inherit', right: 'inherit'}, 500);
+
+      $('.title.has-item').html(cart.item_count == 1 ? theme.strings.cartItem.split('(')[0]+'('+cart.item_count+' item)'+theme.strings.cartItem.split(')')[1] : theme.strings.cartItems.split('(')[0]+'('+cart.item_count+' items)'+theme.strings.cartItems.split(')')[1]);
+      if (theme.function.multiCurrency == true && cookieCurrency !== null && cookieCurrency !== shopCurrency) {
+        Currency.convertAll(shopCurrency,cookieCurrency,".mini-cart span.money");
+      }
+      // $('.look-page-loading').remove();
+      if(!remove_action){
+        if($('#myModal').hasClass('in')){
+          $('#AddToCart-quickview-template').removeClass('loading').addClass('loaded');
+          setTimeout(function(){
+            $('#AddToCart-quickview-template').removeClass('loaded')
+          },5000);
+        }else if($('#addMoreModal').hasClass('in')){
+          $('#addMoreModal .boutique__add-to-cart').removeClass('loading').addClass('loaded');
+          setTimeout(function(){
+            $('#addMoreModal .boutique__add-to-cart').removeClass('loaded')
+          },5000);
+        }else{
+          $('.single_add_to_cart_button, .boutique__add-to-cart.loading').removeClass('loading').addClass('loaded');
+          setTimeout(function(){
+            $('.single_add_to_cart_button, .boutique__add-to-cart.loaded').removeClass('loaded')
+          },5000);
+        }
+        if (theme.function.cartPopupEnable == true) {
+          Shopify.KT_cartPopup();          
+          theme.Quantity();
+        }
+      }
+    }
+  });
+}
+
+Shopify.KT_cartPopup = function() {
+  var table = $("#cartModal .itemList");
+  $.ajax({
+    type: 'get',
+    url: '/cart?view=popup.json',
+    success: function(table_content) {
+      table.html(table_content);
+      $('.boutique__add-to-cart').removeClass('loading');
+      $('#myModal').modal('hide');
+      $('#compare-modal').modal('hide');
+      $('#quickShopModal').modal('hide');
+      setTimeout(function(){$('#cartModal').modal();},1000);
+      theme.Quantity();
+      if (theme.function.multiCurrency == true && cookieCurrency !== null && cookieCurrency !== shopCurrency) {
+        Currency.convertAll(shopCurrency,cookieCurrency,"#cartModal span.money");
+      }
+      $('.look-page-loading').remove();
+    }
+  });
+}
+Shopify.KT_updatePopup = function(pid,cart,action) {
+  if(action == 'remove item'){
+    $('#PopupItem-'+pid+' div').slideUp(300, function(){ $(this).hide();});
+    $('#Undo-'+pid).slideUp(300, function(){ $(this).show();});
+    $('.cart__popup-stotal').attr('data-price',cart.total_price);
+    $('.cartCost, .mini-cart .amout, .cart__popup-stotal').html(Shopify.KT_formatMoney(cart.total_price, theme.moneyFormat));
+    $('.title.has-item').html(cart.item_count == 1 ? theme.strings.cartItem.split('(')[0]+'('+cart.item_count+' item)'+theme.strings.cartItem.split(')')[1] : theme.strings.cartItems.split('(')[0]+'('+cart.item_count+' items)'+theme.strings.cartItems.split(')')[1]);
+    $('.cartCount').text(cart.item_count);
+    if (cart.item_count > 0) {
+      Shopify.KT_getAddress()
+    }
+    else{
+      $('.box-cart-total-JS .subTotal,.box-cart-total-JS .shippingBox').hide(500);
+      $('.box-cart-total-JS .order-total .price').html(Shopify.KT_formatMoney(0, theme.moneyFormat));
+    }
+    if (theme.function.multiCurrency == true && cookieCurrency !== null && cookieCurrency !== shopCurrency) {
+      Currency.convertAll(shopCurrency,cookieCurrency,"#cartModal span.money");
+      Currency.convertAll(shopCurrency,cookieCurrency,".mini-cart span.money");
+    }
+  }
+  else if(action == 'undo'){
+    $('#PopupItem-'+pid+' div').slideDown(300, function(){ $(this).show();});
+    $('#Undo-'+pid).slideDown(300, function(){ $(this).hide();});
+    $.ajax({
+      type: 'GET',
+      url: '/cart.js',
+      dataType: "json",
+      success: function(cart) {
+        $('.cart__popup-stotal').attr('data-price',cart.total_price);
+        $('.cartCost, .mini-cart .amout, .cart__popup-stotal').html(Shopify.KT_formatMoney(cart.total_price, theme.moneyFormat));
+        $('.title.has-item').html(cart.item_count == 1 ? theme.strings.cartItem.split('(')[0]+'('+cart.item_count+' item)'+theme.strings.cartItem.split(')')[1] : theme.strings.cartItems.split('(')[0]+'('+cart.item_count+' items)'+theme.strings.cartItems.split(')')[1]);
+        $('.cartCount').text(cart.item_count);
+        if (cart.item_count > 0) {
+          Shopify.KT_getAddress()
+        }
+        else{
+          $('.box-cart-total-JS .subTotal,.box-cart-total-JS .shippingBox').hide(500);
+          $('.box-cart-total-JS .order-total .price').html(Shopify.KT_formatMoney(0, theme.moneyFormat));
+        }
+        if (theme.function.multiCurrency == true && cookieCurrency !== null && cookieCurrency !== shopCurrency) {
+          Currency.convertAll(shopCurrency,cookieCurrency,"#cartModal span.money");
+          Currency.convertAll(shopCurrency,cookieCurrency,".mini-cart span.money");
+        }
+      },
+      error: function(table_content) {
+        console.log('error')
+      }
+    });
+  }
+  else{
+    jQuery.each(cart.items, function(idx,el) {
+      if(el.id === pid){
+        $('#PopupItem-'+pid+ ' .cart__popup-total').html(Shopify.KT_formatMoney(el.original_line_price, theme.moneyFormat));
+        $('.cart__popup-stotal').attr('data-price',cart.total_price);
+        $('.cartCost, .mini-cart .amout, .cart__popup-stotal').html(Shopify.KT_formatMoney(cart.total_price, theme.moneyFormat));
+        $('.title.has-item').html(cart.item_count == 1 ? theme.strings.cartItem.split('(')[0]+'('+cart.item_count+' item)'+theme.strings.cartItem.split(')')[1] : theme.strings.cartItems.split('(')[0]+'('+cart.item_count+' items)'+theme.strings.cartItems.split(')')[1]);
+        $('.cartCount').text(cart.item_count);
+        if (cart.item_count > 0) {
+          Shopify.KT_getAddress()
+        }
+        else{
+          $('.box-cart-total-JS .subTotal,.box-cart-total-JS .shippingBox').hide(500);
+          $('.box-cart-total-JS .order-total .price').html(Shopify.KT_formatMoney(0, theme.moneyFormat));
+        }
+        if (theme.function.multiCurrency == true && cookieCurrency !== null && cookieCurrency !== shopCurrency) {
+          Currency.convertAll(shopCurrency,cookieCurrency,"#cartModal span.money");
+          Currency.convertAll(shopCurrency,cookieCurrency,".mini-cart span.money");
+        }
+      }
+    });
+  }
+}
+Shopify.KT_updatedCartNote = function(cart) {        
+  $('#cartModal .checkout-button').prop('disabled', false);
+}
+
+Shopify.KT_ShippingCalculator = function(shippPrice) {
+  if (shippPrice !== 0 && shippPrice[0].price === undefined){
+    $('.box-cart-total-JS .order-total .price').html(Shopify.KT_formatMoney($('.box-cart-total-JS #subTotal').attr('data-price'), theme.moneyFormat));
+  }
+  else{
+    if ($('.box-cart-total-JS #subTotal').length > 0) {
+      var data_price = $('.box-cart-total-JS #subTotal').attr('data-price');    
+      var subtotal = parseInt(data_price.toString().replace(/\./g,''))+parseInt(shippPrice !== 0 ? shippPrice[0].price.toString().replace(/\./g,'') : 0);
+      $('.box-cart-total-JS .order-total .price').html(Shopify.KT_formatMoney(subtotal, theme.moneyFormat));
+      if (theme.function.multiCurrency == true && cookieCurrency !== null && cookieCurrency !== shopCurrency) {
+        Currency.convertAll(shopCurrency,cookieCurrency,".box-cart-total-JS span.money");
+      }
+      $('.box-cart-total-JS .subTotal,.box-cart-total-JS .shippingBox').show(500)
+    }
+  }
+}
