@@ -1,0 +1,13 @@
+<div class="yith-wcwl-add-button show {{customer}}">
+	{%- if customer -%}
+		{%- if NITRO_WISHLIST contains product.id -%}
+		  	<a class="nitro-wishlist added-wishlist add_to_wishlist cw claue-tooltip" href="{{pages[settings.page_wishlist].url}}" title="{{ 'products.wishlist.view_wishlist' | t }}"><i class="fa fa-heart"></i><span class="claue-tooltip-label"></span></a>
+		{%- else -%}
+		  	<a class="add_nitro_wishlist add_to_wishlist cw claue-tooltip" href="{{ product.handle | handleize }}" data-customer_id="{{customer.id}}" data-email="{{customer.email}}" data-action="add" data-handle="{{product.handle}}" data-id="{{product.id}}" title="{{ 'products.wishlist.add_to_wishlist' | t }}"><i class="icon-heart"></i><span class="claue-tooltip-label"></span></a>
+		 	<a class="load_nitro_wishlist add_to_wishlist cw" href="{{ product.handle | handleize }}" style="display: none; pointer-events: none"><i class="fa fa-circle-o-notch fa-spin"></i></a>
+		  	<a class="added_nitro_wishlist added-wishlist add_to_wishlist cw claue-tooltip" style="display: none;" href="{{pages[settings.page_wishlist].url}}" title="{{ 'products.wishlist.view_wishlist' | t }}"><i class="fa fa-heart"></i><span class="claue-tooltip-label"></span></a>
+		{%- endif -%}
+	{%- else -%}
+	<a class="nitro-wishlist-login add_to_wishlist cw claue-tooltip" href="/account" title="{{ 'products.wishlist.login_to_use_wishlist' | t }}"><i class="icon-heart"></i><span class="claue-tooltip-label"></span></a>
+	{%- endif -%}
+</div>

@@ -1,0 +1,210 @@
+<section id="cartModal" class="modal animated fade in" aria-hidden="true" role="dialog" tabindex="-1" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button class="close" aria-label="Close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+      </button>
+      <div class="product-quickview cart__popup pr">        
+        <div class="section-title style4 text-center clearfix margin-bottom-20" style="padding-bottom: 0px;">
+          <h3 class="cart__popup-title">{{ 'cart.popup.title_popup' | t }}</h3>
+        </div>
+        <div class="itemList"></div>
+        {%- unless settings.cart_auto_shipping_enable -%}
+          <div class="row-flex margin-0 justify-content-between text-center cart__popup-action">
+            <div class="col-12 col-sm-6 padding-0">
+              {%-if settings.note_enable -%}
+              <div class="cart_totals note margin-top-30">
+                <h5 class="cart__popup-title text-center">{{ 'cart.general.note' | t }}</h5>
+                <form action="/cart" method="post" novalidate id="upadteCartNote">
+                  <textarea name="note" class="cart-note__input db" id="CartSpecialInstructions" rows="4">{{ cart.note }}</textarea>
+                </form>
+              </div>
+              {%-endif-%}
+            </div>
+            <div class="col-12 col-sm-6 padding-0 margin-top-10 text-center">
+              <div class="row-flex margin-0 justify-content-center align-items-center middle-xs cb margin-top-20 totalBox">
+                <div class="text-center">
+                  <div class="clearfix">
+                    <span class="mr__10">{{ 'cart.general.subtotal' | t }}: </span>
+                    <span class="cart__popup-stotal"></span>
+                  </div>
+                </div>
+              </div>
+              <form action="/checkout" method="POST">
+                <div class="box-coupon margin-top-15">
+                  <div class="coupon">
+                    <div class="inner-box">
+                      <input type="text" name="discount" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
+                      {%-comment-%}<input type="submit" class="button" name="apply_coupon" value="Apply Coupon">{%-endcomment-%}
+                    </div>
+                  </div>
+                </div>
+                <button class="button checkout-button" style="padding: 11px 25px;">{{ 'cart.general.checkout' | t }}</button>
+                <div class="clearfix"></div>
+                {%-if additional_checkout_buttons-%}
+                <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+                {%-endif-%}
+              </form>
+              {%-if settings.trust_image-%}
+              <div class="text-center margin-top-20 container-fluid">
+                <img alt="{{settings.trust_image_.alt}}" class="lazyload" data-src="{%-if settings.trust_image_-%}{{settings.trust_image_| img_url: 'master'}}{%-else-%}//cdn.shopify.com/s/files/1/1958/5719/files/trust_imgae.png?113495255364115043154{%-endif-%}">
+              </div>
+              {%-endif-%}
+            </div>
+          </div>
+        {%- else -%}
+          <div class="row-flex margin-0 justify-content-between text-center">
+            {%-if settings.note_enable -%}
+            <div class="cart_totals note margin-top-30 col-12 col-sm-6 p-0 p-sm-right-15">
+              <h5 class="cart__popup-title text-left">{{ 'cart.general.note' | t }}</h5>
+              <form action="/cart" method="post" novalidate id="upadteCartNote">
+                <textarea name="note" class="cart-note__input db" id="CartSpecialInstructions" rows="7">{{ cart.note }}</textarea>
+              </form>
+              {%-if settings.trust_image-%}
+              <div class="text-center margin-top-20">
+                <img alt="{{settings.trust_image_.alt}}" class="lazyload" data-src="{%-if settings.trust_image_-%}{{settings.trust_image_| img_url: 'master'}}{%-else-%}//cdn.shopify.com/s/files/1/1958/5719/files/trust_imgae.png?113495255364115043154{%-endif-%}">
+              </div>
+              {%-endif-%}
+            </div>
+            {%-endif-%}
+            <div class="cart_totals note margin-top-30{% if settings.note_enable %} col-12 col-sm-6 p-0 p-sm-left-15 text-left{%else%} col-12 p-0 text-left{%endif%}">
+              <div class="box-cart-total box-cart-total-JS">
+                <h5 class="title">{{'cart.general.cart_totals'|t}}</h5>
+                <table>
+                  <tr class="subTotal" style="display: none;">
+                    <td>{{ 'cart.general.subtotal' | t }}</td>
+                    <td colspan="2"><span class="price cart__popup-stotal" id="subTotal" data-price="{{ cart.total_price | json }}">{{ cart.total_price | money }}</span></td>
+                  </tr>
+                  {% if cart.total_discounts > 0 %}          
+                  <tr>
+                    <td>{{ 'cart.general.savings' | t }}</td>
+                    <td colspan="2"><span class="cart__savings-amount">{{ cart.total_discounts | money }}</span></td>
+                  </tr>
+                  {% endif %}
+                  <tr class="shippingBox" style="display: none;">
+                    <td>{{ 'cart.label.shipping' | t }}</td>
+                    <td colspan="2" class="shippingText">
+                      {% comment %}
+                      <label><input name="shipping" type="radio">Free Shipping</label>
+                      <label>
+                        <input name="shipping" type="radio">Local Delivery
+                        <span class="price">£50</span>
+                      </label>
+                      <label>
+                        <input name="shipping" type="radio">Flat Rate
+                        <span class="price">£100</span>
+                      </label>
+                      <label>
+                        <input name="shipping" type="radio">International
+                        <span class="price">£150</span>
+                      </label>
+                      {% endcomment %}
+                    </td>
+                  </tr>
+                  <tr class="order-total">
+                    <td>{{'cart.label.total'|t}}</td>
+                    <td colspan="2"><span class="price">{{ cart.total_price | money }}</span></td>
+                  </tr>
+                </table>
+                {%-if settings.note_enable == false and settings.trust_image-%}
+                <div class="text-center margin-bottom-20">
+                  <img alt="{{settings.trust_image_.alt}}" class="lazyload" data-src="{%-if settings.trust_image_-%}{{settings.trust_image_| img_url: 'master'}}{%-else-%}//cdn.shopify.com/s/files/1/1958/5719/files/trust_imgae.png?113495255364115043154{%-endif-%}">
+                </div>
+                {%-endif-%}
+                <form id="checkoutCartPopup" action="/checkout" method="POST">
+                  <div class="">
+                    <div class="box-coupon">
+                      <div class="coupon">
+                        {% comment %}<h3 class="coupon-box-title">Coupon</h3>{% endcomment %}
+                        <div class="inner-box">
+                          <input type="text" name="discount" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
+                          {% comment %}<input type="submit" class="button" name="apply_coupon" value="Apply Coupon">{% endcomment %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="button btn-primary medium checkout-button">{{ 'cart.general.checkout' | t }}</button>
+                  {% if additional_checkout_buttons %}
+                  <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+                  {% endif %}
+                </form>
+              </div>
+            </div>
+          </div>
+        {%- endunless -%}
+        {%-if settings.upsell_enable-%}
+        <div class="section-title style7 text-center clearfix margin-top-30 margin-bottom-20">
+          <h3 class="cart__popup-related-title">{{'cart.popup.related_products'|t}}</h3>
+        </div>
+        <div class="row product-listing_ KiTi_Card style6">
+
+        {% assign min = 1 %}
+        {% assign max = 10 %}
+        {% assign diff = max | minus: min %}
+        {% assign p_arr = '' %}
+
+          {%-for i in (1..10)-%}
+            {% assign randomNumber = "now" | date: "%N" | modulo: diff | plus: min %}
+            {% assign randomNumber_s = randomNumber | append: '' %}
+            {% unless p_arr contains randomNumber_s %}
+            {% assign p_arr = p_arr | join: ',' | append: ',' | append: randomNumber | split: ',' %}
+            {% endunless %}
+          {%-endfor-%}
+
+          {%-assign p_count = 0-%}
+          {%-for i in p_arr-%}
+            {%-assign p_ = 'product_' | append: i -%}
+            {%-if settings[p_] != blank -%}
+              {%-assign p_handle = settings[p_]-%}
+              {%-include 'bt-cartModal_product_related'-%}
+              {%-assign p_count = p_count | plus: 1-%}
+            {%-endif-%}
+            {% if p_count == 3 %}{%-break-%}{% endif %}
+          {%-endfor-%}
+          
+          {% comment %}{%-assign minus = "now" | date: '%S'-%}
+          {%-assign p1 = minus|first|plus: 1-%}
+          {%-assign p2 = minus|first|plus: 1-%}
+          {%-if p1 == p2-%}
+            {%-assign p2 = p1|plus: 1-%}
+          {%-endif-%}
+          {%-if p1 > p_count-%}
+            {%-assign p1 = 10|minus: p1-%}
+          {%-endif-%}
+          {%-if p2 > p_count-%}
+            {%-assign p2 = 10|minus: p2-%}
+          {%-endif-%}         
+          
+          {%-assign p_show = 0-%}
+          {%-assign unp = ''-%}
+          {%-for i in (1..10)-%}
+            {%-if i == p1 or i == p2-%}
+              {%-assign p_ = 'product_' | append: i -%}
+              {%-if settings[p_] != blank-%}
+                {%-assign p_handle = settings[p_]-%}
+                {%-assign unp = p_handle-%}
+                  {%-include 'bt-cartModal_product_related'-%}
+                {%-assign p_show = p_show | plus: 1-%}
+              {%-endif-%}
+            {%-endif-%}
+          {%-endfor-%}
+          {%-if p_show < 2-%}
+            {%-for i in (1..10)-%}
+              {%-assign p_ = 'product_' | append: i -%}
+              {%-if settings[p_] != blank-%}
+                {%-assign p_handle = settings[p_]-%}
+                {%-assign prd = all_products[p_handle]-%}
+                {%-unless prd.handle == unp-%}
+                  {%-include 'bt-cartModal_product_related'-%}
+                  {%-assign p_show = p_show | plus: 1-%}
+                  {%-if p_show == 2-%}{%-break-%}{%-endif-%}
+                {%-endunless-%}
+              {%-endif-%}
+            {%-endfor-%}
+          {%-endif-%}{% endcomment %}
+        </div>
+        {%-endif-%}
+      </div>
+    </div>
+  </div>
+</section>

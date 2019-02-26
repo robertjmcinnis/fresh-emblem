@@ -1,0 +1,140 @@
+{%- for option in product.options_with_values -%}
+  {%- assign downcased_option = option.name | downcase -%}
+  {%- if downcased_option contains 'olo' -%}
+  {%- assign position_option = option.position -%} 
+  {%- assign position_option_ = option.position | minus: 1 -%} 
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign variants_op1 = product.variants|map:'option1'| uniq |join: '|||' | split: '|||' %}
+{%- assign variants_op2 = product.variants|map:'option2'| uniq |join: '|||' | split: '|||' %}
+{%- assign variants_op3 = product.variants|map:'option3'| uniq |join: '|||' | split: '|||' %}
+{%- assign settings_swatch_style = settings.swatch_style -%}
+{%- if section.settings.swatch_style and section.settings.swatch_style != '' -%}
+{%- assign settings_swatch_style = section.settings.swatch_style -%}
+{%- endif -%}
+{%- if variants_op2.size > 0 -%}
+{%- assign variant_title = '=' -%}
+{%- for op1_ in variants_op1 -%}
+  {%- for op2_ in variants_op2 -%}
+    {%- if variants_op3.size == 0 -%}
+        {%- assign variant_title = variant_title| append: op1_ | append: ' / '| append: op2_| append: '|||='%}
+    {%- else -%}
+      {%- for op3_ in variants_op3 -%}
+        {%- assign variant_title = variant_title| append: op1_ | append: ' / '| append: op2_| append: ' / '| append: op3_ | append: '|||='%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign variant_unavailabe = variant_title -%}
+{%- assign variants_title = variant_title | split: '|||' -%}
+<style type="text/css">
+  {%- capture CSSstrip_newlines -%}
+  {%- assign variant_title_index = '' -%}
+  {%- assign check_only_title_first = '' -%}
+  {%- assign check_only_title_second = '' -%}
+  {%-for variant in product.variants -%}  
+    {%- case position_option -%}
+    {%- when 1 -%}
+    {%- assign title = variant.title | split: ' / ' | first | append: '|||' -%}
+    {%- assign _variant_option1 = variant.option1 -%} 
+    {%- assign _variant_option2 = variant.option2 -%} 
+    {%- assign _variant_option3 = variant.option3 -%} 
+    {%- when 2 -%}
+    {%- assign title_ = variant.title | split: ' / '  -%}
+    {%- assign title = title_[1] | append: '|||' -%}
+    {%- assign _variant_option1 = variant.option2 -%}
+    {%- assign _variant_option2 = variant.option1 -%} 
+    {%- assign _variant_option3 = variant.option3 -%} 
+    {%- when 3 -%}
+    {%- assign title = variant.title | split: ' / ' | last | append: '|||' -%}
+    {%- assign _variant_option1 = variant.option3 -%} 
+    {%- assign _variant_option2 = variant.option1 -%} 
+    {%- assign _variant_option3 = variant.option2 -%} 
+    {%- else -%}
+    {%- assign title = variant.title | split: ' / ' | first | append: '|||' -%}
+    {%- assign _variant_option1 = variant.option1 -%} 
+    {%- assign _variant_option2 = variant.option2 -%} 
+    {%- assign _variant_option3 = variant.option3 -%} 
+    {%- endcase -%}  
+    {%-if variant.featured_image-%}
+      {%-unless variant_title_index contains title -%}
+        {%-unless settings_swatch_style == 'color' %}.pid_{{product.id}} li._{{_variant_option1 | handleize}} span.swatch,
+          .pid_{{product.id}} li._{{_variant_option1 | handleize}}.color_sw span.title:before{ 
+            background-image: url({{ variant.featured_image.src | img_url:'small',crop:'center' }});{% if settings_swatch_style== 'image_variant' %} background-size: 100%;{% endif %}
+          }
+          .pid_{{product.id}} li._{{_variant_option1 | handleize}}.color_sw span.title:before{
+            height: 100px;
+          }
+        {%- endunless -%}
+        {%-assign variant_title_index = variant_title_index | append: title -%}
+      {%-endunless -%}
+      {%-unless settings_swatch_style == 'color' -%}.pid_{{product.id}} ._{{_variant_option1 | handleize}}{% if _variant_option2 %}._{{_variant_option2 | handleize}}{% endif %}{% if _variant_option3 %}._{{_variant_option3 | handleize}}{% endif %} li._{{_variant_option1 | handleize}} span.swatch,
+      .pid_{{product.id}} ._{{_variant_option1 | handleize}}{% if _variant_option2 %}._{{_variant_option2 | handleize}}{% endif %}{% if _variant_option3 %}._{{_variant_option3 | handleize}}{% endif %} li._{{_variant_option1 | handleize}}.color_sw span.title:before  { 
+        background-image: url({{ variant.featured_image.src | img_url:'small',crop:'center' }});{% if settings_swatch_style== 'image_variant' %} background-size: 100%;{% endif %}
+      }
+      .pid_{{product.id}} ._{{_variant_option1 | handleize}}{% if _variant_option2 %}._{{_variant_option2 | handleize}}{% endif %}{% if _variant_option3 %}._{{_variant_option3 | handleize}}{% endif %} li._{{_variant_option1 | handleize}}.color_sw span.title:before  { 
+        height: 100px;
+      }{%- endunless -%}
+    {%-endif-%}
+    {%-if variant.available == false-%}
+     .pid_{{product.id}} ._{{_variant_option1 | handleize}}{% if _variant_option3 %}._{{_variant_option3 | handleize}}{% endif %} li._{{_variant_option2 | handleize}} { 
+        color: #cdcdcd;
+      }
+    {%-endif-%}
+    {%-if variant.option3-%}
+      {%-assign variant_ = '='| append: variant.option1| append: ' / ' | append: variant.option2| append: ' / ' | append: variant.option3| append: '|||'-%}
+      .pid_{{product.id}} #callBackVariant--product-template._{{_variant_option1 | handleize}} li._{{_variant_option2 | handleize}}{
+        display: inline-block !important;
+      }
+    {%-else-%}
+      {%-assign variant_ = '='| append: variant.option1| append: ' / ' | append: variant.option2| append: '|||'-%}
+    {%-endif-%}  
+    {%-assign variant_unavailabe = variant_unavailabe | remove: variant_-%}
+  {%-endfor %}
+  {%- assign variant_un = variant_unavailabe | split: '|||'-%}
+  {%- assign check_kk = false -%}
+  {%- for option in product.options_with_values -%}
+    {%- if forloop.index == 2 and option.values.size > 1 -%}
+      {%- assign check_kk = true -%}{%- break -%}
+    {%- endif -%}
+  {%- endfor -%}  
+  {%- if variant_un.size > 0 -%}
+    {%- for variant_ in variant_un -%}
+      {%- assign option = variant_ | split: ' / '-%}
+      {%- unless variant_ == "-" -%}
+      {%- if check_kk == true %}.pid_{{product.id}} ._{{option.first | handleize}}{%-if option.size == 3-%}._{{option.last | handleize}}{%-endif %} li._{{option[1] | handleize}},{%- endif  %}
+      .pid_{{product.id}} ._{{option.first | handleize}}{%-if option.size == 3-%}._{{option[1] | handleize}} li._{{option.last | handleize}}{% else %} li._{{option.last | handleize}}{%-endif %} { 
+        display: none !important;
+      }
+      {%- endunless-%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- endcapture -%}
+  {{CSSstrip_newlines|strip_newlines|replace: '      ',''}}
+</style>
+{%- elsif variants_op1.size > 0-%}
+  {%- assign variant_title = '=' -%}
+  {%- for op1_ in variants_op1 -%}
+    {%- assign variant_title = variant_title| append: op1_ | append: '|||=' -%}
+  {%- endfor -%}
+  <style type="text/css">
+    {%- assign variant_title_index = '' -%}
+    {%- for variant in product.variants -%}
+      {%- assign title = variant.title | split: ' / ' | first | append: '|||' -%}
+      {%- assign variant_option = variant.option1 -%}
+      {%- if variant.featured_image-%}
+        {%- unless variant_title_index contains title -%}
+        {%- unless settings_swatch_style == 'color' %}.pid_{{product.id}} form.cart li._{{variant_option | handleize}} .swatch,{%- endunless -%}
+        .pid_{{product.id}} form.cart li._{{variant_option | handleize}}.color_sw span.title:before{
+          background-image: url({{ variant.featured_image.src | img_url:'small',crop:'center' }});{% if settings_swatch_style== 'image_variant' %} background-size: 100%;{% endif %}
+        }
+        .pid_{{product.id}} li._{{variant_option | handleize}}.color_sw span.title:before{
+          height: 100px;
+        }
+        {%- endunless -%}
+        {%- assign variant_title_index = variant_title_index | append: title -%}
+      {%- endif-%}
+    {%- endfor -%}  
+  </style>
+{%- endif -%}

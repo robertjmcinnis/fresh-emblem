@@ -1,0 +1,100 @@
+<div class="col-sm-4 col-xs-6 col-kiti-12 grid-item margin-bottom-20">
+  {% assign prd = all_products[p_handle] %}
+  {%- assign colour_count = 0 -%}
+  {%- for option in prd.options_with_values -%}
+  {%- assign downcased_option = option.name | downcase -%}
+  {%- assign downcased_option_check = option | downcase | prepend: '"' | append: '"' | strip -%} 
+  {%- if downcased_option contains 'olo' -%}
+  {%- assign colour_count = option.values.size -%}
+  {%- endif -%}
+  {%- endfor -%}
+  {%- assign money_price = price | money -%}
+  {%-include 'kt_product_check', product: prd-%}
+  <div class="row product-item{% if new_label != blank %} new-arrived__label{% endif %}{% if compare_at_price > price %} sale__label{% endif %}{% if prd.available %} instock__label{% else %} outofstock__label{% endif %}">
+    <div class="col-sm-12 col-md-6">
+      <div class="product-thumb">
+        {%- assign aspect_ratioW = settings.aspect_ratio | split: '/' | first | strip | plus: 0.00 -%}
+        {%- assign aspect_ratioH = settings.aspect_ratio | split: '/' | last | strip | plus: 0.00 -%}
+        {%- assign aspect_cs = aspect_ratioW|divided_by:aspect_ratioH | round: 2 -%}
+        <img src="{{'bt_placeholder.svg'|asset_url}}" style="width: 100%">
+        {%- assign aspect_image = prd.featured_image.width | times:1.00 |divided_by:prd.featured_image.height| round: 2 -%}
+        {%- capture image_fit -%}
+        {%- if aspect_ratioW < aspect_ratioH -%}
+        {%- if prd.featured_image.width == prd.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+        {%- elsif aspect_ratioW > aspect_ratioH -%}
+        {%- if prd.featured_image.width == prd.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+        {%- else -%}
+        nonheight nonwidth_
+        {%- endif -%}
+        {%- endcapture -%}
+        <a class="front-image {{image_fit}}" href="{{prd.url| within: collection}}" title="{{prd.title}}">
+          <img data-sizes="auto"
+            data-srcset="{% include 'kt_image_format',src: prd.featured_image.src, size: '480x' %} 767w,
+            {% include 'kt_image_format',src: prd.featured_image.src, size: '384x' %} 992w,
+            {% include 'kt_image_format',src: prd.featured_image.src, size: '480x' %} 1023w,
+            {% include 'kt_image_format',src: prd.featured_image.src, size: '256x' %} 1199w,
+            {% include 'kt_image_format',src: prd.featured_image.src, size: '300x' %} 1920w" class="lazyload" alt="{{prd.title}}"/>
+        </a>
+      </div>
+    </div>
+    <div class="product-info_ col-sm-12 col-md-6 padding-md-0 padding-lg-0 pa pa-lg-ps">
+      <div class="product-info text-lg-left">
+        <h3 class="product-name"><a href="{{ prd.url | within: collection }}">{{ prd.title }}</a></h3>
+        <span class="price">
+          {%- if on_sale %}
+          <ins class="padding-right-5">{{prd.price | money }}</ins>
+          <del style="float:none">{{prd.compare_at_price | money }}</del>
+          {%- else -%}
+          <ins>{{prd.price | money }}</ins>
+          {%- endif -%}
+        </span>
+        <div class="rating margin-0">
+          <span class="shopify-product-reviews-badge" data-id="{{ prd.id }}"></span>
+        </div>
+
+        {%- assign current_variant = prd.selected_or_first_available_variant -%}
+        {%- if settings.use_inventory_management -%}
+        {%- assign show_iq = false -%}
+        {%- if current_variant.inventory_quantity < 15 and current_variant.inventory_management -%}{%- assign show_iq = true -%}{%- endif -%}
+        {%- unless current_variant.inventory_quantity == 0 and prd.has_only_default_variant -%}
+        <div class="meta">
+          <span class="show-iq{% if show_iq == false %} hidden{% endif %}">{% if show_iq %}{{'products.product.only_left_short_text_html'|t: count: current_variant.inventory_quantity}}{% endif %}</span>
+          <span class="show-iq_{% if show_iq == false %} min{% endif %}">{{'products.product.availalbe'|t}}: <span class="availalbe text-primary">{% if current_variant.available %}{{'products.product.in_stock'|t}}{% else %}{{'products.product.out_of_stock'|t}}{% endif %}</span></span>
+        </div>
+        {%- elsif prd.has_only_default_variant -%}
+        <div class="meta">
+          <span>{{'products.product.availalbe'|t}}:
+            <span class="availalbe text-primary">{% if prd.available %}{{'products.product.in_stock'|t}}{% else %}{{'products.product.out_of_stock'|t}}{% endif %}</span>
+          </span>
+        </div>
+        {%- endunless -%}
+        {%- endif -%}
+
+        {%- if prd.metafields.event.countdown -%}
+        {%- assign countdown_ = prd.metafields.event.countdown | split: '+' | first -%}
+        {%- assign countdown__ = countdown_ | split: 'T' | first | split: '/' -%}
+        {%- assign countdown___ = countdown_ | split: 'T' | last | split: ':' -%}
+        <div class="product-count-down text-lg-left">
+          <div class="kt-countdown"
+               data-y="{{countdown__[2]|default:00}}"
+               data-m="{{countdown__[0]|default:00}}"
+               data-d="{{countdown__[1]|default:00}}"
+               data-h="{{countdown___[0]|default:00}}"
+               data-i="{{countdown___[1]|default:00}}"
+               data-s="{{countdown___[2]|default:00}}">
+          </div>
+        </div>
+        {%- endif -%}
+        <div class="gorup-buttons">
+          {%- if preOrder -%}
+          <div class="button add_to_cart_button kt__add-to-cart" data-vrId='{{ prd.selected_or_first_available_variant.id }}'>{{'products.product.pre_order'|t}}</div>
+          {%- elsif sold_out == false -%}
+          <div class="button add_to_cart_button kt__add-to-cart" data-vrId='{{ prd.selected_or_first_available_variant.id }}'>{{'products.product.add_to_cart'|t}}</div>
+          {%- else -%}
+          <div class="button add_to_cart_button sold_out disabled" >{{'products.product.sold_out'|t}}</div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  

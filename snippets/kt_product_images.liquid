@@ -1,0 +1,43 @@
+{%- unless key-%}{%- assign key = 'thumbnail' -%}{%- endunless -%}
+{%- unless section_id -%}{%- assign section_id = section.id -%}{%- endunless -%}
+<div class="{{key}}s-wrapper pr"{% if key == 'thumbnail' and checkOneImage_ %} style="display:none;"{%- endif -%}>
+  <ul class="grid grid--uniform{% unless key == 'thumbnail' %} SlickPhotoswipGallery{% endunless %} product-single__{{key}}s product-single__{{key}}s-{{ section_id }}">
+    {%- assign index_slick = 0 -%}
+    {%- for image in product.images -%}
+      {%- if image.alt == "kt_360" -%}{%-break-%}{%- endif -%}
+      {%- assign kt_visible = false -%}
+      {%- if settings.gallery == false -%}
+        {%- assign kt_visible = true -%}
+      {%- endif -%}
+      {%- if imgsPos0 <= forloop.index and imgsPos1 > forloop.index -%}
+        {%- assign kt_visible = true -%}
+      {%- endif -%}
+      {%- if imgsPos0 == imgsPos1 and imgsPos0 == forloop.index -%}
+        {%- assign kt_visible = true -%}
+      {%- endif -%}
+      {%- if imgsPos0 <= forloop.index and imgsPos1 == product.images.size -%}
+        {%- assign kt_visible = true -%}
+      {%- endif -%}
+      {%- if kt_visible -%}
+        <li class="grid__item product-single__{{key}}s-item">
+          {% if key == 'thumbnail'-%}
+          {%- if image.position == imgPos -%}{%- assign active_photo_ = index_slick -%}{%- endif -%}
+          <a href="{{ image.src | img_url: 'master'}}"
+             class="text-link product-single__{{key}} product-single__{{key}}--{{ section_id }}"
+             title="{%-if image.attached_to_variant? -%}{{image.variants.first.title}}{%- endif -%}"
+             data-src="{{ image.src | img_url: product_image_size, scale: product_image_scale }}"
+             data-id="{%-if image.attached_to_variant? -%}{{image.variants.first.id}}{%- endif -%}">
+            <img class="product-single__{{key}}-image img-responsive" src="{{ image.src | img_url: product_thumb_size, scale: 2 }}" alt="{{ product.title }}">
+          </a>
+          {% else -%}
+          <a href="{{ image.src | img_url: 'master'}}" class="gallery-image product-single__{{key}} product-single__{{key}}--{{ section_id }}"
+             data-image-id="{{image.id}}">
+            <img class="product-single__{{key}}-image img-responsive lazyload" src="{{image.src| img_url: '100x'}}" data-src="{{ image.src | img_url: product_image_size, scale: product_image_scale }}" alt="{{ image.alt | escape | default: product.title }}" data-srcfix="{{image.src | img_url: 'master' }}" data-size="{{image.width}}x{{image.height}}">
+          </a>
+          {% endif -%}
+          {%- assign index_slick = index_slick | plus: 1 -%}
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>

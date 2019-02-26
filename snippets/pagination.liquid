@@ -1,0 +1,26 @@
+<ul class="list--inline pagination">
+  {%- if paginate.previous -%}
+  <li>
+    <a data-pjax-filter href="{{ paginate.previous.url }}" class="button btn-prev btn btn--secondary btn--narrow">←</a>
+  </li>
+  {%- endif -%}
+  {%- for part in paginate.parts -%}
+  {%- if part.is_link -%}
+  <li>
+    <a data-pjax-filter href="{{ part.url }}" class="page-numbers button btn btn--secondary btn--narrow">{{ part.title }}</a>
+  </li>
+  {%- else -%}
+  {%- if part.title == paginate.current_page -%}
+  <li><span class="page-numbers current">{{ part.title }}</span></li>
+  {%- else -%}
+  <li><span class="page-numbers dots">{{ part.title }}</span></li>
+  {%- endif -%}
+  {%- endif -%}
+  {%- endfor -%} 
+
+  {%- if paginate.next -%}
+  <li>
+    <a data-pjax-filter href="{{ paginate.next.url }}" class="button btn-next btn btn--secondary btn--narrow">→</a>
+  </li>
+  {%- endif -%}
+</ul>

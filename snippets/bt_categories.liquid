@@ -1,0 +1,60 @@
+<div class="main-header{% if settings.cat_onm == false %} hidden-xs{% endif %}{% if settings.cat_ont == false %} hidden-sm{% endif %}">
+  <div class="container">
+    <div class="row-flex justify-content-center align-items-center">
+      {%- assign limit = 12 -%}
+      {%- if categories == "menu" -%}
+      <div class="col-sm-12 col-md-12{% if settings.show_cat %} col-lg-3 text-lg-left{% endif %} text-center">
+        <div class="logo">
+          {%-include 'bt_logo_header'-%}
+        </div>
+      </div>
+      {%- assign limit = 6 -%}
+      {%- endif -%}
+      {%- assign countCatCollection = 0 -%}
+      {%- for i in (1..limit) -%}
+        {%- assign cat_collection = 'cat_collection' | append: i -%}
+        {%- if settings[cat_collection] != blank -%}
+          {%- assign countCatCollection = countCatCollection | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if settings.show_cat and countCatCollection > 0 -%}
+      <div class="col-sm-12 col-md-12{% if categories == "menu" %} col-lg-9{% else %} col-lg-12{% endif %} categorys-menu kiti--DropWindow">
+        <ul class="category-menu{% if categories == "style2" %} style2{% endif %} kiti-DropWindowDesktop">
+          {%- for i in (1..limit) -%}
+          {%- assign cat_icon = 'cat_icon' | append: i -%}
+          {%- assign cat_collection = 'cat_collection' | append: i -%}
+            {%- if settings[cat_collection] != blank -%}
+              {%- if categories_style == "left" -%}
+                <li{% if categories == "menu" and forloop.index > 4 %} style="display: none;"{% endif %}>
+                  <a {% if template.name == 'collection' %}data-scroll-top="" data-pjax-filter="" {% endif %}href="/collections/{{handleize_tab}}">
+                    <span class="icon"><img src="{{settings[cat_icon] | img_url: 'small'}}" alt="icon {{settings[cat_collection]}}"></span>
+                    <span class="title">{{settings[cat_collection] | capitalize | replace: '-', ' ' }}</span>
+                  </a>
+                </li>
+              {%- else -%}
+                <li{% if categories == "menu" and forloop.index > 4 %} style="display: none;"{% endif %}>
+                  <a {% if template.name == 'collection' %}data-scroll-top="" data-pjax-filter="" {% endif %}href="/collections/{{settings[cat_collection]}}">
+                    <img src="{{settings[cat_icon] | img_url: 'small'}}" alt="icon {{settings[cat_collection]}}">
+                    <span class="title">{{settings[cat_collection] | capitalize | replace: '-', ' ' }}</span>
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if categories == "menu" -%}
+          {%- assign position ="categories" -%}
+          {%- include "mini-cart" -%}
+          {%- endif -%}
+        </ul>
+      </div>
+      {%- elsif countCatCollection == 0 and categories == "menu" -%}
+      <div class="col-sm-12 col-md-12 col-lg-9 categorys-menu kiti--DropWindow">
+        <ul class="category-menu{% if categories == "style2" %} style2{% endif %} kiti-DropWindowDesktop">
+          {%- assign position ="categories" -%}
+          {%- include "mini-cart" -%}
+        </ul>
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

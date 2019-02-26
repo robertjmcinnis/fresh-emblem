@@ -1,0 +1,113 @@
+<div class="woocommerce-tabs panel-group margin-0" style="float:left;width:100%;">
+  <ul id="product-tabs" class="box-tabs nav-tab" role="tablist">
+    {%- for block in section.blocks -%}
+    {%- if block.settings.show_tab -%}
+      <li{% if forloop.first %} class="active"{% endif %} role="tab">
+        <a href="#tab-kt{{forloop.index}}" role="tab" data-toggle="tab" aria-controls="tab-kt{{forloop.index}}" class="toggle">{{block.settings.tab_title | default: 'Tab Title'}}</a>
+      </li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+  <div class="tab-content tab-container">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.show_tab -%}
+        {%- if block.type == 'tb_description' and product.description != blank-%}
+          <div class="tab-pane{% if forloop.first %} active{% endif %}" role="tabpanel" aria-labelledby="tab-kt{{forloop.index}}" id="tab-kt{{forloop.index}}">
+            {%- assign description = product.description | split: '[/short description]' | last | html -%}
+            {%- include 'shortcode' load: description -%}
+          </div>
+        {%- elsif block.type == 'tb_details'-%}
+          {%- if product.metafields.meta.additional_information -%}
+          <div class="tab-pane{% if forloop.first %} active{% endif %}" role="tabpanel" aria-labelledby="tab-kt{{forloop.index}}" id="tab-kt{{forloop.index}}">
+            <!-- <h2>Additional Information</h2> -->
+            <div class="shop_attributes">
+              {{  product.metafields.meta.additional_information }}
+            </div>
+          </div>
+          {%- else -%}
+          <div class="tab-pane{% if forloop.first %} active{% endif %}" role="tabpanel" aria-labelledby="tab-kt{{forloop.index}}" id="tab-kt{{forloop.index}}">
+            <!-- <h2>Additional Information</h2> -->
+            <table class="shop_attributes">
+              <tbody>
+                {%- if product.type != blank -%}
+                <tr class="">
+                  <th>{{'products.product.type'|t}}:&nbsp;</th>
+                  <td>
+                    <p id="detail-type" class="ng-binding">{{ product.type | link_to_type }}</p>
+                  </td>
+                </tr>
+                {%- endif -%}
+                {%- if product.vendor != blank -%}
+                <tr class="">
+                  <th>{{'products.product.vendor'|t}}:&nbsp;</th>
+                  <td>
+                    <p id="detail-vendor" class="ng-binding">{{product.vendor}}
+                    </p>
+                  </td>
+                </tr>
+                {%- endif -%}
+                {%- unless product.options.size == 1 and product.variants[0].title == 'Default Title'-%}
+                {%- for option in product.options_with_values-%}
+                <tr class="">
+                  <th>{{ option.name }}:&nbsp;</th>
+                  <td>
+                    <p id="{{option_value_hd}}" class="ng-binding">
+                      {%- for item_option in option.values -%}
+                      {{item_option}}{%- unless forloop.last -%}{{', '}}{%- endunless -%}
+                      {%- endfor -%}
+                    </p>
+                  </td>
+                </tr>
+                {%- endfor -%}
+                {%- endunless -%}
+                {%- if current_variant.sku != blank -%}
+                <tr class="">
+                  <th>{{'products.product.sku'|t}}:&nbsp;</th>
+                  <td>
+                    <p id="detail-sku" class="ng-binding variant-sku">{{current_variant.sku}}</p>
+                  </td>
+                </tr>
+                {%- endif -%}
+                {%- if current_variant.weight != 0.0 -%}
+                <tr class="">
+                  <th>{{'products.product.weight'|t}}:&nbsp;</th>
+                  <td>
+                    <p id="detail-weight" class="ng-binding">{{ current_variant.weight | weight_with_unit: current_variant.weight_unit }}</p>
+                  </td>
+                </tr>
+                {%- endif -%}
+              </tbody>
+            </table>
+          </div>
+          {%- endif -%}
+        {%- elsif block.type == 'tb_review' and settings.use_review_st == false-%}
+          <div class="tab-pane{% if forloop.first %} active{% endif %}" role="tabpanel" aria-labelledby="tab-kt{{forloop.index}}" id="tab-kt{{forloop.index}}">
+            <div id="reviews">
+              <div id="comments">
+                {% include 'kt_reviewProduct' %}
+                <div class="clear"></div>
+              </div>
+            </div>
+          </div>    
+        {%- elsif block.type == 'tb_bundle' and settings.show_bundle == false-%}
+        {% if section.settings.show_product_tab_bundle and product.metafields.nitro_bundle.bundle %}
+          <div class="tab-pane{% if forloop.first %} active{% endif %}" role="tabpanel" aria-labelledby="tab-kt{{forloop.index}}" id="tab-kt{{forloop.index}}">
+            {% include 'nitro-product-bundle' %}
+          </div>
+        {%endif%}
+        {%- elsif block.type == 'tb_customize'-%}
+          <div class="tab-pane{% if forloop.first %} active{% endif %}" role="tabpanel" aria-labelledby="tab-kt{{forloop.index}}" id="tab-kt{{forloop.index}}">
+            <div class="shop_attributes">               
+              {%- if block.settings.tab_page_html != blank -%}
+              {%- assign tab_page_html = block.settings.tab_page_html-%}
+              {{ pages[tab_page_html].content }}
+              {%- else -%}
+              {{block.settings.tab_html|html}}
+              {%- endif %}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>

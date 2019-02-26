@@ -1,0 +1,79 @@
+{%- capture handle  -%}{%- include 'shortcode-rerender' render:'handle' default: '' -%}{%- endcapture -%}
+{%- capture background  -%}{%- include 'shortcode-rerender' render:'background' default: 'rgb(222,222,222)' -%}{%- endcapture -%}
+{%- capture width  -%}{%- include 'shortcode-render' render:'width' default: '300px' -%}{%- endcapture -%}
+{%- capture borderwidth  -%}{%- include 'shortcode-rerender' render:'borderwidth' default: '1px' -%}{%- endcapture -%}
+{%- capture borderradius  -%}{%- include 'shortcode-rerender' render:'borderradius' default: '0%' -%}{%- endcapture -%}
+{%- capture bordercolor  -%}{%- include 'shortcode-rerender' render:'bordercolor' default: 'rgb(255,171,205)' -%}{%- endcapture -%}
+{%- capture detail  -%}{%- include 'shortcode-rerender' render:'detail' default: 'on' -%}{%- endcapture -%}
+{%- capture price  -%}{%- include 'shortcode-rerender' render:'price' default: 'on' -%}{%- endcapture -%}
+{%- capture enablecart  -%}{%- include 'shortcode-rerender' render:'enablecart' default: 'on' -%}{%- endcapture -%}
+{%- capture title  -%}{%- include 'shortcode-rerender' render:'title' default: 'on' -%}{%- endcapture -%}
+{%- capture thumbnail  -%}{%- include 'shortcode-rerender' render:'thumbnail' default: 'on' -%}{%- endcapture -%}
+{%- assign has_vid = false -%}
+{% if handle contains '|' %}
+  {%- assign has_vid = true -%}
+{%- endif -%}
+{%- assign vid  = handle | split: '|' | last   -%}
+{%- assign handle  = handle | split: '|' | first  -%}
+{%- assign product = all_products[handle] -%}
+{%- assign vid  = vid | plus: '0'   -%}
+{%- if product != blank -%}
+<div class="tea-title">{{ product.title }}</div>
+<div class="tea-lookbook-info tea__popup--left">
+  <div class="tea_content_product">
+  {% if has_vid and product.variants.size > 1 %}
+          {% for variant in product.variants %}
+            {% if variant.id != vid %}
+              {% continue %}
+            {% endif %}
+            {%-if thumbnail == 'on' -%}
+                {% if variant.image %}
+                  <img src="{{ variant.image | img_url: 'grande'}}" alt="{{ variant.title | esc_html }}">
+                {% else %}
+                  <img src="{{ product.featured_image | img_url: 'grande'}}" alt="{{ product.title | esc_html }}">
+                {% endif %}
+              {%-endif-%}
+              {%- if title == 'on' -%}
+              <h3>{{ product.title }} - {{variant.title}}</h3>
+              {%- endif -%}
+              {%- if price == 'on' -%}
+                <span><span class="moneyx">{{ variant.price | money }}</span></span>
+              {% if  variant.compare_at_price >  variant.price  %}
+                <span><span class="mxoney old-price">{{ variant.compare_at_price | money }}</span></span>
+              {% endif %}
+              {%- endif -%}
+              <div class="tea-btn-group">
+                {%- if detail == 'on'-%}
+                <a href="{{ product.url}}">Detail</a>
+                {%- endif -%}
+                {%- if enablecart == 'on' -%}
+                  <a href="#" data-id="{{variant.id}}" data-quantity="1" class="tea-button tea_ajax_add_to_cart">Buy Now</a>
+                {%- endif -%}
+              </div>
+          {% endfor %}
+  {% else %}
+        {%-if thumbnail == 'on' -%}
+          <img src="{{ product.featured_image | img_url: 'grande'}}" alt="{{ product.title | esc_html }}">
+          {%-endif-%}
+          {%- if title == 'on' -%}
+          <h3>{{ product.title }}</h3>
+          {%- endif -%}
+          {%- if price == 'on' -%}
+            <span><span class="moneyx">{{ product.price | money }}</span></span>
+          {% if  product.compare_at_price >  product.price  %}
+            <span><span class="mxoney old-price">{{ product.compare_at_price | money }}</span></span>
+          {% endif %}
+          {%- endif -%}
+          <div class="tea-btn-group">
+            {%- if detail == 'on'-%}
+            <a href="{{ product.url}}">Detail</a>
+            {%- endif -%}
+            {%- if enablecart == 'on' -%}
+              <a href="#" data-id="{{product.variants.first.id}}" data-quantity="1" class="tea-button tea_ajax_add_to_cart">Buy Now</a>
+            {%- endif -%}
+          </div>
+  {% endif %}
+
+  </div>
+</div>
+{%- endif-%}

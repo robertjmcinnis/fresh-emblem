@@ -1,0 +1,36 @@
+{% if settings.use_compare %}
+<!-- Modal -->
+<div class="modal fade" id="compare-modal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="tea-popup">
+      <button type="button" class="close" data-dismiss="modal">close<i class="i-escape"></i></button>
+      <!-- include -->
+      <div class="white-popup_" id="compare-content">
+        <div class="container padding-0 shop-page clearfix">
+          <div class="table-responsive">
+            <table class="table compare-list">
+              <tbody>
+                <tr class="tr-remove">
+                  <th>&nbsp;</th>                  
+                </tr>
+                <tr class="tr-product-image">
+                  <th>&nbsp;</th>                  
+                </tr>
+                <tr class="tr-product-desc text-left">
+                  <th>{{'products.compare.description'|t}}</th>                 
+                </tr>
+                <tr class="tr-availability">
+                  <th>{{'products.compare.availability'|t}}</th>                
+                </tr>                 
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- include end -->
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+{% endif %}

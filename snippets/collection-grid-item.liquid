@@ -1,0 +1,26 @@
+{% unless collection_image_size %}
+  {%- assign collection_image_size = '330x330' -%}
+{% endunless %}
+{%- assign collection_image_scale = '1' -%}
+
+{% if collection.image and collection != empty %}
+  {% capture collection_image_url %}{{ collection | img_url: collection_image_size, scale: collection_image_scale, crop: 'top' }}{% endcapture %}
+{% elsif collection.products.first and collection.products.first.images != empty and collection != empty %}
+  {% capture collection_image_url %}{{ collection.products.first | img_url: collection_image_size, scale: collection_image_scale, crop: 'top' }}{% endcapture %}
+{% else %}
+  {% assign collection_image_url = blank %}
+{% endif %}
+<div class="item-wrap margin-bottom-30">
+  <a href="{% if collection == empty %}#{% else %}{{ collection.url }}{% endif %}">
+    {% unless collection_image_url == blank %}<img src="{{collection_image_url}}" alt="Outdoor Furniture" width="{{collection_image_size|split:'x'|first|plus:000|times:2}}">
+    {% else %}<img src="{{'placeholder.png'|asset_url}}" alt="Outdoor Furniture" width="{{collection_image_size|split:'x'|first|plus:000|times:2}}">
+    {% endunless %}
+    <h3 class="category-name">
+      {% if collection.title == blank %}
+      {{ 'homepage.onboarding.collection_title' | t }}<span class="count">{{collection.all_products_count|prepend: '('|append:')'}}</span>
+      {% else %}
+      {{ collection.title }}<span class="count">{{collection.all_products_count|prepend: '('|append:')'}}</span>
+      {% endif %}
+    </h3>
+  </a>
+</div>

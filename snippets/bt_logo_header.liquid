@@ -1,0 +1,33 @@
+{%- if template.name == 'index' %}
+<h1 class="h2 site-header__logo" itemscope itemtype="http://schema.org/Organization">
+  {%- else -%}
+  <div class="h2 site-header__logo" itemscope itemtype="http://schema.org/Organization">
+    {% endif -%}
+    {% if settings.body_logo_svg != blank %}
+    {%- capture image_size -%}{{ settings.logo_max_width }}px{%- endcapture -%}
+    <a href="/"><img width="{{image_size}}" src="{{settings.body_logo_svg | file_url }}" alt="{{ settings.logo.alt | default: shop.name }}"></a>
+    {%- elsif settings.logo %}
+    {%- capture image_width -%}{{ settings.logo_max_width}}{%- endcapture -%}
+    {%- capture image_size -%}{{ settings.logo_max_width }}x{%- endcapture -%}
+    {%- capture image_size2x -%}{{ settings.logo_max_width }}x@2x{%- endcapture -%}
+    {%- capture image_size3x -%}{{ settings.logo_max_width }}x@3x{%- endcapture -%}
+    <a href="/" {% if section.settings.import_header == '12' and settings.logomn -%}class="logoMb"{% endif -%} style="max-width:{{image_width}}px;display:inline-block;">
+      <picture>
+        <source srcset="{% include 'kt_image_format',cache:true,src: settings.logo, size: image_size3x %} 2x, {% include 'kt_image_format',cache:true,src: settings.logo, size: image_size %}"/>
+        <img src="{% include 'kt_image_format',cache:true,src: settings.logo, size: image_size2x %}" alt="{{ settings.logo.alt | default: shop.name }}">
+      </picture>
+      {% if section.settings.import_header == '12' and settings.logomn -%}
+      <picture>
+        <source srcset="{% include 'kt_image_format',cache:true,src: settings.logomn , size: image_size3x %} 2x, {% include 'kt_image_format',cache:true,src: settings.logomn, size: image_size %}"/>
+        <img src="{% include 'kt_image_format',cache:true,src: settings.logomn, size: image_size2x %}" alt="{{ settings.logo.alt | default: shop.name }}">
+      </picture>
+      {% endif -%}
+    </a>
+    {%- else -%}
+    <a class="site-header__logo-link" href="/" itemprop="url">{{ shop.name }}</a>
+    {% endif -%}
+    {%- unless template.name == 'index' %}
+  </div>
+  {%- else %}
+</h1>
+{% endunless -%}

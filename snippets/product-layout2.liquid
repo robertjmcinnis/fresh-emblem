@@ -1,0 +1,346 @@
+{%-include 'breadcrumb',breadcrumb_width: 'container' -%}
+{%- include 'datajs-product-single' -%}
+<div class="product-page product-inner layout-{{section.settings.layout}} loading_photo{% if settings_use_thumb %} loading_thumb{% endif %} pid_{{product.id}}" itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" data-product-id="{{ product.id }}" data-use-thumb="{{settings_use_thumb}}">
+  <meta itemprop="name" content="{{ product.title }}">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: '800x' }}">
+  <span property="brand" class="hidden">{{ product.vendor }}</span>
+  {%- capture reviewsForm -%}{{ product.metafields.spr.reviews }}{%- endcapture -%}
+  {%- if reviewsForm != blank and reviewsForm contains 'ratingValue' -%}
+  <div itemscope itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating">
+    {{ product.metafields.spr.reviews | split: 'AggregateRating">' | last | split: "<i" | first | append: '</span>' }}
+  </div>
+  {%- endif -%}
+  <span property="mpn" class="hidden">{{product.selected_or_first_available_variant.sku}}</span>
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign product_thumb_size = '110x110' -%}
+  {%- assign product_image_zoom_size = '1024x1024' -%}
+  {%- assign product_image_scale = '2' -%}
+  {%- assign enable_zoom = settings.enable_zoom -%}
+  {%- assign settings_image_size = settings.image_size -%}
+  {% case settings_image_size %}
+    {% when 'small' %}
+      {%-assign product_image_width = 'col-lg-4 col-md-5 col-sm-5 col-xs-12'-%}
+      {%-assign product_description_width = 'col-lg-8 col-md-7 col-sm-7 col-xs-12'-%}
+      {%-assign product_image_size = '345x'-%}
+      {%-assign vertical = "false"-%}
+    {% when 'medium' %}
+      {%-assign product_image_width = 'col-lg-6 col-md-6 col-sm-6 col-xs-12'-%}
+      {%-assign product_description_width = 'col-lg-6 col-md-6 col-sm-6 col-xs-12'-%}
+      {%-assign product_image_size = '530x'-%}
+      {%-if settings.use_thumb_vertical == true -%}
+        {%-assign vertical = "true"-%}
+      {%-else-%}
+        {%-assign vertical = "false"-%}
+      {%-endif-%}
+    {% when 'large' %}
+      {%-assign product_image_width = 'col-lg-7 col-md-7 col-sm-6 col-xs-12'-%}
+      {%-assign product_description_width = 'col-lg-5 col-md-5 col-sm-6 col-xs-12'-%}
+      {%-assign product_image_size = '720x'-%}
+      {%-if settings.use_thumb_vertical == true -%}
+        {%-assign vertical = "true"-%}
+      {%-else-%}
+        {%-assign vertical = "false"-%}
+      {%-endif-%}
+    {% when 'full' %}
+      {%-assign product_image_width = 'col-lg-12 col-md-12 col-sm-12 col-xs-12'-%}
+      {%-assign product_description_width = 'col-lg-12 col-md-12 col-sm-12 col-xs-12'-%}
+      {%-assign product_image_size = 'master'-%}
+      {%-assign vertical = "false"-%}
+  {% endcase %}
+  {%- if settings_use_thumb == false -%}{%-assign use_thumb = "not_use--thumb"-%}{%-else-%}{%-assign use_thumb = "use--thumb"-%}{%- endif -%}
+  <div class="{% if section.settings.width_section %}container{% else %}container-fluid{% endif %}">
+    <div class="row{%if settings.product_layout == 'image_right'%} image_right{%endif%}{%if settings_image_size == 'full' %} image_full{% endif %} vertical_{{vertical|default:"false"}} {{use_thumb|default:true}}{% if product.available == false  %} outof--stock{% endif %}">
+      <div class="product-images {{ product_image_width }}">
+        <div class="product-detail-image {{settings.thumbnail_alignment}}">
+          <div class="images">
+            <div class="loadingChangeImage" style="display:none"></div>
+            {%-if preOrder == false and sold_out -%}<span class="outof-stock out-of-stock">{{'products.product.sold_out'|t}}</span>{%-endif-%}
+            <div class="btn-group">
+              <button class="pe-7s-play kt_openvd_{{product.id}} hidden"></button>
+              <button class="pe-360-degrees kt_open_{{product.id}} hidden"></button>
+            </div>
+            {%-if product.featured_image-%}
+              <div class="main-image main-image-wapper"{% if checkOneImage_ %} style="padding: 0;width: 100%;"{% endif %}>
+                {%- assign featured_img_src = current_variant.featured_image.src | default: product.featured_image.src -%}
+                {%- assign featured_img_size = featured_img_src.width | append: 'x' -%}
+                {%- assign featured_img_alt = current_variant.featured_image.alt | default: product.featured_image.alt -%}
+                {%- include 'kt_product_images', key: 'photo' -%}
+              </div>
+              {%- if settings_use_thumb and settings_image_size != 'full' -%}
+              <div id="product-thumb-slide" class="vertical-carousel thumbnails columns-4 productThumbSlide--{{ section.id }}" data-vertical="{{vertical|default:"false"}}">
+                {%- include 'kt_product_images', key: 'thumbnail' -%}
+              </div>
+              {%- endif -%}
+              <script type="text/javascript">
+                var initialSlide = {{active_photo_| default: 0}};
+              </script>
+            {%- else -%}
+              <div class="main-image main-image-wapper" style="padding: 0;width: 100%;">
+                {{'no-image.jpg' | asset_img_url: 'master' | img_tag}}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+      <div class="{{ product_description_width }}">
+        <div class="summary entry-summary style2">
+          <h1 itemprop="name" class="product-name entry-title{% unless product.metafields.spr.reviews != blank %} margin-bottom-10{% endunless %}">{{ product.title }}</h1>
+          {%- include 'rating_star' -%}
+          <div class="product-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+            <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+            {%- assign settings_show_price = settings.show_price -%}
+            {% if settings_show_price %}
+            <p class="price product-single__price product-single__price-{{ section.id }}{% unless current_variant.available %} product-price--sold-out{% endunless %}{% if product.available == false %} hidden{% endif %}">
+              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+              <ins class="product-price__price product-price__price-{{ section.id }}">
+                <span id="ProductPrice-{{ section.id }}" itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+                  {{ current_variant.price | money }}
+                </span>
+              </ins>
+              <del id="ComparePrice-{{ section.id }}"{%unless current_variant.compare_at_price > current_variant.price %} class="hide"{% endunless %}>{{ current_variant.compare_at_price | money }}</del>
+            </p>
+            {% endif %}
+            <span class="out-of-stock{% unless preOrder == false and sold_out %} hidden{% endunless %}">{{'products.product.out_of_stock'|t}}</span>
+          </div>
+          {%- if settings.use_inventory_management -%}
+          {%- assign show_iq = false -%}
+          {%- if current_variant.inventory_quantity < 15 and current_variant.inventory_management %}{%-assign show_iq = true-%}{%- endif -%}
+          {%- unless current_variant.inventory_quantity == 0 and product.has_only_default_variant -%}
+          <div class="meta">
+            <span class="show-iq{% if show_iq == false %} hidden{% endif %}">{{'products.product.only_left_short_text_html'|t: count: current_variant.inventory_quantity}}</span>
+            <span class="show-iq_{% if show_iq == false %} min{% endif %}">{{'products.product.availalbe'|t}}: 
+              <span class="availalbe text-primary">{% if current_variant.available %}{{'products.product.in_stock'|t}}{% else %}{{'products.product.out_of_stock'|t}}{% endif %}</span>
+            </span>
+          </div>
+          {%- elsif product.has_only_default_variant -%}
+          <div class="meta">{{'products.product.availalbe'|t}}: 
+            <span class="availalbe text-primary">{% if product.available %}{{'products.product.in_stock'|t}}{% else %}{{'products.product.out_of_stock'|t}}{% endif %}</span>
+          </div>
+          {%- endunless -%}
+          {%- endif -%}
+          <div class="clearfix"></div>
+          {%- unless sold_out -%}
+            {%- if product.metafields.event.countdown %}
+            {% assign countdown_ = product.metafields.event.countdown | split: '+' | first %}
+            {% assign countdown__ = countdown_ | split: 'T' | first | split: '/' %}
+            {% assign countdown___ = countdown_ | split: 'T' | last | split: ':' %}
+            <div class="product-count-down text-left">
+              <div class="kt-countdown"
+                   data-y="{{countdown__[2]|default:00}}"
+                   data-m="{{countdown__[0]|default:00}}"
+                   data-d="{{countdown__[1]|default:00}}"
+                   data-h="{{countdown___[0]|default:00}}"
+                   data-i="{{countdown___[1]|default:00}}"
+                   data-s="{{countdown___[2]|default:00}}">
+              </div>
+            </div>
+            {%-else-%}
+            <div class="kt_progress_bar">
+              <div class="kt_progress_bar_pr"></div>
+              {%-if settings.stock_countdown-%}<div class="kt_countdow_page kt_loop_bar kt_clock_ticker clearfix" data-d="{{settings.total_items_days}}" data-h="{{settings.total_items_hours}}" data-i="{{settings.total_items_minutes}}" data-s="{{settings.total_items_seconds}}"></div>{%-endif-%}
+            </div>
+            {%- endif %}
+          {%- endunless %}
+          <div itemprop="description" class="short-description short-descript{% unless settings.show_shortdes %} hidden{% endunless %}">
+            {%- if product.metafields.meta.short_description -%}
+            {{ product.metafields.meta.short_description | html }}
+            {% elsif product.description contains  '[/short description]' %}
+            {{ product.description | split: '[/short description]' | first | split: '[short description]'| last | html }}
+            {%-else-%}
+            {{ product.description | html }}
+            {%-endif-%}
+          </div>
+          <div class="action_when_fullwidth">
+            <div class="product-addtocart">
+              {% assign nomargin = false %}
+              {% unless product.options.size == 1 and product.variants[0].title == 'Default Title'-%}
+              {%-capture variantSoldout-%}
+              {%-for option in product.options_with_values-%}
+                  {%-for value in option.values-%}
+                    {% if option.selected_value == value %}{% assign value_ = value | handleize %} {{'_'|append: value_}}{% endif-%}
+                  {%-endfor-%}
+              {%-endfor-%}
+              {%-endcapture-%}
+              {%-else-%}
+              {% assign nomargin = true %}
+              {%-endunless-%}
+              <div id="callBackVariant--{{ section.id }}" class="{{variantSoldout}}">
+                {%- assign id = 'cart-form--' | append: section.id -%}
+                {%- assign class = 'cart product-form product-form-' | append: section.id -%}
+                {%- unless settings.show_variant_labels -%}
+                {%- assign class = class | append: ' product-form--hide-variant-labels' -%}
+                {%- endunless -%}
+                {% form 'product', product, id: id, class: class %}
+                  {%-include 'kt_variants_options'-%}
+                  {%-if linklists[product.handle].links.size > 0-%}
+                  {%- include 'kt_product_group' -%}
+                  {%-endif-%}
+                  {%- assign settings_show_quantity_selector = settings.show_quantity_selector -%}
+                  <div class="sw_large cart-form{% if nomargin %} nomargin{% endif %} margin-bottom-15">
+                    {% if settings_show_quantity_selector %}
+                    <div class="quantity product-form__item--quantity{% if preOrder == false and sold_out %} hidden{% endif %}">
+                      <div class="quantity-inner">
+                        <label for="Quantity" class="hidden">{{ 'products.product.quantity' | t }}</label>
+                        <input type="number" id="Quantity" name="quantity" value="1" min="1" class="input-text qty text">
+                        <div class="quantity-nav style2">
+                          <div class="quantity-button quantity-up">+</div>
+                          <div class="quantity-button quantity-down">-</div>
+                        </div>
+                      </div>
+                    </div>                
+                    {% endif %}
+                    <div class="clearfix">
+                      {%- if product.metafields.purchase.on_link != blank %}
+                      <a href="{{product.metafields.purchase.on_link | split: "]" | last }}" class="button button-add-cart out_site">
+                        <span>{{product.metafields.purchase.on_link | split: "]" | first | remove: "["}}</span>
+                      </a>
+                      {%- else %}
+                      <button type="button" onclick="Shopify.KT_addItemFromForm('cart-form--{{ section.id }}');$(this).addClass('loading').removeClass('loaded')" name="add" id="AddToCart-{{ section.id }}" {% unless sold_out == false  %}disabled="disabled"{% endunless %} class="button button-add-cart single_add_to_cart_button">
+                        <span id="AddToCartText-{{ section.id }}">
+                          {%- if preOrder -%}
+                          {{'products.product.pre_order'|t}}
+                          {%- elsif sold_out == false -%}
+                          {{'products.product.add_to_cart'|t}}
+                          {%- else -%}
+                          {{'products.product.sold_out'|t}}
+                          {%- endif -%}
+                        </span>
+                      </button>
+                      {% endif -%}
+                      {% comment %}<div class="ttaddtocart{% if current_variant.price != 0 %} hidden{% endif %}">
+                        <a href="tel:{{settings.top_phone_number}}">
+                          <span class="exclusive phone"><span>{{ 'products.product.contact_button' | t }}</span> </span>
+                        </a>
+                      </div>{% endcomment %}
+                      {%- if settings.use_wishlist and pages['wishlist'] != empty -%}
+                      <div class="wishlist button" href="#">{%- include 't-wishlist-product' -%}</div>
+                      {%- endif -%}
+                      {%- if settings.use_compare-%}<a href="javascript:void(0);" class="button compare" data-pid="{{product.handle}}"><i class="icon-refresh"></i></a>{%- endif -%}
+                    </div>
+                    <div class="clearfix">
+                    {%- if settings.show_add_more_button and product.has_only_default_variant == false%}
+                      <button type="button" id="AddToCartMore-{{ section.id }}" class="button-add-cart-more"><i class="fas fa-bell"></i><span>{{'products.product.get_shipping'|t}}</span></button>
+                    {% endif -%}
+                    </div>
+                  </div>
+                  {%- if section.settings.use_d_c_b -%}
+                    <div class="product-form__item product-form__item--submit shopifyPaymentButton"{%if product.available == false %} style="display: none;"{%endif%}>
+                      {{ form | payment_button }}
+                    </div>
+                  {%- endif -%}
+                {%- endform -%}
+                {%- if preOrder and product.selected_or_first_available_variant.incoming -%}
+                <div class="clearfix"></div>
+                <div class="preOrder margin-top-20 clearfix">
+                  <span>
+                    <em>*</em>{{'products.product.pre_order_text'|t}} {{product.selected_or_first_available_variant.next_incoming_date|date: '%B %d %Y'}}
+                  </span>
+                </div>
+                {%- endif -%}                  
+                {%- if settings.show_bundle -%}
+                  <div class="clearfix"></div>
+                  {%- include 'nitro-product-bundle' -%}
+                {%- endif -%}
+              </div>
+            </div>
+            {% unless shipping_product == false %}
+            <div class="shipping-product">
+              <a href="#" data-target="#productShipping" data-toggle="modal" class="btn-modal">
+                <i class="pe-7s-rocket"></i>
+                <span>{{'products.product.shipping'|t}}</span>
+              </a>
+            </div>
+            {% endunless %}
+            {% unless size_guide == false %}
+            <div class="size-chart">
+              <a href="#" data-target="#sizeModal" data-toggle="modal" class="btn-modal">
+                <i class="pe-7s-scissors"></i>
+                <span>{{'products.product.size_chart'|t}}</span>
+              </a>
+            </div>
+            {% endunless %}
+            {%-if settings.trust_image_prdsingle-%}
+            <div class="text-center margin-top-10">
+              <img alt="{{settings.trust_image_.alt}}" src="{%-if settings.trust_image_-%}{{settings.trust_image_| img_url: 'master'}}{%-else-%}//cdn.shopify.com/s/files/1/1958/5719/files/trust_imgae.png?113495255364115043154{%-endif-%}">
+            </div>
+            {%-endif-%}
+            <table class="product_meta">
+              <tbody>
+                {%- if settings.use_inventory_management -%}
+                {%- assign show_iq = false -%}
+                {%- if current_variant.inventory_quantity < 15 and current_variant.inventory_management %}{%-assign show_iq = true-%}{%- endif -%}
+                {%- unless current_variant.inventory_quantity == 0 and product.has_only_default_variant -%}
+                <tr class="availalbe_wrapper meta">
+                  <td class="title_wrapper">{{'products.product.availalbe'|t}}:</td>
+                  <td>
+                  <span class="show-iq{% if show_iq == false %} hidden{% endif %}">{% if show_iq %}{{'products.product.only_left_short_text_html'|t: count: current_variant.inventory_quantity}}{% endif %}
+                  </span>
+                  <span class="show-iq_{% if show_iq == false %} min{% endif %}">
+                    <span class="availalbe text-primary">{% if current_variant.available %}{{'products.product.in_stock'|t}}{% else %}{{'products.product.out_of_stock'|t}}{% endif %}</span>
+                  </span>
+                  </td>
+                </tr>
+                {%- elsif product.has_only_default_variant -%}
+                <tr class="availalbe_wrapper meta">
+                  <td class="title_wrapper">{{'products.product.availalbe'|t}}:</td>
+                  <td>
+                    <span class="availalbe text-primary">{% if product.available %}{{'products.product.in_stock'|t}}{% else %}{{'products.product.out_of_stock'|t}}{% endif %}</span>
+                  </td>
+                </tr>
+                {%- endunless -%}
+                {%- endif -%}
+
+                {%- assign settings_show_type = settings.show_type -%}
+                {% if settings_show_type and product.type != blank %}
+                <tr class="type_wrapper"><td class="title_wrapper">{{'products.product.type'|t}}:</td> <td><span>{{ product.type | link_to_type }}</span></td></tr>
+                {%-endif %}
+                {%- assign settings_show_sku = settings.show_sku -%}
+                {% if settings_show_sku and current_variant.sku != blank %}
+                <tr class="sku_wrapper"><td class="title_wrapper">{{'products.product.sku'|t}}:</td> <td><span class="sku variant-sku">{{current_variant.sku}}</span></td></tr>
+                {%-endif %}
+                {%- assign settings_show_vendor = settings.show_vendor -%}
+                {% if settings_show_vendor %}
+                <tr class="product-single__vendor"><td class="title_wrapper">{{'products.product.vendor'|t}}:</td> <td><span>{{ product.vendor | link_to_vendor }}</span></td></tr>
+                {% endif %}
+                {%- assign settings_show_categories = settings.show_categories -%}
+                {% if settings_show_categories and product.collections.size > 0 %}
+                <tr class="posted_in"><td class="title_wrapper">{{'products.product.categories'|t}}:</td> <td>
+                  {% for collection_ in product.collections%}
+                  <a href="{{collection_.url}}" rel="tag">{{collection_.title}}</a>{%unless forloop.last%}, {% endunless %}
+                  {%-endfor %}</td>
+                </tr>
+                {%-endif %}
+                {%- assign settings_show_tags = settings.show_tags -%}
+                {% if settings_show_tags and product.tags.size > 0 %}
+                <tr class="tagged_as"><td class="title_wrapper">{{'products.product.tags'|t}}:</td> <td>
+                  {% for tag in product.tags-%}
+                  <a href="{{collection.url|default: '/collections/all'}}?q=tag_{{tag|handleize}}" rel="tag">{{ tag }}</a>{%unless forloop.last%}, {% endunless %}
+                  {%-endfor %}</td>
+                </tr>
+                {%-endif %}
+                {% if settings.show_share_buttons %}
+                <tr class="social_share">
+                  <td class="title_wrapper">{{'general.social.title'|t}}:</td> 
+                  <td>
+                    {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product, style: 'social-share' %}
+                  </td>
+                </tr>
+                {%-endif %}
+              </tbody>
+            </table>
+            {% if settings.show_real_time_visitor %}
+            <div class="realTime" style="display:none">
+              <div class="avatar">
+                {{'realTime.png'|asset_img_url: 'x40'|img_tag}}
+              </div>
+              <div class="counter_real_time" data-counter-max="{{settings.real_time_max}}" data-interval-time="{{settings.real_interval_time | append: '000'}}">+<span id="number_counter"><span>296</span>{{'flash.png'|asset_img_url: '24x'|img_tag}}</span> {{settings.text_visitor|default: 'Visitor right now'}}</div>
+            </div>
+            {%endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

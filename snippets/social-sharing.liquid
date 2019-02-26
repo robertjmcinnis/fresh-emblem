@@ -1,0 +1,41 @@
+<!-- /snippets/social-sharing.liquid -->
+<div class="{{style}}">
+  <ul>
+  {% if settings.share_facebook %}
+    <li>
+      <a title="Share this post on Facebook" class="facebook" href="http://www.facebook.com/sharer.php?u={{ shop.url | append: share_permalink }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=380,width=660');return false;">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% if settings.share_twitter %}
+    <li>
+      <a title="Share this post on Twitter" class="twitter" href="//twitter.com/share?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: share_permalink }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=380,width=660');return false;">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% if settings.share_google_plus %}
+    <li>
+      <a title="Share this post on Google Plus" class="google-plus" href="//plus.google.com/share?app=110&url={{ shop.url | append: share_permalink }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=380,width=660');return false;">
+        <i class="fab fa-google-plus-g"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% if settings.share_pinterest %}
+    <li>
+      <a title="Share this post on Pinterest" class="pinterest" href="//pinterest.com/pin/create/button/?url={{ shop.url | append: share_permalink }}&amp;media={{ share_image | img_url: '1024x1024' }}&amp;description={{ share_title | url_param_escape }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+        <i class="fab fa-pinterest-p"></i>
+      </a>
+    </li>
+    {% endif %}
+    {% if settings.share_tumblr %}
+    <li>
+      <a data-title="Share this post on Tumbr" class="tumblr" data-content="{{ share_image | img_url: '1024x1024' }}" href="//tumblr.com/widgets/share/tool?canonicalUrl={{ shop.url | append: share_permalink }}" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=540');return false;">
+        <i class="fab fa-tumblr"></i>
+      </a>
+    </li>
+    {% endif %}
+
+  </ul>
+</div>

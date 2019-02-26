@@ -1,0 +1,46 @@
+{% unless reviews_width %}
+  {%- assign reviews_width = '' -%}
+{% endunless %}
+{%- if settings.review_app == 'shopifyreview' %}
+{% capture reviewsForm %}{{ product.metafields.spr.reviews }}{% endcapture %}
+{% assign formId = product.id %}
+{% assign reviewCount = 0 %}
+{% if reviewsForm contains 'reviewCount" content="' %}
+{% assign reviewCount = reviewsForm | split: 'reviewCount" content="' | last | split: '"' | first | plus: 0 %}
+{% endif %}
+<div class="{{reviews_width}}">
+  <div class="box-list-reviews">
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-sm-12 ">
+        <div class="box-review spr-content">
+          <h4 class="title-border">
+            <span class="text">{{'products.review.title_reviews'|t}}</span>
+            <span class="subtext">( {{reviewCount}} {% if reviewCount < 2 %} {{'products.review.item_review'|t}}{% else %} {{'products.review.items_review'|t}}{% endif %} )</span>
+          </h4>
+          <ol class="commentlist spr-reviews" id='reviews_{{formId}}'>
+            <div id="shopify-product-reviews" data-id="{{formId}}"></div>
+          </ol>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-12">
+        <h4 class="title-border"><span class="text" onclick='$("#form_{{formId}}").toggle();return false'>{{'products.review.title_new_review'|t}}</span></h4>
+        <div class="box-review form-review">
+          <div class='spr-form' id='form_{{formId}}'{% unless reviewsForm contains 'reviewCount" content="' %} style='display: none'{% endunless %}>
+            <div id="shopify-product-reviews" data-id="{{formId}}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- elsif settings.review_app == 'ryviu' %}
+<div class="{{reviews_width}}">
+<!-- RYVIU APP -->
+<div class="ryviu-show-reviews" product-handle="{{product.handle}}">{{product.metafields.ryviu.reviews}}</div>
+<!-- / RYVIU APP -->
+</div>
+{%- elsif settings.review_app == 'yotpo' %}
+<div class="{{reviews_width}}">
+<div class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&amp;','%26'}}" data-description="{{ product.description | escape }}"></div>
+</div>
+{% endif -%}

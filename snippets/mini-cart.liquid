@@ -1,0 +1,118 @@
+{% if position =="categories" %}
+<li class="mini-cart kiti--DropItem">
+  <a class="cart-link" href="#">
+    <span class="icon__count">
+      <span class="icon pe-7s-cart"></span>
+      {{'cart.general.title' | t}}
+      <span class="count cartCount">{{ cart.item_count }}</span>
+    </span>
+  </a>
+{% elsif position =="menu" %}
+  <div class="mini-cart kiti--DropItem">
+    <a class="cart-link" href="#">
+      <span class="icon__count">
+        <span class="icon pe-7s-cart"></span> 
+        <span class="count cartCount">{{ cart.item_count }}</span>
+      </span>
+    </a>
+{% elsif position =="top-menu" %}
+    <div class="mini-cart kiti--DropItem">
+      <a class="cart-link" href="#">
+        <span class="icon__count">
+          <span class="icon pe-7s-cart"></span>
+          <span class="count cartCount">{{ cart.item_count }}</span>
+        </span>
+          {% if style20 == "style20" %}
+          <span class="amout">{{ cart.total_price | money }}</span>
+          {% else %}
+          <p class="cartCost">{{ cart.total_price | money }}</p>
+          {% endif %}
+      </a>
+{% endif %}
+  <div class="show-shopping-cart kiti--DropInner {% if hidden == "hidden" %}hidden {% endif %}">
+    <h3 class="title has-item text-uppercase clearfix"{% if cart.item_count == 0 %} style="display:none"{% endif %}>{{ 'cart.general.items_with_count_html' | t: count: cart.item_count }}</h3>    
+    <ul class="cart_list product_list_widget list-product has-item clearfix"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+        {%- if cart.item_count > 0 -%}
+        {%- for item in cart.items -%}
+        <li class="item__{{item.id}}">
+          <div class="card" style="display:none"><div class="bar-loading ifinite"></div></div>
+          <div class="thumb">
+            {% if item.image %}
+            {%- assign check_not_img_one = false -%}
+            {%- assign check_break = false -%}
+            {%- if item.variant.image != null or item.product.has_only_default_variant -%}
+            <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ item.title | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ item| img_url: '104x120', crop:'top'}}">
+            {%- else -%}
+            {%- if settings.color_name != blank -%}{%- assign gl_color_name = settings.color_name | downcase -%}{%-else-%}{%- assign gl_color_name = '' -%}{%-endif-%}
+            {%- assign check_break = false -%}
+            {%- assign check_not_img_one = false -%}
+            {%- for option in item.product.options -%}
+            {%- assign downcased_option = option | downcase -%}
+            {%- if downcased_option == 'color' or downcased_option == 'colour' or downcased_option == gl_color_name -%} 
+            {%- assign item_title_variant = item.variant.options[forloop.index0] -%}
+            {%- for image in item.product.images -%}
+            {%- if image.attached_to_variant? -%}
+            {% for variant in image.variants %}
+            {%- if variant.title contains item_title_variant and variant.image.src != blank -%}
+            <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ image.alt | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ image.src| img_url: '104x120', crop:'top' }}">
+            {%- assign check_not_img_one = false -%}
+            {%- assign check_break = true -%}
+            {%- break -%}
+            {%- else -%}
+            {%- assign check_not_img_one = true -%}
+            {%- endif-%}
+            {% endfor %}
+            {%- if check_break -%}{%- break -%}{%- endif-%}
+            {%- else -%}
+            {%- assign check_not_img_one = true -%}
+            {%- endif-%}
+            {%- endfor -%}
+            {%- else -%}
+            {%- assign check_not_img_one = true -%}
+            {%- endif -%}
+            {%- endfor -%}
+            {%- endif -%}
+            {%- if check_not_img_one and check_break == false -%}
+            <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ item.title | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ item| img_url: '104x120', crop:'top' }}">
+            {%- endif -%}
+            {% else %}
+            <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ item.title | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ 'noimage.gif'| asset_img_url: '104x120', crop:'top' }}">
+            {% endif %}
+          </div>
+          <div class="info_itemCart info">            
+            <h4 class="product-name"><a href="{{ item.product.url }}" title="{{ item.product.title | strip_html }}">{{ item.product.title |html }}&nbsp;</a></h4>
+            {%- unless item.variant.title contains 'Default' -%}
+            <span class="variation" title="{{ item.title | escape |strip_html }}">
+              {{item.variant.title}}
+            </span>
+            {%- endunless -%}
+            <span class="price">{{ item.quantity | append : "x " }}{{ item.price | money }}</span>
+            <a onclick="Shopify.KT_removeItem('{{ item.variant_id }}');$(this).parents('li.item__{{item.id}}').find('div.card').show(100);" class="remove-item remove" title="{{'cart.general.remove'|t }}"><i class="fas fa-times"></i></a>
+          </div>
+        </li>
+        {%- endfor -%}
+        {%- else -%}
+        <li class="empty">{{ 'cart.general.empty'| t }}</li>
+        {%- endif -%}
+      </ul>
+      <!-- end product list -->
+    <div class="sub-total has-item clearfix"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+      {{ 'cart.general.subtotal' | t }} 
+      <div class="cartCost">
+        {{ cart.total_price | money }}
+      </div>
+    </div>
+    <div class="group-button has-item clearfix"{% if cart.item_count == 0 %} style="display:none"{% endif %}>
+      <a href="/cart" class="button">{{ 'cart.general.view' | t }}</a>
+      <a href="/checkout" class="check-out button">{{ 'cart.general.checkout' | t }}</a>
+    </div>
+    <h3 class="title no-item clearfix"{% if cart.item_count > 0 %} style="display:none"{% endif %}>{{ 'cart.general.empty' | t }}</h3>
+    <div class="group-button no-item clearfix"{% if cart.item_count > 0 %} style="display:none"{% endif %}>
+      <a href="/collections/all" class="button">{{ 'cart.general.continue_shopping' | t }}</a>
+    </div>
+  </div>
+{% if position =="categories" %}
+  </li>
+{% elsif position =="menu" or position =="top-menu"%}
+</div>
+{% endif %}

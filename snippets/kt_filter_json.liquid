@@ -1,0 +1,8 @@
+<script type="text/javascript">
+collection.Crr = "{{collection.handle|default:'all'}}";
+page.Han = "{{collection.handle|default:'all'}}";
+var groupsFilter = [{%-for block in section.blocks-%}{key: {{block.settings.key|json}}, title: {{block.settings.title|json}}, tags_import: [{%-assign tags_import = block.settings.tags | split: ', ' -%}{%-assign count = 0 -%}{%-for tag_ in tags_import-%}{{tag_|json}}{%-assign count = count | plus: 1 -%}{%-unless count >= tags_import.size-%},{%-endunless-%}{%-endfor-%}], blockStyle: {{block.settings.block_style|json}}, useSplit: {{block.settings.use_split|json}} }{%-unless forloop.last-%},{%-endunless-%}{%-endfor-%}];
+var brands_icon = {{section.settings.brands_icon|split:', '|json}};
+var colorGroupFilter = {{section.settings.color_groups|split:', '|json}}, currTags = {{current_tags | json}}, currTags_handleize = [{% for tg in current_tags %}{{tg|handleize|json}}{%-unless forloop.last-%},{%-endunless-%}{% endfor %}];
+{%-if current_tags-%}var collectionTags = {{collection.tags|json}};{%-else-%} var collectionTags = {{collection.all_tags|json}};{%-endif-%}
+</script>

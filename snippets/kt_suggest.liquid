@@ -1,0 +1,104 @@
+{%- if settings.enable_suggest_products -%}
+{%- assign template_id = template | split: '.' | first -%}
+{%- assign st = 'display_' | append: template_id -%}
+{%- if settings[st] -%}
+{%- assign collection_opj = collections[settings.collection_suggest] -%}
+{%- if collection_opj.handle != "" or collection_opj.handle != empty -%}
+{%- assign colections = collection_opj.products -%}
+{%- capture index -%}{{ 'now' | date: '%S' | times: shop.collections_count | divided_by: 60 }}{%- endcapture -%}
+{%- assign index_number = index | plus:0 -%}
+{%- if index_number <= collection_opj.all_products_count and index_number < 50 -%}
+  {%- for product in colections offset:index -%}
+      {%- assign ps = product -%}
+      {%- break -%}
+  {%- endfor -%}
+{%- else -%}
+ {%- assign ps = colections | first -%}
+{%- endif -%}
+<div class="kt-products-suggest hidden-xs">
+  <div class="product-suggest">
+    {%- if settings.show_close_suggest -%}<a class="suggest-close" onclick="$(this).parent().parent().remove()">×</a>{%- endif -%}
+    <div class="table_suggest">
+      <div class="table-cell-top img"><a href="{{ ps.url | within: collection_opj }}">
+        <img src="{{ps.featured_image | img_url: '70x89', crop: 'center' | split:'?' | first }}" class="attachment-shop_thumbnail" alt="{{ps.title}}"> 
+      </a></div>
+      <div class="table-cell-top">
+        <span style="font-size: 12px">{{'general.suggest.title' | t}}</span>
+        <a href="{{ ps.url | within: collection_opj }}" class="product-title">{{ps.title}}</a>
+        {%- if settings.use_suggest -%}
+        {%- assign ago_suggest = 'now' | date: '%S' | plus:0 -%}
+        <div class="minutes-ago">
+          <span class="minute-number">{%- if ago_suggest == 0 -%}1{%- else -%}{{ago_suggest}}{%- endif -%}</span> <span>{{'general.suggest.minutes_ago' | t}}</span>
+        </div>
+        {%- endif -%}
+        {%- if settings.use_fake_location and settings.fake_location != blank -%}
+        {%- assign arr_fake_location = settings.fake_location | replace: ' | ', '|' | replace: ' |', '|' | replace: '| ', '|' | split: '|' -%}
+        {%- assign ago_index = 'now' | date: '%S' | plus:0 -%}
+        <div class="from-ago">{{'general.suggest.from' | t}} <span class="from">{%- if ago_index > arr_fake_location.size -%}{%- assign ago_index = 0 -%}{%- endif -%}{{arr_fake_location[ago_index]}}</span></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function($) {
+    var newsArray = {{ colections | map:'handle' | json }};   // your code puts strings into this array
+    var curNewsIndex = 0;
+    var delay_time = {{settings.delay_time | plus: 0}};
+    var show_time = {{settings.show_time | plus: 0 | plus: 600}};
+    function advanceNewsItem() {
+      ++curNewsIndex;
+      if(curNewsIndex >= newsArray.length) {curNewsIndex = 0;}
+      var spaceBottom = $('.jas-sticky-atc.fixed').outerHeight() + 10 || $('.claue-cookies-popup.popup-display').outerHeight() + 10 || 25;
+      $('.kt-products-suggest').css('bottom',spaceBottom+'px')
+      $('.kt-products-suggest').slideToggle('slow', function() {
+        var start_time = new Date().getTime();
+        var request_time = 0;
+        Shopify.KT_getProduct(newsArray[curNewsIndex],function(data){
+          request_time = new Date().getTime() - start_time;
+          {%- if settings.use_fake_location and settings.fake_location != blank -%}
+          var myArray = {{ arr_fake_location | json }},
+              rand = Math.floor(Math.random() * {{arr_fake_location.size}});
+          {% endif %}
+          var fakeTimeOrder = Math.floor((Math.random() * 60) + 1);
+          $('.kt-products-suggest .product-title').html(data.title).attr('href','/collections/{{collection_opj.handle}}'+data.url);
+          $('.kt-products-suggest .table-cell-top.img a').attr('href','/collections/{{collection_opj.handle}}'+data.url);
+          $('.kt-products-suggest .table-cell-top.img img').attr( { src:Shopify.KT_resizeImage(data.featured_image,'70x89_crop_center'), alt:data.title } );
+          $('.kt-products-suggest .minute-number').html(fakeTimeOrder);
+          {%- if settings.use_fake_location and settings.fake_location != blank -%}$('.kt-products-suggest .from').html(myArray[rand]);{% endif %}
+          setTimeout(function(){
+            $('.kt-products-suggest').slideToggle("slow");
+          }, delay_time - request_time)
+        });
+      });
+    }
+    if ($(window).width() > 767){
+      var intervalID = setInterval(advanceNewsItem, delay_time + show_time);
+    }
+    // var check_mouse = true;
+    // $('.kt-products-suggest').on({
+    //   mouseover: function () {
+    //     if (check_mouse) {
+    //       clearInterval(intervalID);
+    //       check_mouse = false;
+    //    }
+    //   },
+    //   mouseleave: function () {
+    //     intervalID = setInterval(advanceNewsItem, delay_time + show_time);
+    //     check_mouse = true;
+    //   }
+    // });
+    // $(window).blur(function(){
+    //   clearInterval(intervalID);
+    //   clearTimeout(intervalID);
+    // });
+    // $(window).focus(function(){
+    //   if ($(window).width() > 767){
+    //     intervalID = setInterval(advanceNewsItem, delay_time + show_time);
+    //   }
+    // });
+ });
+</script>
+{%- endif -%}
+{%- endif -%}
+{%- endif -%}

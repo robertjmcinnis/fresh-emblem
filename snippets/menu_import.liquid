@@ -1,0 +1,605 @@
+{%-assign size_handle = 0-%}
+{%- for block in section.blocks-%}
+{%-assign menu_handle = block.settings.menu_links-%}
+{%-assign size_item = linklists[menu_handle].title-%}
+{%-assign size_handle = size_handle | plus: size_item.size-%}
+{%-assign size_handle = size_handle | plus: block.settings.title.size-%}
+{%-endfor-%}
+<ul class="boutique-nav kt-nav {% if key == 'main-menu-vertical' %}main-menu-vertical{% else %}main-menu{% endif %} clone-main-menu{% if size_handle > 45 %} smallPadding{% endif %}"> 
+  {% if section.blocks.size > 0-%}  
+  {%-assign link_active = canonical_url |split:shop.url|last-%}
+  {%- for block in section.blocks-%}
+  {%- if block.type == 'link'-%} {% comment %}---------------- ITEM LINK START------------------{% endcomment %}
+    {%-assign menu_link = block.settings.button_link-%}
+    <li class="site-nav__link--main{% if link_active == block.settings.button_link %} active{% endif %}" style="padding:0 {{section.settings.padding_size}}px">
+      <a href="{{menu_link| default: "#"}}">
+        <span>
+          {{block.settings.title | default: 'menu item'}}
+          {% if block.settings.label != "" -%}
+          <span class="label-menu {{block.settings.label|handleize}}" style="background:{{block.settings.color}} none repeat scroll 0 0">{{block.settings.label|upcase}}</span>
+          {%-endif-%}
+        </span>        
+      </a>
+    </li>{% comment %}---------------- ITEM LINK END------------------{% endcomment %}
+  {% elsif block.type == 'standard'-%}{% comment %}---------------- ITEM STANDARD START------------------{% endcomment %}
+    {%-assign menu_handle = block.settings.menu_links-%}
+    <li class="menu-item-has-children site-nav--has-dropdown site-nav__link--main{% if link_active == block.settings.button_link %} active{% endif %}" style="padding:0 {{section.settings.padding_size}}px">
+      <a href="{{block.settings.button_link| default: "#"}}">
+        <span>
+          {{linklists[menu_handle].title | default: 'menu item'}}
+          {%-if block.settings.label != "" -%}
+          <span class="label-menu {{block.settings.label|handleize}}" style="background:{{block.settings.color}} none repeat scroll 0 0">{{block.settings.label|capitalize}}</span>
+          {%-endif-%}
+        </span>
+        
+      </a>
+      {% if linklists[menu_handle].links.size > 0-%}
+      <span class="expand fa" onclick=""></span>
+      <ul class="sub-menu">
+        {% for link in linklists[menu_handle].links-%}
+        {%-assign child_links = linklists[link.handle].links-%} 
+        <li class="site-nav__child-link {% if child_links.size > 0 %} drop_to_right menu-item-has-children site-nav--has-dropdown{% endif %}">
+          <a href="{{ link.url }}">
+            <span>
+              {{link.title | split: '{' | first }}
+              {% if link.title contains '{'-%}
+              {%-assign label  = link.title |  split: '{' | last  | split: '}' | first-%}
+              <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+              {%-endif %}
+            </span>
+          </a>
+          {% if child_links.size > 0-%}
+          <ul class="sub-menu">
+            {% for child_link in child_links-%}
+            {%- assign grand_child_links = linklists[child_link.handle].links-%} 
+            <li class="site-nav__child-link{% if grand_child_links.size > 0 %} drop_to_right menu-item-has-children site-nav--has-dropdown{% endif %}">
+              <a href="{{child_link.url}}">
+                <span>
+                  {{child_link.title | split: '{' | first }}
+                  {% if child_link.title contains '{'-%}
+                  {%- assign label  = child_link.title |  split: '{' | last  | split: '}' | first-%}
+                  <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                  {%- endif %}
+                </span>
+              </a>
+              {% if grand_child_links.size > 0-%}
+                <ul class="sub-menu">
+                  {% for grand_child_link in grand_child_links-%}
+                  <li class="site-nav__child-link">
+                    <a href="{{grand_child_link.url}}">
+                      <span>
+                        {{grand_child_link.title | split: '{' | first }}
+                        {% if grand_child_link.title contains '{'-%}
+                        {%- assign label  = grand_child_link.title |  split: '{' | last  | split: '}' | first-%}
+                        <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                        {%- endif %}
+                      </span>
+                    </a>
+                  </li>
+                  {%- endfor %}
+                </ul>
+              {%- endif %}
+            </li>
+            {%- endfor %}
+          </ul>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </li>{% comment %}---------------- ITEM STANDARD END------------------{% endcomment %}
+  {% elsif block.type == 'multi_collumn'-%}{% comment %}---------------- ITEM MULTI COLUMN START------------------{% endcomment %}
+    {%- assign menu_handle = block.settings.menu_links-%}
+    <li class="item-megamenu menu-item-has-children site-nav--has-dropdown site-nav__link--main{% if link_active == block.settings.button_link %} active{% endif %}" style="padding:0 {{section.settings.padding_size}}px">
+      <a href="{{block.settings.button_link| default: "#"}}">
+        <span>
+          {{linklists[menu_handle].title | default: 'menu item'}}
+          {%-if block.settings.label != "" -%}
+          <span class="label-menu {{block.settings.label|handleize}}" style="background:{{block.settings.color}} none repeat scroll 0 0">{{block.settings.label|capitalize}}</span>
+          {%-endif-%}
+        </span>
+        
+      </a>
+      {% if linklists[menu_handle].links.size > 0-%}
+      <span class="expand fa" onclick=""></span>
+      <div{% if block.settings.menu_links_width != blank %} style="width:{{block.settings.menu_links_width}}"{% else %} style="width:830px"{% endif %} class="sub-menu megamenu{% if block.settings.bg_image %} lazyload{% endif %}"
+           {% if block.settings.bg_image %}
+           data-bgset="{%- include 'bgset', image: block.settings.bg_image -%}"
+           data-sizes="auto"
+           data-parent-fit="cover"
+           style="background-image: url('{{ block.settings.bg_image | img_url: '300x300' }});"
+           {% endif %}>
+        <div class="row">
+          {%- assign link_handle = linklists[menu_handle].links | map: 'handle' | join: ' '-%}
+          {% if link_handle contains 'breakcol'-%}
+          {%- assign count = 0-%}
+          {%- assign per = block.settings.menu_links_per_col | plus: 0-%}
+          {%- for link in linklists[menu_handle].links-%}
+          {%- if count == 0-%}
+          <div class="{% if per != 1 %}col-md-{% if per == 2 %}6{% elsif per == 3 %}4{% elsif per >= 4 %}3{% endif %} {% endif %}col-sm-12">
+            <div class="widget widget_nav_menu mega-custom-menu">
+              <ul>
+                {%- endif -%}
+                {%- unless link.handle == 'breakcol'-%}
+                  {% if link.title contains '[title]'-%}
+                    <li class="site-nav__child-link{% if link.title contains 'CSS_' %} {{link.title | split: 'CSS_' | last | strip}}{% endif %}">
+                      <a href="{{ link.url }}"
+                         {% if link.type == 'collection_link' and collections[link.object.handle].metafields.meta.banner %}
+                          data-hover-banner="{{collections[link.object.handle].metafields.meta.banner|replace:'"',"'"}}" class="bgChange"
+                         {% elsif link.type == 'collection_link' and link.object.image %} data-hover-image="{{link.object.image | img_url: 'master' }}" class="bgChange"
+                         {% endif %}>
+                        <span>
+                          <strong>{{link.title | split: '{' | first | remove:'[title]' | split: 'CSS_' | first | strip}}</strong>
+                          {% if link.title contains '{'-%}
+                          {%- assign label  = link.title |  split: '{' | last  | split: '}' | first | remove:'[title]'-%}
+                          <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                          {%- endif %}
+                        </span>
+                      </a>
+                    </li>              
+                    {%-assign child_links = linklists[link.handle].links-%}
+                    {%- if child_links.size > 0-%}
+                      {% for child_link in child_links-%}
+                        {% if child_link.handle == 'breakline' %}
+                          <li style="height: 41px;display:block;width: 100%;"></li>
+                        {% else %}
+                          <li>
+                            <a href="{{child_link.url}}"
+                               {% if child_link.type == 'collection_link' and collections[child_link.object.handle].metafields.meta.banner %}
+                                data-hover-banner="{{collections[child_link.object.handle].metafields.meta.banner|replace:'"',"'"}}" class="bgChange"
+                               {% elsif child_link.type == 'collection_link' and child_link.object.image %} data-hover-image="{{child_link.object.image | img_url: 'master' }}" class="bgChange"
+                               {% endif %}>
+                              <span>
+                                {{child_link.title | split: '{' | first }}
+                                {% if child_link.title contains '{'-%}
+                                {%- assign label  = child_link.title |  split: '{' | last  | split: '}' | first-%}
+                                <span class="label-menu {{label | handleize }}{% if link.title contains 'CSS_' %} {{link.title | split: 'CSS_' | last | strip}}{% endif %}">{{label|escape }}</span> 
+                                {%- endif %}
+                              </span>
+                            </a>
+                          </li>
+                        {% endif %}
+                      {% endfor-%}
+                    {%- endif-%}
+                  {% else-%}                
+                    {% if link.handle == 'breakline' %}
+                      <li style="height: 41px;display:block;width: 100%;"></li>
+                    {% else %}
+                      <li class="site-nav__child-link">
+                        <a href="{{link.url}}">
+                          <span>
+                            {{link.title | split: '{' | first }}
+                            {% if link.title contains '{'-%}
+                            {%- assign label  = link.title |  split: '{' | last  | split: '}' | first-%}
+                            <span class="label-menu {{label | handleize }}{% if link.title contains 'CSS_' %} {{link.title | split: 'CSS_' | last | strip}}{% endif %}">{{label|escape }}</span> 
+                            {%- endif %}
+                          </span>
+                        </a>
+                      </li>
+                    {%- endif-%}
+                  {%- endif-%}
+                {% endunless-%}
+                {% if forloop.last or link.handle == 'breakcol'-%}
+              </ul>
+            </div>
+          </div>
+          {%- assign count = 0-%}
+          {%- else-%}
+          {%- assign count = count | plus: 1-%}
+          {%- endif-%}
+          {%- endfor %}
+          {% else-%}
+          
+          {%- assign count = 0-%}
+          {%- for link in linklists[menu_handle].links-%}
+          {%- if block.settings.menu_links_per_col != '1'-%}
+          {%- assign size = linklists[menu_handle].links.size  | plus: 0-%}
+          {%- assign per = block.settings.menu_links_per_col | plus: 0-%}
+          {%- assign size_per = size | divided_by: per | ceil-%}
+          {%- assign breakline = size_per-%}
+          {%- endif-%}
+          {%-assign child_links = linklists[link.handle].links-%}
+          
+          {% if count == 0 -%}
+          <div class="{% if per != 1 %}col-md-{% if per == 2 %}6{% elsif per == 3 %}4{% elsif per >= 4 %}3{% endif %} {% endif %}col-sm-12">
+            <div class="widget widget_nav_menu mega-custom-menu">
+              <ul>
+                {%- endif %}
+                {% if link.title contains '[title]'-%}
+                <li class="site-nav__child-link{% if link.title contains 'CSS_' %} {{link.title | split: 'CSS_' | last | strip}}{% endif %}">
+                  <a href="{{ link.url }}">
+                    <span>
+                      <strong>{{link.title | split: '{' | first | remove:'[title]' | split: 'CSS_' | first | strip}}</strong>
+                      {% if link.title contains '{'-%}
+                      {%- assign label  = link.title |  split: '{' | last  | split: '}' | first | remove:'[title]'-%}
+                      <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                      {%- endif %}
+                    </span>
+                  </a>
+                </li>
+                {%-else-%}
+                <li>
+                  <a href="{{ link.url }}">
+                    <span>
+                      {{link.title | split: '{' | first }}
+                      {% if link.title contains '{'-%}
+                      {%- assign label  = link.title |  split: '{' | last  | split: '}' | first-%}
+                      <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                      {%- endif %}
+                    </span>
+                  </a>
+                </li>
+                {%-endif-%}
+                {%- if child_links.size > 0-%}
+                {% for child_link in child_links-%}
+                <li>
+                  <a href="{{child_link.url}}">
+                    <span>
+                      {{child_link.title | split: '{' | first }}
+                      {% if child_link.title contains '{'-%}
+                      {%- assign label  = child_link.title |  split: '{' | last  | split: '}' | first-%}
+                      <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                      {%- endif %}
+                    </span>
+                  </a>
+                </li>
+                {% endfor-%}
+                {%- endif-%}
+                {% if forloop.last or count == breakline %}
+              </ul>
+            </div>
+          </div>
+          {% assign count = 0-%}
+          {% else-%}
+          {% assign count = count | plus: 1-%}
+          {% endif-%}
+          {%- endfor-%}
+          {%- endif %}
+        </div>
+      </div>
+      {%- endif %}
+    </li>{% comment %}---------------- ITEM MULTI COLUMN END------------------{% endcomment %}
+  {% elsif block.type == 'multi_collumn_extend'-%}{% comment %}---------------- ITEM MULTI COLUMN EXTEND START------------------{% endcomment %}
+  <li class="item-megamenu menu-item-has-children site-nav--has-dropdown site-nav__link--main{% if link_active == block.settings.button_link %} active{% endif %}" style="padding:0 {{section.settings.padding_size}}px">
+      <a href="{{block.settings.button_link| default: "#"}}">
+        <span>
+          {{linklists[menu_handle].title | default: 'menu item'}}
+          {%-if block.settings.label != "" -%}
+          <span class="label-menu {{block.settings.label|handleize}}" style="background:{{block.settings.color}} none repeat scroll 0 0">{{block.settings.label|capitalize}}</span>
+          {%-endif-%}
+        </span>        
+      </a>
+      {% if linklists[menu_handle].links.size > 0-%}
+      <span class="expand fa" onclick=""></span>
+      <div{% if block.settings.menu_links_width != blank %} style="width:{{block.settings.menu_links_width}}"{% else %} style="width:830px"{% endif %} class="sub-menu megamenu{% if block.settings.bg_image %} lazyload{% endif %}"
+           {% if block.settings.bg_image %}
+           data-bgset="{%- include 'bgset', image: block.settings.bg_image -%}"
+           data-sizes="auto"
+           data-parent-fit="cover"
+           style="background-image: url('{{ block.settings.bg_image | img_url: '300x300' }});"
+           {% endif %}>
+        <div class="row">
+          {%- assign link_handle = linklists[menu_handle].links | map: 'handle' | join: ' '-%}
+          {% if link_handle contains 'breakcol'-%}
+          {%- assign count = 0-%}
+          {%- assign per = block.settings.menu_links_per_col | plus: 0-%}
+          {%- for link in linklists[menu_handle].links-%}
+          {%- if count == 0-%}
+          <div class="{% if per != 1 %}col-md-{% if per == 2 %}6{% elsif per == 3 %}4{% elsif per >= 4 %}3{% endif %} {% endif %}col-sm-12">
+            <div class="widget widget_nav_menu mega-custom-menu">
+              <ul>
+                {%- endif -%}
+                {%- unless link.handle == 'breakcol'-%}
+                {% if link.title contains '[title]'-%}
+                <li class="site-nav__child-link">
+                  <a href="{{ link.url }}">
+                    <span>
+                      <strong>{{link.title | split: '{' | first | remove:'[title]'}}</strong>
+                      {% if link.title contains '{'-%}
+                      {%- assign label  = link.title |  split: '{' | last  | split: '}' | first | remove:'[title]'-%}
+                      <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                      {%- endif %}
+                    </span>
+                  </a>
+                </li>
+                {% else-%}
+                <li class="site-nav__child-link">
+                  <a href="{{link.url}}">
+                    <span>
+                      {{link.title | split: '{' | first }}
+                      {% if link.title contains '{'-%}
+                      {%- assign label  = link.title |  split: '{' | last  | split: '}' | first-%}
+                      <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                      {%- endif %}
+                    </span>
+                  </a>
+                </li>
+                {%- endif-%}
+                {% endunless-%}
+                {% if forloop.last or link.handle == 'breakcol'-%}
+              </ul>
+            </div>
+          </div>
+          {%- assign count = 0-%}
+          {%- else-%}
+          {%- assign count = count | plus: 1-%}
+          {%- endif-%}
+          {%- endfor %}
+          {% else-%}
+          {%- assign per = block.settings.menu_links_per_col | plus: 0-%}
+          {% for link in linklists[menu_handle].links-%}
+          {%-assign size = linklists[menu_handle].links.size | plus: 0-%}
+          {%-assign child_links = linklists[link.handle].links-%}
+          <div class="{% if per != 1 %}col-md-{% if per == 2 %}6{% elsif per == 3 %}4{% elsif per >= 4 %}3{% endif %}{% else %}col-md-{% if size == 0 or size == 1 %}12{% elsif size == 2 %}6{% elsif size == 3 %}4{% elsif size >= 4 %}3{% endif %}{% endif %} col-sm-12">
+            <div class="widget widget_nav_menu mega-custom-menu">
+              <ul>
+                <li>
+                  <a href="{{ link.url }}">
+                    <span>
+                      <strong>{{link.title | split: '{' | first }}</strong>
+                      {% if link.title contains '{'-%}
+                      {%- assign label  = link.title |  split: '{' | last  | split: '}' | first-%}
+                      <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                      {%- endif %}
+                    </span>
+                  </a>
+                </li>
+                {%- if child_links.size > 0-%}
+                {% for child_link in child_links-%}
+                <li>
+                  <a href="{{child_link.url}}">
+                    <span>
+                      {{child_link.title | split: '{' | first }}
+                      {% if child_link.title contains '{'-%}
+                      {%- assign label  = child_link.title |  split: '{' | last  | split: '}' | first-%}
+                      <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                      {%- endif %}
+                    </span>
+                  </a>
+                </li>
+                {% endfor-%}
+                {%- endif-%}
+              </ul>
+            </div>
+          </div>
+          {%- endfor-%}
+          {%- endif %}
+        </div>
+      </div>
+      {%- endif %}
+    </li>{% comment %}---------------- ITEM MULTI COLUMN EXTEND END------------------{% endcomment %}
+  {% elsif block.type == 'per_column'-%}{% comment %}---------------- ITEM PER COLUMN START------------------{% endcomment %}
+    {%- assign menu_handle = block.settings.menu_links-%}
+    <li class="item-megamenu menu-item-has-children site-nav--has-dropdown site-nav__link--main{% if link_active == block.settings.button_link %} active{% endif %}" style="padding:0 {{section.settings.padding_size}}px">
+      <a href="{{block.settings.button_link| default: "#"}}">
+        <span>
+          {{linklists[menu_handle].title | default: 'menu item'}}
+          {%-if block.settings.label != "" -%}
+          <span class="label-menu {{block.settings.label|handleize}}" style="background:{{block.settings.color}} none repeat scroll 0 0">{{block.settings.label|capitalize}}</span>
+          {%-endif-%}
+        </span>        
+      </a>
+      {% if linklists[menu_handle].links.size > 0-%}
+      <span class="expand fa" onclick=""></span>
+      <div{% if block.settings.menu_links_width != blank %} style="width:{{block.settings.menu_links_width}}"{% else %} style="width:830px"{% endif %} class="sub-menu megamenu">
+        <div class="row">
+          {%- assign count = 0-%}
+          {%- for link in linklists[menu_handle].links-%}
+          {%- if block.settings.menu_links_per_col != '1'-%}
+          {%- assign size = linklists[menu_handle].links.size  | plus: 0-%}
+          {%- assign per = block.settings.menu_links_per_col | plus: 0-%}
+          {%- assign size_per = size | divided_by: per | ceil-%}
+          {%- assign breakline = size_per-%}
+          {%- endif-%}
+          {% if count == 0 -%}
+          <div class="{% if per != 1 %}col-md-{% if per == 2 %}6{% elsif per == 3 %}4{% elsif per >= 4 %}3{% endif %} {% endif %}col-sm-12">
+            <div class="widget widget_nav_menu mega-custom-menu">
+              <ul>
+                {%- endif %}
+                <li class="site-nav__child-link">
+                  <a href="{{link.url}}">
+                    <span>
+                      {{link.title | split: '{' | first }}
+                      {%- if link.title contains '{' -%}
+                      {%- assign label  = link.title |  split: '{' | last  | split: '}' | first -%}
+                      <span class="label-menu {{label | handleize }}{% if link.title contains 'CSS_' %} {{link.title | split: 'CSS_' | last | strip}}{% endif %}">{{label|escape }}</span> 
+                      {%- endif-%}
+                    </span>
+                  </a>
+                </li>
+                {% if forloop.last or count == breakline %}
+              </ul>
+            </div>
+          </div>
+          {% assign count = 0-%}
+          {% else-%}
+          {% assign count = count | plus: 1-%}
+          {% endif-%}
+          {% endfor %}
+        </div>
+      </div>
+      {%- endif %}
+    </li>{% comment %}---------------- ITEM PER COLUMN END------------------{% endcomment %}
+  {% elsif block.type == 'promo'-%}{% comment %}---------------- ITEM PROMO START------------------{% endcomment %}
+    {%-assign menu_handle = block.settings.menu_links-%}
+    <li class="item-megamenu menu-item-has-children site-nav--has-dropdown site-nav__link--main{% if link_active == block.settings.button_link %} active{% endif %}" style="padding:0 {{section.settings.padding_size}}px">
+      <a href="{{block.settings.button_link| default: "#"}}">
+        <span>
+          {{linklists[menu_handle].title | default: block.settings.name_item}}
+          {%-if block.settings.label != "" -%}
+          <span class="label-menu {{block.settings.label|handleize}}" style="background:{{block.settings.color}} none repeat scroll 0 0">{{block.settings.label|capitalize}}</span>
+          {%-endif-%}
+        </span>        
+      </a>
+      <span class="expand fa" onclick=""></span>
+      <div{% if block.settings.menu_links_width != blank %} style="width:{{block.settings.menu_links_width}}"{% else %} style="width:830px"{% endif %} class="sub-menu megamenu{% if block.settings.use_promo_html and block.settings.page_promo_html != blank%} megaMaxscroll{%endif%}">
+        {%- assign promo_width = block.settings.promo_width | plus: 0-%}
+        {%- assign linklists_width = 12 | minus: promo_width-%}
+        <div class="row{% if block.settings.use_promo_html == false and block.settings.promo_link == blank and block.settings.promo_image %} lazyload{% endif %}"
+             {% if block.settings.use_promo_html == false and block.settings.promo_link == blank and block.settings.promo_image %}
+             data-bgset="{%- include 'bgset', image: block.settings.promo_image -%}"
+             data-sizes="auto"
+             data-parent-fit="contain"
+             style="background-repeat: no-repeat;background-size: contain;background-position: 95% 100%;background-image: url('{{ block.settings.promo_image | img_url: '300x300' }});"
+             {% endif %}>
+          {% if linklists[menu_handle].links.size > 0-%}
+          <div class="col-md-{{linklists_width}} col-sm-12">
+            <div class="row">
+              {%- assign link_handle = linklists[menu_handle].links | map: 'handle' | join: ' '-%}
+              {%- assign per = block.settings.menu_links_per_col | plus: 0-%}
+              {%-if link_handle contains 'breakcol'-%}
+                {%- assign count = 0-%}
+                {%- for link in linklists[menu_handle].links-%}
+                {% if count == 0-%}
+                <div class="{% if per != 1 %}col-md-{% if per == 2 %}6{% elsif per == 3 %}4{% elsif per >= 4 %}3{% endif %} {% endif %}col-sm-12">
+                  <div class="widget widget_nav_menu mega-custom-menu">
+                    <ul>
+                      {% endif-%}
+                      {%- unless link.handle == 'breakcol'-%}
+                      {% if link.title contains '[title]' %}
+                      <li class="site-nav__child-link">
+                        <a href="{{ link.url }}">
+                          <span>
+                            <strong>{{link.title | split: '{' | first | remove:'[title]'}}</strong>
+                            {% if link.title contains '{'-%}
+                            {%- assign label  = link.title |  split: '{' | last  | split: '}' | first | remove:'[title]'-%}
+                            <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                            {%- endif %}
+                          </span>
+                        </a>
+                      </li>
+                      {% else-%}
+                      <li class="site-nav__child-link">
+                        <a href="{{link.url}}">
+                          <span>
+                            {{link.title | split: '{' | first }}
+                            {% if link.title contains '{'-%}
+                            {%- assign label  = link.title |  split: '{' | last  | split: '}' | first-%}
+                            <span class="label-menu  {{label | handleize }}">{{label|escape }}
+                            </span> 
+                            {%- endif %}
+                          </span>
+                        </a>
+                      </li>
+                      {%- endif-%}
+                      {% endunless-%}
+                      {%- if forloop.last or link.handle == 'breakcol' %}
+                    </ul>
+                  </div>
+                </div>
+                {%- assign count = 0-%}
+                {%- else-%}
+                {%- assign count = count | plus: 1-%}
+                {%- endif-%}
+                {%- endfor %}
+              {%-elsif per > 1 -%}
+                {%- assign count = 0-%}
+                {%- for link in linklists[menu_handle].links-%}
+                {%- if block.settings.menu_links_per_col != '1'-%}
+                {%- assign size = linklists[menu_handle].links.size  | plus: 0-%}
+                {%- assign per = block.settings.menu_links_per_col | plus: 0-%}
+                {%- assign size_per = size | divided_by: per | ceil-%}
+                {%- assign breakline = size_per-%}
+                {%- endif-%}
+                {% if count == 0 -%}
+                <div class="{% if per != 1 %}col-md-{% if per == 2 %}6{% elsif per == 3 %}4{% elsif per >= 4 %}3{% endif %} {% endif %}col-sm-12">
+                  <div class="widget widget_nav_menu mega-custom-menu">
+                    <ul>
+                      {%- endif %}
+                      <li class="site-nav__child-link">
+                        <a href="{{link.url}}">
+                          <span>
+                            {{link.title | split: '{' | first }}
+                            {%- if link.title contains '{' -%}
+                            {%- assign label  = link.title |  split: '{' | last  | split: '}' | first -%}
+                            <span class="label-menu {{label | handleize }}{% if link.title contains 'CSS_' %} {{link.title | split: 'CSS_' | last | strip}}{% endif %}">{{label|escape }}</span> 
+                            {%- endif-%}
+                          </span>
+                        </a>
+                      </li>
+                      {% if forloop.last or count == breakline %}
+                    </ul>
+                  </div>
+                </div>
+                {% assign count = 0-%}
+                {% else-%}
+                {% assign count = count | plus: 1-%}
+                {% endif-%}
+                {% endfor %}
+              {%-endif-%}
+            </div>
+          </div>
+          {%- endif %}
+          <div class="col-md-{{promo_width}} col-sm-12">
+            {% if block.settings.use_promo_html == false-%}
+              {%- if block.settings.promo_link != blank-%}
+                <a class="banner-image banner-effect6" href="{{block.settings.promo_link}}">{{block.settings.promo_image| img_url: '1170x'| split: "?" | first | img_tag}}</a>
+              {%- endif-%}
+            {%- else %}
+              {%- if block.settings.page_promo_html != blank -%}
+                {%- assign page_promo_html = block.settings.page_promo_html-%}
+                {{ pages[page_promo_html].content }}
+              {%-else %}
+                {{block.settings.textarea_promo_html|html}}
+              {%- endif %}
+            {% endif-%}
+          </div>
+        </div>
+      </div>
+    </li>{% comment %}---------------- ITEM PROMO END------------------{% endcomment %}
+  {%- endif-%}
+  {%- endfor-%}
+  {%- else-%}
+  {%-assign main_linklist = section.settings.main_linklist | default: 'main-menu' -%}
+    {%-for link in linklists[main_linklist].links %}
+      {%-assign menu_handle = link.handle-%}
+      <li class="menu-item site-nav__link--main{% if linklists[menu_handle].links.size > 0 %} menu-item-has-children site-nav--has-dropdown{% endif %}" style="padding:0 {{section.settings.padding_size}}px">
+        <a href="{{link.url}}">
+          <span>
+            {{link.title | split: '{' | first | remove:'[title]' | split: 'CSS_' | first | strip}}
+            {% if link.title contains '{'-%}
+            {%- assign label  = link.title |  split: '{' | last  | split: '}' | first | remove:'[title]'-%}
+            <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+            {%- endif %}
+          </span>          
+        </a>
+        {%-if linklists[menu_handle].links.size > 0-%}
+        <span class="expand fa" onclick=""></span>
+        <ul class="sub-menu">
+          {% for link_ in linklists[menu_handle].links-%}
+          {%-assign child_links = linklists[link_.handle].links-%} 
+          <li class="site-nav__child-link{% if child_links.size > 0 %} drop_to_right menu-item-has-children site-nav--has-dropdown{% endif %}">
+            <a href="{{ link_.url }}">
+              <span>
+                {{link_.title | split: '{' | first }}
+                {%-if link_.title contains '{'-%}
+                {%-assign label = link_.title | split: '{' | last | split: '}' | first-%}
+                <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                {%-endif -%}
+              </span>
+            </a>
+            {% if child_links.size > 0-%}
+            <ul class="sub-menu">
+              {% for child_link in child_links-%}
+              <li class="site-nav__child-link">
+                <a href="{{child_link.url}}">
+                  <span>
+                    {{child_link.title | split: '{' | first }}
+                    {% if child_link.title contains '{'-%}
+                    {%- assign label  = child_link.title | split: '{' | last | split: '}' | first-%}
+                    <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                    {%- endif %}
+                  </span>
+                </a>
+              </li>
+              {%-endfor %}
+            </ul>
+            {%-endif %}
+          </li>
+          {%-endfor %}
+        </ul>
+        {%-endif %}
+      </li>
+    {%-endfor-%}
+  {%- endif %}
+</ul>

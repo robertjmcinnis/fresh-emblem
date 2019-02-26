@@ -1,0 +1,37 @@
+<section id="searchModal" class="modal animated zoomIn" aria-hidden="true" role="dialog" tabindex="-1" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button class="close" aria-label="Close" data-dismiss="modal" type="button"> <span aria-hidden="true">×</span> </button>
+      <div class="content-item">
+        <h3 class="screen-reader-text" for="search">{{ 'general.search.title' | t }}</h3>
+        <p>{{ 'general.search.info' | t }}</p>
+        <div class="form-search-container-mobile">
+          <div class="inner">
+            <form id="search_mini_form" action="/search" method="get" role="search" class="look-product-search mini-search">
+              <div class="form-search">
+                <label for="search" class="hidden">{{ 'general.search.placeholder' | t }}</label>
+                <select class="searchCatt">
+                  <option value="" selected>All products</option>
+                  {% for coll in collections %}
+                  <option value="{{coll.handle}}">{{coll.title}}</option>
+                  {% endfor %}
+                </select>
+                <span class="iconVbMobile">
+                  <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </span>
+                <input id="search"
+                       class="search-field input-search"
+                       type="text"
+                       name="q"
+                       placeholder="{{ 'general.search.placeholder' | t }}"
+                       aria-label="{{ 'general.search.placeholder' | t }}"
+                       required>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <ul class="livesearch"></ul>
+    </div>
+  </div>
+</section>

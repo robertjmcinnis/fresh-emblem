@@ -1,0 +1,197 @@
+{% unless grid_image_width %}
+  {%- assign grid_image_width = '300x300' -%}
+{% endunless %}
+{% unless ly %}
+  {%- assign ly = 'gr' -%}
+{% endunless %}
+{%- assign grid_image_scale = '2' -%}
+
+{%- assign colour_count = 0 -%}
+{%- for option in product.options_with_values -%}
+   {%- assign downcased_option = option.name | downcase -%}
+   {%- assign downcased_option_check = option | downcase | prepend: '"' | append: '"' | strip -%} 
+   {%- if downcased_option contains 'olo' -%}
+     {%- assign colour_count = option.values.size -%}
+   {%- endif -%}
+{%- endfor -%}
+
+{%- assign money_price = price | money -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%-include 'kt_label_check'-%}
+<div class="row">
+  <div class="product-item{% if new_label != blank %} new-arrived__label{% endif %}{% if compare_at_price > price %} sale__label{% endif %}{% if product.available %} instock__label{% else %} outofstock__label{% endif %} label_style_{{settings.label_style}}">
+    <div class="product-inner row-flex">
+      <div class="col-sm-4 col-xs-12">
+        <div class="row-flex margin-0">
+          {%- if ly == 'lis' and product.images.size > 1 -%}
+          {%- assign col = 'col-9 padding-right-5 ' -%}
+          {%- elsif ly == 'leftlis' and container == false and product.images.size > 1 -%}
+          {%- assign col = 'col-9 padding-right-5 ' -%}
+          {%- elsif ly == 'rightlis' and container == false and product.images.size > 1 %}
+          {%- assign col = 'col-9 padding-right-5 ' -%}
+          {%- else -%}
+          {%- assign col = 'col-12 ' -%}
+          {%- endif -%}
+          <div class="{{col}}main-image">
+            <div class="product-thumb{% unless ly == 'lis' or ly == 'gir' %}{% if settings.use_second_img and product.images.size > 1 %} has-back-image{%-endif-%}{%-endunless-%}">
+              <a href="{{product.url| within: collection}}" class="LoopProduct-link" title="{{product.title}}">
+                {% if product.available == false %}<span class="sold-out"><span class="text">{{'products.product.sold_out'|t}}</span></span>{%-endif-%}
+                {%-if on_sale == true and settings.use_sale_label == true-%}        
+                {%- assign money_save = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price| round -%}
+                <span class="onsale">{% if money_save >= 15 %}<span class="text">{{ money_save }}%</span>{% else %}<span class="text">{{'products.product.on_sale'|t}}
+                </span>{% endif %}</span>
+                {%-endif-%}
+                {%-if new_label != blank-%}<span class="new-arrival"><span class="text">{{new_label}}</span></span>{%-endif-%}
+              </a>
+              {%- if ly != 'ms' and ly != 'lis' -%}
+              {%- assign aspect_ratioW = settings.aspect_ratio | split: '/' | first | strip | plus: 0.00 -%}
+              {%- assign aspect_ratioH = settings.aspect_ratio | split: '/' | last | strip | plus: 0.00 -%}
+              {%- assign aspect_cs = aspect_ratioW|divided_by:aspect_ratioH | round: 2 -%}
+              <img class="svgRatio" src="{{'bt_placeholder.svg'|asset_url}}">
+              {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+              {%- capture image_fit -%}
+              {%- if aspect_ratioW < aspect_ratioH -%}
+              {%- if product.featured_image.width == product.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs >= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+              {%- elsif aspect_ratioW > aspect_ratioH -%}
+              {%- if product.featured_image.width == product.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+              {%- else -%}
+              nonheight nonwidth_
+              {%- endif -%}
+              {%- endcapture -%}
+              {%- endif -%}
+              <a class="front-image {{image_fit}}" href="{{product.url| within: collection}}" title="{{product.title}}">
+                <picture>
+                  <source srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '510x' %}" media="(min-width: 1920px)">
+                  <source srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '476x' %}" media="(min-width: 1200px)">
+                  <source srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '256x' %}" media="(min-width: 1024px)">
+                  <source srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '570x' %}" media="(min-width: 991px)">
+                  <source srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '384x' %}" media="(min-width: 768px)">
+                  <source srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '480x' %}">
+                  <img src="{% include 'kt_image_format',src: product.featured_image.src, size: '480x@2x' %}" alt="{{product.title}}">
+                </picture>
+              </a>
+              {% unless ly == 'lis' or ly == 'gir' or product.images.size <= 1 %}
+              {% if settings.use_second_img and product.images.size > 1-%}
+              {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+              {%- capture image_fit -%}
+              {%- if aspect_ratioW < aspect_ratioH -%}
+              {%- if product.images[1].width == product.images[1].height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs >= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+              {%- elsif aspect_ratioW > aspect_ratioH -%}
+              {%- if product.images[1].width == product.images[1].height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+              {%- else -%}
+              nonheight nonwidth_
+              {%- endif -%}
+              {%- endcapture -%}
+              <a class="back-image {{image_fit}}" href="{{product.url| within: collection}}">
+                <picture>
+                  <source srcset="{% include 'kt_image_format',src: product.images[1].src, size: '510x' %}" media="(min-width: 1920px)">
+                  <source srcset="{% include 'kt_image_format',src: product.images[1].src, size: '476x' %}" media="(min-width: 1200px)">
+                  <source srcset="{% include 'kt_image_format',src: product.images[1].src, size: '256x' %}" media="(min-width: 1024px)">
+                  <source srcset="{% include 'kt_image_format',src: product.images[1].src, size: '570x' %}" media="(min-width: 991px)">
+                  <source srcset="{% include 'kt_image_format',src: product.images[1].src, size: '384x' %}" media="(min-width: 768px)">
+                  <source srcset="{% include 'kt_image_format',src: product.images[1].src, size: '480x' %}">
+                  <img src="{% include 'kt_image_format',src: product.images[1].src, size: '480x@2x' %}" alt="{{product.title}}">
+                </picture>
+              </a>
+              {%-endif-%}
+              {%-endunless-%}
+            </div>
+          </div>
+          {%- assign listThumbScroll = true -%}
+          {%- if ly == 'leftlis' and container -%}
+          {%- assign listThumbScroll = false -%}
+          {%- elsif ly == 'rightlis' and container -%}
+          {%- assign listThumbScroll = false -%}
+          {%- elsif product.images.size <= 1 -%}
+          {%- assign listThumbScroll = false -%}
+          {%- endif -%}
+          {%- if listThumbScroll -%}
+          <div class="col-3 pr listThumbScroll">
+            <div class="listThumbScroll_">
+              <div class="ab">
+                {%-for image in product.images -%}
+                <div class="listThumbScroll_item">
+                  <picture>
+                    <source srcset="{% include 'kt_image_format',src: image.src, size: '110x' %}" media="(min-width: 1920px)">
+                    <source srcset="{% include 'kt_image_format',src: image.src, size: '110x' %}" media="(min-width: 1200px)">
+                    <source srcset="{% include 'kt_image_format',src: image.src, size: '110x' %}" media="(min-width: 1024px)">
+                    <source srcset="{% include 'kt_image_format',src: image.src, size: '110x' %}" media="(min-width: 991px)">
+                    <source srcset="{% include 'kt_image_format',src: image.src, size: '110x' %}" media="(min-width: 768px)">
+                    <source srcset="{% include 'kt_image_format',src: image.src, size: '110x' %}">
+                    <img src="{% include 'kt_image_format',src: image.src, size: '110x@2x' %}" alt="{{product.title}}">
+                  </picture>
+                </div>
+                {%-endfor-%}
+              </div>
+            </div>
+          </div>
+          {%-endif-%}
+        </div>
+      </div>
+      <div class="col-sm-8 col-xs-12">
+        <div class="product-info">
+          <h3 class="product-name">
+            <a href="{{product.url| within: collection}}" title="{{product.title}}">{{product.title}}</a>
+          </h3>
+          <span class="price">
+            <ins>
+              {{ product.price | money }}
+            </ins>{% if on_sale %}
+            <span class="save_price">{% assign saved_amount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}{{ 'products.product.save_html' | t: saved_amount: saved_amount }}</span>
+            <div class="clearfix"></div>{%-endif-%}
+            <del{% if on_sale == false %} class="hidden"{%-endif-%}>
+              {{ product.compare_at_price | default: 0 | money }}
+            </del>
+          </span>
+          {%- if settings.review_app == 'shopifyreview' %}
+          <div class="rating">
+            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+          </div>
+          {%- elsif settings.review_app == 'ryviu' %}
+            <div class="rating">            
+              <div class="ryviu-widget"></div>
+            </div>
+          {%- elsif settings.review_app == 'yotpo' %}
+            <div class="clearfix margin-top-10"></div>
+            <div class="yotpo bottomLine rating"
+              data-appkey="5SyMaw47YkHv19ipX1Dt7XSY4ADnSj8DnTZi34sB"
+              data-domain="{{shop.permanent_domain | escape }}"
+              data-product-id="{{ product.id }}"
+              data-product-models="{{ product.id }}"
+              data-name="{{ product.title | escape }}"
+              data-url="{{ shop.url }}{{ product.url }}"
+              data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+              data-description="{{ product.description | escape }}"
+              data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+            </div>
+          {% endif -%}
+          <div class="available">{{'products.product.availalbe'|t}}: <span>{% if current_variant.available %}{{'products.product.in_stock'|t}}{% else %}{{'products.product.out_of_stock'|t}}{% endif %}</span></div>
+          <div class="short-descript">
+            <p>
+              {%- if product.metafields.meta.short_description -%}
+              {{ product.metafields.meta.short_description | strip_html }}
+              {% elsif product.description contains  '[/short description]' %}
+              {{ product.description | split: '[/short description]' | first | split: '[short description]'| last | strip_html }}
+              {%-else-%}
+              {{ product.description | strip_html | truncatewords: 40 }}
+              {%-endif-%}
+            </p>
+          </div>
+          <div class="gorup-button">
+            {%- if preOrder -%}
+            <div class="button boutique__add-to-cart" onclick="Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1);$(this).addClass('loading').removeClass('loaded')">{{'products.product.pre_order'|t}}</div>
+            {%- elsif sold_out == false -%}
+            <div class="button boutique__add-to-cart" onclick="Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1);$(this).addClass('loading').removeClass('loaded')">{{'products.product.add_to_cart'|t}}</div>
+            {%- else -%}
+            <a href="javascript:void(0);" class="button sold_out disabled" >{{'products.product.sold_out'|t}}</a>
+            {%- endif -%}
+            {%- if settings.use_quickview-%}<a href="javascript:void(0);" class="quick-view" data-view="{{product.url}}" data-target="#myModal"><i class="icon-magnifier"></i></a>{%- endif -%}
+            {%- if settings.use_compare-%}<a href="javascript:void(0);" class="compare" data-pid="{{product.handle}}"><i class="icon-refresh"></i></a>{%- endif -%}
+            {%- if settings.use_wishlist and pages[settings.page_wishlist].url != blank -%}<div class="wishlist">{%- include 't-wishlist-product' -%}</div>{%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

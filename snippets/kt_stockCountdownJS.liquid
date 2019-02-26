@@ -1,0 +1,69 @@
+{%-if settings.stock_countdown-%}
+<script type="text/javascript">
+  function randomIntFromInterval(min, max) {return Math.floor(Math.random() * (max - min + 1) + min);}
+  // Settings are here
+  var total_items = 60;
+  var min_items_left = {{settings.stock_from}};
+  var max_items_left = {{settings.stock_to}};
+  var remaining_items = parseInt($('.show-iq span').text()) || randomIntFromInterval(min_items_left, max_items_left);
+  var check_stock = false;
+  var timer = null,timerinterval = null;
+  var min_of_remaining_items = 1;
+  var decrease_after = 1.7; 
+  var decrease_after_first_item = 0.17; 
+  {%- assign stock_message = settings.stock_message | split:'{{stock_number}}' -%}
+  function progressbar(remaining_items) {
+    $(".kt_progress_bar_pr").html('');
+    var $this = $(".kt_progress_bar_pr"),a = "<p>{{ stock_message[0] | strip }} <span id='kt_count_page' class='count'>" + remaining_items + "</span> {{ stock_message[1] | strip }}</p>" + "<div class='progressbar'><div style='width:100%'></div></div>";
+    $this.addClass('items-count');
+    $this.html(a + $this.html());
+    updateMeter($this,remaining_items);
+    var b = $this;
+    timer = setTimeout(function() {
+    remaining_items--;
+    if(remaining_items < min_of_remaining_items) {
+      remaining_items = randomIntFromInterval(min_items_left, max_items_left)
+    }
+    $('.kt_progress_bar_pr .count').css('background-color', '{{settings.stock_bg_process}}');
+    $('.kt_progress_bar_pr .count').css('color', '#fff');
+    setTimeout(function() {
+      $('.kt_progress_bar_pr .count').css('background-color', '#fff');
+      $('.kt_progress_bar_pr .count').css('color', '{{settings.stock_bg_process}}')
+    },1000 * 60 * 0.03);
+    b.find(".count").text(remaining_items);
+    $('.show-iq span, #quantity_sticky span').text(remaining_items);
+    updateMeter(b,remaining_items)
+    }, 1000 * 60 * decrease_after_first_item );
+    //1000 * 60 * decrease_after_first_item 
+    timerinterval = setInterval(function() {
+      remaining_items--;
+      if (remaining_items < min_of_remaining_items) {
+        remaining_items = randomIntFromInterval(min_items_left, max_items_left)
+      }
+      $('kt_progress_bar_pr .count').css('background-color', '{{settings.stock_bg_process}}');
+      $('kt_progress_bar_pr .count').css('color', '#fff');
+      setTimeout(function() {
+        $('kt_progress_bar_pr .count').css('background-color', '#fff');
+        $('kt_progress_bar_pr .count').css('color', '{{settings.stock_bg_process}}')
+      }, 1000 * 60 * 0.03);
+      b.find(".count").text(remaining_items);
+      $('.show-iq span, #quantity_sticky span').text(remaining_items);
+      updateMeter(b,remaining_items)
+    }, 1000 * 60 * decrease_after)
+    //1000 * 60 * decrease_after
+   }
+   function updateMeter(a,remaining_items) {
+    // console.log('remaining_items b: '+ remaining_items)
+    var b = 100 * remaining_items / total_items;
+    if (remaining_items < 10) {
+      a.find('.progressbar div:first').addClass('less-than-ten')
+    }
+    a.find('.progressbar').addClass('active progress-striped');
+    setTimeout(function() {
+      a.find('.progressbar div:first').css('width', b + '%');
+      a.find('.progressbar').removeClass('active progress-striped')
+    },300);
+  }
+  progressbar(remaining_items);
+</script>
+{%- endif -%}

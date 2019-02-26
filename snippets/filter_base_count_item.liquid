@@ -1,0 +1,61 @@
+{%-comment-%} ===== Check count vailable {%-endcomment-%}
+{%-if product.available-%}
+  {%-assign availability_true = availability_true | plus: 1-%}
+{%-else-%}
+  {%-assign availability_false = availability_false | plus: 1-%}
+{%-endif-%}
+{%-comment-%} ===== Check price {%-endcomment-%}
+{%-if max_filter == 0-%}
+    {%-assign min_filter = product.price_min-%}
+{%-else-%}
+  {%-if product.price_min < min_filter -%}
+    {%-assign min_filter = product.price_min-%}
+  {%-endif-%}
+{%-endif-%}
+{%-if product.price_max > max_filter-%}
+  {%-assign max_filter = product.price_max-%}
+{%-endif-%}
+{%-comment-%} ===== Check count variant {%-endcomment-%}
+{%-for option in product.options-%}
+  {%-unless option == 'Title'-%}
+    {%-assign option_index = forloop.index0-%}
+    {%-if option == option1 and settings.use_filter_variant_1-%}
+      {%-for variant in product.variants-%}
+        {%-assign options_1 = options_1 | append: variant.options[option_index] | append: ':'| append:product.id | append:',,'-%}
+      {%-endfor-%}
+    {%-endif-%}
+    {%-if option == option2 and settings.use_filter_variant_2-%}
+      {%-for variant in product.variants-%}
+        {%-assign options_2 = options_2 | append: variant.options[option_index] | append: ':'| append:product.id | append:',,'-%}
+      {%-endfor-%}
+    {%-endif-%}
+    {%-if option == option3 and settings.use_filter_variant_3-%}
+      {%-for variant in product.variants-%}
+        {%-assign options_3 = options_3 | append: variant.options[option_index] | append: ':'| append:product.id | append:',,'-%}
+      {%-endfor-%}
+    {%-endif-%}
+    {%-if option == option4- and settings.use_filter_variant_4%}
+      {%-for variant in product.variants-%}
+        {%-assign options_4 = options_4 | append: variant.options[option_index] | append: ':'| append:product.id | append:',,'-%}
+      {%-endfor-%}
+    {%-endif-%}
+    {%-if option == option5 and settings.use_filter_variant_5-%}
+      {%-for variant in product.variants-%}
+        {%-assign options_5 = options_5 | append: variant.options[option_index] | append: ':'| append:product.id | append:',,'-%}
+      {%-endfor-%}
+    {%-endif-%}
+  {%-endunless-%}
+{%-endfor-%}
+{%-comment-%} ===== Check count type {%-endcomment-%}
+{%-if product.type != '' and product.type != 'Product type' -%}
+{%-assign properties_ = properties_ | append: product.type | append:',,'-%}
+{%-endif-%}
+{%-comment-%} ===== Check count vendor {%-endcomment-%}
+{%-if product.vendor and product.vendor != 'blank' -%}
+{%-assign vendors_ = vendors_ | append: product.vendor | append:',,'-%}
+{%-endif-%}
+{%-comment-%} ===== Check count tags {%-endcomment-%}
+{%-if product.tags -%}
+{%-assign product_tags = product.tags | join: ",," -%}
+{%-assign tags_ = tags_ | append: product_tags | append:',,'-%}
+{%-endif-%}

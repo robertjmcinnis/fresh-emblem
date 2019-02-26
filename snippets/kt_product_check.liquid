@@ -1,0 +1,230 @@
+{%- if product.title -%}
+  {%- assign compare_at_price = product.compare_at_price -%}
+  {%- assign price = product.price -%}
+  {%- assign price_varies = product.price_varies -%}
+  {%- assign available = product.selected_or_first_available_variant.available -%}
+{%- else -%}
+  {%- assign compare_at_price = 1999 -%}
+  {%- assign price = 1999 -%}
+  {%- assign price_varies = false -%}
+  {%- assign available = true -%}
+{%- endif -%}
+{%- if settings.use_new_label -%}
+  {%-unless product.tags contains 'notnew'%}
+    {%-assign now_date_int = "now" | date: "%j" | plus: 0-%}
+    {%-assign now_year_int = "now" | date: '%Y' | plus: 0-%}
+    {%-assign pub_date_int = product.published_at | date: "%j" | plus: 0-%}
+    {%-assign pub_year_int = product.published_at | date: '%Y' | plus: 0-%}
+    {%-if now_year_int == pub_year_int-%}
+      {%-assign new_day_int = settings.new_day | default: 30 | plus: 0-%}
+      {%-assign check_new = now_date_int | minus: pub_date_int-%}
+      {%-if check_new >= 0 and check_new <= new_day_int-%}
+        {%-capture new_label-%}{{'products.product.new' | t}}{%-endcapture-%}
+      {%-else-%}
+        {%-assign new_label =""%}
+      {%-endif-%}
+    {%-else-%}
+      {%-assign new_day_int = settings.new_day | default: 30 | plus: 366-%}
+      {%-assign check_new = now_date_int | plus: 366-%}
+      {%-if check_new <= new_day_int-%}
+        {%-capture new_label-%}{{'products.product.new' | t}}{%-endcapture-%}
+      {%-else-%}
+        {%-assign new_label =""-%}
+      {%-endif-%}
+    {%-endif-%}
+  {%-endunless-%}
+{%-endif-%}
+{%-assign on_sale = false-%}
+{%-if compare_at_price > price and settings.use_sale_label == true -%}
+  {%-unless product.tags contains 'notsale'-%}
+  {%-assign on_sale = true-%}
+  {%-endunless-%}
+{%-endif-%}
+{%-assign sold_out = true-%}
+{%-assign preOrder = false-%}
+{%-assign sold_out_text = 'products.product.sold_out' | t-%}
+{%-unless available == false-%}
+  {%-assign sold_out = false-%}
+{%-endunless-%}
+{%-if product.selected_or_first_available_variant.inventory_quantity == 0 and product.selected_or_first_available_variant.inventory_policy != 'deny'-%}
+  {%- assign preOrder = true -%}
+{%-endif-%}
+{%- assign colour_count = 0 -%}
+{%- for option in product.options_with_values -%}
+  {%- assign downcased_option = option.name | downcase -%}
+  {%- assign downcased_option_check = option | downcase | prepend: '"' | append: '"' | strip -%} 
+  {%- if downcased_option contains 'olo' -%}
+    {%- assign colour_count = option.values.size -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- comment -%}
+------- Swatches on grid -----------
+{%- endcomment -%}
+{%- assign pos360 = '' -%}
+{%- assign vrsVideo = '' -%}
+{%- assign optVr1 = '' -%}
+{%- assign imgsPos = '' -%}
+{%- assign vrsFeaturedImage = '' -%}
+{%- unless product.has_only_default_variant -%}
+  {% comment %}{%- for option in product.options_with_values -%}
+  {%- if forloop.first -%}
+    {%- if option.name == settings.qs_op_swatch1 -%}
+      {%-assign useColor = settings.qs_is_use1 -%}
+      {%-assign optStyle = settings.qs_option_style_1 -%}
+    {%- elsif option.name == settings.qs_op_swatch2 -%}
+      {%-assign useColor = settings.qs_is_use2 -%}
+      {%-assign optStyle = settings.qs_option_style_2 -%}
+    {%- elsif option.name == settings.qs_op_swatch3 -%}
+      {%-assign useColor = settings.qs_is_use3 -%}
+      {%-assign optStyle = settings.qs_option_style_3 -%}
+    {%- elsif option.name == settings.qs_op_swatch4 -%}
+      {%-assign useColor = settings.qs_is_use4 -%}
+      {%-assign optStyle = settings.qs_option_style_4 -%}
+    {%- elsif option.name == settings.qs_op_swatch5 -%}
+      {%-assign useColor = settings.qs_is_use5 -%}
+      {%-assign optStyle = settings.qs_option_style_5 -%}
+    {%- else -%}
+      {%-assign useColor = false -%}
+      {%-assign optStyle = 'list' -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- break -%}
+  {%- endfor -%}{% endcomment %}
+  {%-capture provr -%}
+    {%- for vr in product.variants -%}
+      {%- unless optVr1 contains vr.option1 -%}
+        {% comment %}<li class="swatch-on-grid _{{ vr.option1 | handleize }}" data-toggle="tooltip" data-placement="top" title="{{ vr.option1}}" data-available="{{vr.available}}">
+          <span class="swatch" data-vrS='kt_{{vr.option1|handleize}}' data-opts='{{product.options.size|json}}' data-opt="Opt1Js" data-vrId='{{vr.id|json}}' data-prId='{{product.id|json}}' data-view="{{product.url}}" data-vrPrice='{{vr.price|json}}' data-vrPriceC='{{vr.compare_at_price}}' data-vrImg={{vr.featured_image.src| json | replace: '\/','/'}} data-ratio={{vr.featured_image.aspect_ratio|json}} data-available="{{vr.available}}" data-ivtQty='{{vr.inventory_quantity}}' data-ivtMgnt='{{vr.inventory_management}}' data-ivtPolicy='{{vr.inventory_policy}}' data-vrTitle='{{vr.title}}' title='{{vr.title}}'>
+            <span class="swacth-title">{{vr.option1}}</span><span class="comma">,</span>
+          </span>
+        </li>{% endcomment %}
+        {%- if imgsPos == '' and vr.featured_image -%}
+          {%- assign imgsPos = vr.featured_image.position | append: ","| split: ',' -%}
+        {%- elsif vr.featured_image -%}
+          {%- assign imgsPos = imgsPos | join: ',' | append: ","  | append: vr.featured_image.position | split: ',' -%}
+        {%- endif -%}
+        
+        {%- assign vrVideo = '' -%}
+        {%- if vr.metafields.meta.video -%}
+          {%- assign vrVideo = vr.featured_image.position | append: ':' | append: vr.metafields.meta.video -%}
+        {%- endif -%}
+        {%- if vrsVideo == '' -%}
+          {%- assign vrsVideo = vrVideo | append: ","| split: ',' -%}
+        {%- else -%}
+          {%- assign vrsVideo = vrsVideo | join: ',' | append: ","  | append: vrVideo | split: ',' -%}
+        {%- endif -%}
+        {%- assign vrsVideo = vrsVideo | uniq -%}
+      {%- endunless -%}
+
+      {%- if optVr1 == '' -%}
+        {%- assign optVr1 = vr.option1 | append: ","| split: ',' -%}
+      {%- else -%}
+        {%- assign optVr1 = optVr1 | join: ',' | append: ","  | append: vr.option1 | split: ',' -%}
+      {%- endif -%}
+      {%- assign optVr1 = optVr1 | uniq -%}
+    {%- endfor -%}
+  {%-endcapture-%}
+{%- endunless -%}
+
+{%- assign imgsPosCheckLast = imgsPos -%}
+{%- for img in product.images -%}
+  {%- if img.alt == 'kt_360' -%}
+    {%- assign pos360 = forloop.index | append: "," | append: product.images.size | split: ',' -%}
+  {%- endif -%}
+  {%- assign vrtitle = img.variants.first.title | json | remove:"'" -%}
+  {%- assign ptitle = product.title | json | remove:"'" -%}
+  {%- assign featuredImage = '{"id":' | append: img.variants.first.id | append: ',"title":' | append: vrtitle | append: '}' -%}
+  {%- if featuredImage == '{"id":,"title":null}' -%}
+  {%- assign featuredImage = '{"id":1,"title":' | append: ptitle | append:'}' -%}
+  {%- endif -%}
+  {% if forloop.last %}
+    {%- assign vrsFeaturedImage = vrsFeaturedImage | append: featuredImage -%}
+  {% else %}
+    {%- assign vrsFeaturedImage = vrsFeaturedImage | append: featuredImage | append: "," -%}  
+  {% endif %}
+{%- endfor -%}
+{%- assign vrsFeaturedImage = '[' | append: vrsFeaturedImage | append: "]" -%}
+{%- if pos360 != '' -%}
+  {%- assign lastPos = "," | append: pos360[0] -%}
+{%- elsif product.images.size == 1 -%}
+  {%- assign lastPos = "," | append: 2 -%}
+{%- else -%}
+  {%- assign lastPos = "," | append: product.images.size -%}
+{%- endif -%}
+{%- if imgsPos == '' -%}
+  {%- assign imgsPos = '1' | append: lastPos | split: ',' -%}
+{%- else -%}
+  {%- if settings.gallery == false -%}
+    {%- assign imgsPos = '1' | append: lastPos | split: ',' -%}
+  {%- else -%}
+    {%- assign imgsPos = imgsPos | join: ',' | append: lastPos | split: ',' -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign imgsPos0 = imgsPos[0]|plus:0 -%}
+{%- assign imgsPos1 = imgsPos[1]|plus:0 -%}
+{%- if imgsPos0 >= imgsPos1 -%}
+  {%- assign imgsPos = '1' | append: lastPos | split: ',' -%}
+  {%- assign imgsPos0 = imgsPos[0]|plus:0 -%}
+  {%- assign imgsPos1 = imgsPos[1]|plus:0 -%}
+{%- endif -%}
+{%- assign imgPos = product.selected_or_first_available_variant.featured_image.position | default: 1 -%}
+{%- unless product.selected_or_first_available_variant.featured_image -%}
+  {%-for var in product.variants -%}
+    {%- if var.image -%}
+      {%- assign imgPos = var.image.position -%}
+    {%- endif -%}
+    {%- if var.id == product.selected_or_first_available_variant.id -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+{%- for imgspr in imgsPos -%}
+  {%- assign idx = forloop.index -%}
+  {%- assign idx_ = forloop.index | minus: 2 -%}
+  {%- assign imgsPos0Int = imgspr|plus:0 -%}
+  {%- assign imgsPos1Int = imgsPos[idx]|plus:0 -%}
+  {%- if imgsPos0Int <= imgPos and imgPos < imgsPos1Int or imgsPos0Int > imgPos and imgPos < imgsPos1Int -%}
+    {%- assign imgsPos0 = imgsPos0Int -%}
+    {%- assign imgsPos1 = imgsPos1Int -%}
+    {%- break -%}
+  {% endif -%}
+  {%- assign imgsPosLast = imgsPos.last|plus:0 -%}
+  {%- if imgsPos0Int == imgsPosLast -%}
+  {% if imgsPosCheckLast contains imgsPos.last %}
+    {%- assign imgsPos0 = imgsPosLast -%}
+    {%- assign imgsPos1 = imgsPosLast -%}
+  {% else %}
+    {%- assign imgsPos0 = imgsPos[idx_]|plus:0 -%}
+    {%- assign imgsPos1 = imgsPosLast -%}
+    {%- assign vrimgpos = imgsPos1 -%}
+  {% endif %}
+  {% endif %}
+{%- endfor -%}
+{%-if product.featured_image-%}
+  {%-assign kiti = product.featured_image -%}
+  {%-assign imgUrl = product.featured_image | img_url: 'master' -%}
+  {%-assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.'-%}
+{%-else-%}
+  {%-assign kiti = 'no-image.jpg' -%}
+  {%-assign imgUrl = 'no-image.jpg' | asset_img_url: 'master' -%}  
+  {%-assign img_url = 'no-image.jpg' | asset_img_url: '1x1' | replace: '_1x1.', '_{width}x.'-%}       
+{%-endif-%}
+{%-assign imgUrl = imgUrl|replace: kiti,'kiti'-%}
+{%- comment -%}
+------- Check one image -----------
+{%- endcomment -%}
+{%- assign checkOneImage = imgsPos0 | plus: 1 -%}
+{%- assign checkOneImage_ = false %}
+{%- if product.images.size == 1 -%}
+  {%- assign checkOneImage_ = true %}
+{%- endif -%}
+
+{%- assign settings_gallery = settings.gallery -%}
+{%- if settings_gallery -%}
+  {%- if checkOneImage == imgsPos1 and checkOneImage != product.images.size -%}
+    {%- assign checkOneImage_ = true %}
+  {%- endif -%}
+  {%- if checkOneImage > product.images.size -%}
+    {%- assign checkOneImage_ = true %}
+  {%- endif -%}
+{%- endif -%}

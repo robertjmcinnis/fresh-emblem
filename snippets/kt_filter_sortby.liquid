@@ -1,0 +1,75 @@
+<div class="kt_filterGroupItem orderby-wapper">
+  <div class="sorter">
+    <div class="sort-by select-wrapper" id="sort_by">
+      {% if settings.sort_enable %}
+      {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+      <div class="layered_subtitle_heading">
+        <span class="layered_subtitle selection">
+          {%- if sort_by == 'manual' -%}{{ 'collections.sorting.featured' | t }}
+          {%- endif -%}
+          {%- if sort_by == 'best-selling' -%}{{ 'collections.sorting.best_selling' | t }}
+          {%- endif -%}
+          {%- if sort_by == 'title-ascending' -%}{{ 'collections.sorting.az' | t }}
+          {%- endif -%}
+          {%- if sort_by == 'title-descending' -%}{{ 'collections.sorting.za' | t }}
+          {%- endif -%}
+          {%- if sort_by == 'price-ascending' -%}{{ 'collections.sorting.price_ascending' | t }}
+          {%- endif -%}
+          {%- if sort_by == 'price-descending' -%}{{ 'collections.sorting.price_descending' | t }}
+          {%- endif -%}
+          {%- if sort_by == 'created-descending' -%}{{ 'collections.sorting.date_descending' | t }}
+          {%- endif -%}
+          {%- if sort_by == 'created-ascending' -%}{{ 'collections.sorting.date_ascending' | t }}
+          {%- endif -%}
+        </span>
+        <span class="ico"></span>
+      </div>
+      <div class="dropdown kt_filterGroupItem_ul layered_filter_sort_by">
+        {%- assign checkview = canonical_url |split:'?'-%}
+        <ul class="options">    
+          <li class="sort_by{% if sort_by == "manual" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=manual">
+              {{ 'collections.sorting.featured' | t }}
+            </a>
+          </li>
+          <li class="sort_by{% if sort_by == "best-selling" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=best-selling">
+              {{ 'collections.sorting.best_selling' | t }}
+            </a>
+          </li>
+          <li class="sort_by{% if sort_by == "title-ascending" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=title-ascending">
+              {{ 'collections.sorting.az' | t }}
+            </a>
+          </li>
+          <li class="sort_by{% if sort_by == "title-descending" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=title-descending">
+              {{ 'collections.sorting.za' | t }}
+            </a>
+          </li>
+          <li class="sort_by{% if sort_by == "price-ascending" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=price-ascending">
+              {{ 'collections.sorting.price_ascending' | t }}
+            </a>
+          </li>
+          <li class="sort_by{% if sort_by == "price-descending" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=price-descending">
+              {{ 'collections.sorting.price_descending' | t }}
+            </a>
+          </li>
+          <li class="sort_by{% if sort_by == "created-descending" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=created-descending">
+              {{ 'collections.sorting.date_descending' | t }}
+            </a>
+          </li>
+          <li class="sort_by{% if sort_by == "created-ascending" %} selected{% endif %}">
+            <a data-pjax-filter href="?sort_by=created-ascending">
+              {{ 'collections.sorting.date_ascending' | t }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

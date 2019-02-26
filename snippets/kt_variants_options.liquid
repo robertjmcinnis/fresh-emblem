@@ -1,0 +1,38 @@
+{%- unless section_id -%}
+  {%- assign section_id = section.id -%}
+{%- endunless -%}
+{%- unless product.has_only_default_variant -%}
+  {%- for option in product.options_with_values -%}
+    {%- assign idx0 = forloop.index0 -%}
+    <div class="selector-wrapper js product-form__item kiti-DropWindowDesktop">
+      <label for="SingleOptionSelector-{{ idx0 }}--{{ section_id }}">{{ option.name }}</label>
+      <select class="single-option-selector single-option-selector-{{ section_id }} hidden" id="SingleOptionSelector-{{ idx0 }}--{{ section_id }}" data-index="option{{ forloop.index }}">
+        {%- for value in option.values %}
+          <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+        {% endfor -%}
+      </select>
+      <div class="fake_select combobox" data-name-option="{{ option.name }}">
+        <label for="kt_{{ option.name | handleize }}{{product.id}}" data-change-label="SingleOptionSelector-{{ idx0 }}--{{ section_id }}" class=""><span class="text">{{ option.selected_value }}</span><span class="ico">{% include 'ico-select' %}</span></label>
+        <ul id="kt_{{ option.name | handleize }}{{product.id}}"{%-if option_index == 1 -%} class="kiti-change"{%-endif-%}>
+          {%- for value in option.values %}
+          <li class="_{{ value | handleize}} sw{% if option.selected_value == value %} selected{% endif %}" data-value="{{ value | escape }}" data-change-option="SingleOptionSelector-{{ idx0 }}--{{ section_id }}"        
+              {% if value contains '"' %} title='{{ value }}'{% else %} title="{{ value }}"{% endif %}>
+            <span class="title">{{ value }}{%if idx0 == 0%}<span class="kt_price_lable"></span>{%endif%}<span class="kt_flash_lable"></span></span>
+          </li>
+          {%-endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endfor -%}
+{%- endunless -%}
+<select name="id" id="ProductSelect-{{ section_id }}" data-section="{{ section_id }}" class="product-form__variants no-js">
+  {% for variant in product.variants %}
+    {% if variant.available %}
+      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}" data-value="{{ variant.title }}">
+        {{ variant.title }}
+      </option>
+    {% else %}
+      <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+    {% endif %}
+  {% endfor %}
+</select>

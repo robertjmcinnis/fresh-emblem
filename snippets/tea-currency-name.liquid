@@ -1,0 +1,130 @@
+{% if cur == "USD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="United States Dollars">USD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "EUR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Euro">EUR<span>&euro;</span></span></label>{% endcapture %} 
+{% elsif cur == "GBP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="United Kingdom Pounds">GBP<span>&pound;</span></span></label>{% endcapture %} 
+{% elsif cur == "CAD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Canadian Dollars">CAD<span>$</span></span></label>{% endcapture %}
+{% elsif cur == "ALL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Albanian Lek">ALL<span>Lek</span></span></label>{% endcapture %} 
+{% elsif cur == "DZD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Algerian Dinar">DZD<span>DA</span></span></label>{% endcapture %} 
+{% elsif cur == "AOA" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Angolan Kwanza">AOA<span>Kz</span></span></label>{% endcapture %} 
+{% elsif cur == "ARS" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Argentine Pesos">ARS<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "AMD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Armenian Dram">AMD<span>AMD</span></span></label>{% endcapture %} 
+{% elsif cur == "AWG" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Aruban Florin">AWG<span>Afl</span></span></label>{% endcapture %} 
+{% elsif cur == "AUD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Australian Dollars">AUD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "BBD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Barbadian Dollar">BBD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "AZN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Azerbaijani Manat">AZN<span>m.</span></span></label>{% endcapture %} 
+{% elsif cur == "BDT" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Bangladesh Taka">BDT<span>Tk</span></span></label>{% endcapture %} 
+{% elsif cur == "BSD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Bahamian Dollar">BSD<span>BS$</span></span></label>{% endcapture %} 
+{% elsif cur == "BHD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Bahraini Dinar">BHD<span>0 BD</span></span></label>{% endcapture %} 
+{% elsif cur == "BYR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Belarusian Ruble">BYR<span>Br</span></span></label>{% endcapture %} 
+{% elsif cur == "BZD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Belize Dollar">BZD<span>BZ$</span></span></label>{% endcapture %} 
+{% elsif cur == "BTN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Bhutanese Ngultrum">BTN<span>Nu</span></span></label>{% endcapture %} 
+{% elsif cur == "BAM" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Bosnia and Herzegovina Convertible Mark">BAM<span>KM</span></span></label>{% endcapture %} 
+{% elsif cur == "BRL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Brazilian Real">BRL<span>R$</span></span></label>{% endcapture %} 
+{% elsif cur == "BOB" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Bolivian Boliviano">BOB<span>Bs</span></span></label>{% endcapture %} 
+{% elsif cur == "BWP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Botswana Pula">BWP<span>P</span></span></label>{% endcapture %} 
+{% elsif cur == "BND" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Brunei Dollar">BND<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "BGN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Bulgarian Lev">BGN<span>лв</span></span></label>{% endcapture %} 
+{% elsif cur == "MMK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Burmese Kyat">MMK<span>K</span></span></label>{% endcapture %} 
+{% elsif cur == "KHR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Cambodian Riel">KHR<span>KHR</span></span></label>{% endcapture %} 
+{% elsif cur == "KYD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Cayman Dollars">KYD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "XAF" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Central African CFA Franc">XAF<span>FCFA</span></span></label>{% endcapture %} 
+{% elsif cur == "CLP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Chilean Peso">CLP<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "CNY" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Chinese Yuan Renminbi">CNY<span>&#165;</span></span></label>{% endcapture %} 
+{% elsif cur == "COP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Colombian Peso">COP<span>$</span></span></label>{% endcapture %}
+{% elsif cur == "CRC" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Costa Rican Colones">CRC<span>&#8353;</span></span></label>{% endcapture %} 
+{% elsif cur == "HRK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Croatian Kuna">HRK<span>kn</span></span></label>{% endcapture %} 
+{% elsif cur == "CZK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Czech Koruny">CZK<span>K&#269;</span></span></label>{% endcapture %} 
+{% elsif cur == "DKK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Danish Kroner">DKK<span>DKK</span></span></label>{% endcapture %} 
+{% elsif cur == "DOP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Dominican Peso">DOP<span>RD$</span></span></label>{% endcapture %} 
+{% elsif cur == "XCD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="East Caribbean Dollar">XCD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "EGP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Egyptian Pound">EGP<span>LE</span></span></label>{% endcapture %} 
+{% elsif cur == "ETB" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Ethiopian Birr">ETB<span>Br</span></span></label>{% endcapture %} 
+{% elsif cur == "XPF" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="CFP Franc">XPF<span>XPF</span></span></label>{% endcapture %} 
+{% elsif cur == "FJD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Fijian Dollars">FJD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "GMD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Gambian Dalasi">GMD<span>D</span></span></label>{% endcapture %} 
+{% elsif cur == "GHS" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Ghanaian Cedi">GHS<span>GH&#8373;</span></span></label>{% endcapture %} 
+{% elsif cur == "GTQ" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Guatemalan Quetzal">GTQ<span>Q</span></span></label>{% endcapture %} 
+{% elsif cur == "GYD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Guyanese Dollar">GYD<span>G$</span></span></label>{% endcapture %} 
+{% elsif cur == "GEL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Georgian Lari">GEL<span>GEL</span></span></label>{% endcapture %}
+{% elsif cur == "HNL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Honduran Lempira">HNL<span>L</span></span></label>{% endcapture %} 
+{% elsif cur == "HKD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Hong Kong Dollars">HKD<span>L</span></span></label>{% endcapture %} 
+{% elsif cur == "HUF" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Hungarian Forint">HUF<span>HUF</span></span></label>{% endcapture %} 
+{% elsif cur == "ISK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Icelandic Kronur">ISK<span>kr</span></span></label>{% endcapture %} 
+{% elsif cur == "INR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Indian Rupees">INR<span>Rs.</span></span></label>{% endcapture %} 
+{% elsif cur == "IDR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Indonesian Rupiah">IDR<span>IDR</span></span></label>{% endcapture %} 
+{% elsif cur == "ILS" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Israeli New Shekel">NIS<span>NIS</span></span></label>{% endcapture %} 
+{% elsif cur == "JMD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Jamaican Dollars">JMD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "JPY" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Japanese Yen">JPY<span>&#165;</span></span></label>{% endcapture %} 
+{% elsif cur == "JEP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Jersey Pound">JEP<span>&pound;</span></span></label>{% endcapture %} 
+{% elsif cur == "JOD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Jordanian Dinar">JOD<span>0 JD</span></span></label>{% endcapture %} 
+{% elsif cur == "KZT" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Kazakhstani Tenge">KZT<span>KZT</span></span></label>{% endcapture %} 
+{% elsif cur == "KES" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Kenyan Shilling">KES<span>KSh</span></span></label>{% endcapture %} 
+{% elsif cur == "KWD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Kuwaiti Dinar">KWD<span>0 KD</span></span></label>{% endcapture %} 
+{% elsif cur == "KGS" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Kyrgyzstani Som">KGS<span>лв</span></span></label>{% endcapture %} 
+{% elsif cur == "LAK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Laotian Kip">LAK<span>LAK</span></span></label>{% endcapture %} 
+{% elsif cur == "LVL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Latvian Lati">LVL<span>Ls</span></span></label>{% endcapture %} 
+{% elsif cur == "LBP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Lebanese Pounds">LBP<span>L&pound;</span></span></label>{% endcapture %} 
+{% elsif cur == "LSL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Lesotho Loti">LSL<span>LSL</span></span></label>{% endcapture %} 
+{% elsif cur == "LRD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Liberian Dollar">LRD<span>LRD</span></span></label>{% endcapture %} 
+{% elsif cur == "LTL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Lithuanian Litai">LTL<span>LTL</span></span></label>{% endcapture %} 
+{% elsif cur == "MGA" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Malagasy Ariary">MGA<span>Ar</span></span></label>{% endcapture %} 
+{% elsif cur == "MKD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Macedonia Denar">MKD<span>ден</span></span></label>{% endcapture %} 
+{% elsif cur == "MOP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Macanese Pataca">MOP<span>MOP$</span></span></label>{% endcapture %} 
+{% elsif cur == "MWK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Malawian Kwacha">MWK<span>MWK</span></span></label>{% endcapture %} 
+{% elsif cur == "MVR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Maldivian Rufiyaa">MVR<span>Rf</span></span></label>{% endcapture %} 
+{% elsif cur == "MXN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Mexican Pesos">MXN<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "MYR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Malaysian Ringgits">MYR<span>RM</span></span></label>{% endcapture %} 
+{% elsif cur == "MUR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Mauritian Rupee">MUR<span>Rs</span></span></label>{% endcapture %} 
+{% elsif cur == "MDL" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Moldovan Leu">MDL<span>MDL</span></span></label>{% endcapture %} 
+{% elsif cur == "MAD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Moroccan Dirham">MAD<span>dh</span></span></label>{% endcapture %} 
+{% elsif cur == "MNT" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Mongolian Tugrik">MNT<span>&#8366</span></span></label>{% endcapture %} 
+{% elsif cur == "MZN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Mozambican Metical">MZN<span>Mt</span></span></label>{% endcapture %} 
+{% elsif cur == "NAD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Namibian Dollar">NAD<span>N$</span></span></label>{% endcapture %} 
+{% elsif cur == "NPR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Nepalese Rupee">NPR<span>Rs</span></span></label>{% endcapture %} 
+{% elsif cur == "ANG" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Netherlands Antillean Guilder">ANG<span>&fnof;</span></span></label> {%endcapture %} 
+{% elsif cur == "NZD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="New Zealand Dollars">NZD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "NIO" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Nicaraguan Córdoba">NIO<span>C$</span></span></label>{% endcapture %} 
+{% elsif cur == "NGN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Nigerian Naira">NGN<span>&#8358;</span></span></label>{% endcapture %} 
+{% elsif cur == "NOK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Norwegian Kroner">NOK<span>kr</span></span></label>{% endcapture %} 
+{% elsif cur == "OMR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Omani Rial">OMR<span>OMR</span></span></label>{% endcapture %} 
+{% elsif cur == "PKR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Pakistani Rupee">PKR<span>Rs.</span></span></label>{% endcapture %} 
+{% elsif cur == "PGK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Papua New Guinean Kina">PGK<span>K</span></span></label>{% endcapture %} 
+{% elsif cur == "PYG" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Paraguayan Guarani">PYG<span>Gs.</span></span></label>{% endcapture %} 
+{% elsif cur == "PEN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Peruvian Nuevo Sol">PEN<span>S/.</span></span></label>{% endcapture %} 
+{% elsif cur == "PHP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Philippine Peso">PHP<span>&#8369;</span></span></label>{% endcapture %} 
+{% elsif cur == "PLN" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Polish Zlotych">PLN<span>zl</span></span></label>{% endcapture %} 
+{% elsif cur == "QAR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Qatari Rial">QAR<span>QAR</span></span></label>{% endcapture %} 
+{% elsif cur == "RON" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Romanian Lei">RON<span>RSD</span></span></label>{% endcapture %} 
+{% elsif cur == "RUB" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Russian Rubles">RUB<span>&#1088;&#1091;&#1073;</span></span></label>{% endcapture %} 
+{% elsif cur == "RWF" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Rwandan Franc">RWF<span>RF</span></span></label>{% endcapture %} 
+{% elsif cur == "WST" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Samoan Tala">WST<span>WS$</span></span></label>{% endcapture %} 
+{% elsif cur == "SAR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Saudi Riyal">SAR<span>SR</span></span></label>{% endcapture %} 
+{% elsif cur == "STD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Sao Tome And Principe Dobra">STD<span>Db</span></span></label>{% endcapture %} 
+{% elsif cur == "RSD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Serbian dinar">RSD<span>RSD</span></span></label>{% endcapture %} 
+{% elsif cur == "SCR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Seychellois Rupee">SCR<span>Rs</span></span></label>{% endcapture %} 
+{% elsif cur == "SGD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Singapore Dollars">SGD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "SYP" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Syrian Pound">SYP<span>S&pound;</span></span></label>{% endcapture %} 
+{% elsif cur == "ZAR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="South African Rand">ZAR<span>R</span></span></label>{% endcapture %} 
+{% elsif cur == "KRW" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="South Korean Won">KRW<span>&#8361;</span></span></label>{% endcapture %} 
+{% elsif cur == "LKR" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Sri Lankan Rupees">LKR<span>Rs</span></span></label>{% endcapture %} 
+{% elsif cur == "SRD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Surinamese Dollar">SRD<span>SRD</span></span></label>{% endcapture %} 
+{% elsif cur == "SEK" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Swedish Kronor">SEK<span>kr</span></span></label>{% endcapture %} 
+{% elsif cur == "CHF" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Swiss Francs">CHF<span>SFr.</span></span></label>{% endcapture %} 
+{% elsif cur == "TWD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Taiwan Dollars">TWD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "THB" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Thai baht">THB<span>&#xe3f;</span></span></label>{% endcapture %} 
+{% elsif cur == "TZS" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Tanzanian Shilling">TZS<span>TZS</span></span></label>{% endcapture %} 
+{% elsif cur == "TTD" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Trinidad and Tobago Dollars">TTD<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "TND" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Tunisian Dinar">TND<span>TND</span></span></label>{% endcapture %} 
+{% elsif cur == "TRY" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Turkish Lira">TRY<span>TL</span></span></label>{% endcapture %} 
+{% elsif cur == "TMT" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Turkmenistani Manat">TMT<span>TMT</span></span></label>{% endcapture %} 
+{% elsif cur == "UGX" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Ugandan Shilling">UGX<span>Ush</span></span></label>{% endcapture %} 
+{% elsif cur == "UAH" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Ukrainian Hryvnia">UAH<span>₴</span></span></label>{% endcapture %} 
+{% elsif cur == "AED" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="United Arab Emirates Dirham">AED<span>Dhs.</span></span></label>{% endcapture %} 
+{% elsif cur == "UYU" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Uruguayan Pesos">UYU<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "UZS" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Uzbekistan som">UZS<span>UZS</span></span></label>{% endcapture %} 
+{% elsif cur == "VUV" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Vanuatu Vatu">VUV<span>$</span></span></label>{% endcapture %} 
+{% elsif cur == "VEF" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Venezuelan Bolivares">VEF<span>Bs.</span></span></label>{% endcapture %} 
+{% elsif cur == "VND" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Vietnamese đồng">VND<span>&#8363;</span></span></label>{% endcapture %} 
+{% elsif cur == "XOF" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="West African CFA franc">XOF<span>CFA</span></span></label>{% endcapture %} 
+{% elsif cur == "YER" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Yemeni Rial">YER<span>YER</span></span></label>{% endcapture %} 
+{% elsif cur == "ZMW" %}{% capture name_curr %}<label for="{{ cur }}"><span data-currency="{{ cur }}" title="Zambian Kwacha">ZMW<span>K</span></span></label>{% endcapture %} 
+{% endif %}

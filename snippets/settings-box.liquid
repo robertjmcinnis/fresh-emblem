@@ -1,0 +1,64 @@
+<div class="box-settings kiti--DropItem{% if settings.show_multiple_currencies == false and section.settings.menu_settings_dropdown == blank and shop.customer_accounts_enabled == false %} hidden{% endif %}">
+  {% if section.settings.icon_settings != "bars" %}
+  <span class="icon pe-7s-config"></span>
+  {% else %}
+  <span class="icon bar">
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+  {% endif %}
+  <div class="settings-wrapper kiti--DropInner">
+    <div class="setting-content">
+      {% if settings.show_multiple_currencies %}
+      <div class="select-currency">
+        <div class="currency-title">{{'layout.settings_dropdown.currency_title' | t}}</div>
+        <div class="currency-topbar">                                                
+          <div class="currency-list currency-lists">
+            <ul class="currency mg_currency_widget clearfix">
+              {%-assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ','-%}
+              {%-assign supported_codes = settings.supported_currencies | split: ' '-%}
+              <li class="mg-currency-item active">
+                {%-include 'tea-currency-name', cur: shop.currency-%}
+                <span class="sym">                  
+                  <input type="radio" name="currency" class="radio-picker hidden {{ shop.currency }}" value="{{ shop.currency }}" checked="checked">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-for code in supported_codes-%}
+              {%-if code != shop.currency and codes contains code-%}
+              <li class="mg-currency-item">
+                {%-include 'tea-currency-name', cur: code-%}
+                <span class="sym">
+                  <input type="radio" name="currency" class="radio-picker hidden {{ code }}" value="{{ code }}">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-endif-%}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if section.settings.menu_settings_dropdown or shop.customer_accounts_enabled %}
+      <div class="setting-option">
+        <ul>
+          {% assign menu_settings_dropdown = section.settings.menu_settings_dropdown %}
+          {% for link in linklists[menu_settings_dropdown].links %}
+          <li><a href="{{link.url}}"><span>{{link.title }}</span></a></li>
+          {% endfor %}
+          {% if shop.customer_accounts_enabled %}
+          {% if customer %}
+          <li><a href="/account/logout"><span>{{"layout.customer.log_out"|t}}</span></a></li>
+          {% else %}
+          <li><a href="/account/login"><span>{{"layout.customer.log_in"|t}}</span></a></li>
+          <li><a href="/account/register"><span>{{"layout.customer.create_account"|t}}</span></a></li>
+          {% endif %}
+          {% endif %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

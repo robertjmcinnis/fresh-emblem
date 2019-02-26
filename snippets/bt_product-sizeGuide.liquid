@@ -1,0 +1,58 @@
+{% assign size_guide = false %}
+{% if product.metafields.meta.size_guide %}
+  <section id="sizeModal" class="modal fade" aria-hidden="false" aria-labelledby="sizeModalLabel" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <button class="close" aria-label="Close" data-dismiss="modal" type="button"> <span aria-hidden="true">×</span> </button>
+        <div class="content-item">
+          <img src="{{product.metafields.meta.size_guide}}" alt="Size Chart" width="838">
+        </div>
+      </div>
+    </div>
+  </section>
+  {% assign size_guide = true %}
+{% elsif collection.handle or product.collections.first.handle %}
+  {% if collection.handle and collection.metafields.meta.size_guide %}
+    <section id="sizeModal" class="modal fade" aria-hidden="false" aria-labelledby="sizeModalLabel" role="dialog" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <button class="close" aria-label="Close" data-dismiss="modal" type="button"> <span aria-hidden="true">×</span> </button>
+          <div class="content-item">
+            <img src="{{collection.metafields.meta.size_guide}}" alt="Size Chart" width="838">
+          </div>
+        </div>
+      </div>
+    </section>
+    {% assign size_guide = true %}
+  {% else %}
+    {% for collection in product.collections %}
+      {% if collection.metafields.meta.size_guide %}
+        <section id="sizeModal" class="modal fade" aria-hidden="false" aria-labelledby="sizeModalLabel" role="dialog" tabindex="-1">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <button class="close" aria-label="Close" data-dismiss="modal" type="button"> <span aria-hidden="true">×</span> </button>
+              <div class="content-item">
+                <img src="{{collection.metafields.meta.size_guide}}" alt="Size Chart" width="838">
+              </div>
+            </div>
+          </div>
+        </section>
+        {% assign size_guide = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endif %}
+{% if settings.size_guide != blank and size_guide == false %}
+<section id="sizeModal" class="modal fade" aria-hidden="false" aria-labelledby="sizeModalLabel" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <button class="close" aria-label="Close" data-dismiss="modal" type="button"> <span aria-hidden="true">×</span> </button>
+      <div class="content-item">
+        <img src="{{settings.size_guide| img_url: 'master'}}" alt="Size Chart" width="838">
+      </div>
+    </div>
+  </div>
+</section>
+{% assign size_guide = true %}
+{% endif %}

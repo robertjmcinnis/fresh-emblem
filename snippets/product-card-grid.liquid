@@ -1,0 +1,196 @@
+{% unless grid_image_width %}
+  {%- assign grid_image_width = '300x300' -%}
+{% endunless %}
+{% unless ly %}
+  {%- assign ly = 'gr' -%}
+{% endunless %}
+{%- assign grid_image_scale = '2' -%}
+
+{%- assign money_price = price | money -%}
+{%-include 'kt_label_check'-%}
+<div class="product-item{% if new_label != blank %} new-arrived__label{% endif %}{% if compare_at_price > price %} sale__label{% endif %}{% if product.available %} instock__label{% else %} outofstock__label{% endif %} label_style_{{settings.label_style}}{% if colour_count > 1 %} showVariants{% endif %}">
+  <div class="product-inner">
+    <div class="product-thumb{% if settings.use_second_img and product.images.size > 1 %} has-back-image{%-endif-%}">
+      <a href="{{product.url| within: collection}}" class="LoopProduct-link" title="{{product.title}}">
+        {% if product.available == false %}<span class="sold-out"><span class="text">{{'products.product.sold_out'|t}}</span></span>{%-endif-%}
+        {%-if on_sale == true and settings.use_sale_label == true-%}
+        {%- assign money_save = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price| round -%}
+        <span class="onsale">{% if money_save >= 15 %}<span class="text">-{{ money_save }}%</span>{% else %}<span class="text">{{'products.product.on_sale'|t}}
+        </span>{% endif %}</span>
+        {%-endif-%}
+        {%-if new_label != blank-%}<span class="new-arrival"><span class="text">{{new_label}}</span></span>{%-endif-%}
+      </a>
+      {%- if ly != 'ms' -%}
+        {%- assign aspect_ratioW = settings.aspect_ratio | split: '/' | first | strip | plus: 0.00 -%}
+        {%- assign aspect_ratioH = settings.aspect_ratio | split: '/' | last | strip | plus: 0.00 -%}
+        {%- assign aspect_cs = aspect_ratioW|divided_by:aspect_ratioH | round: 2 -%}
+        <img src="{{'bt_placeholder.svg'|asset_url}}">
+
+{% if product.selected_or_first_available_variant.image %}
+        {%- assign aspect_image = product.selected_or_first_available_variant.image.width | times:1.00 |divided_by:product.selected_or_first_available_variant.image.height| round: 2 -%}
+        {%- capture image_fit -%}
+          {%- if aspect_ratioW < aspect_ratioH -%}
+            {%- if product.selected_or_first_available_variant.image.width == product.selected_or_first_available_variant.image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs >= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+          {%- elsif aspect_ratioW > aspect_ratioH -%}
+            {%- if product.selected_or_first_available_variant.image.width == product.selected_or_first_available_variant.image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+          {%- else -%}
+             nonheight nonwidth_
+          {%- endif -%}
+        {%- endcapture -%}
+{% else %}
+        {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+        {%- capture image_fit -%}
+          {%- if aspect_ratioW < aspect_ratioH -%}
+            {%- if product.featured_image.width == product.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs >= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+          {%- elsif aspect_ratioW > aspect_ratioH -%}
+            {%- if product.featured_image.width == product.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+          {%- else -%}
+             nonheight nonwidth_
+          {%- endif -%}
+        {%- endcapture -%}
+{% endif %}
+
+
+      {%- endif -%}
+
+{% if product.selected_or_first_available_variant.image %}
+      <a class="front-image {{image_fit}}" href="{{product.url| within: collection}}" title="{{product.title}}">
+        {%- assign img_url = product.selected_or_first_available_variant.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="lazyload"{% if product.images.size < 1 %} style="width: 100%"{% endif %}
+            {%- if ly == 'ms' -%}src="{{ product.selected_or_first_available_variant.image | img_url: '360x' }}"{%- endif -%}
+             data-src="{{ img_url }}"
+             data-widths="[360, 540, 720, 900]"
+             data-aspectratio="{{ product.selected_or_first_available_variant.image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ product.selected_or_first_available_variant.image.alt | escape }}">
+      </a>
+{% else %}
+      <a class="front-image {{image_fit}}" href="{{product.url| within: collection}}" title="{{product.title}}">
+        {%- assign img_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="lazyload"{% if product.images.size < 1 %} style="width: 100%"{% endif %}
+            {%- if ly == 'ms' -%}src="{{ product.featured_image | img_url: '360x' }}"{%- endif -%}
+             data-src="{{ img_url }}"
+             data-widths="[360, 540, 720, 900]"
+             data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ product.featured_image.alt | escape }}">
+      </a>
+{% endif %}
+      {% if settings.use_second_img and product.images.size > 1-%}
+      {%- if ly != 'ms' -%}
+        {%- assign aspect_image = product.images[1].width | times:1.00 |divided_by:product.images[1].height| round: 2 -%}
+        {%- capture image_fit -%}
+          {%- if aspect_ratioW < aspect_ratioH -%}
+            {%- if product.images[1].width == product.images[1].height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs >= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+          {%- elsif aspect_ratioW > aspect_ratioH -%}
+            {%- if product.images[1].width == product.images[1].height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+          {%- else -%}
+             nonheight nonwidth_
+          {%- endif -%}
+        {%- endcapture -%}
+      {%- endif -%}
+      <a class="back-image {{image_fit}}" href="{{product.url| within: collection}}">
+        {%- assign img_url = product.images[1] | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="lazyload"
+             data-src="{{ img_url }}"
+             data-widths="[360, 540, 720, 900]"
+             data-aspectratio="{{ product.images[1].aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ product.images[1].alt | escape }}">
+      </a>
+      {%-endif-%}
+      <div class="gorup-button">
+        {%-assign use_quickshop = false-%}
+        {%- if product.has_only_default_variant == false and product.variants.size >= 1 and settings.use_quickshop -%}
+          {%-assign use_quickshop = true-%}
+        {%- endif -%}
+        {%- if use_quickshop and sold_out == false -%}
+        <div class="button add_to_cart_button boutique__add-to-cart visible_5 visible_9 visible_7 quick-shop" data-href="{{product.url}}" data-pid="{{product.id}}">{{'products.product.quick_shop'|t}}</div>
+        {%- endif -%}
+        {%- if preOrder -%}
+        <div class="button add_to_cart_button boutique__add-to-cart visible_5 visible_9 visible_7{% if use_quickshop %} hidden{%endif%}" onclick="{% if use_quickshop %}Shopify.KT_addItemFromForm('cart-form--{{ product.id }}'){%else%}Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1){%endif%};$(this).addClass('loading').removeClass('loaded')">{{'products.product.pre_order'|t}}</div>
+        {%- elsif sold_out == false -%}
+        <div class="button add_to_cart_button boutique__add-to-cart visible_5 visible_9 visible_7{% if use_quickshop %} hidden{%endif%}" onclick="{% if use_quickshop %}Shopify.KT_addItemFromForm('cart-form--{{ product.id }}'){%else%}Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1){%endif%};$(this).addClass('loading').removeClass('loaded')">{{'products.product.add_to_cart'|t}}</div>
+        {%- else -%}
+        <a href="javascript:void(0);" class="button add_to_cart_button sold_out disabled visible_5 visible_9 visible_7{% if use_quickshop %} hidden{%endif%}" >{{'products.product.sold_out'|t}}</a>
+        {%- endif -%}
+        {%- if settings.use_wishlist and pages[settings.page_wishlist].url != blank -%}
+        <div class="wishlist hidden_5 hidden_9">{%- include 't-wishlist-product' -%}</div>
+        {%- endif -%}
+        {%- if settings.use_compare-%}<a href="javascript:void(0);" class="compare" data-pid="{{product.handle}}"><i class="icon-refresh"></i></a>{%- endif -%}
+        {%- if settings.use_quickview-%}<a href="javascript:void(0);" class="quick-view hidden_7" data-view="{{product.url}}" data-target="#myModal"><i class="icon-magnifier"></i></a>{%- endif -%}
+      </div>
+      <a href="javascript:void(0);" class="quick-view visible_7" data-view="{{product.url}}" data-target="#myModal"><i class="icon-magnifier"></i></a>
+      <span class="price visible_9">
+        <ins class="ProductPrice-{{product.id}}">
+          {{ product.price | money }}
+        </ins>
+        <del class="ComparePrice-{{product.id}}{% if on_sale == false %} hidden{%-endif-%}">
+          {{ product.compare_at_price | default: 0 | money }}
+        </del>
+      </span>
+      <div class="add-cart-wapper visible_4_1 visible_8_1">
+        {%- if use_quickshop and sold_out == false -%}
+        <div class="button add_to_cart_button boutique__add-to-cart visible_4_1_ visible_8_1_ quick-shop" data-href="{{product.url}}" data-pid="{{product.id}}">{{'products.product.quick_shop'|t}}</div>
+        {%- endif -%}
+        {%- if preOrder -%}
+        <div class="button add_to_cart_button boutique__add-to-cart visible_4_1_ visible_8_1_{% if use_quickshop %} hidden{%endif%}" onclick="{% if use_quickshop %}Shopify.KT_addItemFromForm('cart-form--{{ product.id }}'){%else%}Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1){%endif%};$(this).addClass('loading').removeClass('loaded')">{{'products.product.pre_order'|t}}</div>
+        {%- elsif sold_out == false -%}
+        <div class="button add_to_cart_button boutique__add-to-cart visible_4_1_ visible_8_1_{% if use_quickshop %} hidden{%endif%}" onclick="{% if use_quickshop %}Shopify.KT_addItemFromForm('cart-form--{{ product.id }}'){%else%}Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1){%endif%};$(this).addClass('loading').removeClass('loaded')">{{'products.product.add_to_cart'|t}}</div>
+        {%- else -%}
+        <a href="javascript:void(0);" class="button add_to_cart_button sold_out disabled" >{{'products.product.sold_out'|t}}</a>
+        {%- endif -%}
+      </div>
+      {% if product.metafields.event.countdown %}
+      {% assign countdown_ = product.metafields.event.countdown | split: '+' | first %}
+      {% assign countdown__ = countdown_ | split: 'T' | first | split: '/' %}
+      {% assign countdown___ = countdown_ | split: 'T' | last | split: ':' %}
+      <div class="product-count-down">
+        <div class="kt-countdown"
+             data-y="{{countdown__[2]|default:00}}"
+             data-m="{{countdown__[0]|default:00}}"
+             data-d="{{countdown__[1]|default:00}}"
+             data-h="{{countdown___[0]|default:00}}"
+             data-i="{{countdown___[1]|default:00}}"
+             data-s="{{countdown___[2]|default:00}}">
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <div class="product-info">
+      {% if colour_count > 1 %}
+      <div class="attributes">
+        <div class="item">
+          {% include 'swatches_on_grid'%}
+        </div>
+      </div>
+      {% endif %}
+      <h3 class="product-name">
+        <a href="{{product.url| within: collection}}" title="{{product.title}}">{{product.title|strip_html}}</a>
+      </h3>
+      {%-if settings.use_wishlist and pages[settings.page_wishlist].url != blank -%}<div class="wishlist visible_9 hidden_5">{%- include 't-wishlist-product' -%}</div>{%- endif -%}
+      <span class="price hidden_9">
+        <ins class="ProductPrice-{{product.id}}">
+          {{ product.price | money }}
+        </ins>
+        <del class="ComparePrice-{{product.id}}{% if on_sale == false %} hidden{%-endif-%}">
+          {{ product.compare_at_price | default: 0 | money }}
+        </del>
+      </span>
+      {%-if settings.use_wishlist and pages[settings.page_wishlist].url != blank -%}<div class="wishlist visible_5">{%- include 't-wishlist-product' -%}</div>{%- endif -%}
+      {%- if use_quickshop and sold_out == false -%}
+      <div class="button add_to_cart_button boutique__add-to-cart hidden_4_1 hidden_5 hidden_8_1 hidden_9 hidden_7 quick-shop" data-href="{{product.url}}" data-pid="{{product.id}}">Quick shop</div>
+      {%- endif -%}
+      {%- if preOrder -%}
+      <div class="button add_to_cart_button boutique__add-to-cart hidden_4_1 hidden_5 hidden_8_1 hidden_9 hidden_7{% if use_quickshop %} hidden{%endif%}" onclick="{% if use_quickshop %}Shopify.KT_addItemFromForm('cart-form--{{ product.id }}'){%else%}Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1){%endif%};$(this).addClass('loading').removeClass('loaded')">{{'products.product.pre_order'|t}}</div>
+      {%- elsif sold_out == false -%}
+      <div class="button add_to_cart_button boutique__add-to-cart hidden_4_1 hidden_5 hidden_8_1 hidden_9 hidden_7{% if use_quickshop %} hidden{%endif%}" onclick="{% if use_quickshop %}Shopify.KT_addItemFromForm('cart-form--{{ product.id }}'){%else%}Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1){%endif%};$(this).addClass('loading').removeClass('loaded')">{{'products.product.add_to_cart'|t}}</div>
+      {%- else -%}
+      <div class="button add_to_cart_button sold_out disabled hidden_4_1 hidden_5 hidden_8_1 hidden_9 hidden_7" >{{'products.product.sold_out'|t}}</div>
+      {%- endif -%}
+    </div>
+    {%- if use_quickshop -%}
+    <div class="quickshopForm quickshop--{{product.id}} dp-flex align-items-end align-content-end"></div>
+    {%-endif-%}
+  </div>
+</div>

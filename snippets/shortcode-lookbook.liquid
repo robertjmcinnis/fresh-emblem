@@ -1,0 +1,7 @@
+{%- capture data  -%}{%- include 'shortcode-render' render:'handle' default: '' -%}{%- endcapture -%}
+{%- if data != ""-%}
+  {%- assign lb = shop.metafields['nitro-lookbook'][data] -%}
+  {%- if lb != blank -%}
+ {% include 'reshortcode' reload:  lb %} 
+  {%- endif -%}
+{%- endif -%}

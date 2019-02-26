@@ -1,0 +1,47 @@
+{% if settings.enable_popup and template contains 'index' %}
+<section id="newsletterModal" data-pause="{{settings.time_popup_delay|default: 2}}" data-scroll="{{settings.scroll_popup_delay|default: 0}}" data-mobile-display="{{settings.promo_popup_hide_mobile}}" class="modal animated fadeIn" aria-hidden="true" role="dialog" tabindex="-1">
+  <div class="modal-dialog" style="padding: 10px;max-width: 550px;">
+    <div class="white-popup">
+      <button class="close" aria-label="Close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+      </button>
+      <div class="kt-popup-newsletter">
+        <div class="popup-title">
+          {{settings.popup_newsletter_description|html}}
+        </div>
+        {%- if settings.newslatter_mailchimp_url != "" -%}
+        <form method="get" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form-{{section.id|default: 'kiti'}}" class="form-subscribe" name="mc-embedded-subscribe-form-{{section.id|default: 'kiti'}}" data-kt="{{settings.popup_newsletter_coupon_code}}">
+          <input type="email" name="EMAIL" id="mce-EMAIL-{{section.id|default: 'kiti'}}"
+                 class="email-text required-entry validate-email"
+                 value="{% if customer %}{{ customer.email }}{% endif %}"
+                 placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}" required>
+          <button class="button close__" aria-label="Close" data-dismiss="modal" type="button" value="{{'general.newsletter_form.cancel_popup'|t}}">{{'general.newsletter_form.cancel_popup'|t}}</button>
+          <button class="button" name="subscribe" id="mc-embedded-subscribe-{{section.id|default: 'kiti'}}" type="submit" value="{{'general.newsletter_form.submit_popup'|t}}">{{'general.newsletter_form.submit_popup'|t}}</button>
+        </form>
+        {%- else -%}
+          <div class="form-subscribe">
+            {%-form 'customer'-%}
+            {{ form.errors | default_errors }}
+            {%-if form.posted_successfully?-%}
+            <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+            {%-else-%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email"
+                   name="contact[email]"
+                   class="email-text required-entry validate-email"
+                   value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+                   placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}" required>
+            <button class="button" aria-label="Close" data-dismiss="modal" type="button" value="{{'general.newsletter_form.cancel_popup'|t}}">{{'general.newsletter_form.cancel_popup'|t}}</button>
+            <button class="button" name="subscribe" id="subscribe{{section.id|default: '-kiti'}}" type="submit" value="{{'general.newsletter_form.submit_popup'|t}}">{{'general.newsletter_form.submit_popup'|t}}</button>
+            {%-endif-%}
+            {%-endform-%}
+          </div>
+        {%- endif -%}
+        <div class="checkbox">
+          <label><input id="hideforever" type="checkbox" value="">{{'general.newsletter_form.checkbox_popup'|t}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

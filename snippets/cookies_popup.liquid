@@ -1,0 +1,36 @@
+{%- assign template_id = template | split: '.' | first -%}
+{%- assign st = 'display_popup_cookies_' | append: template_id -%}
+{%- if settings[st] -%}
+<div class="claue-cookies-popup">
+  <div class="claue-cookies-inner flex">
+    <div class="cookies-info-text">{{ settings.text_cookies_popup }}</div>
+    <div class="cookies-buttons">
+      <a href="#" class="cookies-accept-btn button">{{ 'general.cookiespopup.accept' | t }}</a>
+      {%- if settings.popup_cookies_btn_infor and settings.link_btn_infor != blank -%}<a href="{{ settings.link_btn_infor }}" class="button cookies-more-btn">{{ 'general.cookiespopup.more' | t }}</a>{%- endif -%}
+    </div>
+  </div>
+</div>
+<script>
+  jQuery(document).ready(function($) {
+    function cookiesPopup() {
+      var popup = $( '.claue-cookies-popup' );
+      setTimeout(function() {
+        popup.addClass('popup-display');
+        popup.on('click', '.cookies-accept-btn', function(e) {
+          e.preventDefault();
+          acceptCookies();
+        })
+      }, 2500 );
+
+      var acceptCookies = function() {
+        popup.removeClass('popup-display').addClass('popup-hide');
+        setCookie('claue_cookies', 'accepted', 0, 0, 0);
+      };
+      if( getCookie('claue_cookies') == 'accepted' ) {
+        popup.removeClass('popup-display').addClass('popup-hide');
+      }
+    }
+    cookiesPopup();
+  });
+</script>
+{%- endif -%}

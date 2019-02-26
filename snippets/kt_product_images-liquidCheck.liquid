@@ -1,0 +1,103 @@
+{%- assign map_position = "" -%}
+{%- for option in product.options -%}
+  {%- assign downcased_option = option | downcase -%}
+  {%- if downcased_option contains 'olo' %}
+  {%- assign cur_color = forloop.index -%}
+  {%- assign option_index = forloop.index0 -%}
+  {%- assign displayed_option_values = '' -%}
+    {%- for image in product.images -%}
+      {%- for variant in image.variants -%}
+        {%- assign option_value = variant.options[option_index] -%}
+        {%- unless displayed_option_values contains option_value -%}
+          {%- assign image_position = variant.image.position | minus: 1 -%}
+          {%- assign map_position = map_position | append: image_position | append: "," -%}
+          {%- if displayed_option_values == '' -%}
+            {%- assign displayed_option_values = option_value | append: ","| split: ',' -%}
+          {%- else -%}
+            {%- assign displayed_option_values = displayed_option_values | join: ',' | append: ","  | append: option_value | split: ',' -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign images_size = product.images.size | plus: 1 -%}
+{%- assign map_position = map_position | append: images_size | split: "," | uniq %}
+
+{%- if cur_color == 1 -%}
+  {%- for index in displayed_option_values -%}
+    {%- if current_variant.option1 == index -%}
+        {%- assign index = forloop.index -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if cur_color == 2 -%}
+  {%- for index in displayed_option_values -%}
+    {%- if current_variant.option2 == index -%}
+        {%- assign index = forloop.index -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- if cur_color == 3 -%}
+  {%- for index in displayed_option_values -%}
+    {%- if current_variant.option3 == index -%}
+        {%- assign index = forloop.index -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- unless index-%}{%- assign index = 1 -%}{%- endunless -%}
+{%- assign map_position_start = index | minus: 1 -%}
+{%- assign map_position_start_ = map_position[map_position_start] | plus: 0 -%}
+{%- assign map_position_end_ = map_position[index] | plus: 0 -%}
+{%- assign variant_position = '' -%}
+{%- assign variant_ids = '' -%}
+{%- for variant in product.variants -%}
+  {%- unless variant_position contains variant.image.position -%}
+  {%- if variant.image.position > 0 -%}
+    {%- assign variant_position = variant_position | append: variant.image.position | append: "|||" -%}
+    {%- assign variant_title_ = variant.title | default: 'current' -%}
+    {%- assign variant_ids =  variant_ids | append: variant.id | append: '|||' -%}
+  {%- endif -%}
+  {%- endunless -%}
+{%- endfor -%}
+{%- assign variant_position = variant_position |split: "|||" -%}
+{%- assign variant_ids = variant_ids | split: '|||' -%}
+{%- if product.images.size > 3 -%}
+  {%- assign enable_thumbnail_slides = true -%}
+{%- endif -%}
+
+{%- assign map_titles = '' -%}
+{%- for image in product.images -%}
+{%- assign title_image_variants = image.variants|map:'title'|join:'' | default: product.title -%}
+  {%- if map_titles == '' -%}
+    {%- assign map_titles = title_image_variants | append: ","| split: ',' -%}
+  {%- else -%}
+    {%- assign map_titles = map_titles | join: ',' | append: "," | append: title_image_variants | split: ',' -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign variant_titles = map_titles -%}
+
+{%- assign checkOneImage = map_position_start_ | plus: 1 -%}
+{%- assign checkOneImage_ = false %}
+{%- if product.images.size == 1 -%}
+  {%- assign checkOneImage_ = true %}
+{%- endif -%}
+
+{%- assign settings_gallery = settings.gallery -%}
+{%- if section.settings.gallery == 'true' -%}
+{%- assign settings_gallery = true -%}
+{%- elsif section.settings.gallery == 'false' -%}
+{%- assign settings_gallery = false -%}
+{%- endif -%}
+{%- if checkOneImage == map_position_end_ and settings_gallery -%}
+  {%- assign checkOneImage_ = true %}
+{%- endif -%}
+{%- if checkOneImage == product.images.size and settings_gallery -%}
+  {%- assign checkOneImage_ = true %}
+{%- endif -%}
+{%- if product.images.size == 1 and settings_gallery -%}
+  {%- assign checkOneImage_ = true %}
+{%- endif -%}

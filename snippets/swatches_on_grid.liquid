@@ -1,0 +1,36 @@
+{%- unless image_size %}
+  {%- assign image_size = 'icon' -%}
+{%- endunless %}
+<ul class="swatches-list clearfix">
+  {%- for option in product.options -%}
+  {%- assign downcased_option = option | downcase -%}
+  {%- if downcased_option contains 'olo' or downcased_option contains 'couleur' -%}
+  {%- assign option_index = forloop.index0 -%}
+  {%- assign displayed_option_values = '' -%}
+  {%- for variant in product.variants -%}
+  {%- assign option_value = variant.options[option_index] -%}
+  {%- if variant.available -%}
+  {%- unless displayed_option_values contains option_value -%}
+  {%- unless variant.featured_image.src == blank -%}
+    {%- assign image = variant.featured_image -%}
+    {%- assign image_size_first = image_size | split: 'x' | first -%}
+    {%- assign image_width = image.width -%}
+    {%- assign image_height = image_size_first | divided_by: image.aspect_ratio | round -%}
+    {%- assign image_width_append = image_width | append:'x' -%}
+  <li class="swatch-on-grid _{{ option_value | handleize }}{%- if variant.featured_image and variant == current_variant %} current-swatch{%- endif -%}">
+    <span class="swatch" data-vrid="{{variant.id}}" data-vrtitle="{{variant.title}}" title="{{variant.title|escape }}" data-vrprice="{{variant.price}}" data-vrcompareprice="{{variant.compare_at_price}}" data-image="{% include 'kt_image_format',src: image.src , size: '480x' %}" style="{%- if variant.featured_image and settings.swatch_style == 'crop_image' -%}background-size: initial; {%- endif -%}{%- if variant.featured_image and settings.swatch_style != 'color' -%}background-image: url({% include 'kt_image_format',src: image.src , size: image_size %}){%- endif -%}"></span>
+  </li>
+  {%- else -%}
+  <li class="swatch-on-grid _{{ option_value | handleize }}">
+    <span class="swatch" data-vrid="{{variant.id}}" data-vrtitle="{{variant.title}}" title="{{variant.title|escape }}" data-vrprice="{{variant.price}}" data-vrcompareprice="{{variant.compare_at_price}}" data-image="" style=""></span>
+  </li>
+  {%- endunless -%}
+  {%- assign displayed_option_values = displayed_option_values | join: ',' -%}
+  {%- assign displayed_option_values = displayed_option_values | append: ',' | append: option_value -%}
+  {%- assign displayed_option_values = displayed_option_values | split: ',' -%}
+  {%- endunless -%}
+  {%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
+  {%- endfor -%}
+</ul>

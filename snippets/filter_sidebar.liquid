@@ -1,0 +1,518 @@
+<form action="#" id="layered_form">
+  <div id="layered_form--slick">
+    <div class="filter-by">
+      <a class="button" title="Filter" href="#"><i class="fa fa-filter" aria-hidden="true"></i>Filter</a>
+    </div>
+    <div class="layered_filter_dropdown">
+      <div class="masory_layout">
+        {% if settings.use_availability %}
+        <div class="layered_filter">
+          <div class="layered_subtitle_heading">
+            <span class="layered_subtitle">{{settings.title_sidebar_availability}}</span>
+            <span class="ico">{% include 'ico-select' %}</span>
+          </div>
+          <ul id="ul_layered_availability" class="layered_filter_ul">
+            <li class="nomargin hiddable ">
+              <label for="layered_availability_1">
+                <input type="checkbox" class="checkbox" name="availability" id="layered_availability_1" value="ab_true" {%if items_filter_check contains 'ab_true' %} checked{% endif %}>
+                <span>{{'layout.filters.in_stock'|t}} <span class="in_stock parent_count">(<span class="count">{{availability_true}}</span>)</span></span>
+              </label>
+            </li>
+            <li class="nomargin hiddable ">
+              <label for="layered_availability_0">
+              <input type="checkbox" class="checkbox" name="availability" id="layered_availability_0" value="ab_false" {%if items_filter_check contains 'ab_false' %} checked{% endif %}>
+                <span>{{'layout.filters.out_stock'|t}} <span class="out_stock parent_count">(<span class="count">{{availability_false}}</span>)</span></span>
+              </label>
+            </li>
+          </ul>
+        </div>{% endif %}{% if settings.use_price and max > min %}
+        <div class="layered_filter">
+        <!-- Filter price --> 
+          <div class="layered_subtitle_heading">
+            <span class="layered_subtitle">{{'layout.filters.price'|t}}</span>
+            <span class="ico">{% include 'ico-select' %}</span>
+          </div>
+          <ul id="ul_layered_price_0" class="layered_filter_ul">
+            <input type="text" id="amount_min" name="price_min" placeholder="{{min | divided_by: 100}}" data-unit="{{shop.currency}}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"> &ndash; 
+            <input type="text" id="amount_max" name="price_max" placeholder="{{max | divided_by: 100}}" data-unit="{{shop.currency}}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+
+            <div class="layered_slider_container">
+              <div class="slider-range-price" data-label-reasult="Price:" data-min="{{min | round }}" data-max="{{max | round }}" data-unit="{{shop.currency}}" data-value-min="{{min| round}}" data-value-max="{{max| round}}"></div>
+              <div class="layered_slider" id="layered_price_slider" data-type="price" data-format="1" data-unit="{{shop.currency}}"></div>
+            </div>
+            <label for="price">{{'layout.filters.price_range'|t}}: </label>
+            <input type="hidden" id="amount" name="price" data-unit="{{shop.currency}}" data-min="{{min | round }}" data-max="{{max | round }}" data-min-{{shop.currency| handleize}}="{{min | round }}" data-max-{{shop.currency| handleize}}="{{max | round }}" value="price_{{min}}-{{max}}">
+            <span id="layered_price_range">{% assign settings_min = settings.min | plus: 0 %}{% assign settings_max = settings.max | plus: 0 %}
+              <span class="price-min"><span class="money">{{min | money }}</span></span> - <span class="price-max"><span class="money">{{max | money }}</span></span>
+            </span>
+          </ul>
+        <!-- ./Filter price -->
+        </div>{% endif %}
+        {% for i in (1..5) %}{%-assign index1 = forloop.index -%}
+        {%-assign use_filter_variant_ = "use_filter_variant_" | append: i-%}
+        {%-if forloop.index == 1-%}{%-assign options = options_1 %}{%-assign option = option1 %}{%-endif-%}
+        {%-if forloop.index == 2-%}{%-assign options = options_2 %}{%-assign option = option2 %}{%-endif-%}
+        {%-if forloop.index == 3-%}{%-assign options = options_3 %}{%-assign option = option3 %}{%-endif-%}
+        {%-if forloop.index == 4-%}{%-assign options = options_4 %}{%-assign option = option4 %}{%-endif-%}
+        {%-if forloop.index == 5-%}{%-assign options = options_5 %}{%-assign option = option5 %}{%-endif-%}
+        {% capture s %}{{options}}{% endcapture %} {% assign options_check = s | handleize | strip %}
+        {%-if settings[use_filter_variant_] and options_check != blank -%}
+        <div class="layered_filter">
+          <div class="layered_subtitle_heading"> 
+            <span class="layered_subtitle">{{option}}</span>
+            <span class="ico">{% include 'ico-select' %}</span>
+          </div>
+          <ul id="ul_layered_id_attribute_group_{{index1}}" class="layered_filter_ul{% if option contains 'Màu sắc' or option contains 'Màu' or option contains 'Color'%} color-group{% endif %}">
+            {%-assign layered_options_filter_count = ''-%}
+            {%-for layered_filter in options-%}
+              {%-unless layered_filter == ''-%}
+                {%-assign check = layered_filter| split: ':' | first |handleize-%}
+                {%-assign layered_options_filter_count = layered_options_filter_count | append: check | append:','-%}
+              {%-endunless-%}
+            {%-endfor-%}
+            {%-assign layered_options_filter = ''-%}
+            {%-assign layered_options_filter_count = layered_options_filter_count | split: ','-%}
+            {%-for layered_filter in options-%}
+              {%-assign layered_options_filter_check = layered_options_filter| split: ','-%}
+              {%-assign check = layered_filter| split: ':' | first |handleize-%}
+              {%-unless layered_filter == ''-%}
+                {%-unless layered_options_filter_check contains check -%}
+                {%-assign item_count = 0-%}{%-for count in layered_options_filter_count -%}{%-if count == check-%}{%-assign item_count = item_count | plus: 1-%}{%-endif-%}{%-endfor-%}
+                {%-assign option_value_hd = layered_filter| split: ':' | first | handleize-%}
+                {%-assign filter_value_hd = option |handleize | append: '_' |append: option_value_hd-%}
+                  <li class="nomargin hiddable _{{layered_filter| split: ':' | first|handleize}}" id="{{option|handleize}}_{{layered_filter| split: ':' | first|handleize}}" style="-webkit-box-ordinal-group: -{{item_count}};-moz-box-ordinal-group: -{{item_count}};-ms-flex-order: -{{item_count}};-webkit-order: -{{item_count}};order: -{{item_count}};">
+                    {%-if option contains 'Màu sắc' or option contains 'Màu' or option contains 'olo'-%}
+                    <span class="color_pick swatch" data-color="{{option_value_hd}}" {% if check_list_color contains option_value_hd-%} style="background-color: {{option_value_hd}}"{% endif %}></span>
+                    {%-endif-%}
+                    <label for="layered_id_attribute_group_{{option|handleize|replace:'-','_'}}_{{forloop.index}}">
+                      <input type="checkbox" class="checkbox{% comment %}{% if option contains 'Màu sắc' or option contains 'Màu' or option contains 'olo' %} hidden{% endif %}{% endcomment %}" name="variant" id="layered_id_attribute_group_{{option|handleize|replace:'-','_'}}_{{forloop.index}}" value="{{filter_value_hd}}"{%if items_filter_check contains filter_value_hd %} checked{% endif %}>
+                      <span{% if layered_filter.size > 25 %} title="{{layered_filter| split: ':' | first}}" {% endif %}>{{layered_filter| split: ':' | first | capitalize }} <span class="parent_count">(<span class="count">{{item_count}}</span>)</span></span>
+                    </label>
+                  </li>
+                {%-assign layered_options_filter = layered_options_filter | append: check | append:','-%}
+                {%-endunless-%}
+              {%-endunless-%}
+            {%-endfor %}
+          </ul>
+        </div>
+        {%- endif -%}
+        {%- endfor %}
+        {% if settings.use_properties %}
+        <div class="layered_filter">
+          <div class="layered_subtitle_heading">
+            <span class="layered_subtitle">{{settings.title_sidebar_properties}}</span>
+            <span class="ico">{% include 'ico-select' %}</span>
+          </div>
+          <ul id="ul_layered_id_properties" class="layered_filter_ul">
+            {%-for item_properties in properties-%}
+            {%-if item_properties != ''-%}
+            {%-assign item_count = 0 %}{%-for count in properties_count -%}{% if count == item_properties %}{%-assign item_count = item_count | plus: 1 %}{% endif %}{% endfor %}
+            {%-assign filter_value_hd_item_properties = item_properties | handleize | prepend: 'tp_' -%}
+            <li class="nomargin hiddable " id="{{settings.title_sidebar_properties|strip| handleize}}_{{item_properties |strip| handleize}}" style="-webkit-box-ordinal-group: -{{item_count}};-moz-box-ordinal-group: -{{item_count}};-ms-flex-order: -{{item_count}};-webkit-order: -{{item_count}};order: -{{item_count}};">
+              <label for="layered_id_properties_{{forloop.index}}">
+                <input type="checkbox" class="checkbox" name="properties" id="layered_id_properties_{{forloop.index}}" value="{{filter_value_hd_item_properties}}"{%if items_filter_check contains filter_value_hd_item_properties %} checked{% endif %}>
+                <span>{{item_properties}} <span class="parent_count">(<span class="count">{{item_count}}</span>)</span></span>
+              </label>
+            </li>
+            {%-endif-%}
+            {%-endfor %}
+          </ul>
+        </div>
+        {% endif %}{% if settings.use_vendor %}
+        <div class="layered_filter">
+          <div class="layered_subtitle_heading">
+            <span class="layered_subtitle">{{settings.title_sidebar_vendor}}</span>
+            <span class="ico">{% include 'ico-select' %}</span>
+          </div>
+          <ul id="ul_layered_id_vendors" class="layered_filter_ul">
+            {%-for item_vendors in vendors-%}
+            {%-if item_vendors != ''-%}
+            {%-assign item_count = 0 %}{%-for count in vendors_count -%}{% if count == item_vendors %}{%-assign item_count = item_count | plus: 1 %}{% endif %}{% endfor %}
+            {%-assign filter_value_hd_item_vendors = item_vendors | handleize | prepend: 'vd_' -%}
+            <li class="nomargin hiddable " id="{{settings.title_sidebar_vendor|strip| handleize}}_{{item_vendors |strip| handleize}}" style="-webkit-box-ordinal-group: -{{item_count}};-moz-box-ordinal-group: -{{item_count}};-ms-flex-order: -{{item_count}};-webkit-order: -{{item_count}};order: -{{item_count}};">
+              <label for="layered_id__vendors_{{forloop.index}}">
+                <input type="checkbox" class="checkbox" name="vendors" id="layered_id__vendors_{{forloop.index}}" value="{{filter_value_hd_item_vendors}}"{%if items_filter_check contains filter_value_hd_item_vendors %} checked{% endif %}>
+                <span>{{item_vendors}} <span class="parent_count">(<span class="count">{{item_count}}</span>)</span></span>
+              </label>
+            </li>
+            {%-endif-%}
+            {%-endfor %}
+          </ul>
+        </div>
+        {% endif %}{% if settings.use_tags %}
+        <div class="layered_filter">
+          <div class="layered_subtitle_heading">
+            <span class="layered_subtitle">{{settings.title_sidebar_tags}}</span>
+            <span class="ico">{% include 'ico-select' %}</span>
+          </div>
+          <ul id="ul_layered_id_tags" class="layered_filter_ul">
+            {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+              {%-assign limit_tg = collection.all_tags.size-%}
+              {%-assign limit_check = settings.title_sidebar_tags_items|strip_newline|strip| split: '||'-%}
+            {%-else-%}
+              {%-assign limit_tg = settings.use_limit_tags | default: tags.size -%}
+            {%-endif-%}
+            {%-for item_tags in tags limit: limit_tg -%}
+              {%-if item_tags != ''-%}
+              {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+                {% if limit_check contains item_tags %}
+                  {%-assign filter_value_hd_item_tags = item_tags | handleize | prepend: 'tag_' -%}
+                  {%-assign item_count = 0 %}{%-for count in tags_count -%}{% if count == item_tags %}{%-assign item_count = item_count | plus: 1 %}{% endif %}{% endfor %}
+                  <li class="nomargin hiddable " id="{{settings.title_sidebar_tags|strip| handleize}}_{{item_tags|strip| handleize}}" style="-webkit-box-ordinal-group: -{{item_count}};-moz-box-ordinal-group: -{{item_count}};-ms-flex-order: -{{item_count}};-webkit-order: -{{item_count}};order: -{{item_count}};">
+                    <label for="layered_id__tags_{{forloop.index}}">
+                      <input type="checkbox" class="checkbox" name="tag" id="layered_id__tags_{{forloop.index}}" value="{{filter_value_hd_item_tags}}"{%if items_filter_check contains filter_value_hd_item_tags %} checked{% endif %}>
+                      <span>{{item_tags}} <span class="parent_count">(<span class="count">{{item_count}}</span>)</span></span>
+                    </label>
+                  </li>
+                {% endif %}
+              {%-else-%}
+              {%-assign filter_value_hd_item_tags = item_tags | handleize | prepend: 'tag_' -%}
+                {%-assign item_count = 0 %}{%-for count in tags_count -%}{% if count == item_tags %}{%-assign item_count = item_count | plus: 1 %}{% endif %}{% endfor %}
+                <li class="nomargin hiddable " id="{{settings.title_sidebar_tags|strip| handleize}}_{{item_tags|strip| handleize}}" style="-webkit-box-ordinal-group: -{{item_count}};-moz-box-ordinal-group: -{{item_count}};-ms-flex-order: -{{item_count}};-webkit-order: -{{item_count}};order: -{{item_count}};">
+                  <label for="layered_id__tags_{{forloop.index}}">
+                  <input type="checkbox" class="checkbox" name="tag" id="layered_id__tags_{{forloop.index}}" value="{{filter_value_hd_item_tags}}"{%if items_filter_check contains filter_value_hd_item_tags %} checked{% endif %}>
+                    <span>{{item_tags}} <span class="parent_count">(<span class="count">{{item_count}}</span>)</span></span>
+                  </label>
+                </li>
+              {%-endif-%}
+              {%-endif-%}
+            {%-endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="layered_filter woocommerce-ordering">
+      <div class="sorter">
+        <div class="sort-by select-wrapper" id="sort_by">
+          {% if settings.sort_enable %}
+          <div class="layered_subtitle_heading">
+            <span class="layered_subtitle selection">
+              {% if sort_by == 'manual' %}
+              {%- assign sort_by = 'title-ascending' -%}
+              {% endif %}
+              {% if sort_by == 'best-selling' %}
+              {%- assign sort_by = 'title-ascending' -%}
+              {% endif %}
+              {% if sort_by == 'title-ascending' %}{{ 'collections.sorting.az' | t }}
+              {% endif %}
+              {% if sort_by == 'title-descending' %}{{ 'collections.sorting.za' | t }}
+              {% endif %}
+              {% if sort_by == 'price-ascending' %}{{ 'collections.sorting.price_ascending' | t }}
+              {% endif %}
+              {% if sort_by == 'price-descending' %}{{ 'collections.sorting.price_descending' | t }}
+              {% endif %}
+              {% if sort_by == 'created-descending' %}{{ 'collections.sorting.date_descending' | t }}
+              {% endif %}
+              {% if sort_by == 'created-ascending' %}{{ 'collections.sorting.date_ascending' | t }}
+              {% endif %}
+            </span>
+            <span class="ico">{% include 'ico-select' %}</span>
+          </div>
+          <div class="dropdown layered_filter_ul">
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            <ul class="options">
+              <li class="sort_by{% if sort_by == "title-ascending" or sort_by == 'manual' or sort_by == 'best-selling' %} selected{% endif %}" data-sort="title-ascending">{{ 'collections.sorting.az' | t }}</li>
+              <li class="sort_by{% if sort_by == "title-descending" %} selected{% endif %}" data-sort="title-descending">{{ 'collections.sorting.za' | t }}</li>
+              <li class="sort_by{% if sort_by == "price-ascending" %} selected{% endif %}" data-sort="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</li>
+              <li class="sort_by{% if sort_by == "price-descending" %} selected{% endif %}" data-sort="price-descending">{{ 'collections.sorting.price_descending' | t }}</li>
+              <li class="sort_by{% if sort_by == "created-descending" %} selected{% endif %}" data-sort="created-descending">{{ 'collections.sorting.date_descending' | t }}</li>
+              <li class="sort_by{% if sort_by == "created-ascending" %} selected{% endif %}" data-sort="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</li>
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="filter-container__selected-filter clearfix"{%if items_filter_check.size  <= 0 %} style="display:none"{% endif %}>
+      <ul>
+        {% if settings.use_availability %}
+        {% if items_filter_check contains 'ab_true' or items_filter_check contains 'ab_false' %}<li class="ul_layered_availability__selected-filter">{{settings.title_sidebar_availability}}: <span class="remove_filterSelected" data-remove="{%if items_filter_check contains 'ab_true' %}ab_true{% elsif items_filter_check contains 'ab_false' %}ab_false{% endif %}">{%if items_filter_check contains 'ab_true' %}{{'layout.filters.in_stock'|t}}{% elsif items_filter_check contains 'ab_flase' %}{{'layout.filters.out_stock'|t}}{% endif %}<i class="fa fa-close" aria-hidden="true"></i></span></li>{% endif %}
+        {% endif %}
+        {% if settings.use_price %}
+        <li class="ul_layered_price_0__selected-filter" style="display:none">{{'layout.filters.price'|t}}: <span class="remove_filterSelected" data-remove="price" data-min-{{shop.currency| handleize}}="{{min | round }}" data-max-{{shop.currency| handleize}}="{{max | round }}" data-value="price_{{min}}-{{max}}"><span class="amount_min">{{min | money }}</span> &ndash; <span class="amount_max">{{max | money }}</span><i class="fa fa-close" aria-hidden="true"></i></span></li>
+        {% endif %}
+        {% for i in (1..5) %}{%-assign index1 = forloop.index -%}
+        {%-assign use_filter_variant_ = "use_filter_variant_" | append: i-%}
+        {%-if forloop.index == 1-%}{%-assign options = options_1 %}{%-assign option = option1 %}{%-endif-%}
+        {%-if forloop.index == 2-%}{%-assign options = options_2 %}{%-assign option = option2 %}{%-endif-%}
+        {%-if forloop.index == 3-%}{%-assign options = options_3 %}{%-assign option = option3 %}{%-endif-%}
+        {%-if forloop.index == 4-%}{%-assign options = options_4 %}{%-assign option = option4 %}{%-endif-%}
+        {%-if forloop.index == 5-%}{%-assign options = options_5 %}{%-assign option = option5 %}{%-endif-%}
+        {% capture s %}{{options}}{% endcapture %} {% assign options_check = s | handleize | strip %}
+        {%-if settings[use_filter_variant_] and options_check != blank -%}
+          {%-for layered_filter in options-%}
+            {%-unless layered_filter == ''-%}
+              {%-assign check = layered_filter| split: ':' | first |handleize-%}
+            {%-endunless-%}
+          {%-endfor-%}
+          {%-assign layered_options_filter = ''-%}
+          {%-assign firstSelected = 0 -%}
+          {%-for layered_filter in options-%}
+            {%-assign layered_options_filter_check = layered_options_filter| split: ','-%}
+            {%-assign check = layered_filter| split: ':' | first |handleize-%}
+            {%-unless layered_filter == ''-%}
+              {%-unless layered_options_filter_check contains check -%}
+              {%-assign option_value_hd = layered_filter| split: ':' | first | handleize-%}
+              {%-assign filter_value_hd = option |handleize | append: '_' |append: option_value_hd-%}
+        {%-if items_filter_check contains filter_value_hd-%}
+        {%-if firstSelected == 0 %}<li class="ul_layered_id_attribute_group_{{index1}}__selected-filter">{{option}}: {%assign firstSelected = 1 %}{% endif %}<span class="remove_filterSelected" data-remove="{{filter_value_hd}}">{{layered_filter| split: ':' | first | capitalize }}<i class="fa fa-close" aria-hidden="true"></i></span>{% if forloop.last and firstSelected == 1 %}</li>{% endif %}
+        {%-endif-%}
+              {%-assign layered_options_filter = layered_options_filter | append: check | append:','-%}
+              {%-endunless-%}
+            {%-endunless-%}
+          {%-endfor %}      
+        {%- endif -%}
+        {%- endfor %}        
+        
+        {%-if settings.use_properties -%}
+        {%-assign firstSelected = 0 -%}
+        {%-for item_properties in properties-%}
+        {%-if item_properties != ''-%}
+        {%-assign filter_value_hd_item_properties = item_properties | handleize | prepend: 'tp_' -%}
+        {%-if items_filter_check contains filter_value_hd_item_properties-%}
+        {%-if firstSelected == 0 %}<li class="ul_layered_id_properties__selected-filter">{{settings.title_sidebar_properties}}: {%assign firstSelected = 1 %}{% endif %}<span class="remove_filterSelected" data-remove="{{filter_value_hd_item_properties}}">{{item_properties}}<i class="fa fa-close" aria-hidden="true"></i></span></li>
+        {%-endif-%}
+        {%-endif-%}
+        {%-endfor %}
+        {%-endif-%}
+        {%-if settings.use_vendor -%}
+        {%-assign firstSelected = 0 -%}
+        {%-for item_vendors in vendors-%}
+        {%-if item_vendors != ''-%}
+        {%-assign filter_value_hd_item_vendors = item_vendors | handleize | prepend: 'vd_' -%}
+        {%if items_filter_check contains filter_value_hd_item_vendors %}
+        {%-if firstSelected == 0 %}<li class="ul_layered_id_vendors__selected-filter">{{settings.title_sidebar_vendor}}: {%assign firstSelected = 1 %}{% endif %}<span class="remove_filterSelected" data-remove="{{filter_value_hd_item_vendors}}">{{item_vendors}}<i class="fa fa-close" aria-hidden="true"></i></span></li>
+        {% endif %}
+        {%-endif-%}
+        {%-endfor %}
+        {%-endif-%}
+        {%-if settings.use_tags -%}
+        {%-assign firstSelected = 0 -%}
+
+        {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+          {%-assign limit_tg = collection.all_tags.size-%}
+          {%-assign limit_check = settings.title_sidebar_tags_items|strip_newline|strip| split: '||'-%}
+        {%-else-%}
+          {%-assign limit_tg = settings.use_limit_tags | default: tags.size -%}
+        {%-endif-%}
+        {%-for item_tags in tags limit: limit_tg -%}
+          {%-if item_tags != ''-%}
+          {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+          {% if limit_check contains item_tags %}
+            {%-assign filter_value_hd_item_tags = item_tags | handleize | prepend: 'tag_' -%}
+            {%-if items_filter_check contains filter_value_hd_item_tags -%}
+              {%-if firstSelected == 0 %}<li class="ul_layered_id_tags__selected-filter">{{settings.title_sidebar_tags}}: {%assign firstSelected = 1 %}{% endif %}<span class="remove_filterSelected" data-remove="{{filter_value_hd_item_tags}}">{{item_tags}}<i class="fa fa-close" aria-hidden="true"></i></span></li>
+            {%-endif-%}
+          {%-endif-%}
+          {%-else-%}
+            {%-assign filter_value_hd_item_tags = item_tags | handleize | prepend: 'tag_' -%}
+            {%-if items_filter_check contains filter_value_hd_item_tags -%}
+              {%-if firstSelected == 0 %}<li class="ul_layered_id_tags__selected-filter">{{settings.title_sidebar_tags}}: {%assign firstSelected = 1 %}{% endif %}<span class="remove_filterSelected" data-remove="{{filter_value_hd_item_tags}}">{{item_tags}}<i class="fa fa-close" aria-hidden="true"></i></span></li>
+            {%-endif-%}
+          {%-endif-%}
+          {%-endif-%}
+        {%-endfor %}
+        {%-endif-%}
+      </ul>
+    </div>
+  </div>
+</form>
+{% comment %}
+<script>
+  var filtersJson = {
+   "items":[
+     {% if settings.use_availability -%}
+      {
+         "title":"{{settings.title_sidebar_availability}}",
+         "code":"ab_",
+          "items":[
+            {
+               "title":"{{'layout.filters.in_stock'|t}}",
+               "value":"ab_true",
+               "selected":{%- if items_filter_check contains 'ab_true' -%}true{%- else -%}false{%- endif -%},
+               "count":"{{availability_true}}"
+            },
+            {
+               "title":"{{'layout.filters.out_stock'|t}}",
+               "value":"ab_false",
+               "selected":{%- if items_filter_check contains 'ab_true' -%}true{%- else -%}false{%- endif -%},
+               "count":"{{availability_false}}"
+            }
+          ]
+      },
+     {%- endif %}
+      {
+         "title":"Price",
+         "code":"price",
+         "items":[
+            {
+               "title":"<span class=\"price\">0 \u20ac<\/span>{% if max >= 30000 %} - <span class=\"price\">299 \u20ac<\/span>{% else %} and above{% endif %}",
+               "value":"price_0-{% if max >= 30000 %}30000{% else %}{{max|divided_by: 100}}{% endif %}",
+               "selected":false,
+               "count":""
+            }{%- if max >= 30000-%},
+            {
+               "title":"<span class=\"price\">300 \u20ac<\/span>{% if max >= 60000 %} - <span class=\"price\">599 \u20ac<\/span>{% else %} and above{% endif %}",
+               "value":"price_30000-{% if max >= 60000 %}60000{% else %}{{max|divided_by: 100}}{% endif %}",
+               "selected":false,
+               "count":""
+            }{%- endif -%}{%- if max >= 60000-%},
+            {
+               "title":"<span class=\"price\">600 \u20ac<\/span>{% if max >= 90000 %} - <span class=\"price\">999 \u20ac<\/span>{% else %} and above{% endif %}",
+               "value":"price_60000-{% if max >= 90000 %}90000{% else %}{{max|divided_by: 100}}{% endif %}",
+               "selected":false,
+               "count":""
+            }{%- endif -%}{%- if max >= 90000-%},
+            {
+               "title":"<span class=\"price\">900 \u20ac<\/span>{% if max >= 120000 %} - <span class=\"price\">1,199 \u20ac<\/span>{% else %} and above{% endif %}",
+               "value":"price_90000-{% if max >= 120000 %}120000{% else %}{{max|divided_by: 100}}{% endif %}",
+               "selected":false,
+               "count":""
+            }{%- endif -%}{%- if max >= 120000-%},
+            {
+               "title":"<span class=\"price\">1,200 \u20ac<\/span>{% if max >= 150000 %} - <span class=\"price\">1,500 \u20ac<\/span>{% else %} and above{% endif %}",
+               "value":"price_120000-{% if max >= 150000 %}150000{% else %}{{max|divided_by: 100}}{% endif %}",
+               "selected":false,
+               "count":""
+            }{%- endif -%}{%- if max >= 150000-%},
+            {
+               "title":"<span class=\"price\">1,500 \u20ac<\/span> and above",
+               "value":"price_150000-{{max|divided_by: 100}}",
+               "selected":false,
+               "count":""
+            }{%- endif -%}
+         ]
+      },
+    {% for i in (1..5) %}{%-assign index1 = forloop.index -%}
+    {%-assign use_filter_variant_ = "use_filter_variant_" | append: i-%}
+    {%-if forloop.index == 1-%}{%-assign options = options_1 %}{%-assign option = option1 %}{%-endif-%}
+    {%-if forloop.index == 2-%}{%-assign options = options_2 %}{%-assign option = option2 %}{%-endif-%}
+    {%-if forloop.index == 3-%}{%-assign options = options_3 %}{%-assign option = option3 %}{%-endif-%}
+    {%-if forloop.index == 4-%}{%-assign options = options_4 %}{%-assign option = option4 %}{%-endif-%}
+    {%-if forloop.index == 5-%}{%-assign options = options_5 %}{%-assign option = option5 %}{%-endif-%}
+    {% capture s %}{{options}}{% endcapture %} {% assign options_check = s | handleize | strip %}
+    {%-if settings[use_filter_variant_] and options_check != blank -%}
+      {
+         "title":"{{option}}",
+         "code":"{{option|handleize}}_",
+         "items":[
+          {%-assign layered_options_filter_count = ''-%}
+          {%-for layered_filter in options-%}
+            {%-unless layered_filter == ''-%}
+              {%-assign check = layered_filter| split: ':' | first |handleize-%}
+              {%-assign layered_options_filter_count = layered_options_filter_count | append: check | append:','-%}
+            {%-endunless-%}
+          {%-endfor-%}
+          {%-assign layered_options_filter = ''-%}
+          {%-assign layered_options_filter_count = layered_options_filter_count | split: ','-%}
+          {%-for layered_filter in options-%}
+            {%-assign layered_options_filter_check = layered_options_filter| split: ','-%}
+            {%-assign check = layered_filter| split: ':' | first |handleize-%}
+            {%-unless layered_filter == ''-%}
+              {%-unless layered_options_filter_check contains check -%}
+              {%-assign item_count = 0-%}{%-for count in layered_options_filter_count -%}{%-if count == check-%}{%-assign item_count = item_count | plus: 1-%}{%-endif-%}{%-endfor-%}
+              {%-assign option_value_hd = layered_filter| split: ':' | first | handleize-%}
+              {%-assign filter_value_hd = option |handleize | append: '_' |append: option_value_hd-%}
+            {
+               "title":"{{layered_filter| split: ':' | first | capitalize }}",
+               "value":"{{filter_value_hd}}",
+               "selected":{%- if items_filter_check contains filter_value_hd -%}true{%- else -%}false{%- endif -%},
+               "count":"{{item_count}}"
+            }
+              {%-assign layered_options_filter = layered_options_filter | append: check | append:','-%}
+           ,
+              {%-endunless-%}
+            {%-endunless-%}
+          {%-endfor %}
+         ]
+      },
+    {% endif %}
+    {% endfor %}
+     {% if settings.use_properties -%}
+      {
+         "title":"{{settings.title_sidebar_properties}}",
+         "code":"tp_",
+          "items":[
+            {%-for item_properties in properties-%}
+            {%-if item_properties != ''-%}
+            {%-assign item_count = 0 %}{%-for count in properties_count -%}{% if count == item_properties %}{%-assign item_count = item_count | plus: 1 %}{% endif %}{% endfor %}
+            {%-assign filter_value_hd_item_properties = item_properties | handleize | prepend: 'tp_' -%}
+            {
+              "title":"{{item_properties}}",
+              "value":"{{filter_value_hd_item_properties}}",
+              "selected":{%- if items_filter_check contains filter_value_hd_item_properties -%}true{%- else -%}false{%- endif -%},
+              "count":"{{item_count}}"
+            },
+            {%-endif-%}
+            {%-endfor %}
+          ]
+      },
+     {%- endif %}
+     {% if settings.use_vendor -%}
+      {
+         "title":"{{settings.title_sidebar_vendor}}",
+         "code":"vd_",
+          "items":[
+            {%-for item_vendors in vendors-%}
+            {%-if item_vendors != ''-%}
+            {%-assign item_count = 0 %}{%-for count in vendors_count -%}{% if count == item_vendors %}{%-assign item_count = item_count | plus: 1 %}{% endif %}{% endfor %}
+            {%-assign filter_value_hd_item_vendors = item_vendors | handleize | prepend: 'vd_' -%}
+            {
+              "title":"{{item_vendors}}",
+              "value":"{{filter_value_hd_item_vendors}}",
+              "selected":{%- if items_filter_check contains filter_value_hd_item_vendors -%}true{%- else -%}false{%- endif -%},
+              "count":"{{item_count}}"
+            },
+            {%-endif-%}
+            {%-endfor %}
+          ]
+      },
+     {%- endif %}
+     {% if settings.use_tags -%}
+      {
+         "title":"{{settings.title_sidebar_tags}}",
+         "code":"tag_",
+          "items":[
+          {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+            {%-assign limit_tg = collection.all_tags.size-%}
+            {%-assign limit_check = settings.title_sidebar_tags_items|strip_newline|strip| split: '||'-%}
+          {%-else-%}
+            {%-assign limit_tg = settings.use_limit_tags-%}
+          {%-endif-%}
+          {%-for item_tags in tags limit: limit_tg -%}
+            {%-if item_tags != ''-%}
+            {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+            {% if limit_check contains item_tags %}
+            {%-assign filter_value_hd_item_tags = item_tags | handleize | prepend: 'tag_' -%}
+            {
+              "title":"{{item_tags}}",
+              "value":"{{filter_value_hd_item_tags}}",
+              "selected":{%- if items_filter_check contains filter_value_hd_item_tags -%}true{%- else -%}false{%- endif -%},
+              "count":"{{item_count}}"
+            },
+            {% endif %}
+            {%-else-%}
+            {%-assign filter_value_hd_item_tags = item_tags | handleize | prepend: 'tag_' -%}
+            {%-assign item_count = 0 %}{%-for count in tags_count -%}{% if count == item_tags %}{%-assign item_count = item_count | plus: 1 %}{% endif %}{% endfor %}
+            {
+              "title":"{{item_tags}}",
+              "value":"{{filter_value_hd_item_tags}}",
+              "selected":{%- if items_filter_check contains filter_value_hd_item_tags -%}true{%- else -%}false{%- endif -%},
+              "count":"{{item_count}}"
+            },
+            {%-endif-%}
+            {%-endif-%}
+          {%-endfor %}
+          ]
+      },
+     {%- endif %}
+   ],
+   "translations":{
+      "title":"{{'layout.filters_mobile.title'|t}}",
+      "submit":"{{'layout.filters_mobile.submit'|t}}",
+      "reset":"{{'layout.filters_mobile.reset'|t}}"
+   }
+};
+</script>
+{% endcomment %}

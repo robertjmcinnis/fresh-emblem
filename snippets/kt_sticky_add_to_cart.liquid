@@ -1,0 +1,118 @@
+{%- if product.available -%}
+{%- assign current_variant_sticky = product.first_available_variant -%}
+{%- assign section_settings_countdown = settings.show_sticky_countdown -%}
+{%- if settings.sticky_align == 'text-left' -%}
+  {%- assign sticky_align = ' justify-content-center justify-content-md-start' -%}
+{%- elsif settings.sticky_align == 'text-center' -%}
+  {%- assign sticky_align = ' justify-content-center full-width' -%}
+{%- elsif settings.sticky_align == 'text-left' -%}
+  {%- assign sticky_align = ' justify-content-center justify-content-md-end' -%}
+{%- endif -%}
+<div class="jas-sticky-atc dp-flex {{settings.sticky_position}}{{sticky_align}}">
+  <form id="cart_form_sticky" data-only-variant="{{product.has_only_default_variant}}" action="/cart/add" method="post" enctype="multipart/form-data" class="variations {{settings.sticky_align}}">
+    {%- if settings.sticky_quantity_message -%}
+    {%- if current_variant_sticky.inventory_management -%}
+    <div id="quantity_sticky" class="variant-quantity_sticky mr__10">
+      {%- if current_variant_sticky.inventory_quantity < 10 and current_variant_sticky.inventory_quantity > 0 -%}
+      {{ 'products.product.only_left_html' | t: count: current_variant_sticky.inventory_quantity }}
+      {%- elsif current_variant.inventory_quantity <= 0 and current_variant_sticky.incoming and current_variant_sticky.available == false -%}
+      {%- assign next_incoming_date = current_variant_sticky.next_incoming_date | date: format: 'month_day_year' -%}
+      {{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    {%- endif -%}
+    {% if product.metafields.event.countdown and settings.show_sticky_countdown %}
+    {% assign countdown_ = product.metafields.event.countdown | split: '+' | first %}
+    {% assign countdown__ = countdown_ | split: 'T' | first | split: '/' %}
+    {% assign countdown___ = countdown_ | split: 'T' | last | split: ':' %}
+    <div class="product-count-down claue_count_down_sticky">
+      <div class="kt-countdown"
+           data-y="{{countdown__[2]|default:00}}"
+           data-m="{{countdown__[0]|default:00}}"
+           data-d="{{countdown__[1]|default:00}}"
+           data-h="{{countdown___[0]|default:00}}"
+           data-i="{{countdown___[1]|default:00}}"
+           data-s="{{countdown___[2]|default:00}}">
+      </div>
+    </div>
+    {% endif %}
+    {%- if settings.show_sticky_img -%}
+    {%- assign current_img_sticky = product.first_available_variant -%}
+    {%- if current_variant_sticky.featured_image == null -%}
+    {%- assign current_img_sticky = product -%}
+    {%- endif -%}
+    <div id="pr_img_sticky" class="mr__10">
+      <img width="80" height="102" src="{%-include 'kt_image_format',src: current_img_sticky.featured_image.src , size: '80x' -%}" class="attachment-shop_thumbnail size-shop_thumbnail" alt="{{current_img_sticky.featured_image.alt}}">
+    </div>
+    {%- endif -%}
+    {%- if product.has_only_default_variant == false -%}
+    <div class="input-dropdown-inner mr__10" data-option-index="{{ option_index }}">
+      {%- for variant in product.variants -%}
+      {%- if variant.available and variant.id == current_variant_sticky.id -%}
+      <a id="labelDropdown" href="#" data-val="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</a>
+      {%- break -%}
+      {%- endif -%}
+      {%- endfor -%}
+      <ul class="t-swatch dropdown-list swatch_list_sticky">
+        {%- for variant in product.variants -%}
+        {%- if variant.available -%}
+        <li data-val='{{ variant.id }}' {%- if variant.featured_image.src.size > 0 %} data-img='{%-include 'kt_image_format',src: variant.featured_image.src , size: '80x' -%}' {% endif -%}{%- if variant.inventory_management and variant.inventory_quantity < 10 and variant.inventory_quantity > 0 %} data-inventory='{{ variant.inventory_quantity }}' {% endif -%} class="swatch_sticky{%- if variant.id == current_variant_sticky.id %} selected{%- endif %}">
+          <a href="javascript:void(0);" data-val='{{ variant.id }}'><label>{{ variant.title }}</label> - {{ variant.price | money }}</a>
+        </li>
+        {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+    {%- endif -%}
+    <input id="idForm" name="id" value="{{product.first_available_variant.id}}" type="hidden">
+    <div class="shopify-variation-add-to-cart variations_button">
+      {%- if settings.show_sticky_quantiny -%}
+      <div class="quantity mr__10">
+        <div class="quantity-inner">
+          <label for="Quantity" class="hidden">{{ 'products.product.quantity' | t }}</label>
+          <input type="number" name="quantity" value="1" min="1" max="{%- if current_variant_sticky.inventory_management != null -%}{{current_variant_sticky.inventory_quantity}}{%- else -%}999{%- endif -%}" class="input-text qty text" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+          <div class="quantity-nav">
+            <div class="quantity-button quantity-up"></div>
+            <div class="quantity-button quantity-down"></div>
+          </div>
+        </div>
+      </div>
+      {%- endif -%}
+      <button type="button" class="single_add_to_cart_button button alt" onclick="Shopify.KT_addItemFromForm('cart_form_sticky');$(this).addClass('loading').removeClass('loaded')">{{ 'products.product.add_to_cart' | t }}</button>
+    </div>
+  </form>
+  {%- if settings.show_sticky_add_mobile -%}
+  <div id="mobile_add_sticky" class="align-items-center dp-flex">
+    <button type="submit" class="single_add_to_cart_button button alt" onclick="jQuery('html, body').stop().animate({scrollTop: jQuery('#AddToCart-product-template').offset().top - 250 }, 500);" >{{ 'products.product.add_to_cart' | t }}</button>
+    {%- if settings.sticky_quantity_message -%}
+    <div id="quantity_sticky" class="variant-quantity_sticky">
+      {%- if current_variant_sticky.inventory_management -%}
+      {%- if current_variant_sticky.inventory_quantity < 10 and current_variant_sticky.inventory_quantity > 0 -%}
+      {{ 'products.product.only_left' | t: count: current_variant_sticky.inventory_quantity }}
+      {%- elsif current_variant.inventory_quantity <= 0 and current_variant_sticky.incoming and current_variant_sticky.available == false -%}
+      {%- assign next_incoming_date = current_variant_sticky.next_incoming_date | date: format: 'month_day_year' -%}
+      {{ 'products.product.will_not_ship_until' | t: date:next_incoming_date }}
+      {%- endif -%}
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    {% if product.metafields.event.countdown and settings.show_sticky_countdown %}
+    {% assign countdown_ = product.metafields.event.countdown | split: '+' | first %}
+    {% assign countdown__ = countdown_ | split: 'T' | first | split: '/' %}
+    {% assign countdown___ = countdown_ | split: 'T' | last | split: ':' %}
+    <div class="product-count-down claue_count_down_sticky">
+      <div class="kt-countdown"
+           data-y="{{countdown__[2]|default:00}}"
+           data-m="{{countdown__[0]|default:00}}"
+           data-d="{{countdown__[1]|default:00}}"
+           data-h="{{countdown___[0]|default:00}}"
+           data-i="{{countdown___[1]|default:00}}"
+           data-s="{{countdown___[2]|default:00}}">
+      </div>
+    </div>
+    {% endif %}
+  </div>  
+  {%- endif -%}
+</div>
+{%- endif -%}

@@ -1,0 +1,16 @@
+<!-- /snippets/comment.liquid -->
+<div class="comment-item">
+  <div class="comment-author">
+    <img style="width: 100%;float: left;border-radius: 50%;" alt="{{ comment.author }}" src="https://www.gravatar.com/avatar/{{ comment.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=130&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ comment.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=130&d=mm&r=g 2x">
+  </div>
+  <div class="comment-body">
+    {% capture author %}<h5 class="author">{{ comment.author }}</h5>{% endcapture %}
+    {% capture date %}<span class="date-comment"><time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">{{ comment.created_at | date: "%d %b %Y" }}</time></span>{% endcapture %}
+    {{ 'blogs.article.comment_meta_html' | t: author: author, date: date }}
+    <div class="comment-content">
+      <p>{{ comment.content }}</p>
+    </div>
+
+    {% comment %}<a rel="nofollow" class="comment-reply-link" href="#">reply<i class="fa fa-mail-reply"></i></a>{% endcomment %}
+  </div>
+</div>

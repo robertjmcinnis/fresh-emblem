@@ -1,0 +1,128 @@
+<section id="addMoreModal" class="modal animated fadeIn" aria-hidden="false" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <button class="close" aria-label="Close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+      </button>
+      <div class="content-item product-addmore-content">
+        <div class="box-container">
+          <div class="box-header">
+            <h3>{{settings.title_modal|html}}</h3>
+          </div>
+          <div class="box-body">
+            <form id="kt_addmore">
+              <ul class="full-list-variants">
+                {%-assign addmore_variants = product.variants | sort: 'price'-%}
+                {%- assign name_otpion1 = '' -%}
+                {%- assign image_url = '' -%}
+
+                {%-for variant in addmore_variants-%}
+                  {%-if variant.image-%}
+                    {%-unless name_otpion1 contains variant.option1-%}
+                    {%-if name_otpion1 != ''-%}
+                      {%- assign name_otpion1 = name_otpion1 | join: '|||' | append: '|||' | append: variant.option1 | split: '|||' -%}
+                      {%- assign _url = variant.image|img_url: '150x' -%}
+                      {%- assign image_url = image_url | join: '|||' | append: '|||' | append: _url | split: '|||' -%}  
+                    {%-else-%}
+                      {%- assign name_otpion1 = name_otpion1 | append: variant.option1 | append: '|||' | split: '|||' -%}
+                      {%- assign _url = variant.image|img_url: '150x' -%}
+                      {%- assign image_url = image_url | append: _url | append: '|||' | split: '|||' -%}  
+                    {%-endif-%}
+                    {%-endunless-%}
+                  {%-endif-%}
+                {%-endfor-%}
+
+                {%-for variant in addmore_variants-%}
+                <li class="item-variant variant--{{variant.id}} vr__{{variant.option1 | handleize}} vr__{{variant.option2 | handleize}} vr__{{variant.option3 | handleize}} itemGroupProducts col-sm-6 col-xs-12" data-nth-child="{{forloop.index}}">
+                  <div class="item-wrapper">
+                    <div class="img-var">
+                      {%-if variant.image-%}
+                        <img class="lazyload" data-src="{{variant.image|img_url: '150x'}}">
+                      {%-else-%}
+                        {%-if name_otpion1 contains variant.option1-%}
+                          {%-for name_otpion in name_otpion1-%}
+                            {%-if name_otpion == variant.option1-%}
+                              <img class="lazyload" data-src="{{image_url[forloop.index0]}}">
+                            {%-endif-%}
+                          {%-endfor-%}
+                        {%-else-%}
+                          <img class="lazyload" data-src="{{product.featured_image|img_url: '150x'}}">
+                        {%-endif-%}
+                      {%-endif-%}
+                    </div>
+                    <div class="info-var">
+                      <div class="name-var">{{variant.title}}</div>
+                      <div class="price" data-price-default="{{variant.price}}">{{variant.price|money}}{%-if variant.available == false-%}<span> - {{'products.product.out_of_stock'|t}}</span>{%-endif-%}</div>
+                    </div>
+                    <input type="checkbox" id="checkbox--{{variant.id}}" data-vr-id="{{variant.id}}" onclick="$(this).parents('li.variant--{{variant.id}}').toggleClass('selected')" {%-if variant.available == false-%} disabled="disabled"{%-endif-%}/>
+                    <div class="quantity quantity-var">
+                      <div class="quantity-inner">
+                        <div class="quantity-button quantity-down">-</div>
+                        <input type="number" name="quantity__{{variant.id}}" value="1" min="1" class="input-text qty text" data-id="{{variant.id}}">
+                        <div class="quantity-button quantity-up">+</div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {%-endfor-%}
+              </ul>
+            </form>
+            <div class="options-product row-flex align-items-center margin-top-15">
+              <div class="p-left-15 margin-bottom-10"><span>{{'collections.filters_mobile.title'|t}}</span></div>
+              {%- for option_addmore in product.options_with_values -%}
+              <div class="p-left-15 p-right-15 margin-bottom-10">
+                <select class="single-option-selector single-option-selector-addmore-template" id="SingleOptionSelector-{{ forloop.index0 }}--addmore-template" data-index="option{{ forloop.index0 }}">
+                  {%- for value in option_addmore.values-%}
+                    {%- if forloop.first -%}
+                      <option value="all">All - {{ option_addmore.name }}</option>
+                    {%- endif -%}
+                    <option value="vr__{{ value | handleize }}">{{ value }}</option>
+                  {%-endfor -%}
+                </select>
+              </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color:#efefef;padding:10px 15px">
+        <div class="options-product row-flex align-items-center">
+          {% if settings.use_threshold %}
+          <div class="col-12 col-md-6 p-left-15 p-right-15 margin-bottom-10 text-center">
+            <div class="footer-container">
+              <div class="progress" data-total="{{settings.free_shipping_above|remove:'.'}}">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="6000" aria-valuemin="0" aria-valuemax="{{settings.free_shipping_above|remove:'.'}}" style="width: 60%">
+                  60%
+                </div>
+              </div>
+              <p class="content_threshold">{{ 'general.shipping_threshold.spend' | t }} 
+                <strong class="spend_price">
+                  {{product.price|money}}
+                </strong> {{ 'general.shipping_threshold.more' | t }} <strong class="tooltip_top" aria-label="{{ 'general.shipping_threshold.days' | t }}">{{ 'general.shipping_threshold.free' | t }}</strong>
+                <a href="/collections/all?sort_by=best-selling"> {{ 'general.shipping_threshold.continue' | t }}</a> {{ 'general.shipping_threshold.add_more' | t }} {{settings.free_shipping_above|remove:'.'|money}}.
+              </p>              
+              <p class="content_threshold threshold_congrats hidden"><i class="fas fa-bell"></i> {{ 'general.shipping_threshold.congratulations' | t }}</p>
+            </div>
+          </div>
+          {% endif %}
+          <div class="col-12 col-md-{% if settings.use_threshold %}6{%else%}12{%endif%} p-left-15 p-right-15 margin-bottom-10 text-center">          
+            <div class="subtotal">
+              <div class="subtotal-label">
+                <span class="h4">Subtotal: </span>
+                <span class="subtotal-number">
+                  {{product.price|money}}
+                </span>
+              </div>
+            </div>
+            <button type="button" id="add-to-cart" class="btn button boutique__add-to-cart margin-top-10" onclick="Shopify.KT_addItemFromMoreAttr('kt_addmore');$(this).addClass('loading').removeClass('loaded')">
+              {{'products.product.add_to_cart'|t}}
+            </button>
+            <div class="text-center margin-top-15" style="max-width: 500px;margin: 0 auto;">
+              <img alt="{{settings.trust_image_addmore.alt}}" src="{%-if settings.trust_image_addmore-%}{{settings.trust_image_addmore| img_url: 'master'}}{%-else-%}//cdn.shopify.com/s/files/1/1958/5719/files/trust_imgae_no_title.png?5947895233354169859{%-endif-%}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

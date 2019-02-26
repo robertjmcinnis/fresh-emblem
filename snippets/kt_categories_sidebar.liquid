@@ -1,0 +1,29 @@
+<div class="widget widget_product_categories">
+  <h2 class="widget-title">{{ 'blogs.sidebar.categories' | t }}</h2>
+  <ul class="product-categories">
+    {%- if settings.list_categories_linklist == blank -%}
+      {%- for line_collection in collections -%}
+      {%- if line_collection.handle != 'wishlist' -%}
+      <li class="{% if collection.handle == line_collection.handle %} current-cat {% endif %}"><a data-scroll-top="" data-pjax-filter="" href="{{line_collection.url}}">{{line_collection.title}} <span class="count">({{line_collection.all_products_count}})</span></a></li>
+      {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for line_collection in linklists[settings.list_categories_linklist].links -%}
+      {%- if line_collection.type == 'collection_link' -%}
+      <li class="level-1 {% if collection.handle == line_collection.object.handle %}current-cat showAny{% endif %}"><a data-scroll-top="" data-pjax-filter="" href="{{line_collection.object.url}}">{{line_collection.title}} <span class="count">({{line_collection.object.all_products_count}})</span></a>
+        {%-assign child_links = linklists[line_collection.handle].links-%}
+        {% if child_links.size > 0-%}
+        <ul class="child_collection">
+          {% for child_link in child_links-%}
+            {%- if child_link.type == 'collection_link' -%}
+            <li class="level-2 {% if collection.handle == child_link.object.handle %}current-cat{% endif %}"><a data-scroll-top="" data-pjax-filter="" href="{{child_link.object.url}}">{{child_link.title}} <span class="count">({{child_link.object.all_products_count}})</span></a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- endif -%}
+      </li>
+      {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </ul>
+</div>

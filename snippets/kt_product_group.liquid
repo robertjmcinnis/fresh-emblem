@@ -1,0 +1,33 @@
+<table class="group-product table">
+  <tbody>
+    <tr>
+      <th>{{'products.products_group.name'|t}}</th>
+      <th class="th-price">{{'products.products_group.price'|t}}</th>
+      <th class="th-qty">{{'products.products_group.quantity'|t}}</th>
+    </tr>
+    {%- for link in linklists[product.handle].links -%}
+    {%- if link.type == 'product_link' -%}
+    {%- assign pr = link.object -%}
+    {%- assign pr_current_variant = pr.selected_or_first_available_variant -%}
+    {%- if pr.available -%}
+    <tr class="itemGroupProducts">
+      <td><a href="{{pr.url}}">{{pr.title}}</a></td>
+      <td>
+        <span class="price">
+          <ins>{{pr.compare_at_price | money}}</ins>
+          <del>{{pr.price | money}}</del>
+        </span>
+      </td>
+      <td class="quantity-inner">
+        <div class="quantity">
+          <a class="quantity-down" href="#">-</a>
+          <input type="number" size="4" class="input-text qty text" title="Quantity" min="0" value="0" name="qtt" data-id="{{pr_current_variant.id}}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+          <a class="quantity-up" href="#">+</a>
+        </div>
+      </td>
+    </tr>
+    {%- endif -%}
+    {%- endif -%}
+    {%- endfor -%}
+  </tbody>
+</table>

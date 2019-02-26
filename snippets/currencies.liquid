@@ -1,0 +1,118 @@
+{{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
+{{ "jquery.currencies.min.js" | asset_url | script_tag }}
+<script>
+  // Pick your format here:
+  // money_format or money_with_currency_format
+  Currency.format = '{{ settings.currency_format | default: 'money_format' }}';
+
+  var shopCurrency = '{{ shop.currency }}';
+
+  /* Sometimes merchants change their shop currency, let's tell our JavaScript file */
+  Currency.moneyFormats[shopCurrency].money_with_currency_format = {{ shop.money_with_currency_format | strip_html | json }};
+  Currency.moneyFormats[shopCurrency].money_format = {{ shop.money_format | strip_html | json }};
+
+  var cookieCurrency;
+  try {cookieCurrency = Currency.cookie.read();} catch (err) {} // ignore errors reading cookies
+
+  // Fix for customer account pages.
+  $('span.money span.money').each(function() {
+    $(this).parents('span.money').removeClass('money');
+  });
+
+  // Saving the current price.
+  $('span.money').each(function() {
+    $(this).attr('data-currency-'+shopCurrency, $(this).html());
+  });
+
+  // Select all your currencies buttons.
+  var buttons = $('.mg-currency-item');
+  
+  // If there's no cookie or it's the shop currency.
+  {% if settings.use_auto_currencies -%}
+  if (cookieCurrency == null) {
+    $.ajax({
+      type: 'get',
+      url: '//gapi.beeketing.com/v1/currency/detect-currency',
+      success: function(data) {
+        {%- if template contains 'collection' and settings.use_price %}
+        if($('#ul_layered_price_0').length > 0){Currency.convertSliderPrice(shopCurrency,data.code,".slider-range-price");}
+        {% endif -%}
+        buttons.removeClass('active');
+        if($('.mg-currency-item').parent().find('[data-currency="'+data.code+'"]').length > 0){
+          $('.sym input.'+ data.code).closest('li.mg-currency-item').addClass('active');
+        }else{
+          $('.mg-currency-item').parent().prepend('<li class="mg-currency-item active"><span class="sym"><input type="radio" name="currency" class="radio-picker hidden '+data.code+'" value="'+data.code+'" checked="checked"><span class="flags"></span><label for="'+data.code+'"><span data-currency="'+data.code+'" title="'+data.code+'">'+data.code+'</span></label></span></li>')
+        }
+        $('.currency_display').text(data.code);
+        Currency.convertAll(shopCurrency, data.code);
+      }
+    });
+  }
+  else {
+    // Create currency by client location.
+    $.ajax({
+      type: 'get',
+      url: '//gapi.beeketing.com/v1/currency/detect-currency',
+      success: function(data) {
+        if($('.mg-currency-item').parent().find('[data-currency="'+data.code+'"]').length <= 0){
+          $('.mg-currency-item').parent().prepend('<li class="mg-currency-item"><span class="sym"><input type="radio" name="currency" class="radio-picker hidden '+data.code+'" value="'+data.code+'" checked="checked"><span class="flags"></span><label for="'+data.code+'"><span data-currency="'+data.code+'" title="'+data.code+'">'+data.code+'</span></label></span></li>')
+        }
+      }
+    });
+    {%- if template contains 'collection' and settings.use_price %}
+    if($('#ul_layered_price_0').length > 0){Currency.convertSliderPrice(shopCurrency,cookieCurrency,".slider-range-price");}
+    {% endif -%}
+    Currency.convertAll(shopCurrency, cookieCurrency);
+    buttons.removeClass('active');
+    if($('.mg-currency-item').parent().find('[data-currency="'+cookieCurrency+'"]').length > 0){
+      $('.sym input.'+ cookieCurrency).closest('li.mg-currency-item').addClass('active');
+    }else{
+      $('.mg-currency-item').parent().prepend('<li class="mg-currency-item active"><span class="sym"><input type="radio" name="currency" class="radio-picker hidden '+cookieCurrency+'" value="'+cookieCurrency+'" checked="checked"><span class="flags"></span><label for="'+cookieCurrency+'"><span data-currency="'+cookieCurrency+'" title="'+cookieCurrency+'">'+cookieCurrency+'</span></label></span></li>')
+    }
+    $('.sym input.'+ cookieCurrency).closest('li.mg-currency-item').addClass('active');
+    $('.currency_display').text(cookieCurrency);
+  }
+  {%-else-%}
+  if (cookieCurrency == null || cookieCurrency === shopCurrency) {
+    $('.sym input.'+ shopCurrency+':checked').closest('li.mg-currency-item').addClass('active');
+    Currency.currentCurrency = shopCurrency;
+  }
+  else {
+    {%- if template contains 'collection' and settings.use_price %}
+    if($('.noFilter').length <= 0){Currency.convertSliderPrice(shopCurrency,cookieCurrency,".slider-range-price");}
+    {% endif -%}
+    Currency.convertAll(shopCurrency, cookieCurrency);
+    buttons.removeClass('active');
+    $('.sym input.'+ cookieCurrency).toggle('click').closest('li.mg-currency-item').addClass('active');
+    $('.currency_display').text(cookieCurrency);
+  }
+  {%-endif-%}
+  // When customer clicks on a currency button.
+  $(document).on('click', '.mg-currency-item', function(event){
+    event.preventDefault();
+    $('.mg_currency_widget').css('pointer-events', 'none');
+    $('.mg-currency-item').removeClass('active');
+    var newCurrency =  $(this).find('input').val();
+    $('.sym input.'+ newCurrency ).toggle('click').closest('li.mg-currency-item').addClass('active');
+    $('.currency_display').text(newCurrency);
+
+    if(newCurrency == Currency.currentCurrency){
+      {%- if template contains 'collection' and settings.use_price %}
+      if($('#ul_layered_price_0').length > 0){Currency.convertSliderPrice(shopCurrency,newCurrency,".slider-range-price");}
+      {% endif -%}
+      Currency.convertAll(shopCurrency, newCurrency);
+    }
+    else{
+      {%- if template contains 'collection' and settings.use_price %}
+      if($('#ul_layered_price_0').length > 0){
+        if($( ".slider-range-price" ).slider( "instance" ) !== undefined ){$(".slider-range-price").slider( "destroy" );}
+        Currency.convertSliderPrice(Currency.currentCurrency,newCurrency,".slider-range-price");
+      }
+      {% endif -%}
+      Currency.convertAll(Currency.currentCurrency, newCurrency);
+      Currency.cookie.write(newCurrency);
+      cookieCurrency = newCurrency;
+    }
+    setTimeout(function(){ {%- if template contains 'collection' and settings.use_price %}if($('#ul_layered_price_0').length > 0){sliderRangePrice();}{% endif -%}$('.mg_currency_widget').css('pointer-events', 'auto'); }, 500);
+  });
+</script>

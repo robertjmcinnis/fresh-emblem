@@ -1,0 +1,26 @@
+{%- if settings.review_app == 'shopifyreview' %}
+<div class="rating">
+  <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+</div>
+{%- elsif settings.review_app == 'ryviu' %}
+  <div class="rating">
+    {%- if type == 'collection' -%}
+    <div class="ryviu-collection-widget" data="collection_product_reviews" product-handle="{{product.handle}}"></div>    
+    {%- else -%}
+    <div class="ryviu-widget"></div>
+    {%- endif -%}
+  </div>
+{%- elsif settings.review_app == 'yotpo' %}
+  <div class="clearfix margin-top-10"></div>
+  <div class="yotpo bottomLine rating"
+    data-appkey="5SyMaw47YkHv19ipX1Dt7XSY4ADnSj8DnTZi34sB"
+    data-domain="{{shop.permanent_domain | escape }}"
+    data-product-id="{{ product.id }}"
+    data-product-models="{{ product.id }}"
+    data-name="{{ product.title | escape }}"
+    data-url="{{ shop.url }}{{ product.url }}"
+    data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+    data-description="{{ product.description | escape }}"
+    data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+  </div>
+{% endif -%}
