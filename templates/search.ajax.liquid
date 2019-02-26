@@ -1,0 +1,132 @@
+{%- layout none -%}{%- paginate search.results -%}
+{%- assign productObj = 0 -%}
+{%- assign productObj_ = '' -%}
+{%- assign articleObj = 0 -%}
+{%- assign articleObj_ = '' -%}
+{%- assign pageObj = 0 -%}
+{%- assign pageObj_ = '' -%}
+{%- if search.performed -%}
+    {%- for item in search.results -%}
+        {%- if item.object_type == 'product' and productObj <= 5 -%}
+          {%-capture productObj_item-%}
+          <li class="item-search" data-animate="fadeIn" onclick="window.location.href='{{item.url}}'">
+            <div class="thumb">
+              {%- if item.compare_at_price > item.price -%}<div class="product-tag">{{'general.search_dropdown.sale_label'|t}}</div>{%- endif -%}
+              <a href="{{item.url}}">
+                <img src="{{ item.featured_image.src | img_url: '104x120', crop:'top' }}" alt="">
+              </a>
+            </div>
+            <div class="product-info">
+              <h4 class="product-name"><a href="{{item.url}}" title="{{item.title}}">{{ item.title | strip_html | truncate: 25}}</a></h4>
+              <div class="product-description">
+                {%- if item.metafields.meta.short_description -%}
+                {{ item.metafields.meta.short_description | strip_html | truncate: 70 | capitalize  }}
+                {% elsif item.description contains  '[/short description]' %}
+                {{ item.description | split: '[/short description]' | first | split: '[short description]'| last  | strip_html | truncate: 70 | capitalize  }}
+                {%-else-%}
+                {{ item.description | strip_html | truncate: 70 | capitalize  }}
+                {%-endif-%}
+              </div>
+              <div class="rating">
+                <span class="shopify-product-reviews-badge" data-id="{{ item.id }}"></span>
+              </div>
+              <span class="price">
+                <ins>{{ item.price | money }}</ins>
+                {%- if item.compare_at_price > item.price -%}
+                <del>{{ item.compare_at_price  | money }} </del>
+                {%- endif -%}
+              </span> 
+            </div>
+          </li>                
+          {%- if productObj == 5 %}
+          <li class="animated zoomIn text-right"><a href="/search?type=product&q={{ search.terms }}"><span>{{'general.search_dropdown.view_more'|t}}</span></a></li>
+          {%- endif -%}
+          {%-endcapture-%}
+          {%- assign productObj_ = productObj_ | append: productObj_item -%}
+          {%- assign productObj = productObj | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.object_type == 'article' and articleObj <= 3 -%}
+          {%-capture articleObj_item-%}
+          <li class="item-search" data-animate="fadeIn" onclick="window.location.href='{{item.url}}'">
+            <div class="thumb">
+              <a href="{{item.url}}">
+                {%unless item.image %}
+                <span class="pe-7s-comment" style="font-size: 64px;"></span>
+                {% else %}
+                <img src="{{ item.image.src | img_url: '104x120', crop:'top' }}" alt="">
+                {% endunless %}
+              </a>
+            </div>
+            <div class="product-info">
+              <h4 class="product-name"><a href="{{item.url}}" title="{{item.title}}">{{ item.title | strip_html | truncate: 25}}</a></h4>
+              <div class="product-description">
+                {% if item.published_at %}<i class="fa fa-clock-o" aria-hidden="true"></i> {{ item.published_at | date: "%b %d, %Y" }} , <i class="fa fa-comment"></i> {{item.comments_count}}<br/> {% endif %}
+                {{ item.content | strip_html | truncate: 70 | capitalize  }}
+              </div>
+            </div>
+          </li>                
+          {%- if articleObj == 3 %}
+          <li class="animated zoomIn text-right"><a href="/search?type=article&q={{ search.terms }}"><span>{{'general.search_dropdown.view_more'|t}}</span></a></li>
+          {%- endif -%}
+          {%-endcapture-%}
+          {%- assign articleObj_ = articleObj_ | append: articleObj_item -%}
+          {%- assign articleObj = articleObj | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.object_type == 'page' and pageObj <= 3 -%}
+          {%-capture pageObj_item-%}
+                <li class="item-search" data-animate="fadeIn" onclick="window.location.href='{{item.url}}'">
+                  <div class="thumb">
+                    <span class="pe-7s-news-paper" style="font-size: 64px;"></span>
+                  </div>
+                  <div class="product-info">
+                    <h4 class="product-name"><a href="{{item.url}}" title="{{item.title}}">{{ item.title | strip_html | truncate: 25}}</a></h4>
+                    <div class="product-description">
+                      {% if item.published_at %}<i class="fa fa-clock-o" aria-hidden="true"></i> {{ item.published_at | date: "%b %d, %Y" }} <br/> {% endif %}
+                      {{ item.content | strip_html | truncate: 70 | capitalize  }}
+                    </div>
+                  </div>
+                </li>                
+              {%- if pageObj == 3 %}
+                <li class="animated zoomIn text-right"><a href="/search?type=article&q={{ search.terms }}"><span>{{'general.search_dropdown.view_more'|t}}</span></a></li>
+              {%- endif -%}
+          {%-endcapture-%}
+          {%- assign pageObj_ = pageObj_ | append: pageObj_item -%}
+          {%- assign pageObj = pageObj | plus: 1 -%}
+        {%- endif -%}
+    {%- endfor -%}
+  {%- if productObj_ != '' -%}
+  <li class="productObj order-1">
+    <span class="titleObj">{{'general.search_dropdown.products'|t}}:</span>
+    <ul>
+      {{productObj_}}
+    </ul>
+  </li>
+  {%- endif -%}
+  {%- if articleObj_ != '' -%}
+  <li class="articleObj order-2">
+    <span class="titleObj">{{'general.search_dropdown.articles_group'|t}}:</span>
+    <ul>
+      {{articleObj_}}
+    </ul>
+  </li>
+  {%- endif -%}
+  {%- if pageObj_ != '' -%}
+  <li class="pageObj order-2">
+    <span class="titleObj">{{'general.search_dropdown.pages_group'|t}}:</span>
+    <ul>
+      {{pageObj_}}
+    </ul>
+  </li>
+  {%- endif -%}
+{%- endif -%}
+{%- if  search.results_count  < 1-%}
+{%- assign searchTerms = search.terms -%}
+{%- for collection in collections -%}
+{%- if search.terms contains collection.id %}
+{%- assign isCollection = collection.id | append:'-' -%}
+{%- assign searchTerms = collection.title | append: "-" | append: search.terms | remove:isCollection -%}
+{%- endif -%}
+{%- endfor -%}
+  <li class="item-search animated fadeIn margin-0"><h6 class="margin-0">{{'general.search.no_results_html'|t : terms: searchTerms}}</h6></li>
+{%- endif -%}
+{%- endpaginate -%}

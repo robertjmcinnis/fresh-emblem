@@ -1,0 +1,163 @@
+{%- layout none -%}
+{% comment %}
+{%- assign discountCODE = canonical_url | split:'?q='| last -%}
+{% if discountCODE %}
+  {%- assign price_rules = shop.metafields.price_rules.price_rules | split: '{"id' -%}
+  {%- assign count = 0 -%}
+  {%- assign optiomizeDiscount = '' -%}
+  {% for price_rule in price_rules %}
+  {% if count == 0 %}
+    {% if forloop.first %}
+      {%- assign optiomizeDiscount = price_rule | prepend: '{"id' | remove_first: "[" | prepend: optiomizeDiscount -%}
+      {%- assign count = count | plus: 1 -%}
+    {% else %}
+      {%- assign optiomizeDiscount = optiomizeDiscount | append: '{"id' | append: price_rule | replace: '}]', '}' -%}
+      {%- assign count = count | plus: 1 -%}
+    {% endif %}
+  {% elsif count == 1 %}
+    {% if forloop.last %}
+      {%- assign optiomizeDiscount = price_rule | replace: '}]', '}' | prepend: optiomizeDiscount | append: "|||" -%}
+      {%- assign count = 0 -%}
+    {% else %}
+      {%- assign optiomizeDiscount = optiomizeDiscount | append: price_rule | append: "|||" -%}
+      {%- assign count = 0 -%}
+    {% endif %}
+  {% endif %}
+  {% endfor %}
+  {%- assign optiomizeDiscount = optiomizeDiscount | split: ',|||' -%}
+  {%- assign discountCODE = discountCODE | upcase -%}
+  {% for discount in optiomizeDiscount %}
+    {%- assign discountCODECheck = discount | split: '"title":"' | last | split: '"' | first | upcase  -%}
+    {% if discountCODECheck == discountCODE %}
+      {%- assign dCODE_ = discount -%}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{{shop.metafields.country.country}}<br/><br/><br/>
+
+{{"now" | date}}<br/>
+{%- assign dCODE_id = dCODE_ | split: '{"id":' | last | split: ',' | first -%}
+id: 												{{dCODE_id}}<br/>
+{%- assign dCODE_title = dCODE_ | split: 'title":"' | last | split: '"' | first -%}
+title: 												{{dCODE_title}}<br/>
+{%- assign dCODE_value_type = dCODE_ | split: 'value_type":"' | last | split: '"' | first -%}
+value_type: 										{{dCODE_value_type}}<br/>
+{%- assign dCODE_value = dCODE_ | split: 'value":"' | last | split: '"' | first -%}
+value: 												{{dCODE_value}}<br/>
+{%- assign dCODE_customer_selection = dCODE_ | split: 'customer_selection":"' | last | split: '"' | first -%}
+customer_selection: 								{{dCODE_customer_selection}}<br/>
+{%- assign dCODE_target_type = dCODE_ | split: 'target_type":"' | last | split: '"' | first -%}
+target_type: 										{{dCODE_target_type}}<br/>
+{%- assign dCODE_target_selection = dCODE_ | split: 'target_selection":"' | last | split: '"' | first -%}
+target_selection: 									{{dCODE_target_selection}}<br/>
+{%- assign dCODE_allocation_method = dCODE_ | split: 'allocation_method":"' | last | split: '"' | first -%}
+allocation_method: 									{{dCODE_allocation_method}}<br/>
+{%- assign dCODE_once_per_customer = dCODE_ | split: 'once_per_customer":' | last | split: ',"usage_limit"' | first -%}
+once_per_customer: 									{{dCODE_once_per_customer}}<br/>
+{%- assign dCODE_usage_limit = dCODE_ | split: 'usage_limit":' | last | split: ',"starts_at":' | first -%}
+usage_limit: 										{{dCODE_usage_limit}}<br/>
+{%- assign dCODE_starts_at = dCODE_ | split: 'starts_at":"' | last | split: '"' | first -%}
+starts_at: 											{{dCODE_starts_at}}<br/>
+{%- assign dCODE_ends_at = dCODE_ | split: 'ends_at":' | last | split: ',"created_at":' | first -%}
+ends_at: 											{{dCODE_ends_at}}<br/>
+{%- assign dCODE_entitled_product_ids = dCODE_ | split: 'entitled_product_ids":' | last | split: ',"entitled_variant_ids":' | first -%}
+entitled_product_ids: 								{{dCODE_entitled_product_ids}}<br/>
+{%- assign dCODE_entitled_variant_ids = dCODE_ | split: 'entitled_variant_ids":' | last | split: ',"entitled_collection_ids":' | first -%}
+entitled_variant_ids: 								{{dCODE_entitled_variant_ids}}<br/>
+{%- assign dCODE_entitled_collection_ids = dCODE_ | split: 'entitled_collection_ids":' | last | split: ',"entitled_country_ids":' | first -%}
+entitled_collection_ids: 							{{dCODE_entitled_collection_ids}}<br/>
+{%- assign dCODE_entitled_country_ids = dCODE_ | split: 'entitled_country_ids":' | last | split: ',"prerequisite_saved_search_ids":' | first -%}
+entitled_country_ids: 								{{dCODE_entitled_country_ids}}<br/>
+{%- assign dCODE_prerequisite_saved_search_ids = dCODE_ | split: 'prerequisite_saved_search_ids":' | last | split: ',"prerequisite_subtotal_range":' | first -%}
+prerequisite_saved_search_ids: 						{{dCODE_prerequisite_saved_search_ids}}<br/>
+{%- assign dCODE_prerequisite_subtotal_range = dCODE_ | split: 'prerequisite_subtotal_range":' | last | split: ',"prerequisite_shipping_price_range":' | first -%}
+prerequisite_subtotal_range: 						{{dCODE_prerequisite_subtotal_range}}<br/>
+{%- assign dCODE_prerequisite_shipping_price_range = dCODE_ | split: 'prerequisite_shipping_price_range":' | last | split: ',"title":' | first -%}
+prerequisite_shipping_price_range: 					{{dCODE_prerequisite_shipping_price_range}}<br/>
+
+{{customer.id}}
+{%- assign dCODE_checked = false -%}
+{% if dCODE_customer_selection == 'all' %}
+  {%- assign dCODE_checked = true -%}
+{% elsif dCODE_customer_selection == 'prerequisite' and customer and dCODE_prerequisite_saved_search_ids contains customer.id %}
+  {%- assign dCODE_checked = true -%}
+{% endif %}
+
+
+<br/><br/><br/>{{dCODE_checked}}
+{% if dCODE_checked == true %}
+  {% if dCODE_target_type == 'shipping_line' %}
+    {%- assign dPRICE = 0.0 -%}
+  {% elsif dCODE_target_type == 'line_item' and dCODE_value_type == 'fixed_amount' %}
+    {%- assign dPRICE = dCODE_value | times: 100.0 -%}
+  {% elsif dCODE_target_type == 'line_item' and dCODE_value_type == 'percentage' %}
+    {%- assign dPRICE_per = dCODE_value | abs -%}
+  {% endif %}
+{% endif %}
+{{dPRICE|money}}
+{{dPRICE_per}}
+{% endcomment %}
+
+{%- if cart.item_count > 0 -%}
+    {%- for item in cart.items -%}
+    <li class="item__{{item.id}}">
+      <div class="card" style="display:none"><div class="bar-loading ifinite"></div></div>
+        <div class="thumb">
+          {% if item.image %}
+          {%- assign check_not_img_one = false -%}
+          {%- assign check_break = false -%}
+          {%- if item.variant.image != null or item.product.has_only_default_variant -%}
+          <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ item.title | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ item| img_url: '104x120', crop:'top'}}">
+          {%- else -%}
+          {%- if settings.color_name != blank -%}{%- assign gl_color_name = settings.color_name | downcase -%}{%-else-%}{%- assign gl_color_name = '' -%}{%-endif-%}
+          {%- assign check_break = false -%}
+          {%- assign check_not_img_one = false -%}
+          {%- for option in item.product.options -%}
+          {%- assign downcased_option = option | downcase -%}
+          {%- if downcased_option == 'color' or downcased_option == 'colour' or downcased_option == gl_color_name -%} 
+          {%- assign item_title_variant = item.variant.options[forloop.index0] -%}
+          {%- for image in item.product.images -%}
+          {%- if image.attached_to_variant? -%}
+          {% for variant in image.variants %}
+          {%- if variant.title contains item_title_variant and variant.image.src != blank -%}
+          <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ image.alt | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ image.src| img_url: '104x120', crop:'top' }}">
+          {%- assign check_not_img_one = false -%}
+          {%- assign check_break = true -%}
+          {%- break -%}
+          {%- else -%}
+          {%- assign check_not_img_one = true -%}
+          {%- endif-%}
+          {% endfor %}
+          {%- if check_break -%}{%- break -%}{%- endif-%}
+          {%- else -%}
+          {%- assign check_not_img_one = true -%}
+          {%- endif-%}
+          {%- endfor -%}
+          {%- else -%}
+          {%- assign check_not_img_one = true -%}
+          {%- endif -%}
+          {%- endfor -%}
+          {%- endif -%}
+          {%- if check_not_img_one and check_break == false -%}
+          <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ item.title | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ item| img_url: '104x120', crop:'top' }}">
+          {%- endif -%}
+          {% else %}
+          <img class="attachment-thumbnail size-thumbnail lazyload" alt="{{ item.title | escape |strip_html }}" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{{ 'noimage.gif'| asset_img_url: '104x120', crop:'top' }}">
+          {% endif %}
+        </div>
+        <div class="info_itemCart info">            
+          <h4 class="product-name"><a href="{{ item.product.url }}" title="{{ item.product.title | strip_html }}">{{ item.product.title |strip_html }}&nbsp;</a></h4>
+          {%- unless item.variant.title contains 'Default' -%}
+          <span class="variation" title="{{ item.title | escape |strip_html }}">
+            {{item.variant.title |strip_html }}
+          </span>
+          {%- endunless -%}
+          <span class="price">{{ item.quantity | append : "x " }}{{ item.price | money }}</span>
+          <a onclick="Shopify.KT_removeItem('{{ item.variant_id }}');$(this).parents('li.item__{{item.id}}').find('div.card').show(100);" class="remove-item remove" title="{{'cart.general.remove'|t }}"><i class="fas fa-times"></i></a>
+        </div>            
+      </li>
+   {%- endfor -%}
+{%- else -%}
+  <li class="empty">{{ 'cart.general.empty'| t }}</li>
+{%- endif -%}

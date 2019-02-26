@@ -1,0 +1,88 @@
+{% layout none %}
+{%- if cart.item_count > 0 -%}
+  {%- for item in cart.items -%}
+  <div class="cart__popup-item cart__popup-item row-flex align-items-center margin-0" id="PopupItem-{{item.id}}">
+    <div class="cart__popup-thumb col-sm col-sm-auto col-3">
+      {%- capture image -%}
+      {%- assign aspect_ratioW = settings.aspect_ratio | split: '/' | first | strip | plus: 0.00 -%}
+      {%- assign aspect_ratioH = settings.aspect_ratio | split: '/' | last | strip | plus: 0.00 -%}
+      {%- capture image_size -%}80x{{aspect_ratioH | times:80.00 | divided_by:aspect_ratioW| round}}{%- endcapture -%} 
+      {%- if item.image -%}
+        {%- assign check_break = false -%}
+        {%- assign check_not_img_one = false -%}
+        {%- if item.variant.featured_image != null or item.product.has_only_default_variant -%}
+          <img width="80" height="{{aspect_ratioH | times:80.00 | divided_by:aspect_ratioW| round}}" class="attachment-shop_thumbnail" alt="{{ item.title | escape |strip_html }}" src="{{ item| img_url: image_size, crop:'center'}}">
+       {%- else -%}
+           {%- assign check_break = false -%}
+           {%- assign check_not_img_one = false -%}
+           {%- for option in item.product.options -%}
+              {%- assign downcased_option = option | downcase -%}
+              {%- if downcased_option == 'color' or downcased_option == 'colour' or gl_color_name contains downcased_option_check -%}
+                 {%- assign item_title_variant = item.variant.options[forloop.index0] -%}
+                 {%- for image in item.product.images -%}
+                    {%- if image.attached_to_variant? -%}
+                       {% for variant in image.variants %}
+                          {%- if variant.title contains item_title_variant and variant.image.src != blank -%}
+                             <img width="80" height="{{aspect_ratioH | times:80.00 | divided_by:aspect_ratioW| round}}" class="attachment-shop_thumbnail" alt="{{ image.alt | escape |strip_html }}" src="{{ image.src| img_url: image_size, crop:'center'}}">                   
+                             {%- assign check_not_img_one = false -%}
+                             {%- assign check_break = true -%}
+                             {%- break -%}
+                          {%- else -%}
+                             {%- assign check_not_img_one = true -%}
+                          {%- endif-%}
+                       {% endfor %}
+                       {%- if check_break -%}{%- break -%}{%- endif-%}
+                    {%- else -%}
+                       {%- assign check_not_img_one = true -%}
+                    {%- endif-%}
+                 {%- endfor -%}
+              {%- else -%}
+                 {%- assign check_not_img_one = true -%}
+              {%- endif -%}
+           {%- endfor -%}
+        {%- endif -%}
+        {%- if check_not_img_one and check_break == false -%}
+          <img width="80" height="{{aspect_ratioH | times:80.00 | divided_by:aspect_ratioW| round}}" class="attachment-shop_thumbnail" alt="{{ item.title | escape |strip_html }}" src="{{ item| img_url: image_size, crop:'center'}}">
+        {%- endif -%}
+     {%- else-%}
+        {{ 'noimage.gif'| asset_img_url: image_size, crop:'center' | img_tag }}
+     {%- endif -%}
+    {%- endcapture -%}
+      {{image}}
+    </div>
+    <div class="cart__popup-title text-center text-sm-left col-sm col-6">
+      <a href="{{ item.product.url }}" title="{{ item.product.title | strip_html }}">{{ item.product.title |strip_html }}</a>
+      {%- unless item.variant.title contains 'Default' -%}
+      <span class="variation clearfix" title="{{ item.title | escape |strip_html }}">
+        {{item.variant.title|strip_html}}
+      </span>
+      {%- endunless -%}
+    </div>
+    <div class="cart__popup-price text-center col-sm col-sm-auto col-3">
+      {{ item.price | money }}
+    </div>
+    <div class="cart__popup-quantity text-center col-sm col-sm-auto col-4">
+      <div class="quantity quantity-inner pr row-flex margin-0">               
+        <a class="cart__popup-qty quantity-down text-center" href="javascript:void(0);">-</a>
+        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" 
+               {% if item.variant.inventory_quantity >= 1 and item.variant.inventory_management %}max="{{item.variant.inventory_quantity}}"{% endif %}
+               class="qty cart__popup-qty--input text-center" data-pid="{{item.id}}" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+        <a class="xcp-plus cart__popup-qty cart__popup-qty--plus text-center quantity-up" href="javascript:void(0);">+</a>
+      </div>
+    </div>
+    <div class="cart__popup-total fwsb cb text-center col-sm col-sm-auto col-6">
+      {{ item.price | times: item.quantity | money }}
+    </div>
+    <div class="cart__popup-remove text-center col-sm-auto col-2" onclick="Shopify.KT_removeItem('{{ item.variant_id }}',Shopify.KT_updatePopup)">
+      <i class="fa fa-trash"></i>
+    </div>
+  </div>
+  <div id="Undo-{{item.id}}" class="cart__popup-empty text-left margin-top-15 margin-bottom-15">
+    <a href="{{ item.product.url }}" title="{{ item.product.title | strip_html }}">
+      {{image}}
+      {{ item.product.title | html | capitalize }}
+    </a> removed
+    <strong onclick=" Shopify.KT_addItem('{{item.id}}', $('#PopupItem-{{item.id}} input').val(),Shopify.KT_updatePopup); return false" class="cart__popup-undo">Undo?</strong>
+  </div>
+  {%- endfor -%}
+{%- endif -%}

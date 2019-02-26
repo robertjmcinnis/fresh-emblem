@@ -1,0 +1,116 @@
+{% assign grid_results = false %}
+<div class="banner">
+  <div class="banner-content">
+    {% if settings.image_bg_search == blank %}
+    {{ '1.jpg' | asset_img_url: 'master' | img_tag }}
+    {% else %}
+    {{settings.image_bg_search | img_url: 'master' | img_tag }}
+    {% endif %}
+  </div>
+</div>
+{%- assign searchTerms = search.terms -%}
+{%- for collection in collections -%}
+{%- if search.terms contains collection.id %}
+{%- assign isCollection = collection.id | append:'-' -%}
+{%- assign searchTerms = collection.title | append: "-" | append: search.terms | remove:isCollection -%}
+{%- endif -%}
+{%- endfor -%}
+{%- assign limit_ = settings.limit_search -%}
+<div class="main-container left-slidebar margin-bottom-60">  
+  <div class="container">
+    <div class="breadcrumbs" style="margin-bottom: 20px;">        
+      <a href="/" title="{{ 'general.breadcrumb.homepage' | t }}">{{ 'general.breadcrumb.homepage' | t }}</a>
+      <span>{{ 'general.search.results_for_html' | t: terms: searchTerms }}</span>
+    </div>
+    <div class="row">
+      {% if search.performed %}
+        {% paginate search.results by limit_ %}
+          {% if search.results_count == 0 %}
+            <div class="section-header section-header--large col-xs-12">
+              <h2 class="section-header__title h2">{{ 'general.search.no_results_html' | t: terms: searchTerms }}</h2>
+            </div>
+            {% include 'search-bar' %}
+          {% else %}
+            <div class="main-content col-sm-12 col-md-12">
+              <div class="shop-top margin-bottom-30 dp-flex flex-row flex-nowrap justify-content-between">
+                <div class="shop-top-left">   
+                  <h1 class="shop-title">{{ 'general.search.results_for_html' | t: terms: searchTerms }}</h1>
+                  {% include 'search-bar' %}           
+                </div>
+                <div class="shop-top-right">
+                  <span class="woocommerce-result-count">
+                    {%- assign current_offset = paginate.current_offset | plus:1 -%}
+                    {%- assign current_product_size = search.results.size | plus:paginate.current_offset -%}
+                    {%- if limit_ > paginate.items -%}
+                    {{ 'collections.general.results_limit' | t: count: paginate.items }}
+                    {%- else -%}
+                    {{ 'collections.general.results_with_count_html' | t:count:current_offset,curent_count:current_product_size,pr_count:search.results_count }}
+                    {%- endif -%}
+                  </span> 
+                </div>
+              </div>
+              <ul class="product-list-grid desktop-columns-3 tablet-columns-2 mobile-columns-1 row" data-section-id="search-template" id="Masory-search-template" data-section-type="masory-section">
+                {% assign enable_show_review =true %}
+                {% for item in search.results %}
+                {%- if item.object_type == 'product'-%}
+                {% assign product = item %}
+                <!-- begin list search results-->
+                {% assign grid_item_width = ' col-sm-6 col-md-4' %}
+                <li class="grid-item{{grid_item_width}} ly__gr">
+                {% include 'product-card-grid' %}
+                </li>
+                {% else %}
+                <li class="grid-item col-sm-6 col-md-4 ly__gr">
+                  <div class="thumb{%unless item.image %} noImage{% endunless %}">
+                    <a href="{{item.url}}">
+                      {%-if item.image -%}
+                      <picture>
+                        <source srcset="{% include 'kt_image_format',src: item.image.src, size: '510x' %}" media="(min-width: 1920px)">
+                        <source srcset="{% include 'kt_image_format',src: item.image.src, size: '476x' %}" media="(min-width: 1200px)">
+                        <source srcset="{% include 'kt_image_format',src: item.image.src, size: '256x' %}" media="(min-width: 1024px)">
+                        <source srcset="{% include 'kt_image_format',src: item.image.src, size: '570x' %}" media="(min-width: 991px)">
+                        <source srcset="{% include 'kt_image_format',src: item.image.src, size: '384x' %}" media="(min-width: 768px)">
+                        <source srcset="{% include 'kt_image_format',src: item.image.src, size: '480x' %}">
+                        <img src="{% include 'kt_image_format',src: item.image.src, size: '480x@2x' %}" alt="{{item.title}}">
+                      </picture>
+                      {%-else-%}
+                      {%-if item.object_type == 'page' -%}
+                      <span class="pe-7s-news-paper" style="font-size: 64px;"></span>
+                      {%-else-%}
+                      <span class="pe-7s-comment" style="font-size: 64px;"></span>
+                      {%-endif-%}
+                      {%-endif-%}
+                    </a>
+                  </div>
+                  <div class="product-info">
+                    <h4 class="product-name"><a href="{{item.url}}" title="{{item.title}}">{{ item.title | strip_html | truncate: 25}}</a></h4>
+                    <div class="product-description">
+                      {% if item.published_at %}<i class="fa fa-clock-o" aria-hidden="true"></i> {{ item.published_at | date: "%b %d, %Y" }}{%- unless item.object_type == 'page'-%} , <i class="fa fa-comment"></i> {{item.comments_count}}{% endunless %}<br/> {% endif %}
+                      {{ item.content | strip_html | truncate: 70 | capitalize  }}
+                    </div>
+                  </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if paginate.pages > 1 %}
+            <div class="text-center">
+              {% include 'pagination',key: 'base' %}
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      {% else %}
+        <div class="section-header col-sm-12">
+          <h1 class="section-header__title h2">{{ 'general.search.title' | t }}</h1>
+          <form class="box-search" action="/search" method="get" autocomplete="off">
+            <input type="text" name="q" value="{{ search.terms | escape }}" class="notAjax" placeholder="{{ 'general.search.placeholder' | t }}" required>
+            <button class="button-search"><span class="pe-7s-search"></span></button>
+          </form>
+        </div>
+      {% endif %}
+      </div>
+  </div>
+</div>

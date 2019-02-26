@@ -1,0 +1,14 @@
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/product-template.liquid
+{% endcomment %}
+{% section 'product-template' %}
+{%- if template contains 'product' and settings.show_sticky_add -%}{%- include 'kt_sticky_add_to_cart' , product: product -%}{%- endif -%}
+<section class="shopify-section">
+{% section 'kt_recentlyViewedProducts' %}
+</section>
+{% section 'kt_relatedProduct' %}
+{% if settings.use_review_st %}
+<section class="shopify-section">
+  {% include 'kt_reviewProduct', reviews_width: 'container' %}
+</section>
+{% endif %}

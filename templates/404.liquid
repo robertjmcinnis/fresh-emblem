@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <div class="site-content col-md-12" role="main">
+      <header class="page-header">
+        <h1 class="page-title">Not Found</h1>
+      </header>
+      <div class="page-wrapper" style="margin-bottom: 50px;">
+        <div class="page-content">
+          <h2>{{ 'general.404.title' | t }}</h2>
+          <h6>{{ 'general.404.subtext' | t }}</h6>
+          <form role="search" method="get" id="searchform_404" class="searchform" action="/search">
+            <div>
+              <input type="text" placeholder="{{ 'general.search.placeholder' | t }}" value="" name="q" id="q">
+              <button type="submit" id="searchsubmit" class="btn">{{'general.search.submit'|t}}</button>
+            </div>
+          </form>
+        </div>
+        <!-- .page-content -->
+      </div>
+      <!-- .page-wrapper -->
+    </div>
+    <!-- .site-content -->
+  </div>
+  <!-- end row -->
+</div>

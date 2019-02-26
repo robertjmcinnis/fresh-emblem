@@ -1,0 +1,1 @@
+{%- layout none -%}{%- paginate collection.products by 1000 -%}{{collection.products | map: 'tags' | json}}{%- endpaginate -%}

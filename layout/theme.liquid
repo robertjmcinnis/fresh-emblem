@@ -1,0 +1,288 @@
+<!doctype html>
+  <!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="{{ settings.color_button }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {%- endif -%}
+    {%- capture seo_title -%}
+      {{ page_title }}
+      {%- if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+      {%- endif -%}
+      {%- if current_page != 1 -%}
+        &ndash; {{ 'general.meta.page' | t: page: current_page }}
+      {%- endif -%}
+      {%- unless page_title contains shop.name -%}
+        &ndash; {{ shop.name }}
+      {%- endunless -%}
+    {%- endcapture -%}
+    <title>{{ seo_title }}</title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {%- if template contains 'index' -%}
+      {%- if settings.home_page_keywords != '' and settings.home_page_keywords != null -%}
+        <meta name="keywords" content="{{settings.home_page_keywords}}"/>
+      {%- else- %}
+        <meta name="keywords" content="{{shop.name}}, {{shop.domain}}"/>
+      {%- endif- %}
+    {%- elsif template contains 'product'-%}
+      <meta name="keywords" content="{{product.name}},{%- for collection in product.collections -%}{{collection.name}}, {%- endfor -%}{%- if product.tags.size > 0 %}{%- for tag in product.tags -%}{{tag}}, {%- endfor -%}{%- endif -%}{{shop.name}}, {{shop.domain}}"/>
+    {%- elsif template contains 'collection' -%}
+      <meta name="keywords" content="{{collection.name }}, {{shop.name}}, {{shop.domain}}"/>
+    {%- elsif template contains 'blog' -%}
+      <meta name="keywords" content="{{blog.name }}, {{shop.name}}, {{shop.domain}}"/>
+    {%- elsif template contains 'article' -%}
+      <meta name="keywords" content="{{article.title}}, {{blog.name}}, {%- if article.tags.size > 0-%}{%- for tag in article.tags -%}{{tag}}, {%- endfor -%}{%- endif -%}{{shop.name}}, {{shop.domain}}"/>
+    {%- else -%}
+      <meta name="keywords" content="{{page_title}}, {{shop.name}}, {{shop.domain}}"/>
+    {%- endif -%}
+    {%- include 'social-meta-tags' -%}
+    {%- include 'styleSpeed' -%}
+    {{ content_for_header }}
+    {%- include 'header-stylesheets' -%}
+    {%- capture check_admin -%}{{ content_for_header }}{%- endcapture -%}
+    {%- assign admin_shopify = false -%}
+    {%- if check_admin contains 'design_mode' -%}{%- assign admin_shopify = true -%}{%- endif -%}
+    {%- capture productOptionStyle -%}
+      [
+      {%- for i in (1..5) -%}
+      {%-assign op_swatch = 'op_swatch' | append: i -%}
+      {%-assign op_style = 'option_style_' | append: i -%}
+      {%-assign color_watched = 'is_use' | append: i -%}
+      {'name': "{{settings[op_swatch]}}",'style': "{{settings[op_style]}}",'color_watched': {{settings[color_watched]}}}{%-unless forloop.last-%},{%-endunless-%}
+      {%- endfor -%}
+      ]
+    {%- endcapture -%}
+    <script>
+      var goto = !0;
+      var optionValue = '';
+      var first_available = '';
+      var first_available_title = '';
+      var dataLayer = [];
+      var product_id = {{product.id | json}};
+      var product_handle = {{product.handle | json}};
+      var shopURL = "https://{{shop.permanent_domain}}";
+      var cookieCurrency = null;
+      var collectionRecently = {{collection.handle|json}} || 'all';
+      var collection = {
+        Crr : {{collection.handle|json}} || null
+      };
+      var page = {
+        Han : {%- if template.name == 'collection' -%}
+                {{collection.handle|json}}
+              {%- elsif template.name == 'product' -%}
+                {{product.handle|json}}
+              {%- elsif template.name == 'page' -%}
+                {{page.handle|json}}
+              {%- elsif template.name == 'blog' -%}
+                {{blog.handle|json}}
+              {%- elsif template.name == 'article' -%}
+                {{article.handle|json}}
+              {%- else -%}
+                "no_banner"
+              {%- endif -%}
+      };
+      var theme = {
+        strings: {
+          inStock: {{'products.product.in_stock' | t | json}},
+          outOfStock: {{'products.product.out_of_stock' | t | json}},
+          soldOut: {{'products.product.sold_out' | t | json}},
+          addToCart: {{'products.product.add_to_cart' | t | json}},
+          contact: {{'products.product.contact' | t | json}},
+          contactMe: {{'products.product.contact_button' | t | json}},
+          remove: {{'cart.general.remove' | t | json}},
+          empty: {{'cart.general.empty' | t | json}},
+          cartItem: {{'cart.general.items_with_count_html' | t: count: 1 | json}},
+          cartItems: {{'cart.general.items_with_count_html' | t: count: 2 | json}},
+          titleTotal: {{'cart.general.subtotal' | t | json}},
+          showMore: {{'general.filters.show_more' | t | json}},
+          showLess: {{'general.filters.show_less' | t | json}},
+          noimage: {{'noimage.gif' | asset_url | json}},
+          infoButton: {{'products.product_loating.info' | t | json}},
+          customButton: {{'products.product_loating.custom_button' | t | json}},
+          cdday: {{'general.countdown.count_down_day' | t | json}},
+          cdhrs: {{'general.countdown.count_down_hours' | t | json}},
+          cdmin: {{'general.countdown.count_down_minute' | t | json}},
+          cdsecs: {{'general.countdown.count_down_seconds' | t | json}},
+          no_shopping: {{'shopify.checkout.shipping.no_rates_for_cart_or_destination_notice'|t|json}},
+          nll_send: {{'general.newsletter_form.send'|t|json}},
+          nll_error_mesenger: {{'general.newsletter_form.error_mesenger'|t|json}},
+          nll_success_mesenger: {{'general.newsletter_form.success_mesenger_html'|t|json}}
+        },
+        productStrings: {
+          addToCart: {{'products.product.add_to_cart' | t | json}},
+          preOrder: {{'products.product.pre_order' | t | json}},
+          selectOption: {{'products.product.select_option' | t | json}},
+          soldOut: {{'products.product.sold_out' | t | json}},
+          inStock: {{'products.product.in_stock' | t | json}},
+          outOfStock: {{'products.product.out_of_stock' | t | json}},
+          unavailable: {{'products.product.unavailable' | t | json}},
+          onlyLeft: '{{'products.product.only_left_short_text_html' | t: count: '1'}}',
+          {% assign stock_message = settings.stock_message | split:'{{stock_number}}' -%}
+          stockMessage: {{stock_message|json}}
+        },
+        shop: {
+          addressLocality: {{shop.address.city| json}},
+          addressRegion: {{shop.address.province| json}},
+          postalCode: {{shop.address.zip| json}},
+          addressCountry: {{shop.address.country| json}}
+        },
+        function:{
+          multiCurrency: {{settings.show_multiple_currencies|json}},
+          searchByCollection: {{settings.use_search_by_collection|json}},
+          cartPopupEnable: {{settings.cart_popup_enable|json}},
+          cartAutoShippingEnable: {{settings.cart_auto_shipping_enable|json}},
+          vrsgallery: {{settings.gallery|json}},
+          quickshop: {{settings.use_quickshop|json}},
+          quickview: {{settings.use_quickview|json}},
+          fquickview: {{settings.use_fquickview|json}},
+          productOptionStyle: {{productOptionStyle}},
+          photoZoom: {{settings.use_zoom}},
+          nll_ajax: {%-if settings.popup_newsletter_coupon_code != blank and settings.newslatter_mailchimp_url != blank-%}true{%- else -%}false{%-endif-%}
+        },
+        compare:{
+          remove: {{'products.compare.remove' | t |json}},
+        },
+        moneyFormat: {{shop.money_format | json}}
+      };
+      window._handleize = function(str){
+        str = str.toLowerCase().replace(/'|"|\(|\)|\[|\]/g, "").replace(/\W+/g, "-")
+        return str.replace(/^-+|-+$/g, "")
+      }
+      window._snakeCase = function(str){
+        str = str.toLowerCase().replace(/'|"|\(|\)|\[|\]/g, "").replace(/\W+/g, "_")
+        return str.replace(/^-+|-+$/g, "")
+      }
+    </script>
+    <!--[if (lte IE 9) ]>{{ 'match-media.min.js' | asset_url | script_tag }}<![endif]-->
+    {%- if template.directory == 'customers' %}
+      <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script><!--<![endif]-->
+      <!--[if lte IE 9]><script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script><![endif]-->
+    {% endif -%}
+    <script type="text/javascript">var ryviu_user_settings = {{shop.metafields.ryviu.user_settings|json}};</script>
+</head>
+  
+
+  <body class="{% if template contains 'index' %} home{% endif %}{% if customer %} customer-logged-in {% endif %} template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" id="{{ page_title | handle }}">
+    <img style="opacity: 0; visibility: hidden;z-index: -11;position: absolute;left: 0 !important;max-height: 100vh;" src="{{'bt_placeholder.svg'|asset_url}}">
+    {%- if template contains 'collection' -%}
+      {%-for imgPrd in collection.products limit: 4-%}
+        <img style="opacity: 0; visibility: hidden;z-index: -11;position: absolute;left: 0 !important;max-height: 100vh;" src="{% include 'kt_image_format',src: imgPrd.featured_image.src, size: '360x' %}" alt="{{imgPrd.title}}">
+      {%-endfor-%}
+    {%- elsif template contains 'product' -%}
+        <img style="opacity: 0; visibility: hidden;z-index: -11;position: absolute;left: 0 !important;max-height: 100vh;" src="{{ product.featured_image.src | img_url: '530x', scale: 2 }}" alt="{{imgPrd.title}}">
+    {%- endif -%}
+    <div class="background-overlay"></div>
+    {%- if settings.two_header -%}
+      {%-if template contains 'index' -%}
+      {%- section 'header' -%}
+      {%-else-%}
+      {%- section 'header-page' -%}
+      {%-endif-%}
+    {%-else-%}
+      {%- section 'header' -%}
+    {%-endif-%}
+    {% unless template contains 'index' %}
+    {% section 'kt_collection_banner' %}
+    {% endunless %}
+    <div class="page-container" id="PageContainer" style="float:left;width:100%;">
+      <main class="main-content" id="MainContent" role="main">
+        
+        {%if template contains 'index' %}
+        {%- capture check_sidebar -%}{{ content_for_layout | strip_newlines }}{%- endcapture -%}
+        {% if check_sidebar contains '<!-- START SIDEBAR INDEX -->' and admin_shopify == false %}  
+        {{check_sidebar|split: '<!-- START SIDEBAR INDEX -->'|first|append:'</div>'|html}}
+        
+        <div class="clearfix"></div>
+        <div class="container">
+          <div class="row left-sidebar">
+            <div class="col-sm-8 col-md-9 main-content">
+              {{check_sidebar|split: '<!-- END SIDEBAR INDEX --></div>'|last|split:'<!-- END CONTENT INDEX --></div>'|first|append:'</div>'|html}}
+            </div>
+            <div class="col-sm-4 col-md-3">
+              {{check_sidebar|split: '<!-- START SIDEBAR INDEX --></div>'|last|split:'<!-- END SIDEBAR INDEX --></div>'|first|append:'</div>'|html}}
+            </div>
+          </div>
+        </div>
+        {{check_sidebar|split:'<!-- END CONTENT INDEX --></div>'|last|append:'</div>'|html}}
+        {% else %}
+        {{ content_for_layout }}
+        {% endif %}
+        {%-else-%}
+        {{ content_for_layout}}
+        {% endif %}
+      </main>
+      {%- section 'footer' -%}
+      {% if settings.use_color_library %}
+        {%- section 'custom_color' -%}
+      {% endif %}
+    </div>
+
+    <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
+    <!--[if lte IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'theme.min.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+    <!--[if lte IE 9]><script src="{{ 'theme.min.js' | asset_url }}"></script><![endif]-->
+    {% comment %}
+    {%- include 'bt-searchModal' -%}
+    {% endcomment %}
+    {%- include 'cookies_popup' -%}
+    {%- include 'kt_suggest' -%}
+    {%- include 'bt-newsletter-popup' -%}
+    {%- include 'bt-quickviewModal' -%}
+    {%- include 'kt_quickshopModal' -%}
+    {%- include 'kt_compare' -%}
+    {%- include 'bt-cartModal' -%}
+    {%- include 'photoswipe' -%}
+    {%- if admin_shopify -%}
+    {%- include 'adminThemeTool' -%}
+    {%- endif -%}
+    {%- if settings.show_multiple_currencies -%}
+    {%- include 'currencies' -%}
+    {%- endif -%}
+    <div class="test-loading"><div class="card"><div class="kt-bar-loading"><span class="line-loading"></span></div></div></div>
+    {%- if template.name == 'collection' -%}
+      <div class="loadingFilter">
+        <div class="card hidden"><div class="bar-loading ifinite"></div></div>
+      </div>
+      <div class="kt_layerFilter kt_layerMobilde">
+        <div class="headFilter">
+          <a data-pjax-filter="" href="/collections/{{collection.handle}}" id="filterClear" style="display:none">
+            <span ria-hidden="true">{{'collections.filters_mobile.clear'|t}}</span>
+          </a>
+          <span class="title">{{'collections.filters_mobile.title'|t}}</span>
+          <button class="close"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="filterSelectedGroup">
+          <div id="filterSelected"></div>
+        </div>
+        <div class="kt_layerfilterGroups kt_layerfilterGroupsMobile margin-bottom-30"></div>
+        <div class="filterButtonGroup">
+          <button class="button" id="filterApply"></button>
+        </div>
+      </div>
+    {%-endif-%}
+    <a href="#" class="scroll_top" title="Scroll to Top"><i class="fa fa-arrow-up"></i></a>
+    
+    <script src="{{ 'api.jquery.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'custom.min.js' | asset_url }}" defer="defer"></script>
+    {%- if settings.review_app == 'ryviu' -%}
+    <!--  RYVIU APP -->
+    <script src="https://ryviu-app.firebaseapp.com/client/reviews.js?shop={{shop.permanent_domain}}"></script>
+    <!--  / RYVIU APP -->
+    {%- elsif settings.review_app == 'yotpo' -%}
+      <!--Installed by Yotpo Automatic Installation-->
+      <script>(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/5SyMaw47YkHv19ipX1Dt7XSY4ADnSj8DnTZi34sB/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script>
+      <!--End of Yotpo Automatic Installation-->
+    {%- endif -%}
+    
+    {%- include 'kt_stockCountdownJS' -%}
+    {%- include 'googleRich' -%}
+</body>
+</html>

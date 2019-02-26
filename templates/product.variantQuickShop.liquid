@@ -1,0 +1,53 @@
+{%-layout none-%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign settings_use_thumb = settings.use_thumb -%}
+{%- include 'kt_product_check'-%}
+{%- include 'datajs-product-single' -%}
+<button class="close"></button>
+<div class="product-page pid_{{product.id}}" id="ProductSection-{{product.id}}" data-section-id="{{product.id}}" data-section-type="product-{{product.id}}" data-enable-history-state="false" data-product-id="{{ product.id }}" data-use-thumb="false">
+  <div id="callBackVariant--{{ product.id }}" class="{{variantSoldout}}">
+    <form action="/cart/add" method="post" enctype="multipart/form-data" id="cart-form--{{product.id}}" class="cart product-form product-form-{{product.id}}{% unless settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %} dp-flex justify-content-between align-items-end">
+      <div class="selectorWrapper">
+        <div class="clearfix margin-top-20"></div>
+        {%-include 'kt_variants_options' ,section_id: product.id-%}    
+      </div>
+      <div class="dp-flex flex-row flex-nowrap align-items-stretch align-content-stretch" style="width: 100%">
+        {% if settings.show_quantity_selector %}
+        {% if product.available %}
+        <div class="quantity dp-flex align-items-center">
+          <div class="quantity-inner">
+            <label for="Quantity" class="hidden">{{ 'products.product.quantity' | t }}</label>
+            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="input-text qty text" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+            <div class="quantity-nav">
+              <div class="quantity-button quantity-up"></div>
+              <div class="quantity-button quantity-down"></div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endif %}
+        <button type="button" onclick="Shopify.KT_addItemFromForm('cart-form--{{product.id}}');$(this).addClass('loading').removeClass('loaded')" name="add" id="AddToCart-{{product.id}}" {% unless sold_out == false  %}disabled="disabled"{% endunless %} class="button button-add-cart boutique__add-to-cart">
+          <span id="AddToCartText-{{ product.id }}">
+            {%- if preOrder -%}
+            {{'products.product.pre_order'|t}}
+            {%- elsif sold_out == false -%}
+            {{'products.product.add_to_cart'|t}}
+            {%- else -%}
+            {{'products.product.sold_out'|t}}
+            {%- endif -%}
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="ProductPrice">
+    <ins id="ProductPrice-{{product.id}}">
+      {{ product.price | money }}
+    </ins>
+    <del id="ComparePrice-{{product.id}}"{%unless current_variant.compare_at_price > current_variant.price %} class="hide"{% endunless %}>
+      {{ product.compare_at_price | default: 0 | money }}
+    </del>
+  </div>
+</div>
+<!--ENDHTML-->
+{{ product | json }}

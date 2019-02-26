@@ -1,0 +1,29 @@
+{%-include 'breadcrumb',breadcrumb_width: 'container' -%}
+<div class="container">
+  <div class="row">
+    <div class="site-content col-sm-12 col-md-8 col-md-offset-2 margin-bottom-90">
+      <div class="section-header">
+        <h1>{{ 'customer.activate_account.title' | t }}</h1>
+        <p>{{ 'customer.activate_account.subtext' | t }}</p>
+      </div>
+
+      <div class="form-vertical">
+        {% form 'activate_customer_password' %}
+
+          {{ form.errors | default_errors }}
+
+          <label for="CustomerPassword">{{ 'customer.activate_account.password' | t }}</label>
+          <input type="password" value="" name="customer[password]" id="CustomerPassword">
+
+          <label for="CustomerPasswordConfirmation" class="margin-top-15">{{ 'customer.activate_account.password_confirm' | t }}</label>
+          <input type="password" value="" name="customer[password_confirmation]" id="CustomerPasswordConfirmation">
+
+          <div class="text-left margin-top-20">
+            <input type="submit" class="button btn-primary margin-right-20" value="{{ 'customer.activate_account.submit' | t }}">
+            <input type="submit" class="button" name="decline" value="{{ 'customer.activate_account.cancel' | t }}">
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>

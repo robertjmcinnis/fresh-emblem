@@ -1,0 +1,380 @@
+{% layout none %}
+{% capture ajax_return %} 
+{%- assign limit__ = settings.limit | plus: 0 -%}
+{%-comment-%}
+============================================
+-START declare variable item filter
+	option[i] : Name filter option
+	option_filter_[i] : Handle filter option
+	options_[i] : Declare empty array of option
+	properties_ : Declare empty array of option
+	vendors_ : Declare empty array of option
+	tags_ : Declare empty array of option
+============================================
+{%-endcomment-%}
+{%-assign product_filter_count = 0-%}
+{%-assign availability_true = 0-%}
+{%-assign availability_false = 0-%}
+{%-assign max_filter = 0-%}
+{%-assign min_filter = max_filter-%}
+{%-if settings.use_filter_variant_1-%}
+  {%-assign option1 = settings.filter_variant_1_title| strip-%}
+  {%-assign option_filter_1 = settings.filter_variant_1_title| strip| handleize-%}
+  {%-assign options_1 = ''-%}
+{%-endif-%}
+{%-if settings.use_filter_variant_2-%}
+  {%-assign option2 = settings.filter_variant_2_title| strip-%}
+  {%-assign option_filter_2 = settings.filter_variant_2_title| strip| handleize-%}
+  {%-assign options_2 = ''-%}
+{%-endif-%}
+{%-if settings.use_filter_variant_3-%}
+  {%-assign option3 = settings.filter_variant_3_title| strip-%}
+  {%-assign option_filter_3 = settings.filter_variant_3_title| strip| handleize-%}
+  {%-assign options_3 = ''-%}
+{%-endif-%}
+{%-if settings.use_filter_variant_4-%}
+  {%-assign option4 = settings.filter_variant_4_title| strip-%}
+  {%-assign option_filter_4 = settings.filter_variant_3_title| strip| handleize-%}
+  {%-assign options_4 = ''-%}
+{%-endif-%}
+{%-if settings.use_filter_variant_5-%}
+  {%-assign option5 = settings.filter_variant_5_title| strip-%}
+  {%-assign option_filter_5 = settings.filter_variant_5_title| strip| handleize-%}
+  {%-assign options_5 = ''-%}
+{%-endif-%}
+{%-assign properties_ = ''-%}
+{%-assign vendors_ = ''-%}
+{%-assign tags_ = ''-%}
+{%-comment-%}
+============================================
+-START Declare the largest price and the smallest price
+	max : largest price
+	min : smallest price
+============================================
+{%-endcomment-%}
+{%-paginate collection.products by collection.products_count-%}
+{%-assign max = 0-%}
+{%-for product in collection.products limit: collection.products_count-%}
+  {%-if product.price_max > max-%}
+    {%-assign max = product.price_max-%}
+  {%-endif-%}
+{%-endfor-%}
+{%-assign min = max-%}
+{%-for product in collection.products limit: collection.products_count-%}
+  {%-if product.price_min < min-%}
+    {%-assign min = product.price_min-%}
+  {%-endif-%}
+{%-endfor-%}
+{%-endpaginate-%}
+{%-comment-%}
+============================================
+-START check current filter using canonical_url
+============================================
+{%-endcomment-%}
+{%-assign at_filter = ''-%}
+{%-assign price_filter = ''-%}
+{%-assign layout_filter = 'grid'-%}
+{%-assign page_filter = 1-%}
+{%-assign items_filter = canonical_url |split:'q='|last|replace: "+",","|split:"&"|first-%}
+{%-assign canonical_url_collection = canonical_url |split:'q='-%}
+{%-assign items_filter_check = items_filter |split:','-%}
+{%-for item in items_filter_check-%}
+  {%-assign items_check = item |split:'_'-%}
+    {%-if items_check[0] == 'ab' or items_check[0] == 'tp' or items_check[0] == 'vd' or items_check[0] == 'tag' or items_check[0] == option_filter_1 or items_check[0] == option_filter_2 or items_check[0] == option_filter_3 or items_check[0] == option_filter_4 or items_check[0] == option_filter_5-%}
+      {%-assign at_filter = at_filter| append: item | append: ' '-%}
+    {%-elsif items_check[0] == 'price'-%}
+      {%-assign price_filter = items_check[1]-%}
+    {%-elsif items_check[0] == 'page'-%}
+      {%-assign page_filter = items_check[1] | plus : 0-%}
+    {%-elsif items_check[0] == 'lo'-%}
+      {%-assign layout = items_check[1]-%}
+    {%-endif-%}
+{%-endfor-%}
+{%-comment-%} ===== Check items range in page{%-endcomment-%}
+{%-unless page_filter %}{%-assign page_filter = 1-%}{%-endunless-%}
+{%-assign page = page_filter-%}
+{%-assign startRec = page_filter | minus: 1 | times: limit__-%}
+{%-assign endRec = startRec | plus: limit__-%}
+{%-assign items_filter = at_filter | strip |replace: ' ',',,'-%}
+{%-comment-%} ===== Check filter by price{%-endcomment-%}
+{%-if price_filter != ''-%}
+  {%-assign items_filter_price_ = price_filter |split: '-'-%}
+  {%-assign min = items_filter_price_[0] |plus: 0| times:1.0-%}
+  {%-assign max = items_filter_price_[1] |plus: 0| times:1.0-%}
+{%-endif-%}
+{%-comment-%} ===== END Check filter by price{%-endcomment-%}
+{%-assign products_filter = ''-%}
+
+{%-paginate collection.products by 1000-%}
+{%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+  {% if sort_by == 'title-ascending' %}
+    {% assign products = collection.products | sort: 'title' %}
+  {% endif %}
+  {% if sort_by == 'title-descending' %}
+    {% assign products = collection.products | sort: 'title' | reverse %}
+  {% endif %}
+  {% if sort_by == 'price-ascending' %}
+    {% assign products = collection.products | sort: 'price' %}
+  {% endif %}
+  {% if sort_by == 'price-descending' %}
+    {% assign products = collection.products | sort: 'price' | reverse %}
+  {% endif %}
+  {% if sort_by == 'created-descending' %}
+    {% assign products = collection.products | sort: 'published_at' | reverse %}
+  {% endif %}
+  {% if sort_by == 'created-ascending' %}
+    {% assign products = collection.products | sort: 'published_at' %}
+  {% endif %}
+{%-for product in products limit: 1000-%}
+  {%-comment-%} ===== Check variant{%-endcomment-%}
+  {%-assign products_variants_filter = ''-%}
+  {%-for option in product.options-%}
+    {%-unless option == 'Title'-%}
+      {%-assign option_index = forloop.index0-%}
+      {%-assign item_option = option | handleize-%}
+      {%-for variant in product.variants-%}
+          {%-assign variant_value = variant.options[option_index] | handleize-%}
+          {%-assign products_variants_filter = products_variants_filter| append: item_option | append:'_' | append: variant_value | append: ',,'-%}
+      {%-endfor-%}
+    {%-endunless-%}
+  {%-endfor-%}
+  {%-assign products_variants_filter = products_variants_filter| split: ',,' | uniq | join:',,'-%}
+  {%-assign products_variants_filter_ = products_variants_filter| split: ',,' | uniq-%}
+  {%-comment-%} ===== END Check variant{%-endcomment-%}
+  {%-comment-%} ===== Check vendors{%-endcomment-%}
+  {%-assign products_vendors_filter = ''-%}
+  {%-for vendor in product.vendor-%}
+  {%-assign item_vendor = vendor | handleize-%}
+  {%-assign products_vendors_filter = products_vendors_filter| append:'vd_' | append: item_vendor | append: ',,'-%}
+  {%-endfor-%}
+  {%-assign products_vendors_filter = products_vendors_filter | split: ',,' | join:',,'-%}
+  {%-assign products_vendors_filter_ = products_vendors_filter | split: ',,'-%}
+  {%-comment-%} ===== END Check vendors{%-endcomment-%}
+  {%-comment-%} ===== Check types{%-endcomment-%}
+  {%-assign products_types_filter = ''-%}
+  {%-for type in product.type-%}
+  {%-assign item_type = type | handleize-%}
+  {%-assign products_types_filter = products_types_filter| append:'tp_' | append: item_type | append: ',,'-%}
+  {%-endfor-%}
+  {%-assign products_types_filter = products_types_filter | split: ',,' | join:',,'-%}
+  {%-assign products_types_filter_ = products_types_filter | split: ',,'-%}
+  {%-comment-%} ===== END Check types{%-endcomment-%}
+  {%-comment-%} ===== Check available{%-endcomment-%}
+  {%-assign products_available_filter = 'ab_' | append: product.available | append: ',,'-%}
+  {%-assign products_available_filter = products_available_filter | split: ',,' | join:',,'-%}
+  {%-assign products_available_filter_ = products_available_filter | split: ',,'-%}
+  {%-comment-%} ===== END Check available{%-endcomment-%}
+
+  {%-comment-%} ===== Check tags{%-endcomment-%}
+  {%-assign products_tags_filter = ''-%}
+  {%-for tag in product.tags-%}
+  {%-assign item_tag = tag | handleize-%}
+  {%-assign products_tags_filter = products_tags_filter| append:'tag_' | append: item_tag | append: ',,'-%}
+  {%-endfor-%}
+  {%-assign products_tags_filter = products_tags_filter | split: ',,' | join:',,'-%}
+  {%-assign products_tags_filter_ = products_tags_filter | split: ',,'-%}
+  {%-comment-%} ===== END Check tags{%-endcomment-%}
+
+  {%-assign products_filter = products_tags_filter_ | concat: products_vendors_filter_ | concat: products_types_filter_ | concat: products_available_filter_ | concat: products_variants_filter_-%}
+  {%-assign items_filter_check = items_filter | split: ',,'-%}
+  {%-assign items_filter_check_size = items_filter | split: ',,' |size-%}
+  {%-assign check_items_filter_count = 0-%}
+  {%-for items in items_filter_check-%}
+    {%-for item in products_filter-%}
+      {%-if items == item-%}
+        {%-assign check_items_filter_count = check_items_filter_count | plus : 1-%}
+        {%-assign item_color = item | split: '_' | first-%}
+        {%-if item_color == 'color'-%}{%-assign last_item_color = item | split: '_' | last-%}{%-endif-%}
+      {%-endif-%}
+    {%-endfor-%}
+  {%-endfor-%}
+  {%-if check_items_filter_count >= items_filter_check_size-%}
+    {%-for option in product.options-%}
+      {%-unless option == 'Title' and option != 'Color'-%}
+        {%-assign option_index = forloop.index0-%}
+        {%-assign item_option = option | handleize-%}
+        {%-for variant in product.variants-%}
+          {%-assign products_filter_variants_image = ''-%}
+          {%-assign variant_ = variant.options[option_index] | handleize-%}
+            {%-if variant_ == last_item_color-%}
+              {%-assign variant_filter_image = variant-%}{%-break-%}
+            {%-endif-%}
+        {%-endfor-%}
+      {%-endunless-%}
+    {%-endfor-%}
+    {%-if items_filter_price_.size > 1 and product.price_min >= min and product.price_min <= max-%}
+      {%-assign product_filter_count = product_filter_count | plus: 1-%}
+        {%-if product_filter_count > startRec and product_filter_count <= endRec-%}
+          {% if layout == 'gr' or layout == 'ms' %}
+          <li class="grid-item grid-item-animate{{page_filter}} ly__{{layout}}" data-animate="fadeIn">
+            {%-include 'product-card-grid', grid_image_width: '250x250', current_variant: variant_filter_image, ly: layout-%}
+          </li>
+          {% else %}
+          <li class="grid-item list grid-item-animate{{page_filter}} ly__{{layout}}" data-animate="fadeIn">
+            {%-include 'product-card-list', grid_image_width: '250x250', current_variant: variant_filter_image, ly: layout-%}
+          </li>
+          {% endif %}
+        {%-endif-%}
+      {%-assign is_empty_filter = false-%}
+      {%-include 'filter_base_count_item'-%}
+    {%-elsif product.price_min >= min and product.price_min <= max-%}
+      {%-assign product_filter_count = product_filter_count | plus: 1-%}
+        {%-if product_filter_count > startRec and product_filter_count <= endRec-%}
+          {% if layout == 'gr' or layout == 'ms' %}
+          <li class="grid-item grid-item-animate{{page_filter}} ly__{{layout}}" data-animate="fadeIn">
+            {%-include 'product-card-grid', grid_image_width: '250x250', current_variant: variant_filter_image, ly: layout-%}
+          </li>
+          {% else %}
+          <li class="grid-item list grid-item-animate{{page_filter}} ly__{{layout}}" data-animate="fadeIn">
+            {%-include 'product-card-list', grid_image_width: '250x250', current_variant: variant_filter_image, ly: layout-%}
+          </li>
+          {% endif %}
+        {%-endif-%}
+      {%-assign is_empty_filter = false-%}
+      {%-include 'filter_base_count_item'-%}
+    {%-endif-%}
+  {%-elsif canonical_url_collection.size == 1-%}
+    {%-include 'filter_base_count_item'-%}
+    {%-assign product_filter_count = product_filter_count | plus: 1-%}
+  {%-endif-%}
+{%-endfor-%}
+{%-endpaginate-%}
+{%-if settings.use_filter_variant_1-%}
+{%-assign options_1 = options_1| split: ',,' | uniq-%}
+{%-endif-%}{%-if settings.use_filter_variant_2-%}
+{%-assign options_2 = options_2| split: ',,' | uniq-%}
+{%-endif-%}{%-if settings.use_filter_variant_3-%}
+{%-assign options_3 = options_3| split: ',,' | uniq-%}
+{%-endif-%}{%-if settings.use_filter_variant_4-%}
+{%-assign options_4 = options_4| split: ',,' | uniq-%}
+{%-endif-%}{%-if settings.use_filter_variant_5-%}
+{%-assign options_4 = options_5| split: ',,' | uniq-%}
+{%-endif-%}
+{%-assign properties_count = properties_ | split: ',,'-%}
+{%-assign properties = properties_ | split: ',,' | uniq-%}
+{%-assign vendors_count = vendors_ | split: ',,'-%}
+{%-assign vendors = vendors_ | split: ',,' | uniq-%}
+{%-assign tags_count = tags_ | split: ',,'-%}
+{%-assign tags = tags_ | split: ',,' | uniq-%}
+{%- if max_filter != 0 and min_filter != 0 -%}
+{%-assign max = max_filter-%}
+{%-assign min = min_filter-%}
+{%- endif -%}
+
+{% endcapture %}
+{%-assign ajax_return_ = ajax_return|trip_newlines|strip-%}
+{%- if ajax_return_ == ''-%}
+<div class="grid__item small--text-center margin-top-30 margin-bottom-30"><p class="text-center">{{ 'collections.general.no_matches_filtered_html' | t }}</p></div>
+{%- else -%}
+{{ajax_return_}}
+{%- endif -%}
+{%-capture Ajax_filter-%} 
+  Ajax_filter[
+  {%-for i in (1..5)-%}
+    {%-assign use_filter_variant_ = "use_filter_variant_" | append: i-%}
+    {%-if forloop.index == 1-%}{%-assign options = options_1-%}{%-assign option = option1-%}{%-endif-%}
+    {%-if forloop.index == 2-%}{%-assign options = options_2-%}{%-assign option = option2-%}{%-endif-%}
+    {%-if forloop.index == 3-%}{%-assign options = options_3-%}{%-assign option = option3-%}{%-endif-%}
+    {%-if forloop.index == 4-%}{%-assign options = options_4-%}{%-assign option = option4-%}{%-endif-%}
+    {%-if forloop.index == 5-%}{%-assign options = options_5-%}{%-assign option = option5-%}{%-endif-%}
+    {%-capture s-%}{{options}}{%-endcapture-%}{%-assign options_check = s | handleize | strip-%}
+    {%-if settings[use_filter_variant_] and options_check != blank-%}
+    {"id":"kiti{{forloop.index}}","handle":"{{option | strip | handleize}}","name":"{{option | strip}}","items":[
+        {%-assign layered_options_filter_count = ''-%}
+        {%-for layered_filter in options-%}
+          {%-unless layered_filter == ''-%}
+            {%-assign check = layered_filter| split: ':' | first |handleize-%}
+            {%-assign layered_options_filter_count = layered_options_filter_count | append: check | append:',,'-%}
+          {%-endunless-%}
+        {%-endfor-%}
+        {%-assign layered_options_filter = ''-%}
+        {%-assign layered_options_filter_count = layered_options_filter_count | split: ',,'-%}
+        {%-for layered_filter in options-%}
+          {%-assign layered_options_filter_check = layered_options_filter| split: ',,'-%}
+          {%-assign check = layered_filter| split: ':' | first |handleize-%}
+          {%-unless layered_filter == ''-%}
+            {%-unless layered_options_filter_check contains check -%}
+              {"handle":"{{layered_filter| split: ':' | first | strip | handleize}}","title":"{{layered_filter| split: ':' | first}}","count":"
+              {%-assign item_count = 0-%}
+              {%-for count in layered_options_filter_count-%}
+                {%-if count == check-%}
+                  {%-assign item_count = item_count | plus: 1-%}
+                {%-endif-%}
+              {%-endfor-%}
+              {{item_count}}"}{%-unless forloop.last-%},{%-endunless-%}
+            {%-assign layered_options_filter = layered_options_filter | append: check | append:',,'-%}
+            {%-endunless-%}
+          {%-endunless-%}
+        {%-endfor-%}
+      ]},{%-endif-%}
+    {%-endfor-%}{"id":"kiti10","handle":"{{settings.title_sidebar_properties | strip | handle}}","name":"{{settings.title_sidebar_properties | strip}}","items":[
+  {%-for item_properties in properties-%}
+  {%-if item_properties != ''-%}
+  {"handle":"{{item_properties | strip | handleize}}","title":"{{item_properties}}","count":
+  {%-assign item_count = 0-%}
+  {%-for count in properties_count-%}
+    {%-if count == item_properties-%}
+      {%-assign item_count = item_count | plus: 1-%}
+    {%-endif-%}{%-endfor-%}
+    {{item_count}}}{%-unless forloop.last-%},{%-endunless-%}
+  {%-endif-%}
+  {%-endfor-%}
+  ]},{"id":"kiti11","handle":"{{settings.title_sidebar_vendor | strip | handle}}","name":"{{settings.title_sidebar_vendor | strip}}","items":[
+  {%-for item_vendors in vendors-%}
+  {%-if item_vendors != ''-%}
+    {"handle":"{{item_vendors | strip | handleize}}","title":"{{item_vendors}}","count":
+    {%-assign item_count = 0-%}
+      {%-for count in vendors_count-%}
+        {%-if count == item_vendors-%}
+          {%-assign item_count = item_count | plus: 1-%}
+        {%-endif-%}
+      {%-endfor-%}{{item_count}}}{%-unless forloop.last-%},{%-endunless-%}
+    {%-endif-%}
+  {%-endfor-%}
+  ]},{"id":"kiti12","handle":"{{settings.title_sidebar_tags | strip | handle}}","name":"{{settings.title_sidebar_tags | strip}}","items":[
+  {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+    {%-assign limit_tg = collection.all_tags.size-%}
+    {%-assign limit_check = settings.title_sidebar_tags_items | strip_newline | strip | split: '||'-%}
+  {%-else-%}
+    {%-assign limit_tg = settings.use_limit_tags | default: tags.size -%}
+  {%-endif-%}
+  {%-for item_tags in tags limit: limit_tg -%}
+    {%-if item_tags != ''-%}
+      {%-if settings.use_limit_tags != blank and settings.title_sidebar_tags_items != blank -%}
+        {%-if limit_check contains item_tags-%}
+        {"handle":"{{item_tags | strip | handleize}}","title":{{item_tags|json}},"count":
+        {%-assign item_count = 0-%}
+        {%-for count in tags_count-%}
+          {%-if count == item_tags-%}
+            {%-assign item_count = item_count | plus: 1-%}
+          {%-endif-%}
+        {%-endfor-%}{{item_count}}}{%-unless forloop.last-%},{%-endunless-%}
+        {%-endif-%}
+      {%-else-%}
+      {"handle":"{{item_tags | strip | handleize}}","title":{{item_tags|json}},"count":
+        {%-assign item_count = 0-%}
+        {%-for count in tags_count-%}
+          {%-if count == item_tags-%}
+            {%-assign item_count = item_count | plus: 1-%}
+          {%-endif-%}
+        {%-endfor-%}{{item_count}}}{%-unless forloop.last-%},{%-endunless-%}
+      {%-endif-%}
+    {%-endif-%}
+  {%-endfor-%}
+  ]},{"id":"kiti13","handle":"product-price","name":"Product price","items":[{"handle":"min","title":"Min","count":"{{min| round}}"},{"handle":"max","title":"Max","count":"{{max| round}}"}]},{"id":"kiti13","handle":"product-available","name":"Product available","items":[{"handle":"in_stock","title":"In stock","count":{{availability_true}}},{"handle":"out_stock","title":"Out stock","count":{{availability_false}}}]}]
+{%-endcapture-%}
+{%-assign item_replce = '},]'-%}{%-assign item_replce_ = '}]'-%}
+{{Ajax_filter|strip_newline|strip|replace:item_replce,item_replce_}}
+Ajax_filter {% assign p_start = startRec| plus:1 %}{{'collections.filters.showing'|t : start : p_start, end: endRec ,filtered_count:product_filter_count}}
+Ajax_filter
+{%-assign pages = product_filter_count| divided_by: limit__ -%}
+{%-assign pages_check = pages| times: limit__ -%}
+{% if pages_check < product_filter_count %}
+{%-assign pages = pages | plus: 1 -%}
+{% endif %}
+{% if pages > 1 %}
+{% include 'pagination',key: 'collection_filter',pages:pages %}
+{% endif %}
+<div class="loadMore clearfix"{% if page_filter == pages %} style="display:none"{% endif %}>
+  <a href="javascript:void(0)" class="button btn-next btn btn--secondary btn--narrow" data-page="page_{{page_filter|plus:1}}" data-action="loadmore">{{'collections.general.load_more'|t}}</a>
+</div>
