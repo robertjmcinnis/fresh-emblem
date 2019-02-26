@@ -1,0 +1,149 @@
+<div class="block-paralax4{% if section.settings.testimonial_background == blank or section.settings.testimonial_background.height > 500  %} bg-parallax{% endif %} lazyload"
+     style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+            {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+            {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%;
+            {%-if section.settings.testimonial_background-%}
+            background-image: {{section.settings.testimonial_background|img_url: "300x"}};
+            {%-else %}                
+            background-image: url('https://cdn.shopify.com/s/files/1/2336/5331/files/bg-parallax2_300x.jpg?8681034232238000474');
+            {%-endif-%}"
+     data-bgset="{%-if section.settings.testimonial_background-%}{%- include 'bgset', image: section.settings.testimonial_background -%}{%-else-%}https://cdn.shopify.com/s/files/1/2336/5331/files/bg-parallax2.jpg?8681034232238000474{%-endif-%}"
+     data-sizes="auto"
+     data-parent-fit="cover">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+      <div class="head">
+        <h3 class="title">{{section.settings.title}}</h3>
+        <span class="sub-title">{{section.settings.stitle}}</span>
+      </div>
+      <div class="row">
+        <div class="col-lg-offset-2 col-sm-12 col-lg-8">
+          <div class="testimonials style2 owl-carousel nav-style2 nav-center-center" data-autoplay="true" data-items="1" data-nav="true" data-dots="false">
+            {%- if section.blocks.size > 0 -%}
+            {%-for block in section.blocks-%}            
+            <div class="testimonial" {{ block.shopify_attributes }}>
+              <div class="avatar">
+                {% if block.settings.testimonial_avatar-%}
+                <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.testimonial_avatar.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.testimonial_avatar.src, size: '200x' %}" alt="{{block.settings.testimonial_avatar.alt}}">
+                {%-else %}
+                <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/testimonial{% cycle '1_50x','2_50x','3_50x'%}.png?14150746610566026908" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/testimonial{% cycle '1','2','3'%}.png?14150746610566026908" alt="{{shop.name}}">
+                {%-endif-%}
+              </div>
+              <div class="inner">
+                <p class="text-in">{{block.settings.testimonial_content}}</p>
+                <h6>{{block.settings.testimonial_name}}</h6>
+              </div>
+            </div>
+            {%-endfor-%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Testimonial 1",
+    "class": "index-section index-section--kt bt_testimonials",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Testimonial 1",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px",
+        "default": "60px-0-75px-0"
+      },
+      {
+         "type": "text",
+         "id": "titlex",
+         "label": "Title",
+         "default": "Testimonials"
+      },
+      {
+        "type": "textarea",
+        "id": "stitle",
+        "label": "Title section",
+        "default": "Customer & Partner talk about us!"
+      },
+      {
+        "type": "image_picker",
+        "id": "testimonial_background",
+        "label": "Background image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "1",
+        "name": "Item client say",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "testimonial_avatar",
+            "label": "Avatar"
+          },
+          {
+            "type": "textarea",
+            "id": "testimonial_content",
+            "label": "Testimonial content",
+            "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard."
+          },
+          {
+            "type": "text",
+            "id": "testimonial_name",
+            "label": "Name",
+            "default": "John Brown"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonial 1",
+        "category": "Promo",
+        "blocks": [
+          {
+            "type": "1"
+          },
+          {
+            "type": "1"
+          },
+          {
+            "type": "1"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

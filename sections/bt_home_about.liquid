@@ -1,0 +1,103 @@
+<div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+      <div class="section-title style10 text-center margin-bottom-40">
+        <h3>{{section.settings.title_section}}</h3>
+        <div class="sub-title montserratLight">{{section.settings.stitle}}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-2 col-sm-12 col-md-8">
+          <div class="video  style2 video-lightbox">
+              <img class="lazyload" src="{% if section.settings.image-%}{{section.settings.image|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/bg-video_250x.jpg?8094129153511050531{%-endif %}" data-src="{% if section.settings.image-%}{{section.settings.image|img_url:'master'}}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/bg-video.jpg?8094129153511050531{%-endif %}"  alt="">
+            <a href="#" class="link-lightbox button-play" data-videoid="{{ section.settings.video_url.id }}" data-videosite="{{ section.settings.video_url.type }}" data-url="{{ section.settings.video_url }}"></a>
+          </div>
+          <div class="montserratLight margin-top-30 text-center">
+            {{pages[section.settings.page_content].content}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "About us section",
+    "class": "index-section index-section--kt bt_home_about",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "About us section",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "text",
+        "id": "title_section",
+        "label": "Title",
+        "default": "About us"
+      },
+      {
+        "type": "text",
+        "id": "stitle",
+        "label": "Subtitle",
+        "default": "welcome to boutique"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image video"
+      },
+      {
+        "id": "video_url",
+        "type": "video_url",
+        "label": "Video URL",
+        "accept": ["youtube", "vimeo"],
+        "default": "https://vimeo.com/134060140"
+      },
+      {
+        "type": "page",
+        "id": "page_content",
+        "label": "Content"
+      }
+    ],
+    "presets": [
+      {
+        "name": "About us section",
+        "category": "Infomation"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,80 @@
+{%- if section.settings.hidden_section -%}{%- capture check_admin -%}{{ content_for_header  }}{%- endcapture -%}<style> #shopify-section-{{ section.id }} { {%- if check_admin contains 'design_mode' -%}opacity: .5;filter: alpha(opacity=50){%- else -%}display: none !important{%- endif -%}}</style>{%- endif -%}
+{%- if section.settings.section_margin_top != blank or section.settings.section_margin_bottom != blank or section.settings.section_padding != blank or section.settings.section_border != blank -%}
+{%- assign s_margin_top = section.settings.section_margin_top | remove: ' ' | join: ' ' -%}
+{%- assign s_margin_bottom = section.settings.section_margin_bottom | remove: ' ' | join: ' ' -%}
+{%- assign s_padding = section.settings.section_padding | remove: ' ' | split: '-' | join: ' ' -%}
+{%- assign s_border = section.settings.section_border | remove: ' ' | split: '-' | join: ' ' -%}
+{%- endif -%}
+{%- capture style_block_section -%}
+   {%- if section.settings.section_margin_top != blank or section.settings.section_margin_bottom != blank or section.settings.section_padding != blank or section.settings.section_bg_color != blank or section.settings.section_bg_image != blank or section.settings.section_border != blank -%}
+   style="{%- if section.settings.section_margin_top != blank -%} margin-top: {{s_margin_top}} !important;{%- endif -%}{%- if section.settings.section_margin_bottom != blank -%} margin-bottom: {{s_margin_bottom}} !important;{%- endif -%}{%- if section.settings.section_padding != blank -%}padding: {{s_padding}} !important;{%- endif -%}{%- if section.settings.section_bg_color != blank -%}background-color: {{ section.settings.section_bg_color }} !important;{%- endif -%}{%- if section.settings.section_bg_image != blank -%} background-image: url({%-include 'gl_image_format',src: section.settings.section_bg_image , size: '2048x' -%}) !important; background-position: center !important; background-repeat: no-repeat !important; background-size: cover !important;{%- endif -%}{%- if section.settings.section_border != blank and section.settings.section_border_color != blank -%}border-width: {{ s_border }} !important; border-color: {{section.settings.section_border_color}} !important; border-style: {{section.settings.section_border_style}} !important{%- endif -%}"
+   {%- endif -%}
+{%- endcapture -%}
+<div class="bt-nitro-slider">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        {%- include 'shortcode' load: section.settings.bt_revolution_sc -%}
+      </div>
+    </div>
+  </div>
+</div>
+{%- schema -%}
+ {
+  "name": "Revolution Slider",
+  "class": "gl-revolution-slider",
+  "settings":[
+    {
+      "type":"textarea",
+      "id":"bt_revolution_sc",
+      "label":"Nitro Slider Shortcode",
+	   "info":"Example: [shopify-slider-259]"
+    },
+    {
+        "type": "paragraph",
+        "content": "You can easily add the slider to this theme by installing our free [Nitro Powerfull Slider Partner](https://partner.teathemes.net/signup) app."
+      },
+    {
+        "type": "header",
+        "content": "== Design Options"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "header",
+        "content": "== Basel Extras"
+      },
+      {
+        "type": "checkbox",
+        "id": "hidden_section",
+        "label": "Disable Section?",
+        "info": "If checked the section won't be visible on the public side of your website. You can switch it back any time.",
+        "default": false
+      }
+  ],
+   
+  "presets": [
+    {
+      "name": "Nitro Slider",
+      "category": "Slider"
+    }
+  ]
+}
+{% endschema %}
+ 

@@ -1,0 +1,1595 @@
+<div data-section-id="{{ section.id }}" data-section-type="header-section">
+  <div id="box-mobile-menu" class="box-mobile-menu full-height">
+    <div class="box-inner">
+      <span class="close-menu"><span class="icon pe-7s-close"></span></span>
+    </div>
+  </div>
+  {% if section.settings.stickey_menu %}
+  {% unless section.settings.import_header == '5' or section.settings.import_header == '10'  %}
+  <div id="header-ontop" class="is-sticky"></div>
+  {% endunless %}
+  {% endif %}
+  <!-- Header -->
+  {%- comment -%}
+  {%- include 'bt_logo_header_page' -%}
+  {%- endcomment -%}
+  {% capture announcement_box %}
+    {% if section.settings.message_richtext != blank %}
+  {% if section.settings.announcement_border %}
+  <div class="row">
+    <div class="container">
+      {% endif %}
+      <div class="clearfix announcement_header{%if section.settings.message_onm == false%} hidden-xs{% endif %}{%if section.settings.message_ont == false%} hidden-sm{% endif %}"
+           style="{%- if section.settings.announcement_margin_top != blank -%}margin-top: {{section.settings.announcement_margin_top}};{%- endif -%}
+                  {%- if section.settings.announcement_margin_bottom != blank -%}margin-bottom: {{section.settings.announcement_margin_bottom}};{%- endif -%}">
+        {% if section.settings.announcement_border %}
+        <div class="text-border" style="color:{{section.settings.color_text}};background-color:{{section.settings.color_bg}}">
+          {{section.settings.message_richtext }}
+        </div>
+        {% else %}        
+        <div class="header-text text-center" style="color:{{section.settings.color_text}};background-color:{{section.settings.color_bg}}">
+          {{section.settings.message_richtext}}
+        </div>
+        {% endif %}
+      </div>
+      {% if section.settings.announcement_border %}
+    </div>
+  </div>
+  {% endif %}
+    {% endif %}
+  {% endcapture %}
+  {% if section.settings.import_header == '1' -%}
+  <header id="header" class="header style1">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="top-header">
+        <div class="inner">
+          <div class="main-menu-wapper kiti--DropWindow">
+            <div class="row-flex justify-content-center align-items-center">
+              <div class="col-md-8 col-sm-12 hidden-xs">
+                <nav id="AccessibleNav" role="navigation">
+                  {% include 'menu_import' %}
+                </nav>
+              </div>
+              <div class="col-md-4 col-sm-12 col-xs-12">
+                <span class="mobile-navigation">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.13 24" width="17px" height="17px">
+                    <defs><style>#Layer_2 .cls-1{fill:#6d6e71;stroke:#6d6e71;stroke-miterlimit:10;}</style></defs>
+                    <title>Menu</title>
+                    <g id="Layer_2" data-name="Layer 2">
+                      <g id="Layer_1-2" data-name="Layer 1">
+                        <rect class="cls-1" x="0.5" y="0.5" width="26.13" height="3.94" rx="1" ry="1"/>
+                        <rect class="cls-1" x="0.5" y="10.5" width="26.13" height="3.81" rx="1" ry="1"/>
+                        <rect class="cls-1" x="0.5" y="19.94" width="26.13" height="3.56" rx="1" ry="1"/>
+                      </g>
+                    </g>
+                  </svg>
+                </span>               
+                <a class="cart-link__mobile" href="/cart" style="display:none;">
+                  <span class="icon__count">
+                    <span class="icon pe-7s-cart"></span> 
+                    <span class="count cartCount">{{ cart.item_count }}</span>
+                  </span>
+                </a>
+                <div class="box-control kiti-DropWindowDesktop">
+                  {%- assign search_style = "show-input" -%}
+                  {% include 'search-bar' %}
+                  {% include 'settings-box' %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- assign categories ="menu" -%}
+    {% include 'bt_categories_page',categories: "menu" %}
+  </header>
+  {% elsif section.settings.import_header == '2' -%}
+  <header id="header" class="header style2 style4_">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="main-header">
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row-flex justify-content-center align-items-center">
+            <div class="col-xs-12 col-sm-12 col-md-3 logo-wapper">
+              <div class="logo">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 menu-wapper">
+              <div class="box-control kiti-DropWindowDesktop">
+                {% assign search_style = "icon" %}
+                {% include 'search-bar' %}
+                {% assign position ="menu" %}
+                {% include "mini-cart" %}
+                {% include"settings-box" %}
+              </div>
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '3' -%}
+  <header id="header" class="header style3{% if settings.bottom_toolbar %} useBottomToolbar{% endif %}">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="main-menu-wapper kiti--DropWindow">
+        <div class="row-flex justify-content-center align-items-center">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 logo-wapper">
+            <div class="logo">
+              {%-include 'bt_logo_header_page'-%}
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 menu-wapper">
+            <div class="top-header">
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+              {% if settings.slogan_header != blank %}
+                <div class="slogan">"{{settings.slogan_header}}"</div>
+              {% endif %}
+              <div class="box-control">
+                {% assign search_style = "show-input2" %}
+                {% include 'search-bar' %}
+                {% assign position ="top-menu" %}
+                {% include "mini-cart" %}
+                {% include"settings-box" %}
+              </div>
+            </div>
+            {% include 'menu_import' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '4' -%}
+  <header id="header" class="header style5">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="top-header">
+      <div class="container">
+        <div class="logo">
+          {%-include 'bt_logo_header_page'-%}
+        </div>
+      </div>
+    </div>
+    <div class="main-header">
+      <div class="container">
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row-flex justify-content-center align-items-center">
+            <div class="col-xs-2 col-sm-8 col-md-12 col-lg-7 order-md-2 order-lg-1">
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+              {% include 'menu_import' %}
+            </div>
+            <div class="col-xs-10 col-sm-4 col-md-5 col-lg-5 padding-left-xs-0 order-md-1 order-lg-1">
+              <div class="box-control kiti-DropWindowDesktop">
+                {% assign search_style = "show-input2" %}
+                {% include 'search-bar' %}
+                {% assign position ="top-menu" %}
+                {% include "mini-cart" %}
+                {% include"settings-box" %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '5' -%}
+  {% if section.settings.message %}
+  <div class="container-fluid">
+    <div class="top-header">
+      {{announcement_box|trip_mewlines|remove:'  '}}
+    </div>
+  </div>
+  {% endif %}
+  <header id="header" class="header sidebar">
+    <span class="close-header-sidebar"><span class="icon pe-7s-close"></span></span>
+    <span class="open-header-sidebar"><i class="fa fa-angle-double-right"></i></span>
+    <div class="header-top sidebar-menu kiti--DropWindow">
+      <div class="logo">
+        {%-include 'bt_logo_header_page'-%}
+      </div>
+      <ul class="boutique-nav main-menu menu-sidebar">
+        {%-assign main_linklist = settings.vertical_menu_links | default: 'main-menu' -%}
+        {%-for link in linklists[main_linklist].links %}
+          {%-assign menu_handle = link.handle-%}
+          <li class="{% if linklists[menu_handle].links.size > 0 %} menu-item-has-children site-nav--has-dropdown{% endif %}">
+            <a href="{{link.url}}">
+              <span>
+                {{link.title | split: '{' | first | remove:'[title]' | split: 'CSS_' | first | strip}}
+                {% if link.title contains '{'-%}
+                {%- assign label  = link.title |  split: '{' | last  | split: '}' | first | remove:'[title]'-%}
+                <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                {%- endif %}
+              </span>          
+            </a>
+            {%-if linklists[menu_handle].links.size > 0-%}
+            <span class="expand fa"></span>
+            <ul class="sub-menu">
+              {% for link_ in linklists[menu_handle].links-%}
+              {%-assign child_links = linklists[link_.handle].links-%} 
+              <li class="site-nav__child-link{% if child_links.size > 0 %} menu-item-has-children site-nav--has-dropdown{% endif %}">
+                <a href="{{ link_.url }}">
+                  <span>
+                    {{link_.title | split: '{' | first }}
+                    {%-if link_.title contains '{'-%}
+                    {%-assign label = link_.title | split: '{' | last | split: '}' | first-%}
+                    <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                    {%-endif -%}
+                  </span>
+                </a>
+                {% if child_links.size > 0-%}
+                <ul class="sub-menu">
+                  {% for child_link in child_links-%}
+                  <li class="site-nav__child-link">
+                    <a href="{{child_link.url}}">
+                      <span>
+                        {{child_link.title | split: '{' | first }}
+                        {% if child_link.title contains '{'-%}
+                        {%- assign label  = child_link.title | split: '{' | last | split: '}' | first-%}
+                        <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                        {%- endif %}
+                      </span>
+                    </a>
+                  </li>
+                  {%-endfor %}
+                </ul>
+                {%-endif %}
+              </li>
+              {%-endfor %}
+            </ul>
+            {%-endif %}
+          </li>
+        {%-endfor-%}
+      </ul>
+      <div class="box-control">
+        {% assign search_style = "icon" %}
+        {% include 'search-bar' %}
+        <div class="mini-cart">
+          <a class="cart-link" href="/cart"><span class="icon pe-7s-cart"></span> <span class="count cartCount">{{ cart.item_count }}</span></a>
+        </div>
+        {% include"settings-box" %}
+      </div>
+
+      <div class="line-header"></div>
+      {% include "boutique_socials" %}
+      <div class="sidebar-footer">
+        <div class="coppyright">
+          {%-if settings.copyright != blank-%}
+          <p>{{settings.copyright|html}}</p>
+          {%-else-%}
+          <p>
+            <span class="site-footer__copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}</span>
+            <span class="site-footer__copyright-content">{{ powered_by_link }}</span>
+          </p>
+          {%-endif-%}
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="header-categoy-menu"{% if settings.image_categories != blank %} style="background-image: url('{{settings.image_categories|img_url:'master'}}');"{% endif %}>
+    <span class="close-header-sidebar"><span class="icon pe-7s-close"></span></span>
+    <span class="open-header-sidebar"><i class="fa fa-angle-double-left"></i></span>
+    <div class="inner">
+      <div class="block-category-carousel function-carousel">
+        <h3 class="title">{{settings.title_categories}}</h3>
+        <span class="sub-title">{{settings.stitle_categories}}</span>
+        <div class="block-inner owl-carousel nav-center-center nav-style2" data-nav="true" data-dots="true" data-items="1" data-loop="false" data-autoplay="false">
+          {%- assign check_row_catt = 1 -%}
+          {%- for i in (1..12) -%}
+          {%- assign cat_icon = 'cat_icon' | append: i -%}
+          {%- assign cat_collection = 'cat_collection' | append: i -%}
+          {%- if settings[cat_collection] != blank or settings[cat_icon] -%}
+          {%- if check_row_catt == 1 -%}
+          <ul class="list-cat">
+            {%- endif -%} 
+            <li>
+              <a href="/collections/{{settings[cat_collection]}}">
+                <img src="{{settings[cat_icon] | img_url: 'small'}}" alt="icon {{settings[cat_collection]}}">
+                {{settings[cat_collection] | capitalize | replace: '-', ' ' }}
+              </a>
+            </li>
+            {%- if  check_row_catt  >=  4  or forloop.last -%}
+          </ul>
+          {%- assign check_row_catt = 0 -%}
+          {%- endif -%}
+          {%- assign check_row_catt = check_row_catt | plus : 1 %}
+          {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% elsif section.settings.import_header == '6' -%}
+  <header id="header" class="header style2 style9">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="main-header">
+      <div class="container"> 
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-2">
+              <div class="logo">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-10">
+              <div class="box-control">
+                {% assign search_style = "icon" %}
+                {% include 'search-bar' %}
+                {% assign position ="menu" %}
+                {% include "mini-cart" %}
+                {% include"settings-box" %}
+              </div>
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '7' -%}
+  <header id="header" class="header style3 style4">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      {{announcement_box|trip_mewlines|remove:'  '}}
+    </div>
+    {% endif %}
+    <div class="top-header">
+      <div class="inner">
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row-flex justify-content-center align-items-center">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 logo-wapper">
+              <div class="logo">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-3 col-md-6 col-lg-6">
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>
+            <div class="col-xs-10 col-sm-9 col-md-6 col-lg-4 control-wapper padding-left-xs-0">
+              <div class="box-control kiti-DropWindowDesktop">
+                {% assign search_style = "show-input2"%}
+                {% include 'search-bar' %}
+                {% assign position ="top-menu" %}
+                {% include "mini-cart" %}
+                {% include "settings-box" %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- assign categories ="style2" -%}
+    {%- assign categories_style = "left" -%}
+    {% include 'bt_categories_page' %}
+  </header>
+  {% elsif section.settings.import_header == '8' -%}
+  <header id="header" class="header style3 style9_">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      {{announcement_box|trip_mewlines|remove:'  '}}
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="topbar">
+        <ul class="boutique-nav topbar-menu left">
+          {% if settings.phone_contact != blank %}<li><a href="tel:{{settings.phone_contact}}"><i class="fa fa-phone"></i>{{'contact.orther.call_us'|t}} {{settings.phone_contact}}</a></li>{% endif %}
+          {% if settings.email_contact != blank %}<li><a href="mailto:{{settings.email_contact}}"><i class="fa fa-envelope"></i>{{settings.email_contact}}</a></li>{% endif %}
+        </ul>
+        <ul class="boutique-nav topbar-menu right">
+          {% if shop.customer_accounts_enabled %}
+          <li class="menu-item-has-children site-nav--has-dropdown">
+            <a href="javascript:void(0);" class="expand"><i class="fa fa-lock"></i> {{'layout.customer.account'|t}}</a>
+            <ul class="sub-menu">
+              {% assign menu_settings_dropdown = section.settings.menu_settings_dropdown %}
+              {% for link in linklists[menu_settings_dropdown].links %}
+              <li><a href="{{link.url}}"><span>{{link.title }}</span></a></li>
+              {% endfor %}
+              {% if customer %}
+              <li><a href="/account/logout"><span>{{"layout.customer.log_out"|t}}</span></a></li>
+              {% else %}
+              <li><a href="/account/login"><span>{{"layout.customer.log_in"|t}}</span></a></li>
+              {% endif %}
+            </ul>
+          </li>
+          {% endif %}
+          <li class="menu-item-has-children site-nav--has-dropdown currency-list currency-lists{% if settings.show_multiple_currencies == false %} hidden{% endif %}">
+            <a href="javascript:void(0);" class="currency_display expand">{{ shop.currency }}</a>
+            <ul class="currency mg_currency_widget sub-menu dropdown-select-menu">
+              {%-assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ','-%}
+              {%-assign supported_codes = settings.supported_currencies | split: ' '-%}
+              <li class="mg-currency-item active">
+                {%-include 'tea-currency-name', cur: shop.currency-%}
+                <span class="sym">                  
+                  <input type="radio" name="currency" class="radio-picker hidden {{ shop.currency }}" value="{{ shop.currency }}" checked="checked">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-for code in supported_codes-%}
+              {%-if code != shop.currency and codes contains code-%}
+              <li class="mg-currency-item">
+                {%-include 'tea-currency-name', cur: code-%}
+                <span class="sym">
+                  <input type="radio" name="currency" class="radio-picker hidden {{ code }}" value="{{ code }}">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-endif-%}
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="main-menu-wapper kiti--DropWindow">
+        <div class="row-flex justify-content-center align-items-center">      
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 logo-wapper">
+            <div class="logo">
+              {%-include 'bt_logo_header_page'-%}
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 menu-wapper">
+            <div class="top-header">
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+              {% if settings.slogan_header != blank %}<div class="slogan">"{{settings.slogan_header}}"</div>{% endif %}
+              <div class="box-control">
+                {% assign search_style = "show-input2" %}
+                {% include 'search-bar' %}
+                {% assign position ="top-menu" %}
+                {% include "mini-cart" %}
+              </div>
+            </div>
+            {% include 'menu_import' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '9' -%}
+  <header id="header" class="header style3 style12 style9_">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      {{announcement_box|trip_mewlines|remove:'  '}}
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="topbar">
+        <ul class="boutique-nav topbar-menu left">
+          {% if settings.phone_contact != blank %}<li><a href="tel:{{settings.phone_contact}}"><i class="fa fa-phone"></i>{{'contact.orther.call_us'|t}} {{settings.phone_contact}}</a></li>{% endif %}
+          {% if settings.email_contact != blank %}<li><a href="mailto:{{settings.email_contact}}"><i class="fa fa-envelope"></i>{{settings.email_contact}}</a></li>{% endif %}
+        </ul>
+        <ul class="boutique-nav topbar-menu right">
+          {% if shop.customer_accounts_enabled %}
+          <li class="menu-item-has-children site-nav--has-dropdown">
+            <a href="javascript:void(0);" class="expand"><i class="fa fa-lock"></i> {{'layout.customer.account'|t}}</a>
+            <ul class="sub-menu">
+              {% assign menu_settings_dropdown = section.settings.menu_settings_dropdown %}
+              {% for link in linklists[menu_settings_dropdown].links %}
+              <li><a href="{{link.url}}"><span>{{link.title }}</span></a></li>
+              {% endfor %}
+              {% if customer %}
+              <li><a href="/account/logout"><span>{{"layout.customer.log_out"|t}}</span></a></li>
+              {% else %}
+              <li><a href="/account/login"><span>{{"layout.customer.log_in"|t}}</span></a></li>
+              {% endif %}
+            </ul>
+          </li>
+          {% endif %}
+          <li class="menu-item-has-children site-nav--has-dropdown currency-list currency-lists{% if settings.show_multiple_currencies == false %} hidden{% endif %}">
+            <a href="javascript:void(0);" class="currency_display expand">{{ shop.currency }}</a>
+            <ul class="currency mg_currency_widget sub-menu dropdown-select-menu">
+              {%-assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ','-%}
+              {%-assign supported_codes = settings.supported_currencies | split: ' '-%}
+              <li class="mg-currency-item active">
+                {%-include 'tea-currency-name', cur: shop.currency-%}
+                <span class="sym">                  
+                  <input type="radio" name="currency" class="radio-picker hidden {{ shop.currency }}" value="{{ shop.currency }}" checked="checked">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-for code in supported_codes-%}
+              {%-if code != shop.currency and codes contains code-%}
+              <li class="mg-currency-item">
+                {%-include 'tea-currency-name', cur: code-%}
+                <span class="sym">
+                  <input type="radio" name="currency" class="radio-picker hidden {{ code }}" value="{{ code }}">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-endif-%}
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="main-header">
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row-flex justify-content-center align-items-center">
+            <div class="col-xs-12 col-sm-12">
+              <div class="logo2 text-center">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-3 col-md-7 col-lg-5">
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>			
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 logo-main">
+              <div class="logo">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-10 col-sm-9 col-md-5 col-lg-4 control-wapper padding-left-xs-0">
+              <div class="box-control">
+                {% assign search_style = "show-input2" %}
+                {% include 'search-bar' %}
+                {% assign position ="top-menu" %}
+                {% include "mini-cart" %}							
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '10' -%}
+  {% if section.settings.message %}
+  <div class="container-fluid">
+    <div class="top-header">
+      {{announcement_box|trip_mewlines|remove:'  '}}
+    </div>
+  </div>
+  {% endif %}
+  <header id="header" class="header sidebar header13 style9_{% unless template contains "index" %} closed{% endunless %}">
+    <span class="close-header-sidebar"><span class="icon pe-7s-close"></span></span>
+    <span class="open-header-sidebar"><i class="fa fa-angle-double-right"></i></span>
+    <div class="header-top sidebar-menu kiti--DropWindow">
+      <div class="logo">
+        {%-include 'bt_logo_header_page'-%}
+      </div>
+      <div class="box-control">
+        {% assign search_style = "icon" %}
+        {% include 'search-bar' %}
+        {% assign position ="top-menu" %}
+        {% assign hidden = "hidden" %}
+        {% include "mini-cart" %}		
+      </div>
+      <ul class="boutique-nav header-bottom-sidebar-menu">
+        {% if shop.customer_accounts_enabled %}
+        <li class="menu-item-has-children site-nav--has-dropdown">
+          <a href="javascript:void(0);" class="expand"><i class="fa fa-lock"></i> {{'layout.customer.account'|t}}</a>
+          <ul class="sub-menu">
+            {% assign menu_settings_dropdown = section.settings.menu_settings_dropdown %}
+            {% for link in linklists[menu_settings_dropdown].links %}
+            <li><a href="{{link.url}}"><span>{{link.title }}</span></a></li>
+            {% endfor %}
+            {% if customer %}
+            <li><a href="/account/logout"><span>{{"layout.customer.log_out"|t}}</span></a></li>
+            {% else %}
+            <li><a href="/account/login"><span>{{"layout.customer.log_in"|t}}</span></a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% endif %}
+        <li class="menu-item-has-children site-nav--has-dropdown currency-list currency-lists{% if settings.show_multiple_currencies == false %} hidden{% endif %}">
+          <a href="javascript:void(0);" class="currency_display expand">{{ shop.currency }}</a>
+          <ul class="currency mg_currency_widget sub-menu dropdown-select-menu">
+            {%-assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ','-%}
+            {%-assign supported_codes = settings.supported_currencies | split: ' '-%}
+            <li class="mg-currency-item active">
+              {%-include 'tea-currency-name', cur: shop.currency-%}
+              <span class="sym">                  
+                <input type="radio" name="currency" class="radio-picker hidden {{ shop.currency }}" value="{{ shop.currency }}" checked="checked">
+                {{ name_curr }}
+              </span>
+            </li>
+            {%-for code in supported_codes-%}
+            {%-if code != shop.currency and codes contains code-%}
+            <li class="mg-currency-item">
+              {%-include 'tea-currency-name', cur: code-%}
+              <span class="sym">
+                <input type="radio" name="currency" class="radio-picker hidden {{ code }}" value="{{ code }}">
+                {{ name_curr }}
+              </span>
+            </li>
+            {%-endif-%}
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>      
+      <ul class="boutique-nav main-menu menu-sidebar">
+        {%-assign main_linklist = settings.vertical_menu_links | default: 'main-menu' -%}
+        {%-for link in linklists[main_linklist].links %}
+          {%-assign menu_handle = link.handle-%}
+          <li class="{% if linklists[menu_handle].links.size > 0 %} menu-item-has-children site-nav--has-dropdown{% endif %}">
+            <a href="{{link.url}}">
+              <span>
+                {{link.title | split: '{' | first | remove:'[title]' | split: 'CSS_' | first | strip}}
+                {% if link.title contains '{'-%}
+                {%- assign label  = link.title |  split: '{' | last  | split: '}' | first | remove:'[title]'-%}
+                <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                {%- endif %}
+              </span>          
+            </a>
+            {%-if linklists[menu_handle].links.size > 0-%}
+            <span class="expand fa"></span>
+            <ul class="sub-menu">
+              {% for link_ in linklists[menu_handle].links-%}
+              {%-assign child_links = linklists[link_.handle].links-%} 
+              <li class="site-nav__child-link{% if child_links.size > 0 %} menu-item-has-children site-nav--has-dropdown{% endif %}">
+                <a href="{{ link_.url }}">
+                  <span>
+                    {{link_.title | split: '{' | first }}
+                    {%-if link_.title contains '{'-%}
+                    {%-assign label = link_.title | split: '{' | last | split: '}' | first-%}
+                    <span class="label-menu {{label | handleize }}">{{label|escape }}</span> 
+                    {%-endif -%}
+                  </span>
+                </a>
+                {% if child_links.size > 0-%}
+                <ul class="sub-menu">
+                  {% for child_link in child_links-%}
+                  <li class="site-nav__child-link">
+                    <a href="{{child_link.url}}">
+                      <span>
+                        {{child_link.title | split: '{' | first }}
+                        {% if child_link.title contains '{'-%}
+                        {%- assign label  = child_link.title | split: '{' | last | split: '}' | first-%}
+                        <span class="label-menu  {{label | handleize }}">{{label|escape }}</span> 
+                        {%- endif %}
+                      </span>
+                    </a>
+                  </li>
+                  {%-endfor %}
+                </ul>
+                {%-endif %}
+              </li>
+              {%-endfor %}
+            </ul>
+            {%-endif %}
+          </li>
+        {%-endfor-%}
+      </ul>
+      <div class="line-header"></div>
+      {% include "boutique_socials", social_grid: 'style13' %}
+      <div class="sidebar-footer">
+        <div class="coppyright">
+          {%-if settings.copyright != blank-%}
+          <p>{{settings.copyright|html}}</p>
+          {%-else-%}
+          <p>
+            <span class="site-footer__copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}</span>
+            <span class="site-footer__copyright-content">{{ powered_by_link }}</span>
+          </p>
+          {%-endif-%}
+        </div>
+      </div>
+    </div>	
+  </header>
+  {% elsif section.settings.import_header == '11' -%}
+  <header id="header" class="header style2 style14">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="main-header kiti--DropWindow">
+      <div class="logo">
+        {%-include 'bt_logo_header_page'-%}
+      </div>
+      <div class="main-menu-wapper">
+        {% include 'menu_import' %}
+        <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+      </div>
+      <div class="right-control">
+        <div class="box-control">
+          {% assign search_style = "icon2" %}
+          {% include 'search-bar' %}
+          {% assign position ="menu" %}
+          {% include "mini-cart" %}
+          {% include"settings-box" %}
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '12' -%}
+  <header id="header" class="header style2 style15">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="main-header">
+      <div class="container">
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div class="logo">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+              <div class="box-control">
+                {% assign search_style = "icon2" %}
+                {% include 'search-bar' %}
+                {% assign position ="menu" %}
+                {% include "mini-cart" %}
+                {% include"settings-box" %}
+              </div>
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '13' -%}
+  <header id="header" class="header style2 style16 style9_">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="topbar">
+        <ul class="boutique-nav topbar-menu left">
+          {% if settings.phone_contact != blank %}<li><a href="tel:{{settings.phone_contact}}"><i class="fa fa-phone"></i>{{'contact.orther.call_us'|t}} {{settings.phone_contact}}</a></li>{% endif %}
+          {% if settings.email_contact != blank %}<li><a href="mailto:{{settings.email_contact}}"><i class="fa fa-envelope"></i>{{settings.email_contact}}</a></li>{% endif %}
+        </ul>
+        <ul class="boutique-nav topbar-menu right">
+          {% if shop.customer_accounts_enabled %}
+          <li class="menu-item-has-children site-nav--has-dropdown">
+            <a href="javascript:void(0);" class="expand"><i class="fa fa-lock"></i>  {{'layout.customer.account'|t}}</a>
+            <ul class="sub-menu">
+              {% assign menu_settings_dropdown = section.settings.menu_settings_dropdown %}
+              {% for link in linklists[menu_settings_dropdown].links %}
+              <li><a href="{{link.url}}"><span>{{link.title }}</span></a></li>
+              {% endfor %}
+              {% if customer %}
+              <li><a href="/account/logout"><span>{{"layout.customer.log_out"|t}}</span></a></li>
+              {% else %}
+              <li><a href="/account/login"><span>{{"layout.customer.log_in"|t}}</span></a></li>
+              {% endif %}
+            </ul>
+          </li>
+          {% endif %}
+          <li class="menu-item-has-children site-nav--has-dropdown currency-list currency-lists{% if settings.show_multiple_currencies == false %} hidden{% endif %}">
+            <a href="javascript:void(0);" class="currency_display expand">{{ shop.currency }}</a>
+            <ul class="currency mg_currency_widget sub-menu dropdown-select-menu">
+              {%-assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ','-%}
+              {%-assign supported_codes = settings.supported_currencies | split: ' '-%}
+              <li class="mg-currency-item active">
+                {%-include 'tea-currency-name', cur: shop.currency-%}
+                <span class="sym">                  
+                  <input type="radio" name="currency" class="radio-picker hidden {{ shop.currency }}" value="{{ shop.currency }}" checked="checked">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-for code in supported_codes-%}
+              {%-if code != shop.currency and codes contains code-%}
+              <li class="mg-currency-item">
+                {%-include 'tea-currency-name', cur: code-%}
+                <span class="sym">
+                  <input type="radio" name="currency" class="radio-picker hidden {{ code }}" value="{{ code }}">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-endif-%}
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="main-header">
+        <div class="logo">
+          {%-include 'bt_logo_header_page'-%}
+        </div>
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row">
+            <div class="col-xs-2 col-sm-9 col-md-10 col-lg-11">
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>
+            <div class="col-xs-10 col-sm-3 col-md-2 col-lg-1">
+              <div class="box-control">
+                {% assign search_style = "icon" %}
+                {% include 'search-bar' %}
+
+                {% assign position ="menu" %}
+                {% include "mini-cart" %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '14' -%}
+  <header id="header" class="header style2 style16 style17">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="topbar">
+        <ul class="boutique-nav topbar-menu left">
+          {% if settings.phone_contact != blank %}<li><a href="tel:{{settings.phone_contact}}"><i class="fa fa-phone"></i>{{'contact.orther.call_us'|t}} {{settings.phone_contact}}</a></li>{% endif %}
+          {% if settings.email_contact != blank %}<li><a href="mailto:{{settings.email_contact}}"><i class="fa fa-envelope"></i>{{settings.email_contact}}</a></li>{% endif %}
+        </ul>
+        <div class="social-topbar">
+          <label>{{'contact.orther.contacts_us'|t}}</label>
+          {% include 'boutique_socials' %}
+        </div>
+      </div>
+      <div class="main-header">
+        <div class="logo">
+          {%-include 'bt_logo_header_page'-%}
+        </div>
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row">
+            <div class="col-xs-2 col-sm-10 col-md-10 col-lg-11">
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>
+            <div class="col-xs-10 col-sm-2 col-md-2 col-lg-1">
+              <div class="box-control">
+                {% assign search_style = "icon" %}
+                {% include 'search-bar' %}
+
+                {% assign position ="menu" %}
+                {% include "mini-cart" %}
+                {% include"settings-box" %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '15' -%}
+  <header id="header" class="header style18">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="main-header">
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12">
+              <div class="logo2 text-center">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-3 col-md-7 col-lg-5">
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>			
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+              <div class="logo-main">
+                <div class="logo">
+                  {%-include 'bt_logo_header_page'-%}
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-10 col-sm-9 col-md-5 col-lg-4 control-wapper kiti-DropWindowDesktop padding-left-xs-0">
+              <div class="box-control">
+                {% assign search_style = "show-input" %}
+                {% include 'search-bar' %}
+                {% assign position ="menu" %}
+                {% include "mini-cart" %}
+                {% include"settings-box" %}							
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '16' -%}
+  <header id="header" class="header style2 style19">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="main-header">
+      <div class="container">
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 logo-wapper">
+              <div class="logo">
+                {%-include 'bt_logo_header_page'-%}
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 menu-wapper">
+              <div class="box-control">
+                {% assign search_style = "icon" %}
+                {% include 'search-bar' %}
+                {% assign position ="menu" %}
+                {% include "mini-cart" %}             
+                {% include"settings-box" %}
+              </div>
+              {% include 'menu_import' %}
+              <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% elsif section.settings.import_header == '17' -%}
+  <header id="header" class="header style2 style20 style9_">
+    {% if section.settings.message %}
+    <div class="container-fluid">
+      <div class="top-header">
+        {{announcement_box|trip_mewlines|remove:'  '}}
+      </div>
+    </div>
+    {% endif %}
+    <div class="container">
+      <div class="topbar">
+        <ul class="boutique-nav topbar-menu left">
+          {% if settings.phone_contact != blank %}<li><a href="tel:{{settings.phone_contact}}"><i class="fa fa-phone"></i>{{'contact.orther.call_us'|t}} {{settings.phone_contact}}</a></li>{% endif %}
+          {% if settings.email_contact != blank %}<li><a href="mailto:{{settings.email_contact}}"><i class="fa fa-envelope"></i>{{settings.email_contact}}</a></li>{% endif %}
+        </ul>
+        <ul class="boutique-nav topbar-menu right">
+          {% if shop.customer_accounts_enabled %}
+          <li class="menu-item-has-children site-nav--has-dropdown">
+            <a href="javascript:void(0);" class="expand"><i class="fa fa-lock"></i> {{'layout.customer.account'|t}}</a>
+            <ul class="sub-menu">
+              {% assign menu_settings_dropdown = section.settings.menu_settings_dropdown %}
+              {% for link in linklists[menu_settings_dropdown].links %}
+              <li><a href="{{link.url}}"><span>{{link.title }}</span></a></li>
+              {% endfor %}
+              {% if customer %}
+              <li><a href="/account/logout"><span>{{"layout.customer.log_out"|t}}</span></a></li>
+              {% else %}
+              <li><a href="/account/login"><span>{{"layout.customer.log_in"|t}}</span></a></li>
+              {% endif %}
+            </ul>
+          </li>
+          {% endif %}
+          <li class="menu-item-has-children site-nav--has-dropdown currency-list currency-lists{% if settings.show_multiple_currencies == false %} hidden{% endif %}">
+            <a href="javascript:void(0);" class="currency_display expand">{{ shop.currency }}</a>
+            <ul class="currency mg_currency_widget sub-menu dropdown-select-menu">
+              {%-assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ','-%}
+              {%-assign supported_codes = settings.supported_currencies | split: ' '-%}
+              <li class="mg-currency-item active">
+                {%-include 'tea-currency-name', cur: shop.currency-%}
+                <span class="sym">                  
+                  <input type="radio" name="currency" class="radio-picker hidden {{ shop.currency }}" value="{{ shop.currency }}" checked="checked">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-for code in supported_codes-%}
+              {%-if code != shop.currency and codes contains code-%}
+              <li class="mg-currency-item">
+                {%-include 'tea-currency-name', cur: code-%}
+                <span class="sym">
+                  <input type="radio" name="currency" class="radio-picker hidden {{ code }}" value="{{ code }}">
+                  {{ name_curr }}
+                </span>
+              </li>
+              {%-endif-%}
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="main-header">
+        <div class="logo">
+          {%-include 'bt_logo_header_page'-%}
+        </div>
+        <div class="main-menu-wapper kiti--DropWindow">
+          <div class="main-menu-inner">
+            <span class="mobile-navigation"><i class="fa fa-bars"></i></span>
+            {% include 'menu_import' %}
+            <div class="box-control">            
+              {% assign search_style = "icon" %}
+              {% include 'search-bar' %}
+              {% assign style20 ="style20" %}
+              {% assign position ="top-menu" %}
+              {% include "mini-cart" %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {%- endif %}
+  <!-- ./Header -->
+</div>
+{% schema %}
+  {
+  "name": "Header page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "== Logo"
+    },
+    {
+      "type": "text",
+      "id": "body_logo_svg",
+      "label": "___ Logo SVG",
+      "placeholder": "Logo__1.svg",
+      "info": "[Upload svg file to Files](\/admin\/settings\/files) and copy name file to input."
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "___ Logo image",
+      "info": "Dimension: 300px - 91px"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 100,
+      "max": 270,
+      "step": 5,
+      "unit": "px",
+      "label": "___ Logo width",
+      "info": "Custom logo width (in pixels)",
+      "default": 270
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_sticky",
+      "label": "___ Logo image for sticky header"
+    },
+    {
+      "type": "image_picker",
+      "id": "logomn",
+      "label": "___ Mini logo image"
+    },
+    {
+      "type": "header",
+      "content": "== Slogan"
+    },
+    {
+      "type": "textarea",
+      "id": "slogan_header",
+      "label": "___ Slogan Text",
+      "default": "Boutique is a reflection of you!"
+    },
+    {
+      "type": "header",
+      "content": "== Layout Setting"
+    },
+    {
+      "type": "select",
+      "id": "import_header",
+      "options": [
+        {
+          "value": "1",
+          "label": "Header Style 1 (Home 1)"
+        },
+        {
+          "value": "2",
+          "label": "Header Style 2 (Home 2 + 4 + 7)"
+        },
+        {
+          "value": "3",
+          "label": "Header Style 3 (Home 3 + 6)"
+        },
+        {
+          "value": "4",
+          "label": "Header Style 4 (Home 5)"
+        },
+        {
+          "value": "5",
+          "label": "Header Style 5 (Home 8)"
+        },
+        {
+          "value": "6",
+          "label": "Header Style 6 (Home 9)"
+        },
+        {
+          "value": "7",
+          "label": "Header Style 7 (Home 10)"
+        },
+        {
+          "value": "8",
+          "label": "Header Style 8 (Home 11)"
+        },
+        {
+          "value": "9",
+          "label": "Header Style 9 (Home 12)"
+        },
+        {
+          "value": "10",
+          "label": "Header Style 10 (Home 13)"
+        },
+        {
+          "value": "11",
+          "label": "Header Style 11 (Home 14)"
+        },
+        {
+          "value": "12",
+          "label": "Header Style 12 (Home 15)"
+        },
+        {
+          "value": "13",
+          "label": "Header Style 13 (Home 16)"
+        },
+        {
+          "value": "14",
+          "label": "Header Style 14 (Home 17)"
+        },
+        {
+          "value": "15",
+          "label": "Header Style 15 (Home 18)"
+        },
+        {
+          "value": "16",
+          "label": "Header Style 16 (Home 19)"
+        },
+        {
+          "value": "17",
+          "label": "Header Style 17 (Home 20)"
+        }
+      ],
+      "label": "=== Select Header",
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id" :"stickey_menu",
+      "label": "-- Use stickey menu",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "message",
+      "label": "-- Show announcement",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "message_onm",
+      "label": "Show on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "message_ont",
+      "label": "Show on tablet",
+      "default": false
+    },
+    {
+       "type": "richtext",
+       "id": "message_richtext",
+       "label": "Announcement text",
+       "default": "<p>Announce something here</p>"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Announcement text color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Announcement background color",
+      "default": "#7796A8"
+    },
+    {
+      "type": "checkbox",
+      "id": "announcement_border",
+      "label": "Use border for announcement"
+    },
+    {
+      "type": "text",
+      "id": "announcement_margin_top",
+      "label": "Announcement margin top",
+      "info": "10px"
+    },
+    {
+      "type": "text",
+      "id": "announcement_margin_bottom",
+      "label": "Announcement margin bottom",
+      "info": "10px"
+    },
+    {
+      "type": "header",
+      "content": "== Header Settings Dropdown"
+    },
+    {
+      "type": "radio",
+      "id": "icon_settings",
+      "options": [
+        {
+          "value": "bars",
+          "label": "Bars Icon"
+        },
+        {
+          "value": "config",
+          "label": "Config Icon"
+        }
+      ],
+      "label": "Settings icon",
+      "default": "config"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_settings_dropdown",
+      "label": "Settings Menu"
+    },
+    {
+      "type": "header",
+      "content": "== MAIN MENU SETTINGS and VERTICAL MENU"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": "Menu default",
+      "default": "main-menu",
+      "info": "Show when no item block."
+    },
+    {
+      "type": "range",
+      "id": "padding_size",
+      "min": 10,
+      "max": 55,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding item level 1",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Item menu Link",
+      "settings": [
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Menu link"
+        },
+        {
+          "type":"text",
+          "id":"title",
+          "label":"Menu title",
+          "default":"Item link"
+        },
+        {
+          "type":"text",
+          "id":"label",
+          "label":"Menu label"
+        },
+        {
+          "type":"color",
+          "id":"color",
+          "label":"Label color",
+          "default":"#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Item menu Standard",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Select menu"
+        },
+        {
+          "type": "link_list",
+          "id": "menu_links",
+          "label": "Choose the parent item menu"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Menu link"
+        },
+        {
+          "type":"text",
+          "id":"label",
+          "label":"Menu label"
+        },
+        {
+          "type":"color",
+          "id":"color",
+          "label":"Label color",
+          "default":"#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "per_column",
+      "name": "Item menu Per column",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Select menu"
+        },
+        {
+          "type": "link_list",
+          "id": "menu_links",
+          "label": "Choose the parent item menu"
+        },
+        {
+          "type": "text",
+          "id": "menu_links_width",
+          "label": "Width dropdown",
+          "default": "830px"
+        },
+        {
+          "type": "select",
+          "id": "menu_links_per_col",
+          "label": "Select munber per col",
+          "options": [
+            {
+              "value": "1",
+              "label": "None"
+            },
+            {
+              "value": "2",
+              "label": "2 column"
+            },
+            {
+              "value": "3",
+              "label": "3 column"
+            },
+            {
+              "value": "4",
+              "label": "4 column"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Menu link"
+        },
+        {
+          "type":"text",
+          "id":"label",
+          "label":"Menu label"
+        },
+        {
+          "type":"color",
+          "id":"color",
+          "label":"Label color",
+          "default":"#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "multi_collumn",
+      "name": "Item menu Multi column",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Select menu"
+        },
+        {
+          "type": "link_list",
+          "id": "menu_links",
+          "label": "Choose the parent item menu"
+        },
+        {
+          "type": "text",
+          "id": "menu_links_width",
+          "label": "Width dropdown",
+          "default": "830px"
+        },
+        {
+          "type": "select",
+          "id": "menu_links_per_col",
+          "label": "Select munber per col",
+          "options": [
+            {
+              "value": "2",
+              "label": "2 column"
+            },
+            {
+              "value": "3",
+              "label": "3 column"
+            },
+            {
+              "value": "4",
+              "label": "4 column"
+            }
+          ],
+          "default": "3"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Menu link"
+        },
+        {
+          "type":"text",
+          "id":"label",
+          "label":"Menu label"
+        },
+        {
+          "type":"color",
+          "id":"color",
+          "label":"Label color",
+          "default":"#ffffff"
+        },
+        {
+          "type":"image_picker",
+          "id":"bg_image",
+          "label":"Background image"
+        }
+      ]
+    },
+    {
+      "type": "promo",
+      "name": "Item menu Promo",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Select menu"
+        },
+        {
+          "type": "link_list",
+          "id": "menu_links",
+          "label": "Choose the parent item menu"
+        },
+        {
+          "type": "text",
+          "id": "name_item",
+          "label": "Name item",
+          "default": "Features"
+        },
+        {
+          "type": "text",
+          "id": "menu_links_width",
+          "label": "Width dropdown",
+          "default": "830px"
+        },
+        {
+          "type": "select",
+          "id": "menu_links_per_col",
+          "label": "Select munber per col",
+          "options": [
+            {
+              "value": "1",
+              "label": "1 column"
+            },
+            {
+              "value": "2",
+              "label": "2 column"
+            },
+            {
+              "value": "3",
+              "label": "3 column"
+            },
+            {
+              "value": "4",
+              "label": "4 column"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Menu link"
+        },
+        {
+          "type":"text",
+          "id":"label",
+          "label":"Menu label"
+        },
+        {
+          "type":"color",
+          "id":"color",
+          "label":"Label color",
+          "default":"#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "== Promo settings"
+        },
+        {
+          "type": "select",
+          "id": "promo_width",
+          "label": "Select munber Promo width",
+          "options": [
+            {
+              "value": "12",
+              "label": "Full width"
+            },
+            {
+              "value": "6",
+              "label": "1/2 width"
+            },
+            {
+              "value": "8",
+              "label": "2/3 width"
+            },
+            {
+              "value": "9",
+              "label": "3/4 width"
+            }
+          ],
+          "default": "8"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image",
+          "label": "=== Promo image"
+        },
+        {
+          "type": "url",
+          "id": "promo_link",
+          "label": "Promo link to"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_promo_html",
+          "label": "=== Use Promo width HTML",
+          "info": "Choose page or write to filed HTML"
+        },
+        {
+          "type": "page",
+          "id": "page_promo_html",
+          "label": "Choose page"
+        },
+        {
+          "type": "textarea",
+          "id": "textarea_promo_html",
+          "label": "HTML"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

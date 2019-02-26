@@ -1,0 +1,450 @@
+<div class="kt_layerFilterJS" data-section-id="{{ section.id }}" data-section-type="collection-template">
+  {%- include 'kt_filter_json' -%}
+  {%-if settings.use_wishlist -%}{%- include 'nitro-wishlist' -%}{%- endif -%}
+  {%-assign limit = section.settings.limit -%}
+  {%-paginate collection.products by limit %}
+  <div class="main-container">
+    <div class="{% if section.settings.width_section %}container{% else %}container-fluid{% endif %}">
+      <div class="{{section.settings.sidebar_layout|default: 'no'}}-sidebar">
+        <div class="catalog-filter">
+          <div class="shop-top dp-flex justify-content-between">
+            <div class="shop-top-left">
+              {%-include 'breadcrumb' -%}
+            </div>
+            <div class="shop-top-right dp-flex flex-row flex-nowrap justify-content-between justify-content-md-end">
+              {%- if section.settings.sidebar_layout != '' -%}
+              <div class="filter-by filterMobile">
+                <a class="button_" title="Filter" href="#"><i class="fa fa-filter" aria-hidden="true"></i>{{'collections.filters.title'|t}}</a>
+              </div>
+              {%- endif -%}
+              <span class="woocommerce-result-count">
+                {%- assign current_offset = paginate.current_offset | plus:1 -%}
+                {%- assign current_product_size = collection.products.size | plus:paginate.current_offset -%}
+                {%- if current_tags == blank -%}
+                {%- if limit > paginate.items -%}
+                {{ 'collections.general.results_limit' | t: count: paginate.items }}
+                {%- else -%}
+                {{ 'collections.general.results_with_count_html' | t:count:current_offset,curent_count:current_product_size,pr_count:collection.all_products_count }}
+                {%- endif -%}
+                {%- elsif limit > paginate.items -%}
+                {{ 'collections.general.results_limit' | t: count: paginate.items }}
+                {%- else -%}
+                {%- assign current_offset = paginate.current_offset | plus:1 -%}
+                {%- assign current_product_size = collection.products.size | plus:paginate.current_offset -%}
+                {{ 'collections.general.results_with_count_html' | t:count:current_offset,curent_count:current_product_size,pr_count:paginate.items }}
+                {%- endif -%}
+              </span>
+              {%- if section.settings.sidebar_layout != '' %}
+              {%- include 'kt_filter_sortby' -%}
+              {% endif -%}
+              <div class="show-grid-list">
+                <span class="label-filter">{{'collections.filters.view'|t}}:</span>
+                <a data-pjax-filter class="show-grid active" href="?view=grid"><i class="fa fa-th"></i></a>
+                <a data-pjax-filter class="show-list" href="?view=list"><i class="fa fa-list"></i></a>
+              </div>
+            </div>
+            {%- if section.settings.sidebar_layout == '' -%}
+            <div class="kt_layerFilter kt_dropdown">
+              <div class="kt_catalog-filter">
+                <div class="dp-flex flex-row flex-nowrap justify-content-between">
+                  <div class="filter-by filterDrop hidden-xs">
+                    <a class="button_" title="{{'collections.filters.title'|t}}" href="#"><i class="fa fa-filter" aria-hidden="true"></i>{{'collections.filters.title'|t}}</a>
+                  </div>
+                  <div class="filter-by filterMobile">
+                    <a class="button_" title="Filter" href="#"><i class="fa fa-filter" aria-hidden="true"></i>{{'collections.filters.title'|t}}</a>
+                  </div>
+                  {%- include 'kt_filter_sortby' -%}
+                </div>
+              </div>
+              <div class="kt_layerfilterGroups kt_layerfilterGroupsDesktop"></div>
+            </div>
+            {%- endif -%}
+          </div>          
+          <div class="filter-container__selected-filter margin-bottom-20 clearfix"{%if items_filter_check.size <= 0 %} style="display:none"{% endif %}{% if current_tags.size == null %} style="display:none"{% endif %}>
+            {%- include 'kt_filter_selected' -%}
+          </div>
+        </div>
+        {%-if section.settings.masonry == true-%}{%- assign ly = 'ms' -%}{%-else-%}{%-assign ly = 'gr'-%}{%-endif-%}
+        {%- case section.settings.grid -%}
+        {%- when '2' -%}
+        {%- assign grid_item_width = ' col-lg-6 col-md-6 col-sm-6 col-xs-6 col-kiti-12' -%}
+        {%- assign pr_fixed = ' desktop-columns-2 tablet-columns-2 mobile-columns-1 row flex-flow' -%}
+        {%- assign grid_image_width = 'grid_image_width' -%}
+        {%- when '3' -%}
+        {%- assign grid_item_width = ' col-lg-4 col-md-4 col-sm-4 col-xs-6 col-kiti-12' -%}
+        {%- assign pr_fixed = ' desktop-columns-3 tablet-columns-3 mobile-columns-1 row flex-flow' -%}
+        {%- when '4' -%}
+        {%- assign grid_item_width = ' col-lg-3 col-md-3 col-sm-4 col-xs-6 col-kiti-12' -%}
+        {%- assign pr_fixed = ' desktop-columns-4 tablet-columns-3 mobile-columns-1 row flex-flow' -%}
+        {%- when '5' -%}
+        {%- assign grid_item_width = ' col-xl-5ths col-lg-5ths col-sm-4 col-xs-6 col-kiti-12' -%}
+        {%- assign pr_fixed = ' desktop-columns-5 tablet-columns-3 mobile-columns-1 row flex-flow' -%}
+        {%- when '6' -%}
+        {%- assign grid_item_width = ' col-lg-2 col-md-2 col-sm-2 col-xs-6 col-kiti-12' -%}
+        {%- assign pr_fixed = ' desktop-columns-6 tablet-columns-3 mobile-columns-1 row flex-flow' -%}
+        {%- endcase -%}
+        {%- assign settings_collection_layout = section.settings.collection_layout -%}        
+        <div class="row">
+          <div class="main-content{% if section.settings.sidebar_layout == '' %} col-lg-12{% else %} col-sm-8 col-md-9{% if section.settings.width_section == false %} col-lg-10{% endif %} margin-top-30 margin-bottom-50{%-endif-%}">
+            <div class="collection-products clearfix">
+              <div class="category-products">
+                <ul class="products-grid product-listing product-list-grid{%unless section.settings.product_grid_layout == ''%} KiTi_Card style{{section.settings.product_grid_layout}}{% endunless %} ly__{{ly}}_items{{pr_fixed}}"
+                    data-grid="{{grid_item_width}}"
+                    data-layout="{{ly}}"
+                    data-section-id="{{ section.id }}"{% if section.settings.masonry == true %} id="Masory-{{ section.id }}" data-section-type="masory-section"{% endif %}>
+                  {% for product in collection.products limit: limit %}
+                    <li class="grid-item{{grid_item_width}} ly__{{ly}}">
+                      {% include 'product-card-grid', ly: ly, grid: section.settings.grid, container: section.settings.width_section %}
+                    </li>
+                  {% endfor %}
+                  {%-if settings_collection_layout != 'default' -%}{%-if paginate.next.is_link-%}<div class="product-listing-loadmore"></div>{%-endif-%}{%-endif-%}
+                </ul>
+              </div>
+              <div class="pagination_ text-center clearfix">
+                {%- if settings_collection_layout == 'default' -%}
+                  {%- if paginate.pages > 1 -%}
+                    {%- include 'pagination' -%}
+                  {%- endif -%}
+                {%- else -%}
+                  <div class="loadMore clearfix"{% unless paginate.next.is_link %} style="display:none"{% endunless %}>
+                    <a data-pjax-filter href="{{ paginate.next.url }}" class="button btn-next btn btn--secondary btn--narrow" data-page="page_{{paginate.current_page|plus:1}}" data-action="{{settings_collection_layout}}" data-text-button="{{'collections.general.load_more'|t}}" data-text-loading="{{'collections.general.loading'|t}}"{% if settings_collection_layout == 'infinity' %} style="opacity: 0"{%-endif-%}>{{'collections.general.load_more'|t}}</a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+          {%- if section.settings.sidebar_layout != '' -%}
+          <div class="sidebar clearfix margin-top-30 margin-bottom-50 col-sm-4 col-md-3{% if section.settings.width_section == false %} col-lg-2{% endif %}">
+            {%- if settings.list_categories_enable -%}
+            {% include 'kt_categories_sidebar' %}
+            {%- endif -%}
+            <div class="kt_layerFilter kt_sidebar">
+              <div class="kt_layerfilterGroups kt_layerfilterGroupsDesktop"></div>
+            </div>
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endpaginate -%}
+</div>
+{% schema %}
+  {
+    "name": "Collection page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "select",
+        "id": "sidebar_layout",
+        "label": "Sidebar layout",
+        "options": [
+          {
+            "value": "",
+            "label": "None"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "grid",
+        "label": "Products per row (grid only)",
+        "default": "4",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "masonry",
+        "label": "Using masonry layout"
+      },
+      {
+        "type": "select",
+        "id": "collection_layout",
+        "label": "Paging layout for template",
+        "options": [
+          {
+            "label": "Paging",
+            "value": "default"
+          },
+          {
+            "label": "Button loadmore",
+            "value": "loadmore"
+          },
+          {
+            "label": "Infinity load",
+            "value": "infinity"
+          }
+        ],
+        "default": "default"
+      },
+      {
+        "type": "range",
+        "id": "limit",
+        "min": 5,
+        "max": 50,
+        "step": 1,
+        "label": "Limit display product",
+        "default": 16
+      },
+      {
+        "type": "select",
+        "id": "product_grid_layout",
+        "label": "Product card grid layout",
+        "options": [
+          {
+            "value": "",
+            "label": "Default"
+          },
+          {
+            "label": "Layout 1",
+            "value": "1"
+          },
+          {
+            "label": "Layout 2",
+            "value": "2"
+          },
+          {
+            "label": "Layout 3",
+            "value": "3"
+          },
+          {
+            "label": "Layout 4",
+            "value": "4"
+          },
+          {
+            "label": "Layout 4.1",
+            "value": "4_1 style4"
+          },
+          {
+            "label": "Layout 5",
+            "value": "5"
+          },
+          {
+            "label": "Layout 7",
+            "value": "7"
+          },
+          {
+            "label": "Layout 8",
+            "value": "8"
+          },
+          {
+            "label": "Layout 8.1",
+            "value": "8_1 style8"
+          },
+          {
+            "label": "Layout 9",
+            "value": "9"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "textarea",
+        "id": "color_groups",
+        "default": "Color",
+        "label": "List group use style with color swatch",
+        "info": "Separate by a comma, i.e \"Color, Material, ...\"."
+      },
+      {
+        "type": "textarea",
+        "id": "brands_icon",
+        "label": "Brands link image",
+        "info": "Separate by a comma, i.e \"https://cdn.shopify.com/s/files/1/1958/5719/files/Adidas.jpg?581951153018427370, https://cdn.shopify.com/s/files/1/1958/5719/files/Apple.jpg?763180296243275461, ...\". [Upload svg file to Files](\/admin\/settings\/files) and copy name file to input."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Filter By...",
+        "settings": [
+          { 
+            "type":"text",
+            "id":"title",
+            "label":"Filter by group title",
+            "default":"Filter By"
+          },
+          {
+            "type": "textarea",
+            "id": "tags",
+            "label": "Shop by tags list",
+            "info": "Separate by a comma, i.e \"Tag1, Tag2, Tag3\"."
+          },
+          {
+            "type": "header",
+            "content": "== Custom for auto filter groups"
+           },
+          { 
+            "type":"text",
+            "id":"key",
+            "label":"Filter keyword",
+            "default":"Color",
+            "info": "Tags containing keyword will be display"
+          },
+          {
+            "type": "paragraph",
+            "content": "Create tag filter groups in Shopify. This snippet is designed to group and separate out collection tags. Use admin extensions"
+          },
+          {
+            "type": "header",
+            "content": "== Select block style"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "Width (Future Use, disabled...)",
+            "default": "3"
+          },
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "1",
+                "label": "Detail"
+              },
+              {
+                "value": "2",
+                "label": "Color list"
+              },
+              {
+                "value": "3",
+                "label": "Tag"
+              },
+              {
+                "value": "4",
+                "label": "Color tag"
+              },
+              {
+                "value": "5",
+                "label": "Color icon"
+              },
+              {
+                "value": "6",
+                "label": "Brand icon"
+              },
+              {
+                "value": "7",
+                "label": "Brand with icon"
+              }
+            ],
+            "label": "Style",
+            "default": "1"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_split",
+            "label": "Split the column into 2"
+          }
+        ]
+      },
+      {
+        "type": "item_recent",
+        "name": "Recent products",
+        "settings": [
+          { 
+            "type":"text",
+            "id":"title",
+            "label":"Filter by group title",
+            "default":"Recent products"
+          },
+          { 
+            "type":"text",
+            "id":"key",
+            "label":"Filter keyword",
+            "default":"kt_rencent",
+            "info": "Wrong: Don't change"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

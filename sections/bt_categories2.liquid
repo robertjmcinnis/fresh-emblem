@@ -1,0 +1,93 @@
+<div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+  <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+      <div class="block-category-carousel"{% if section.settings.image != blank %} style="background-image:url('{{section.settings.image|img_url: '768x'}}')"{% endif %}>
+        <h3 class="title">{{section.settings.title_section}}</h3>
+        <span class="sub-title">{{section.settings.stitle}}</span>
+        <div class="block-inner owl-carousel" data-nav="false" data-dots="true" data-items="1" data-loop="false" data-autoplay="false">
+          {%- assign check_row_catt = 1 -%}
+          {%- for i in (1..12) -%}
+          {%- assign cat_icon = 'cat_icon' | append: i -%}
+          {%- assign cat_collection = 'cat_collection' | append: i -%}
+          {%- if settings[cat_collection] != blank or settings[cat_icon] -%}
+          {%- if check_row_catt == 1 -%}
+          <ul class="list-cat">
+            {%- endif -%} 
+            <li>
+              <a href="/collections/{{settings[cat_collection]}}">
+                <img src="{{settings[cat_icon] | img_url: 'small'}}" alt="icon {{settings[cat_collection]}}">
+                {{settings[cat_collection] | capitalize | replace: '-', ' ' }}
+              </a>
+            </li>
+            {%- if  check_row_catt  >=  4  or forloop.last -%}
+          </ul>
+          {%- assign check_row_catt = 0 -%}
+          {%- endif -%}
+          {%- assign check_row_catt = check_row_catt | plus : 1 %}
+          {%- endif -%}
+          {%- endfor -%}
+        </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Featured categories 2",
+    "class": "index-section index-section--kt bt_categories2",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Featured categories sidebar",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "text",
+        "id": "title_section",
+        "label": "Title",
+        "default": "CATEGORIES"
+      },
+      {
+        "type": "text",
+        "id": "stitle",
+        "label": "Subtitle",
+        "default": "Find all items you want by select our featured categories"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured categories 2",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,881 @@
+<div data-section-id="{{ section.id }}" id="MasoryBlock-{{ section.id }}" data-section-type="bt_block_masonry">
+  <div class="{% if section.settings.width_section %} container{% endif %}">
+    <div class="row margin-0 block_masonry margin-bottom-80">
+      {% for block in section.blocks %}
+        {% if block.type == 'banner1' %}
+          <div class="kt-banner block-kt-banner style1 col-lg-{{block.settings.banner_width}}
+                  {%- if block.settings.hide_medium %} hidden-md{%- else %} col-ms-{{block.settings.banner_width}}{%- endif %}
+                  {%- if block.settings.hide_small %} hidden-sm{%- else %} col-sm-{{ block.settings.banner_width }}{%- endif %}
+                  {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-xs-12{%- endif %}{% if block.settings.nopadding %} padding-0{% endif %}"
+              data-height="{% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}585{%endif%}"
+              data-positiontop="{{block.settings.space_box|default: '60px'}}"
+              data-positionright="0px"
+              data-positionleft="0px" {{ block.shopify_attributes }}>
+            <a href="{{block.settings.image_link}}" class="bg-image lazyload"
+              data-bgset="{% if block.settings.image-%}{%- include 'bgset', image: block.settings.image -%}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/56_placeholder.jpg?1825947973671515744{%-endif %}"
+              data-sizes="auto"
+              data-parent-fit="cover"
+              style="background-image: url('{% if block.settings.image-%}{{block.settings.image|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/56_placeholder_250x.jpg?1825947973671515744{%-endif %}'); height: {% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}585{%endif%}px;"></a>
+            <div class="banner-content text-center">
+              <h3 class="title" style="color: {{block.settings.color_title}}">{{block.settings.titlex}}</h3>
+              {%-if block.settings.stitle != blank -%}<div class="subtitle" style="color: {{block.settings.color_stitle}}">{{block.settings.stitle}}</div>{%-endif-%}
+              <a class="banner-button" href="{{block.settings.image_link}}">{{block.settings.name_btn}}</a>
+            </div>
+          </div>
+        {% elsif block.type == 'banner2' %}
+          <div class="kt-banner block-kt-banner style3{% if block.settings.content_align_left %} style4{% endif %} col-lg-{{block.settings.banner_width}}
+                  {%- if block.settings.hide_medium %} hidden-md{%- else %} col-ms-{{block.settings.banner_width}}{%- endif %}
+                  {%- if block.settings.hide_small %} hidden-sm{%- else %} col-sm-{{ block.settings.banner_width }}{%- endif %}
+                  {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-xs-12{%- endif %}{% if block.settings.nopadding %} padding-0{% endif %}"
+                data-height="{% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}300{%endif%}"
+                data-position="center"
+                data-position{% if block.settings.content_align_left %}left{% else %}right{% endif %}="30px" {{ block.shopify_attributes }}>
+            <a href="{{block.settings.image_link}}" class="bg-image lazyload"
+              data-bgset="{% if block.settings.image-%}{%- include 'bgset', image: block.settings.image -%}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/58_placeholder.jpg?14766680686375294333{%-endif %}"
+              data-sizes="auto"
+              data-parent-fit="cover"
+              style="background-image: url('{% if block.settings.image-%}{{block.settings.image|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/58_placeholder_100x.jpg?14766680686375294333{%-endif %}'); height: {% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}300{%endif%}px;"></a>
+            <div class="banner-content text-center">
+              <h3 class="title" style="color: {{block.settings.color_title}}">{{block.settings.titlex}}</h3>
+              <div class="subtitle" style="color: {{block.settings.color_stitle}}">{{block.settings.stitle}}</div>
+              <a class="banner-button" href="{{block.settings.image_link}}">{{block.settings.name_btn}}</a>
+            </div>
+          </div>
+        {% elsif block.type == 'banner3' %}
+          <div class="kt-banner block-kt-banner style5 col-lg-{{block.settings.banner_width}}
+                  {%- if block.settings.hide_medium %} hidden-md{%- else %} col-ms-{{block.settings.banner_width}}{%- endif %}
+                  {%- if block.settings.hide_small %} hidden-sm{%- else %} col-sm-{{ block.settings.banner_width }}{%- endif %}
+                  {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-xs-12{%- endif %}{% if block.settings.nopadding %} padding-0{% endif %}"
+              data-height="{% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}300{%endif%}"
+              data-positiontop="60px"
+              data-position="center"
+              data-positionleft="0px"
+              data-positionright="0px" {{ block.shopify_attributes }}>
+            <a href="#" class="bg-image lazyload"
+            data-bgset="{% if block.settings.image-%}{%- include 'bgset', image: block.settings.image -%}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/62.jpg?4976022171276950664{%-endif %}"
+            data-sizes="auto"
+            data-parent-fit="cover"
+            style="background-image: url('{% if block.settings.image-%}{{block.settings.image|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/2336/5331/files/62_100x.jpg?4976022171276950664{%-endif %}'); height: {% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}300{%endif%}px;"></a>
+            <div class="banner-content text-center">
+              <div class="video video-lightbox">
+                <a href="#" class="link-lightbox button-play" data-videoid="{{ block.settings.video_url.id }}" data-videosite="{{ block.settings.video_url.type }}" data-url="{{ section.settings.video_url }}"></a>
+              </div>
+            </div>
+          </div>
+        {% elsif block.type == 'block1' %}
+          <div class="kt-banner block-kt-banner style2 col-lg-{{block.settings.banner_width}}
+                  {%- if block.settings.hide_medium %} hidden-md{%- else %} col-ms-{{block.settings.banner_width}}{%- endif %}
+                  {%- if block.settings.hide_small %} hidden-sm{%- else %} col-sm-{{ block.settings.banner_width }}{%- endif %}
+                  {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-xs-12{%- endif %}{% if block.settings.nopadding %} padding-0{% endif %}" data-bgcolor="{{block.settings.color_bg}}"
+                  data-position="center"
+                  data-height="{% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}300{%endif%}"
+                  data-positionright="65px"
+                  data-positionleft="65px" {{ block.shopify_attributes }}>
+            <a href="{{block.settings.image_link}}" class="bg-image" style="height: {% if block.settings.height_box != blank-%}{{block.settings.height_box}}{%else%}300{%endif%}px;"></a>
+            <div class="banner-content text-center" style="border-color: {{block.settings.color_title}}">
+              <h3 class="title" style="color: {{block.settings.color_title}}">{{block.settings.titlex}}</h3>
+              <div class="subtitle" style="color: {{block.settings.color_stitle}}">{{block.settings.stitle}}</div>
+            </div>
+          </div>
+        {% elsif block.type == 'blocknewsletter' %}
+          <div class="block-kt-banner col-lg-{{block.settings.banner_width}}
+                  {%- if block.settings.hide_medium %} hidden-md{%- else %} col-ms-{{block.settings.banner_width}}{%- endif %}
+                  {%- if block.settings.hide_small %} hidden-sm{%- else %} col-sm-{{ block.settings.banner_width }}{%- endif %}
+                  {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-xs-12{%- endif %}{% if block.settings.nopadding %} padding-0{% endif %}" {{ block.shopify_attributes }}>
+            <div class="block-newletter style4">
+              <div class="head">
+                <div class="section-title text-center">
+                  <h3>{{block.settings.titlex}}</h3>
+            <span class="sub-title">{{block.settings.s_title}}</span>
+                </div>
+              </div>
+              <div class="form">
+                <div class="desc">
+                  {{block.settings.description|html}}
+                </div>
+                {%- if settings.newslatter_mailchimp_url != "" -%}
+                  <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="newletter mailing-form" name="mc-embedded-subscribe-form" target="_blank">
+                    <input type="email"
+                           name="contact[email]"
+                           id="contact_email{{section.id}}"
+                           class="email-text required-entry validate-email"
+                           value="{% if customer %}{{ customer.email }}{% endif %}"
+                           placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                    <input name="subscribe" id="subscribe{{section.id}}" type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button">
+                  </form>
+                {%- else -%}
+                  {%-form 'customer', class: 'newletter'-%}
+                    {{ form.errors | default_errors }}
+                    {%-if form.posted_successfully?-%}
+                    <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                    {%-else-%}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <input type="email"
+                           name="contact[email]"
+                           id="Email{{section.id}}"
+                           class="email-text required-entry validate-email"
+                           value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+                           placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                    <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button">
+                    {%-endif-%}
+                  {%-endform-%}
+                {%- endif -%}              
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{%-schema-%}
+{
+  "name": "Content homepage 18",
+  "class": "index-section index-section--kt contentHome18",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Content homepage 18",
+      "info": "Customize name section (no display item preview)"
+    },
+    {
+      "type": "header",
+      "content": "Content settings"
+    },
+    {
+      "type":"checkbox",
+      "id": "width_section",
+      "label": "Max width section",
+      "default": true,
+      "info": "Max width = 1200px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner1",
+      "name": "Item banner 1",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "turnoff",
+          "label": "Turn off block"
+        },
+        {
+          "type":"text",
+          "id":"height_box",
+          "label": "Height box",
+          "default": "585"
+        },
+        {
+           "type": "select",
+           "id": "banner_width",
+           "options": [
+            {
+               "value": "1",
+               "label": "1 column - 1/12"
+             },
+             {
+               "value": "2",
+               "label": "2 columns - 1/6"
+             },
+             {
+               "value": "3",
+               "label": "3 columns - 1/4"
+             },
+             {
+               "value": "4",
+               "label": "4 columns - 1/3"
+             },
+             {
+               "value": "5",
+               "label": "5 columns - 5/12"
+             },
+             {
+               "value": "6",
+               "label": "6 columns - 1/2"
+             },
+             {
+               "value": "7",
+               "label": "7 columns - 7/12"
+             },
+             {
+               "value": "8",
+               "label": "8 columns - 2/3"
+             },
+             {
+               "value": "9",
+               "label": "9 columns - 3/4"
+             },
+             {
+               "value": "10",
+               "label": "10 columns - 5/6"
+             },
+             {
+               "value": "11",
+               "label": "11 columns - 11/12"
+             },
+             {
+               "value": "12",
+               "label": "12 columns - 1/1"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "6"
+        },
+        {
+          "type": "checkbox",
+          "id": "nopadding",
+          "label": "No padding",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "==  Hide on device?"
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_medium",
+           "label": "___ Device medium",
+           "info": "Device medium ( 1199px - 992px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_small",
+           "label": "___ Device small",
+           "info": "Device small ( 991px - 768px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_extra_small",
+           "label": "___ Device Extra small",
+           "info": "Device small ( less 767px )",
+           "default": false
+        },
+        {
+          "type": "header",
+          "content": "== Promo Banner settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image banner"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Link to"
+        },
+        {
+          "type":"text",
+          "id":"space_box",
+          "label": "== Content space top",
+          "default": "60px"
+        },
+        {
+          "type":"textarea",
+          "id":"titlex",
+          "label": "== Title",
+          "default": "Beauty must have"
+        },
+        {
+          "type": "color",
+          "id": "color_title",
+          "label": "Title colors",
+          "default": "#d1a95a"
+        },
+        {
+          "type":"richtext",
+          "id":"stitle",
+          "label": "== Subtitle",
+          "default": "<p>women’s accessorie</p>"
+        },
+        {
+          "type": "color",
+          "id": "color_stitle",
+          "label": "Subtitle colors",
+          "default": "#222222"
+        },
+        {
+          "type":"text",
+          "id":"name_btn",
+          "label": "== Name button",
+          "default": "purchase now"
+        }
+      ]
+    },
+    {
+      "type": "banner2",
+      "name": "Item banner 2",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "turnoff",
+          "label": "Turn off block"
+        },
+        {
+          "type":"text",
+          "id":"height_box",
+          "label": "Height box",
+          "default": "300"
+        },
+        {
+           "type": "select",
+           "id": "banner_width",
+           "options": [
+            {
+               "value": "1",
+               "label": "1 column - 1/12"
+             },
+             {
+               "value": "2",
+               "label": "2 columns - 1/6"
+             },
+             {
+               "value": "3",
+               "label": "3 columns - 1/4"
+             },
+             {
+               "value": "4",
+               "label": "4 columns - 1/3"
+             },
+             {
+               "value": "5",
+               "label": "5 columns - 5/12"
+             },
+             {
+               "value": "6",
+               "label": "6 columns - 1/2"
+             },
+             {
+               "value": "7",
+               "label": "7 columns - 7/12"
+             },
+             {
+               "value": "8",
+               "label": "8 columns - 2/3"
+             },
+             {
+               "value": "9",
+               "label": "9 columns - 3/4"
+             },
+             {
+               "value": "10",
+               "label": "10 columns - 5/6"
+             },
+             {
+               "value": "11",
+               "label": "11 columns - 11/12"
+             },
+             {
+               "value": "12",
+               "label": "12 columns - 1/1"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "6"
+        },
+        {
+          "type": "checkbox",
+          "id": "nopadding",
+          "label": "No padding",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "==  Hide on device?"
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_medium",
+           "label": "___ Device medium",
+           "info": "Device medium ( 1199px - 992px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_small",
+           "label": "___ Device small",
+           "info": "Device small ( 991px - 768px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_extra_small",
+           "label": "___ Device Extra small",
+           "info": "Device small ( less 767px )",
+           "default": false
+        },
+        {
+          "type": "header",
+          "content": "== Promo Banner settings"
+        },
+        {
+         "type": "checkbox",
+           "id": "content_align_left",
+           "label": "Content align left",
+           "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image banner"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Link to"
+        },
+        {
+          "type":"textarea",
+          "id":"titlex",
+          "label": "== Title",
+          "default": "New arrival"
+        },
+        {
+          "type": "color",
+          "id": "color_title",
+          "label": "Title colors",
+          "default": "#fff"
+        },
+        {
+          "type":"richtext",
+          "id":"stitle",
+          "label": "== Subtitle",
+          "default": "<p>trending swear</p>"
+        },
+        {
+          "type": "color",
+          "id": "color_stitle",
+          "label": "Subtitle colors",
+          "default": "#fff"
+        },
+        {
+          "type":"text",
+          "id":"name_btn",
+          "label": "== Name button",
+          "default": "Explore now"
+        }
+      ]
+    },
+    {
+      "type": "banner3",
+      "name": "Item banner and video",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "turnoff",
+          "label": "Turn off block"
+        },
+        {
+          "type":"text",
+          "id":"height_box",
+          "label": "Height box",
+          "default": "300"
+        },
+        {
+           "type": "select",
+           "id": "banner_width",
+           "options": [
+            {
+               "value": "1",
+               "label": "1 column - 1/12"
+             },
+             {
+               "value": "2",
+               "label": "2 columns - 1/6"
+             },
+             {
+               "value": "3",
+               "label": "3 columns - 1/4"
+             },
+             {
+               "value": "4",
+               "label": "4 columns - 1/3"
+             },
+             {
+               "value": "5",
+               "label": "5 columns - 5/12"
+             },
+             {
+               "value": "6",
+               "label": "6 columns - 1/2"
+             },
+             {
+               "value": "7",
+               "label": "7 columns - 7/12"
+             },
+             {
+               "value": "8",
+               "label": "8 columns - 2/3"
+             },
+             {
+               "value": "9",
+               "label": "9 columns - 3/4"
+             },
+             {
+               "value": "10",
+               "label": "10 columns - 5/6"
+             },
+             {
+               "value": "11",
+               "label": "11 columns - 11/12"
+             },
+             {
+               "value": "12",
+               "label": "12 columns - 1/1"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "6"
+        },
+        {
+          "type": "checkbox",
+          "id": "nopadding",
+          "label": "No padding",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "==  Hide on device?"
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_medium",
+           "label": "___ Device medium",
+           "info": "Device medium ( 1199px - 992px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_small",
+           "label": "___ Device small",
+           "info": "Device small ( 991px - 768px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_extra_small",
+           "label": "___ Device Extra small",
+           "info": "Device small ( less 767px )",
+           "default": false
+        },
+        {
+          "type": "header",
+          "content": "== Promo Banner settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image banner"
+        },
+        {
+          "id": "video_url",
+          "type": "video_url",
+          "label": "Video URL",
+          "accept": ["youtube", "vimeo"],
+          "default": "https://vimeo.com/134060140"
+        }
+      ]
+    },
+    {
+      "type": "block1",
+      "name": "Item block 1",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "turnoff",
+          "label": "Turn off block"
+        },
+        {
+          "type":"text",
+          "id":"height_box",
+          "label": "Height box",
+          "default": "300"
+        },
+        {
+           "type": "select",
+           "id": "banner_width",
+           "options": [
+            {
+               "value": "1",
+               "label": "1 column - 1/12"
+             },
+             {
+               "value": "2",
+               "label": "2 columns - 1/6"
+             },
+             {
+               "value": "3",
+               "label": "3 columns - 1/4"
+             },
+             {
+               "value": "4",
+               "label": "4 columns - 1/3"
+             },
+             {
+               "value": "5",
+               "label": "5 columns - 5/12"
+             },
+             {
+               "value": "6",
+               "label": "6 columns - 1/2"
+             },
+             {
+               "value": "7",
+               "label": "7 columns - 7/12"
+             },
+             {
+               "value": "8",
+               "label": "8 columns - 2/3"
+             },
+             {
+               "value": "9",
+               "label": "9 columns - 3/4"
+             },
+             {
+               "value": "10",
+               "label": "10 columns - 5/6"
+             },
+             {
+               "value": "11",
+               "label": "11 columns - 11/12"
+             },
+             {
+               "value": "12",
+               "label": "12 columns - 1/1"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "6"
+        },
+        {
+          "type": "checkbox",
+          "id": "nopadding",
+          "label": "No padding",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "==  Hide on device?"
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_medium",
+           "label": "___ Device medium",
+           "info": "Device medium ( 1199px - 992px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_small",
+           "label": "___ Device small",
+           "info": "Device small ( 991px - 768px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_extra_small",
+           "label": "___ Device Extra small",
+           "info": "Device small ( less 767px )",
+           "default": false
+        },
+        {
+          "type": "header",
+          "content": "== Content settings"
+        },
+        {
+          "type": "color",
+          "id": "color_bg",
+          "label": "Background color",
+          "default": "#d14b78"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Link to"
+        },
+        {
+          "type":"textarea",
+          "id":"titlex",
+          "label": "== Title",
+          "default": "Our gift to you"
+        },
+        {
+          "type": "color",
+          "id": "color_title",
+          "label": "Title colors",
+          "default": "#fff"
+        },
+        {
+          "type":"textarea",
+          "id":"stitle",
+          "label": "== Subtitle",
+          "default": "<span class=\"big-text\">30% off</span> With code Boutique"
+        },
+        {
+          "type": "color",
+          "id": "color_stitle",
+          "label": "Subtitle colors",
+          "default": "#fff"
+        }
+      ]
+    },
+    {
+      "type": "blocknewsletter",
+      "name": "Item block newletter",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "turnoff",
+          "label": "Turn off block"
+        },
+        {
+           "type": "select",
+           "id": "banner_width",
+           "options": [
+            {
+               "value": "1",
+               "label": "1 column - 1/12"
+             },
+             {
+               "value": "2",
+               "label": "2 columns - 1/6"
+             },
+             {
+               "value": "3",
+               "label": "3 columns - 1/4"
+             },
+             {
+               "value": "4",
+               "label": "4 columns - 1/3"
+             },
+             {
+               "value": "5",
+               "label": "5 columns - 5/12"
+             },
+             {
+               "value": "6",
+               "label": "6 columns - 1/2"
+             },
+             {
+               "value": "7",
+               "label": "7 columns - 7/12"
+             },
+             {
+               "value": "8",
+               "label": "8 columns - 2/3"
+             },
+             {
+               "value": "9",
+               "label": "9 columns - 3/4"
+             },
+             {
+               "value": "10",
+               "label": "10 columns - 5/6"
+             },
+             {
+               "value": "11",
+               "label": "11 columns - 11/12"
+             },
+             {
+               "value": "12",
+               "label": "12 columns - 1/1"
+             }
+           ],
+           "label": "== Select column width",
+           "default": "6"
+        },
+        {
+          "type": "checkbox",
+          "id": "nopadding",
+          "label": "No padding",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "==  Hide on device?"
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_medium",
+           "label": "___ Device medium",
+           "info": "Device medium ( 1199px - 992px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_small",
+           "label": "___ Device small",
+           "info": "Device small ( 991px - 768px )",
+           "default": false
+        },
+        {
+         "type": "checkbox",
+           "id": "hide_extra_small",
+           "label": "___ Device Extra small",
+           "info": "Device small ( less 767px )",
+           "default": false
+        },
+        {
+          "type": "header",
+          "content": "== Content settings"
+        },
+        {
+           "type": "text",
+           "id": "titlex",
+           "label": "Title",
+           "default": "NEWSLETTER"
+        },
+        {
+           "type": "text",
+           "id": "s_title",
+           "label": "Sub title",
+           "default": "Sign up for Our Newsletter & Promotions"
+        },
+        {
+           "type": "textarea",
+           "id": "description",
+           "label": "Description",
+           "default": "<span class=\"text-primary\">SALE UPTO <span class=\"big-text\">30%</span></span><span>On your next purchase!</span>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content homepage 18",
+      "category": "Layout",
+      "blocks": [
+        {
+          "type": "banner1"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

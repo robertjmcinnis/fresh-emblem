@@ -1,0 +1,409 @@
+<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+  <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+    {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks-%}
+    {%- assign image_ = block.settings.image -%}
+    {%- if block.settings.collection == blank
+        and block.settings.product_1 == blank
+        and block.settings.product_2 == blank
+        and block.settings.product_3 == blank
+        and block.settings.product_4 == blank
+    -%}  
+      {%- assign no_collection = "no-collection" -%}
+      {%- assign goto_collection = "goto-collection" -%}
+    {%- endif -%}    
+    {%- if block.settings.collection != blank
+        and block.settings.product_1 == blank
+        and block.settings.product_2 == blank
+        and block.settings.product_3 == blank
+        and block.settings.product_4 == blank
+        and collections[block.settings.collection].products_count == 0 -%}
+      {%- assign no_collection = "no-collection" -%}
+      {%- assign goto_collection = "goto-collection" -%}
+    {%- endif -%}    
+    {%- assign products_count = 0 -%}
+    {%- if block.settings.product_1 != blank -%}
+    {%- assign products_count = products_count | plus: 1 -%}
+    {%- endif -%}
+    {%- if block.settings.product_2 != blank -%}
+    {%- assign products_count = products_count | plus: 1 -%}
+    {%- endif -%}
+    {%- if block.settings.product_3 != blank -%}
+    {%- assign products_count = products_count | plus: 1 -%}
+    {%- endif -%}
+    {%- if block.settings.product_4 != blank -%}
+    {%- assign products_count = products_count | plus: 1 -%}
+    {%- endif -%}
+    
+    {%- assign aspect_ratioW = settings.aspect_ratio_banner_products | split: '/' | first | strip | plus: 0.00 -%}
+    {%- assign aspect_ratioH = settings.aspect_ratio_banner_products | split: '/' | last | strip | plus: 0.00 -%}
+    {%- assign aspect_cs = aspect_ratioW|divided_by:aspect_ratioH | round: 2 -%}
+    <div class="row">
+      {% if block.settings.align_right == false -%}
+      <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-30">
+        {% if image_ == blank %}
+        <div class="image__product aspectRatioPlaceholder">
+          {%- if products_count == 3 -%}
+          <img src="{{'bt_placeholder_banner_products_2.svg'|asset_url}}">
+          {%- else -%}
+          <img src="{{'bt_placeholder_banner_products_1.svg'|asset_url}}">
+          {%- endif -%}
+          <a class="banner-opacity" href="{{block.settings.banner_call_to_action}}" style="text-align: center;width: 100%;height: 100%;position: absolute;display: inline-block;">
+          </a>
+        </div>
+        {%- else %}
+        <a href="{{block.settings.banner_call_to_action}}" class="banner-opacity">
+          <img id="{{ img_id }}" class="grid-view-item__image" src="{% include 'kt_image_format',src: image_ , size: '570x' %}" srcset="{% include 'kt_image_format',src: image_ , size: '570x' %} 1x, {% include 'kt_image_format',src: image_ , size: '570x@2x' %} 2x" />
+        </a>
+        {%- endif %}
+      </div>
+      {%- endif %}
+      <div class="col-xs-12 col-sm-12 col-md-6 {{goto_collection}}">
+        <div class="row">
+          {% if no_collection == "no-collection" %}
+            {% for i in (1..4) %}
+            <div class="col-sm-6">
+              <div class="image__product aspectRatioPlaceholder">
+                <img src="{{'bt_placeholder_banner_products_item.svg'|asset_url}}">
+                <a href="#" class="banner-product">
+                  <h3 class="text">Boutique Shopify Theme<br/>- KiTi -</h3>
+                  <span class="price">{{ '2222' | money }}</span>
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+            <div class="boutique-help">
+              <span class="boutique-helper-icon"></span>
+              <h3>Almost there...</h3>
+              <p>You have no products in your Frontpage collection. This placeholder will appear until you <a href="/admin/collections?tutorial=Frontpage">add a product to this collection</a>.</p>
+              <p><a class="button" href="/admin/collections?tutorial=Frontpage">Add a Product</a></p>
+            </div>
+          {% else %}
+            {%- if block.settings.product_1 != blank
+                or block.settings.product_2 != blank
+                or block.settings.product_3 != blank
+                or block.settings.product_4 != blank
+            -%}
+              {%- if products_count == 3 -%}
+                {%- assign forloop_ = 0 -%}
+                {%- for i in (1..4) -%}
+                  {%- assign product_ = 'product_'|append: i -%}
+                  {%- assign product__ = block.settings[product_] -%}
+                  {%- assign product = all_products[product__] -%}
+                  {%- if block.settings[product_] != blank and forloop_ == 0-%}
+                  {%- capture image_fit -%}
+                      {%- if product.featured_image.width == product.featured_image.height -%} nonheight nonwidth_{%- elsif product.featured_image.width < product.featured_image.height -%} nonheight{%- else -%} nonwidth{%- endif -%}
+                  {%- endcapture -%}
+                    <div class="col-xs-12 col-sm-12">
+                      <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                        <img src="{{'bt_placeholder_banner_products_item_big.svg'|asset_url}}">
+                        <a href="{{ product.url | within: collection }}" class="banner-product">
+                          <picture>
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '510x' %}" media="(min-width: 1920px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '476x' %}" media="(min-width: 1200px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '455x' %}" media="(min-width: 1024px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '570x' %}" media="(min-width: 991px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '768x' %}" media="(min-width: 768px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '480x' %}">
+                            <img class="lazyload" data-src="{% include 'kt_image_format',src: product.featured_image.src , size: '480x@2x' %}" src="{% include 'kt_image_format',src: product.featured_image.src , size: '100x' %}" alt="{{product.title}}">
+                          </picture>
+                          <h3 class="text">{{ product.title }}</h3>
+                          <span class="price">{{product.price | money }}</span>
+                        </a>
+                      </div>
+                    </div>
+                    {%- assign forloop_ = 1 -%}
+                  {%- elsif block.settings[product_] != blank -%}
+                    {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+                    {%- capture image_fit -%}
+                      {%- if aspect_ratioW < aspect_ratioH -%}
+                        {%- if product.featured_image.width == product.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+                      {%- elsif aspect_ratioW > aspect_ratioH -%}
+                        {%- if product.featured_image.width == product.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+                      {%- else -%}
+                        {%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight nonwidth_{%- endif -%}  
+                      {%- endif -%}
+                    {%- endcapture -%}
+                    <div class="col-xs-12 col-sm-6">
+                      <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                        <img src="{{'bt_placeholder_banner_products_item.svg'|asset_url}}">
+                        <a href="{{ product.url | within: collection }}" class="banner-product">
+                          <picture>
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1920px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1200px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1024px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 991px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '384x' %}" media="(min-width: 768px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '480x' %}">
+                            <img class="lazyload" data-src="{% include 'kt_image_format',src: product.featured_image.src , size: '480x@2x' %}" src="{% include 'kt_image_format',src: product.featured_image.src , size: '100x' %}" alt="{{product.title}}">
+                          </picture>
+                          <h3 class="text">{{ product.title }}</h3>
+                          <span class="price">{{product.price | money }}</span>
+                        </a>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- for i in (1..4) -%}
+                  {%- assign product_ = 'product_'|append: i -%}
+                  {%- assign product__ = block.settings[product_] -%}
+                  {%- assign product = all_products[product__] -%}
+                  {%- if block.settings[product_] != blank-%}
+                  {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+                  {%- capture image_fit -%}
+                    {%- if aspect_ratioW < aspect_ratioH -%}
+                      {%- if product.featured_image.width == product.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+                    {%- elsif aspect_ratioW > aspect_ratioH -%}
+                      {%- if product.featured_image.width == product.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+                    {%- else -%}
+                        {%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight nonwidth_{%- endif -%}  
+                    {%- endif -%}
+                  {%- endcapture -%}
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                      <img src="{{'bt_placeholder_banner_products_item.svg'|asset_url}}">
+                      <a href="{{ product.url }}" class="banner-product">
+                        <picture>
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1920px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1200px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1024px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 991px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '384x' %}" media="(min-width: 768px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '480x' %}">
+                          <img class="lazyload" data-src="{% include 'kt_image_format',src: product.featured_image.src , size: '480x@2x' %}" src="{% include 'kt_image_format',src: product.featured_image.src , size: '100x' %}" alt="{{product.title}}">
+                        </picture>
+                        <h3 class="text">{{ product.title }}</h3>
+                        <span class="price">{{product.price | money }}</span>
+                      </a>
+                    </div>
+                  </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            {%- else -%}
+              {% for product in collections[block.settings.collection].products limit:4 %}
+                {% if collections[block.settings.collection].products.size == 3 %}
+                {%- assign collection = collections[block.settings.collection] -%}
+                  {% if forloop.first == true %}
+                    <div class="col-xs-12 col-sm-12">
+                      {%- capture image_fit -%}
+                      {%- if product.featured_image.width == product.featured_image.height -%} nonheight nonwidth_{%- elsif product.featured_image.width < product.featured_image.height -%} nonheight{%- else -%} nonwidth{%- endif -%}
+                      {%- endcapture -%}
+                      <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                        <img src="{{'bt_placeholder_banner_products_item_big.svg'|asset_url}}">
+                        <a href="{{ product.url | within: collection }}" class="banner-product">
+                          <picture>
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '570x' %}" media="(min-width: 1920px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '476x' %}" media="(min-width: 1200px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '455x' %}" media="(min-width: 1024px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '570x' %}" media="(min-width: 991px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '768x' %}" media="(min-width: 768px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '480x' %}">
+                            <img class="lazyload" data-src="{% include 'kt_image_format',src: product.featured_image.src , size: '480x@2x' %}" src="{% include 'kt_image_format',src: product.featured_image.src , size: '100x' %}" alt="{{product.title}}">
+                          </picture>
+                          <h3 class="text">{{ product.title }}</h3>
+                          <span class="price">{{product.price | money }}</span>
+                        </a>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="col-xs-12 col-sm-6">
+                      {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+                      {%- capture image_fit -%}
+                        {%- if aspect_ratioW < aspect_ratioH -%}
+                          {%- if product.featured_image.width == product.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+                        {%- elsif aspect_ratioW > aspect_ratioH -%}
+                          {%- if product.featured_image.width == product.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+                        {%- else -%}
+                          {%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight nonwidth_{%- endif -%}  
+                        {%- endif -%}
+                      {%- endcapture -%}
+                      <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                        <img src="{{'bt_placeholder_banner_products_item.svg'|asset_url}}">
+                        <a href="{{ product.url | within: collection }}" class="banner-product">
+                          <picture>
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1920px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1200px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1024px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 991px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '384x' %}" media="(min-width: 768px)">
+                            <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '480x' %}">
+                            <img class="lazyload" data-src="{% include 'kt_image_format',src: product.featured_image.src , size: '480x@2x' %}" src="{% include 'kt_image_format',src: product.featured_image.src , size: '100x' %}" alt="{{product.title}}">
+                          </picture>
+                          <h3 class="text">{{ product.title }}</h3>
+                          <span class="price">{{product.price | money }}</span>
+                        </a>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% else %}
+                  <div class="col-xs-12 col-sm-6">
+                    {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+                    {%- capture image_fit -%}
+                      {%- if aspect_ratioW < aspect_ratioH -%}
+                        {%- if product.featured_image.width == product.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+                      {%- elsif aspect_ratioW > aspect_ratioH -%}
+                        {%- if product.featured_image.width == product.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+                      {%- else -%}
+                        {%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight nonwidth_{%- endif -%}  
+                      {%- endif -%}
+                    {%- endcapture -%}
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                      <img src="{{'bt_placeholder_banner_products_item.svg'|asset_url}}">
+                      <a href="{{ product.url | within: collection }}" class="banner-product">
+                        <picture>
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1920px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1200px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 1024px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '270x' %}" media="(min-width: 991px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '384x' %}" media="(min-width: 768px)">
+                          <source data-srcset="{% include 'kt_image_format',src: product.featured_image.src , size: '480x' %}">
+                          <img class="lazyload" data-src="{% include 'kt_image_format',src: product.featured_image.src , size: '480x@2x' %}" src="{% include 'kt_image_format',src: product.featured_image.src , size: '100x' %}" alt="{{product.title}}">
+                        </picture>
+                        <h3 class="text">{{ product.title }}</h3>
+                        <span class="price">{{product.price | money }}</span>
+                      </a>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>      
+      {% if block.settings.align_right %}
+      <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom-30">
+        {% if image_ == blank %}
+        <div class="image__product aspectRatioPlaceholder">
+          {%- if products_count == 3 -%}
+          <img src="{{'bt_placeholder_banner_products_2.svg'|asset_url}}">
+          {%- else -%}
+          <img src="{{'bt_placeholder_banner_products_1.svg'|asset_url}}">
+          {%- endif -%}
+          <a class="banner-opacity" href="{{block.settings.banner_call_to_action}}" style="text-align: center;width: 100%;height: 100%;position: absolute;display: inline-block;">
+          </a>
+        </div>
+        {%- else %}
+        <a href="{{block.settings.banner_call_to_action}}" class="banner-opacity">
+          <picture>
+            <source data-srcset="{% include 'kt_image_format',src: image_ , size: '570x' %}" media="(min-width: 1920px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_ , size: '570x' %}" media="(min-width: 1200px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_ , size: '570x' %}" media="(min-width: 1024px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_ , size: '480x' %}" media="(min-width: 991px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_ , size: '768x' %}" media="(min-width: 768px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_ , size: '480x' %}">
+            <img class="lazyload" data-src="{% include 'kt_image_format',src: image_ , size: '480x@2x' %}" src="{% include 'kt_image_format',src: image_ , size: '300x' %}" alt="{{product.title}}">
+          </picture>
+        </a>
+        {%- endif %}
+      </div>
+      {% endif %}
+    </div>
+    {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+{%- assign aspect_ratio = settings.aspect_ratio_banner_products -%}
+{% schema %}
+  {
+    "name": "Products with banner",
+    "class": "index-section index-section--kt bt_banner_products",
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Products with banner",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "40px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+  "blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "align_right",
+            "label": "Banner right"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Banner image",
+            "info": "Text in placeholder image is size suggestion"
+          },
+          {
+            "id": "banner_call_to_action",
+            "type": "url",
+            "label": "Banner button link"
+          },
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Choose collection"
+          },
+          {
+            "type": "product",
+            "id": "product_1",
+            "label": "Choose product 1"
+          },
+          {
+            "type": "product",
+            "id": "product_2",
+            "label": "Choose product 2"
+          },
+          {
+            "type": "product",
+            "id": "product_3",
+            "label": "Choose product 3"
+          },
+          {
+            "type": "product",
+            "id": "product_4",
+            "label": "Choose product 4"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Products with banner",
+        "category": "Products"
+      }
+    ]
+  }
+{% endschema %}

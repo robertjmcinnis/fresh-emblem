@@ -1,0 +1,109 @@
+<div class="section-skills" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                                   {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}">
+  <div class="container">
+    <div class="clearfix" style="{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+      <div class="section-title text-center style7">
+        <span class="sub-title">{{ section.settings.text }}</span>
+        <h3>{{ section.settings.titlex }}</h3>
+      </div>
+      {% if section.blocks.size != 0-%}
+      <div class="kt-processbar">
+        {% for block in section.blocks-%}
+        {%- assign percent = block.settings.percent -%}
+        {% if percent != "" %}
+        <div data-bgskill="{{ block.settings.bgskill }}" data-bgbar="{{ block.settings.bgbar }}" data-percent="{{ block.settings.percent }}" data-height="36" class="item-processbar">
+          <span class="processbar-title">{{block.settings.title | strip_html }}</span>
+          <div class="processbar-bg">
+            <div class="processbar-width">
+              <div class="processbar-percent">{{block.settings.percent | strip_html }}%</div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Section processbar",
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Section processbar",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "== Content settings"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "80px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "text",
+        "id": "titlex",
+        "label": "Title",
+        "default": "OUR AWESOME SKILLS"
+      },
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Text",
+        "default": "We’ra all Talents!"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item",
+        "name": "Item processbar",
+        "settings": [
+          {
+             "type": "text",
+             "id": "title",
+             "label": "Title",
+             "default": "ADOBE/PHOTOSHOP"
+          },
+          {
+             "type": "color",
+             "id": "bgskill",
+             "label": "Background skill",
+             "default": "#c99947"
+          },
+          {
+             "type": "color",
+             "id": "bgbar",
+             "label": "Background bar",
+             "default": "#e4e4e4"
+          },
+          {
+             "type": "text",
+             "id": "percent",
+             "label": "Percent",
+             "default": "85"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

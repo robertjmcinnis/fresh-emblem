@@ -1,0 +1,131 @@
+<div class="block-paralax5{% if section.settings.background_img != blank %} bg-parallax lazyload{% endif %}"
+  style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+        {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+        {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%;
+        {%-if section.settings.background_img-%}
+        background-image: {{section.settings.background_img|img_url: "300x"}};background-position: center center; background-size: cover;
+        {%-else %}                
+        background-image: url('https://cdn.shopify.com/s/files/1/2336/5331/files/pralax3_200x.jpg?17007520566563283364');background-position: center center; background-size: cover;
+        {%-endif-%}"
+  data-bgset="{%-if section.settings.background_img-%}{%- include 'bgset', image: section.settings.background_img -%}{%-else-%}https://cdn.shopify.com/s/files/1/2336/5331/files/pralax3.jpg?17007520566563283364{%-endif-%}"
+  data-sizes="auto"
+  data-parent-fit="cover">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div class="head">
+      <h3 class="title">{{section.settings.titlex}}</h3>
+      <span class="sub-title">{{section.settings.s_title}}</span>
+    </div>
+    <div class="col-lg-offset-2 col-sm-12 col-lg-8">
+      <div class="block-newletter style3">
+        <div class="form">
+          <div class="desc">
+            {{section.settings.description}}
+          </div>
+          <div class="newletter-wapper">
+            {%- if settings.newslatter_mailchimp_url != "" -%}
+              <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="newletter mailing-form" name="mc-embedded-subscribe-form" target="_blank">
+                <input type="email"
+                       name="contact[email]"
+                       id="contact_email{{section.id}}"
+                       class="email-text required-entry validate-email"
+                       value="{% if customer %}{{ customer.email }}{% endif %}"
+                       placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                <input name="subscribe" id="subscribe{{section.id}}" type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button">
+              </form>
+            {%- else -%}
+              {%-form 'customer', class: 'newletter'-%}
+                {{ form.errors | default_errors }}
+                {%-if form.posted_successfully?-%}
+                <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                {%-else-%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <input type="email"
+                       name="contact[email]"
+                       id="Email{{section.id}}"
+                       class="email-text required-entry validate-email"
+                       value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+                       placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button">
+                {%-endif-%}
+              {%-endform-%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Home newsletter 5",
+    "class": "index-section index-section--kt bt_newsleeter4",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Home newsletter 5",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+         "type": "text",
+         "id": "titlex",
+         "label": "Title",
+         "default": "Newsletter"
+      },
+      {
+         "type": "text",
+         "id": "s_title",
+         "label": "Sub title",
+         "default": "Subscribe to our newsletters and don’t miss our exclusive offers and promotions."
+      },
+      {
+         "type": "textarea",
+         "id": "description",
+         "label": "Description",
+         "default": "<span class=\"text-primary\">Get <span class=\"big-text\">50%</span> off</span><span>On your next purchase!</span>"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_img",
+        "label": "Background image"
+      }  
+    ],
+    "presets": [
+      {
+        "name": "Home newsletter 5(parallax)",
+        "category": "Newsletter"
+      }
+    ]
+  }
+{% endschema %}

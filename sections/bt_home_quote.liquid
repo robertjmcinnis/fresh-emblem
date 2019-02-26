@@ -1,0 +1,96 @@
+<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+  <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+    {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks-%}
+    {%- assign image_ = block.settings.image -%}
+    <div class="row-flex align-items-center">
+      <div class="col-xl-4 col-lg-5 col-md-4" style="text-align: right;">
+        {% if image_%}
+        <img style="margin-right: 20px;" src="{{image_|img_url:'270x'}}" alt="{{image_.alt|default: 'logo'}}">
+        {% else %}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 63" width="208" height="63" style="margin-right: 20px;"><title>{{shop.name}} placeholder</title><rect width="208" height="63" style="fill:#e5e5e5"></rect><text transform="translate(55.89 42.5)" style="font-size:32px;fill:gray;font-family:Roboto-Regular, Roboto">208x63</text></svg>
+        {% endif %}
+      </div>
+      <div class="col-xl-7 col-lg-7 col-md-8 col-sm-8 col-xs-12">
+        <blockquote>
+          {{block.settings.text| default:'Boutique is a reflection of you! A sexy and confident woman that radiates through his daring wardrobe. We bring you the best of all things glam and sexy while keeping in mind that high quality doesn’t have to come at a high price.'}}
+        </blockquote>
+      </div>
+    </div>
+    {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Home quote",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Home quote",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "40px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Quote image",
+            "info": "Size suggestion: 270x- pixels"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "Boutique is a reflection of you! A sexy and confident woman that radiates through his daring wardrobe. We bring you the best of all things glam and sexy while keeping in mind that high quality doesn’t have to come at a high price."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home quote",
+        "category": "Quote"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,105 @@
+<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+  <div class="clearfix" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+    {%- if section.blocks.size > 0 -%}
+    <div class="row section-block-text">
+    {%- for block in section.blocks-%}
+      <div class="col-sm-6 item">
+        <div class="block-text" style="color:{{block.settings.color_text}};background-color:{{block.settings.color_bg}}">
+          <p>{{block.settings.title}}</p>
+          <p class="primary">{{block.settings.stitle}}</p>
+        </div>
+      </div>
+    {%- endfor -%}
+    </div>
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Shipping text 1",
+    "class": "index-section index-section--kt bt_shipping_text2",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Shipping text 1",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+             "type": "textarea",
+             "id": "title",
+             "label": "Title",
+             "default": "Boutique is not over with fashion fever week!"
+          },
+          {
+             "type": "text",
+             "id": "stitle",
+             "label": "Sub title",
+             "default": "ends Dec 29th"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Announcement text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg",
+            "label": "Announcement background color",
+            "default": "#c99947"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Shipping text 1",
+        "category": "Promo",
+        "blocks": [
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

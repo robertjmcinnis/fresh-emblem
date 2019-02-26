@@ -1,0 +1,261 @@
+{%- if section.blocks.size > 0 -%}
+  {%- if section.settings.section_layout == '1' -%}
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+      <div class="row">
+        {%- for block in section.blocks-%}
+        {%- if block.type == 'item_1' -%}
+        <div class="col-sm-12 col-md-4">
+          <div class="element-icon style2">
+            <div class="icon">
+              {%- if block.settings.image -%}
+              {%- assign image_ = block.settings.image -%}
+              {{image_ | img_url:'40x40' | img_tag}}
+              {%- else -%}
+              <i class="flaticon flaticon-{%- if forloop.first -%}origami28{%- elsif forloop.index == 2 -%}curvearrows9{%- else -%}headphones54{%- endif -%}"></i>
+              {%- endif -%}
+            </div>
+            <div class="content">
+              <h4 class="title">{{block.settings.shipping_info_content | html }}</h4>
+            </div>
+          </div>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+  {%- elsif section.settings.section_layout == '2' -%}
+  <div class="block-paralax1 bg-parallax lazyload"
+    style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                                               {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                                               {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}
+                                               {%- if section.settings.image != blank -%}background-image:{{section.settings.image|img_url: '300x'}}{%-else-%}background-image: url('https://cdn.shopify.com/s/files/1/2336/5331/files/background_paralax1_300x.png?9150606121308461104');{%-endif-%}"
+    data-bgset="{%-if section.settings.image != blank%}{%- include 'bgset', image: section.settings.image -%}{%-else-%}https://cdn.shopify.com/s/files/1/2336/5331/files/background_paralax1.png?9150606121308461104{%-endif-%}"
+    data-sizes="auto"
+    data-parent-fit="cover">
+    <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+      <div class="row">
+        {%- for block in section.blocks-%}
+        {%- if block.type == 'item_2' -%}
+        <div class="col-sm-4">
+          <div class="element-icon style3">
+            <div class="icon">
+              {%- if block.settings.image -%}
+              {%- assign image_ = block.settings.image -%}
+              {{image_ | img_url:'40x40' | img_tag}}
+              {%- else -%}
+              <i class="flaticon flaticon-{%- if forloop.first -%}origami28{%- elsif forloop.index == 2 -%}curvearrows9{%- else -%}headphones54{%- endif -%}"></i>
+              {%- endif -%}
+            </div>
+            <div class="content">
+              <h4 class="title">{{block.settings.shipping_info_content | html }}</h4>
+              <span class="subtite">{{block.settings.shipping_sinfo_content | html }}</span>
+            </div>
+          </div>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+  {%- elsif section.settings.section_layout == '3' or section.settings.section_layout == '4' -%}
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                float:left;width:100%">
+      {%-unless section.settings.section_layout == '4'-%}<span class="border-dashed"></span>{%-endunless-%}
+      <div class="row">
+        {%- for block in section.blocks-%}
+        {%- if block.type == 'item_3' -%}
+        <div class="col-sm-12 col-md-4">
+          <div class="element-icon style4{%unless forloop.last%} plus{%endunless%}">
+            <div class="inner" style="{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+              <div class="icon">
+                {%- if block.settings.image -%}
+                {%- assign image_ = block.settings.image -%}
+                {{image_ | img_url:'40x40' | img_tag}}
+                {%- else -%}
+                <i class="flaticon flaticon-{%- if forloop.first -%}origami28{%- elsif forloop.index == 2 -%}curvearrows9{%- else -%}headphones54{%- endif -%}"></i>
+                {%- endif -%}
+              </div>
+              <div class="content">
+                <h4 class="title">{{block.settings.shipping_info_content | html }}</h4>
+                <span class="subtite">{{block.settings.shipping_sinfo_content }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%-unless section.settings.section_layout == '4'-%}<span class="border-dashed"></span>{%-endunless-%}
+    </div>
+  </div>
+  {%- endif -%}
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Shipping icon",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Shipping icon",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "select",
+        "id": "section_layout",
+        "label": "Section layout",
+        "options": [
+          {
+            "label": "Layout 1",
+            "value": "1"
+          },
+          {
+            "label": "Layout 2",
+            "value": "2"
+          },
+          {
+            "label": "Layout 3",
+            "value": "3"
+          },
+          {
+            "label": "Layout 3 (border none)",
+            "value": "4"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Background image"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item_1",
+        "name": "Item 1",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Icon image",
+            "info": "Size suggestion: 80x80 pixels"
+          },
+          {
+            "type": "text",
+            "id": "shipping_info_content",
+            "label": "Shipping Info Content",
+            "default": "FREE SHIPPING WORLD WIDE"
+          }
+        ]
+      },
+      {
+        "type": "item_2",
+        "name": "Item 2",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Icon image",
+            "info": "Size suggestion: 80x80 pixels"
+          },
+          {
+            "type": "text",
+            "id": "shipping_info_content",
+            "label": "Shipping Info Content",
+            "default": "delivery <strong>free</strong>"
+          },
+          {
+            "type": "text",
+            "id": "shipping_sinfo_content",
+            "label": "Shipping Sub Info Content (Parallax option)",
+            "default": "From $50 or purchase"
+          }
+        ]
+      },
+      {
+        "type": "item_3",
+        "name": "Item 3",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Icon image",
+            "info": "Size suggestion: 80x80 pixels"
+          },
+          {
+            "type": "text",
+            "id": "shipping_info_content",
+            "label": "Shipping Info Content",
+            "default": "delivery <strong>free</strong>"
+          },
+          {
+            "type": "text",
+            "id": "shipping_sinfo_content",
+            "label": "Shipping Sub Info Content (Parallax option)",
+            "default": "From $50 or purchase"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Shipping icon",
+        "category": "Promo",
+        "blocks": [
+          {
+            "type": "item_1"
+          },
+          {
+            "type": "item_1"
+          },
+          {
+            "type": "item_1"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

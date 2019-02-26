@@ -1,0 +1,2477 @@
+{%- if section.settings.use_footer -%}
+{%- if settings.use_background_footer_img and settings.background_footer_img -%}
+  {%- if settings.use_background_footer_parallax -%}
+  {%- assign footer_bg_style = ' bg-parallax' -%}
+  {%- else -%}
+  {%- assign footer_bg_style = ' bg-basic' -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign footer_service = false -%}
+
+<footer style="font-size: {{section.settings.font_size_footer}}px;
+ {%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+ {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}">
+  <div class="footer{{footer_bg_style}}"{%- if section.settings.section_padding != blank -%} style="padding: {{section.settings.section_padding | replace : '-',' '}};"{%- endif -%}>
+    {%- if section.blocks.size != 0 -%}
+    {%- for block in section.blocks -%}
+    {%- if block.type == 'footer_service' -%}
+    <div class="{%- if section.settings.width_section -%}container{%- else -%}container-fluid{%- endif -%}">
+      <div class="footer-service">
+        <div class="row">
+          {%-for i in (1..3)-%}          
+          {%-assign service_icon = 'service_icon_'| append: i -%}
+          {%-assign service_text = 'service_text_'| append: i -%}
+          {%-if block.settings[service_icon] != blank or block.settings[service_text] != blank -%}
+          <div class="col-sm-4">
+            <div class="element-icon style5{% unless forloop.last %} plus{% endunless %}">
+              <div class="icon">
+                <span class="fa {{block.settings[service_icon]|default: "fa-truck"}}"></span>
+              </div>
+              <div class="content">
+                {{block.settings[service_text]}}
+              </div>
+            </div>
+          </div>
+          {%-endif-%}
+          {%-endfor-%}
+        </div>
+      </div>
+    </div>
+    {%- assign footer_service = true -%}
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+    <div class="footer-top padding-bottom-60">
+      <div class="{%- if section.settings.width_section -%}container{%- else -%}container-fluid{%- endif -%}">
+        <div class="row-flex justify-content-start flex-row flex-wrap">
+          {%- for block in section.blocks -%}
+  {%-capture block_width -%}
+          {%- if block.type == 'item_1' and block.settings.block_width == '12' -%}
+          offset-sm-0 col-md-8 offset-md-2 col-lg-8 offset-lg-2
+          {%- if block.settings.hide_medium %} hidden-md-down{%- endif %}
+          {%- if block.settings.hide_small %} hidden-sm-down{%- endif %}
+          {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-12{%- endif %}
+          {%- else -%}
+          col-lg-{{block.settings.block_width}}
+          {%- if block.settings.hide_medium %} hidden-md-down{%- else %} col-ms-12{%- endif %}
+          {%- if block.settings.hide_small %} hidden-sm-down{%- else %} col-sm-12{%- endif %}
+          {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-12{%- endif %}
+          {%- endif %}
+  {%-endcapture-%}
+          {%- if block.type == 'item_1' -%}
+            <div class="footer-sidebar {{block_width | strip_newlines | remove: '   '}}"{%- if block.type == 'item_1' and block.settings.block_width == '12' -%} style="border:none;"{%endif%} {{ block.shopify_attributes }}>
+              <div class="widget contact-info widget_text text-{{block.settings.content_align}}"{%-unless footer_service-%} style="margin-top: 10px;"{%-endunless-%}>
+                {%-if block.settings.use_footer_logo-%}
+                <div class="logo margin-bottom-25">
+                  <a href="/">
+                    {%- assign image_ = block.settings.footer_logo -%}
+                    {%-if image_%}
+                    <img src="{{image_|img_url:'270x'}}" alt="{{image_.alt|default: 'logo'}}">
+                    {%-else-%}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 63" width="208" height="63">
+                      <title>{{shop.name}} placeholder</title>
+                      <rect width="208" height="63" style="fill:#e5e5e5"></rect>
+                      <text transform="translate(55.89 42.5)" style="font-size:32px;fill:gray;font-family:Roboto-Regular, Roboto">208x63</text>
+                    </svg>
+                    {%-endif-%}
+                  </a>
+                </div>
+                {%-endif-%}
+                <div class="content margin-bottom-10">
+                  {%-if block.settings.content_align == 'left' -%}
+                  {%- assign justify_content = 'start' -%}
+                  {%-elsif block.settings.content_align == 'right' -%}
+                  {%- assign justify_content = 'end' -%}
+                  {%-else-%}
+                  {%- assign justify_content = 'center' -%}
+                  {%-endif-%}
+                  {%-if block.settings.footer_description != blank-%}<p>{{block.settings.footer_description}}</p>{%-endif-%}
+                  {%-if block.settings.footer_widget_address_contact != ""-%}<p class="address dp-flex flex-nowrap justify-content-{{justify_content}}"><i class="fa fa-home"></i><span>{{block.settings.footer_widget_address_contact|default: shop.address.summary}}</span></p>{% endif %}
+                  {%-if block.settings.footer_widget_phone_contact != ""-%}<p class="phone dp-flex flex-nowrap justify-content-{{justify_content}}" style="font-size: {{block.settings.font_size_phone}}px"><a href="tel:{{block.settings.footer_widget_phone_contact|default: shop.address.phone}}"><i class="fa fa-phone" style="font-size: {{block.settings.font_size_phone}}px;color:{{block.settings.phone_color}}"></i> <span style="color:{{block.settings.phone_color}}">{{block.settings.footer_widget_phone_contact|default: shop.address.phone}}</span></a></p>{% endif %}
+                  {%-if block.settings.footer_widget_email_contact != ""-%}<p class="mail dp-flex flex-nowrap justify-content-{{justify_content}}"><a href="mailto:{{block.settings.footer_widget_email_contact|default: shop.address.email}}"><i class="fa fa-envelope"></i><span>{{block.settings.footer_widget_email_contact|default: shop.address.email}}</span></a></p>{% endif %}
+                </div>
+                {%-assign footer_qlink = block.settings.footer_qlink-%}
+                {%-if footer_qlink != blank-%}
+                <ul class="footer-menu margin-bottom-25">
+                  {%-for link in linklists[footer_qlink].links-%}
+                  <li><a href="{{link.url}}">{{link.title | capitalize }}</a></li>
+                  {%-endfor-%}
+                </ul>
+                {%-endif-%}
+              </div>
+            </div>
+          {%- elsif block.type == 'item_2' -%}
+            <div class="footer-sidebar footer_links {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget style3 text-{{block.settings.content_align}} margin-bottom-25">
+                <span class="text-primary PlayfairDisplay">{{block.settings.stitle}}</span>
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                <div class="content">
+                  {%-assign footer_link = block.settings.footer_link-%}
+                  {%-if footer_link != blank-%}
+                  <ul{% if block.settings.content_align == 'right' %} dir="rtl"{% endif %}>
+                    {%-for link in linklists[footer_link].links-%}
+                    <li><a href="{{link.url}}">{{link.title | capitalize }}</a></li>
+                    {%-endfor-%}
+                  </ul>
+                  {%-endif-%}
+                </div>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_3' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget contact-info contact_info_1 text-{{block.settings.content_align}} margin-bottom-25">
+                <span class="text-primary PlayfairDisplay">{{block.settings.stitle}}</span>
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                <div class="content">
+                  {%-if block.settings.footer_widget_address_contact != ""-%}<p class="address row-flex margin-right-0 margin-left-0 margin-bottom-25 flex-nowrap justify-content-{{justify_content}}"><span>{{block.settings.footer_widget_address_contact|default: shop.address.summary}}</span></p>{%-endif-%}
+                  {%-if block.settings.footer_widget_phone_contact != ""-%}<p class="phone row-flex margin-right-0 margin-left-0 margin-bottom-25 flex-nowrap justify-content-{{justify_content}}" style="font-size: {{block.settings.font_size_phone}}px"><a href="tel:{{block.settings.footer_widget_phone_contact|default: shop.address.phone}}"><i class="fa fa-phone" style="font-size: {{block.settings.font_size_phone}}px;color:{{block.settings.phone_color}}"></i><span style="color:{{block.settings.phone_color}}"> {{block.settings.footer_widget_phone_contact|default: shop.address.phone}}</span></a></p>{%-endif-%}
+                </div>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_4' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget contact-info text-{{block.settings.content_align}} margin-bottom-25">
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                <div class="content">
+                  {%-if block.settings.footer_widget_address_contact != ""-%}<p class="address dp-flex flex-nowrap justify-content-{{justify_content}}"><strong>{{'layout.footer.address_label'|t}} </strong> <span> {{block.settings.footer_widget_address_contact|default: shop.address.summary}}</span></p>{%-endif-%}
+                  {%-if block.settings.footer_widget_phone_contact != ""-%}<p class="phone dp-flex flex-nowrap justify-content-{{justify_content}}"><strong>{{'layout.footer.phone_label'|t}} </strong><a href="tel:{{block.settings.footer_widget_phone_contact|default: shop.address.phone}}"> <span> {{block.settings.footer_widget_phone_contact|default: shop.address.phone}}</span></a></p>{%-endif-%}
+                  {%-if block.settings.footer_widget_email_contact != ""-%}<p class="mail dp-flex flex-nowrap justify-content-{{justify_content}}"><strong>{{'layout.footer.email_label'|t}} </strong><a href="mailto:{{block.settings.footer_widget_email_contact|default: shop.address.email}}"> <span> {{block.settings.footer_widget_email_contact|default: shop.address.email}}</span></a></p>{%-endif-%}
+                </div>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_5' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">  
+                <div class="content">
+                  <span class="text-primary PlayfairDisplay">{{block.settings.stitle}}</span>
+                  <h3 class="widget-title">{{block.settings.title}}</h3>
+                  {%- assign social_grid =  'dp-flex flex-nowrap justify-content-' | append: justify_content -%}
+                  {%-include 'boutique_socials', social_grid: social_grid-%}
+                </div>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_6' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">  
+                <div class="content">
+                  <h3 class="widget-title">{{block.settings.title}}</h3>
+                  {%- assign social_grid =  'dp-flex flex-nowrap justify-content-' | append: justify_content -%}
+                  {%-include 'boutique_socials', social_grid: social_grid-%}
+                </div>
+              </div>
+              <div class="widget widget_text text-{{block.settings.content_align}} margin-bottom-25">
+                <h3 class="widget-title">{{block.settings.title2}}</h3> 
+                <div class="content">             
+                  <img src="{{block.settings.footer_payment|img_url: '300x'}}" alt="">
+                </div> 
+              </div>
+            </div>
+          {%- elsif block.type == 'item_7' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget fick_photo {{block.settings.block_design}} text-{{block.settings.content_align}}">             
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                <div id="flickr_badge_wrapper" class="fick-photo">
+                  <script type="text/javascript" src="{{settings.badge_code}}"></script>
+                </div>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_8' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget fick_photo {{block.settings.block_design}} text-{{block.settings.content_align}}">             
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                <ul id="instafeed" class="fick-photo hidden"></ul>          
+                <script type="text/javascript">
+                  {%- assign instafeed_img = '{{image}}' -%}
+                  {%- assign instafeed_link = '{{link}}' -%}
+                  document.addEventListener('DOMContentLoaded', function(event){
+                    var feed = new Instafeed({
+                      target: 'instafeed',
+                      get: 'user',
+                      userId: '{{settings.user_id|default: '3311466850'}}',
+                      accessToken: '{{settings.accessToken_instagram|default: '3311466850.1677ed0.84b4d7bf4b6f49b4887a8fe93707d9b5'}}',
+                      sortBy: 'most-recent',
+                      limit: {{settings.limit_instagram|default: '8'}},
+                      template: '<li><a href="{{instafeed_link}}"><img class="lazyload" data-src="{{instafeed_img}}" /></a><li>'
+                    });
+                    feed.run();
+                  })
+                </script>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_9' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar {{block.settings.block_style}}{%if block.settings.use_dark %} style7{% endif %} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget widget_newletter {{block.settings.newsletter_design}} text-{{block.settings.content_align}}">
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                {%- if settings.newslatter_mailchimp_url != "" -%}
+                <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="newletter" name="mc-embedded-subscribe-form" target="_blank">
+                  <input type="email"
+                         name="contact[email]"
+                         id="contact_email{{section.id}}"
+                         class="email-text required-entry validate-email"
+                         value="{% if customer %}{{ customer.email }}{% endif %}"
+                         placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                  <span><button class="button" name="subscribe" id="subscribe{{section.id}}" type="submit">{{'general.newsletter_form.submit'|t}}</button></span>
+                </form>
+                {%- else -%}
+                  {%-form 'customer', class: 'newletter'-%}
+                  {{ form.errors | default_errors }}
+                  {%-if form.posted_successfully?-%}
+                  <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                  {%-else-%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input type="email"
+                         name="contact[email]"
+                         id="Email{{section.id}}"
+                         class="email-text required-entry validate-email"
+                         value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+                         placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                  <span><button class="button" type="submit" title="{{ 'general.newsletter_form.submit' | t }}">{{'general.newsletter_form.submit'|t}}</button></span>
+                  {%-endif-%}
+                  {%-endform-%}
+                {%- endif -%}
+              </div>
+              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">
+                <h3 class="widget-title">{{block.settings.title2}}</h3>
+                <div class="content">
+                  {%- include "boutique_socials", social_grid: 'social' -%}
+                </div>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_10' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar style_5 {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget widget_newletter {{block.settings.newsletter_design}} text-{{block.settings.content_align}}">
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                {%- if block.settings.text_newsletter != blank -%}<p>{{block.settings.text_newsletter}}</p>{%- endif -%}
+                {%- if settings.newslatter_mailchimp_url != "" -%}
+                  <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="newletter" name="mc-embedded-subscribe-form" target="_blank">
+                    <input type="email"
+                           name="contact[email]"
+                           id="contact_email{{section.id}}"
+                           class="email-text required-entry validate-email"
+                           value="{% if customer %}{{ customer.email }}{% endif %}"
+                           placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                    <span><button class="button" type="submit" name="subscribe" id="subscribe{{section.id}}">{{'general.newsletter_form.submit'|t}}</button></span>
+                  </form>
+                {%- else -%}
+                  {%-form 'customer', class: 'newletter'-%}
+                  {{ form.errors | default_errors }}
+                  {%-if form.posted_successfully?-%}
+                  <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                  {%-else-%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input type="email"
+                         name="contact[email]"
+                         id="Email{{section.id}}"
+                         class="email-text required-entry validate-email"
+                         value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+                         placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+                  <span><button class="button" type="submit" title="{{ 'general.newsletter_form.submit' | t }}">{{'general.newsletter_form.submit'|t}}</button></span>
+                  {%-endif-%}
+                  {%-endform-%}
+                {%- endif -%}
+              </div>
+              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">
+                <div class="content">
+                  {%- include "boutique_socials", social_grid: 'social' -%}
+                </div>
+              </div>
+            </div>
+          {%- elsif block.type == 'item_11' -%}
+            {%-if block.settings.content_align == 'left' -%}
+            {%- assign justify_content = 'start' -%}
+            {%-elsif block.settings.content_align == 'right' -%}
+            {%- assign justify_content = 'end' -%}
+            {%-else-%}
+            {%- assign justify_content = 'center' -%}
+            {%-endif-%}
+            <div class="footer-sidebar style_5 {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
+              <div class="widget our-service {{block.settings.newsletter_design}} text-{{block.settings.content_align}}">             
+                <h3 class="widget-title">{{block.settings.title}}</h3>
+                <div class="content">
+                  <div class="tagcloud">
+                    {%-assign colletion = collections['all']-%}
+                    {%-if block.settings.use_limit_tags != blank and block.settings.tags_items != blank -%}
+                      {%-assign limit_tg = colletion.all_tags.size-%}
+                      {%-assign limit_check = block.settings.tags_items|strip_newline|strip| split: ','-%}
+                    {%-else-%}
+                      {%-assign limit_tg = block.settings.use_limit_tags | default: collections['all'].all_tags.size -%}
+                    {%-endif-%}
+                    {%-for item_tags in colletion.all_tags limit: limit_tg -%}
+                      {%-if item_tags != ''-%}
+                      {%-if block.settings.use_limit_tags != blank and block.settings.tags_items != blank -%}
+                        {%-if limit_check contains item_tags-%}
+                          {%-capture linkToTag -%}{{ item_tags| highlight_active_tag | link_to_tag: item_tags }}{%-endcapture-%}
+                          {{linkToTag|replace: '/?constraint=','/collections/all/'}}
+                        {%-endif-%}
+                      {%-else-%}
+                        {%-capture linkToTag -%}{{ item_tags| highlight_active_tag | link_to_tag: item_tags }}{%-endcapture-%}
+                        {{linkToTag|replace: '/?constraint=','/collections/all/'}}
+                      {%-endif-%}
+                      {%-endif-%}
+                    {%-endfor %}
+                    {%- assign tag_color_footer = settings.tag_color_footer -%}
+                    {%- assign tag_hover_color_footer = settings.tag_hover_color_footer -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    {%- if section.blocks.size != 0 -%}
+    {%- for block in section.blocks -%}
+    {%- if block.type == 'footer_bottom_1' -%}
+    <div class="footer-bottom">
+      <div class="payment{% if section.settings.width_section %} container{% else %} container-fluid{% endif %}" style="border-top-color: {{block.settings.border_color|default:'#e0e0e0' | color_modify: 'alpha', 0.9 }}">
+        <div class="">
+          <div class="head">
+            <strong><span style="color: {{block.settings.title_color}}">{{block.settings.footer_small_title_payment}}</span></strong>
+            <span class="PlayfairDisplay">{{block.settings.footer_widget_title_payment}}</span>
+          </div>
+          <div class="list">
+            {%-for i in (1..6)-%}
+            {%-assign payment_image = 'payment_image_'| append: i -%}
+            {%-assign payment_call_to_action = 'payment_call_to_action_'| append: i -%}
+            {%-if block.settings[payment_image] != blank -%}
+            <a href="{{block.settings[payment_call_to_action]|default: '#'}}" class="item"><img src="{{block.settings[payment_image] | img_url: 'master'}}" alt="{{image_.alt}}"></a>
+            {%-endif-%}
+            {%-endfor-%}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- elsif block.type == 'footer_bottom_2' -%}
+    <div class="footer-bottom">
+      <div class="payment" style="{%- if block.settings.section_padding != blank -%}padding: {{block.settings.section_padding | replace : '-',' '}};{%- endif -%}border-top-color: {{block.settings.border_color|default:'#e0e0e0' | color_modify: 'alpha', 0.9 }}">   
+        {%-if block.settings.copyright != blank-%}
+        <p style="margin: 0;">{{block.settings.copyright|html}}</p>
+        {%-else-%}
+        <p style="margin: 0;">
+          <small class="site-footer__copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}</small>
+          <small class="site-footer__copyright-content">{{ powered_by_link }}</small>
+        </p>
+        {%-endif-%}
+      </div>
+    </div>
+    {%- elsif block.type == 'footer_bottom_3' -%}
+    <div class="footer-bottom">
+      <div class="payment{% if section.settings.width_section %} container{% else %} container-fluid{% endif %}" style="border-top-color: {{block.settings.border_color|default:'#e0e0e0' | color_modify: 'alpha', 0.9 }}">
+        <div class="">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <div class="coppyright"> 
+                {%-if block.settings.copyright != blank-%}
+                <p style="margin: 0;">{{section.settings.copyright|html}}</p>
+                {%-else-%}
+                <p style="margin: 0;">
+                  <small class="site-footer__copyright-content">&copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}</small>
+                  <small class="site-footer__copyright-content">{{ powered_by_link }}</small>
+                </p>
+                {%-endif-%}
+              </div>
+            </div>
+            {% if block.settings.linklist_footer_bottom != blank %}
+              <div class="col-sm-6 text-right">
+                {% assign link_bottom_handle = block.settings.linklist_footer_bottom %}
+                {% if link_bottom_handle != blank %}
+                  <ul class="footer-menu">
+                    {% for link in linklists[link_bottom_handle].links %}
+                    <li><a href="{{link.url}}">{{link.title | capitalize }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+  </div>
+</footer>
+{%- endif -%}
+{% comment %}
+<div id="toolbar" class="hidden-md hidden-lg row-flex justify-content-center align-items-center flex-row margin-0">
+  <div class="itemTool col-kiti-2 text-center">
+    <a href="/" class="icon">
+      <i class="fa fa-home"></i>
+    </a>
+  </div>
+  <div class="itemTool col-kiti-2 text-center">
+    <div class="icon">
+      <i class="fa fa-free-code-camp"></i>
+    </div>
+  </div>
+  <div class="itemTool col-kiti-2 text-center">
+    <a href="/cart" class="icon">
+      <span class="cart-count">
+        <i class="fa fa-shopping-basket"></i>
+        <span class="cartCount">0</span>
+      </span>
+    </a>
+  </div>
+  <div class="itemTool col-kiti-2 text-center">
+    <div class="icon scrollToTop">
+      <i class="fa fa-globe"></i>
+    </div>
+  </div>
+  <div class="itemTool col-kiti-2 text-center">
+    <a href="/account" class="icon">
+      <i class="fa fa-user-circle-o"></i>
+    </a>
+  </div>
+</div>
+{% endcomment %}
+{%- assign title_color_footer = settings.title_color_footer -%}
+{%- assign text_color_footer = settings.text_color_footer -%}
+{%- assign link_color_footer = settings.link_color_footer -%}
+{%- assign note_color_footer = settings.note_color_footer -%}
+{%- assign social_color_footer = settings.social_color_footer -%}
+{%- assign social_hover_color_footer = settings.social_hover_color_footer -%}
+{%- assign border_color_footer = settings.border_color_footer -%}
+{%- assign background_footer = settings.background_footer -%}
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "use_footer",
+        "label": "== Use footer",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "range",
+        "id": "font_size_footer",
+        "min": 10,
+        "max": 16,
+        "step": 1,
+        "unit": "px",
+        "label": "Footer font size",
+        "default": 13
+      }
+    ],
+    "blocks": [
+      {
+        "type": "footer_service",
+        "name": "Footer service",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "service_icon_1",
+            "label": "== Service 1 icon",
+            "default": "fa-truck"
+          },
+          {
+            "type": "textarea",
+            "id": "service_text_1",
+            "label": "Service 1 text",
+            "default": "<h4 class=\"title\">Free shipping</h4><div class=\"text\">from £150 purchase *</div>"
+          },
+          {
+            "type": "textarea",
+            "id": "service_icon_2",
+            "label": "== Service 2 icon",
+            "default": "fa-undo-alt"
+          },
+          {
+            "type": "textarea",
+            "id": "service_text_2",
+            "label": "Service 2 text",
+            "default": "<h4 class=\"title\">Exchange or Refund</h4><div class=\"text\">on stores</div>"
+          },
+          {
+            "type": "textarea",
+            "id": "service_icon_3",
+            "label": "== Service 3",
+            "default": "fa-shield-alt"
+          },
+          {
+            "type": "textarea",
+            "id": "service_text_3",
+            "label": "Service 3 text",
+            "default": "<h4 class=\"title\">Member safe shopping</h4><div class=\"text\">Safe guarantee</div>"
+          }
+        ]
+      },
+      {
+        "type": "item_1",
+        "name": "Logo and info",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "== Footer Logo"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_footer_logo",
+            "label": "-- Use footer logo"
+          },
+          {
+            "type": "image_picker",
+            "id": "footer_logo",
+            "label": "Image footer logo"
+          },
+          {
+            "type": "textarea",
+            "id": "footer_description",
+            "label": "Description below the logo"
+          },
+          {
+            "type": "header",
+            "content": "== About Your Site"
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_address_contact",
+            "label": "-- Address",
+            "default": "5701 Outlets at Tejon Pkwy, Tejon ranch CA 93203 UK."
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_phone_contact",
+            "label": "-- Phone",
+            "default": "(+800) 6868 2268"
+          },
+          {
+            "type": "range",
+            "id": "font_size_phone",
+            "min": 10,
+            "max": 24,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size phone number",
+            "default": 13
+          },
+          {
+             "type": "color",
+             "id": "phone_color",
+             "label": "Color phone number",
+             "default": "#ffffff"
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_email_contact",
+            "label": "-- Email",
+            "default": "info@demo.com"
+          },
+          {
+            "type": "header",
+            "content": "== Quick link"
+          },
+          {
+            "type": "link_list",
+            "id": "footer_qlink",
+            "label": "Menu quick link",
+            "default": "footer"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_2",
+        "name": "Linklist",
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "text",
+            "id": "stitle",
+            "label": "== Small title",
+            "default": "Talk to Us Now !"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Infomation</p>"
+          },
+          {
+            "type": "header",
+            "content": "== Menu link"
+          },
+          {
+            "type": "link_list",
+            "id": "footer_link",
+            "label": "Menu link",
+            "default": "footer"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_3",
+        "name": "Contact",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "text",
+            "id": "stitle",
+            "label": "== Small title",
+            "default": "Talk to Us Now !"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Contact Us</p>"
+          },
+          {
+            "type": "header",
+            "content": "== About Your Site"
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_address_contact",
+            "label": "-- Address",
+            "default": "5701 Outlets at Tejon Pkwy, Tejon ranch CA 93203 UK."
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_phone_contact",
+            "label": "-- Phone",
+            "default": "(+800) 6868 2268"
+          },
+          {
+            "type": "range",
+            "id": "font_size_phone",
+            "min": 10,
+            "max": 24,
+            "step": 1,
+            "unit": "px",
+            "label": "Font size phone number",
+            "default": 13
+          },
+          {
+             "type": "color",
+             "id": "phone_color",
+             "label": "Color phone number",
+             "default": "#ffffff"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_4",
+        "name": "Contact 2",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Contact</p>"
+          },
+          {
+            "type": "header",
+            "content": "== About Your Site"
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_address_contact",
+            "label": "-- Address",
+            "default": "5701 Outlets at Tejon Pkwy, Tejon ranch CA 93203 UK."
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_phone_contact",
+            "label": "-- Phone",
+            "default": "(+800) 6868 2268"
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_email_contact",
+            "label": "-- Email",
+            "default": "info@demo.com"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_5",
+        "name": "Follow",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "text",
+            "id": "stitle",
+            "label": "== Small title",
+            "default": "Talk to Us Now !"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title Socials",
+            "default": "<p>Follow Us</p>"
+          },
+          {
+            "type": "select",
+            "id": "socials_design",
+            "options": [
+              {
+                "value": "socials_design_1",
+                "label": "Style 1"
+              },
+              {
+                "value": "socials_design_2",
+                "label": "Style 2"
+              },
+              {
+                "value": "socials_design_3",
+                "label": "Style 3"
+              }
+            ],
+            "label": "Socials design",
+            "default": "socials_design_1"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_6",
+        "name": "Follow and payment",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title Socials",
+            "default": "<p>Follow Us</p>"
+          },
+          {
+            "type": "select",
+            "id": "socials_design",
+            "options": [
+              {
+                "value": "socials_design_1",
+                "label": "Style 1"
+              },
+              {
+                "value": "socials_design_2",
+                "label": "Style 2"
+              },
+              {
+                "value": "socials_design_3",
+                "label": "Style 3"
+              }
+            ],
+            "label": "Socials design",
+            "default": "socials_design_1"
+          },
+          {
+            "type": "richtext",
+            "id": "title2",
+            "label": "== Title Payment",
+            "default": "<p>Payment</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "footer_payment",
+            "label": "Image payment"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_7",
+        "name": "Flick Photo",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "block_design",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style2",
+                "label": "Style 2"
+              },
+              {
+                "value": "style3",
+                "label": "Style 3"
+              }
+            ],
+            "label": "== Block design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Flick Photo</p>"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_8",
+        "name": "Instagram Photo",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "block_design",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style2",
+                "label": "Style 2"
+              },
+              {
+                "value": "style3",
+                "label": "Style 3"
+              }
+            ],
+            "label": "== Block design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Instagram Photo</p>"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_9",
+        "name": "Newletter and follow",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "use_dark",
+            "label": "Use for dark background section",
+            "default": false
+          },
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Newsletter</p>"
+          },
+          {
+            "type": "select",
+            "id": "newsletter_design",
+            "options": [
+              {
+                "value": "newsletter_design_1",
+                "label": "Style 1"
+              },
+              {
+                "value": "newsletter_design_2",
+                "label": "Style 2"
+              }
+            ],
+            "label": "Newsletter design",
+            "default": "newsletter_design_1"
+          },
+          {
+            "type": "richtext",
+            "id": "title2",
+            "label": "== Title Socials",
+            "default": "<p>Follow us</p>"
+          },
+          {
+            "type": "select",
+            "id": "socials_design",
+            "options": [
+              {
+                "value": "socials_design_1",
+                "label": "Style 1"
+              },
+              {
+                "value": "socials_design_2",
+                "label": "Style 2"
+              },
+              {
+                "value": "socials_design_3",
+                "label": "Style 3"
+              }
+            ],
+            "label": "Socials design",
+            "default": "socials_design_1"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_10",
+        "name": "Newletter and social",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Newsletter</p>"
+          },
+          {
+            "type": "textarea",
+            "id": "text_newsletter",
+            "label": "Text info",
+            "default": "Lorem Ipsum is simply dummy text of the printing and typesetting."
+          },
+          {
+            "type": "select",
+            "id": "newsletter_design",
+            "options": [
+              {
+                "value": "newsletter_design_1",
+                "label": "Style 1"
+              },
+              {
+                "value": "newsletter_design_2",
+                "label": "Style 2"
+              }
+            ],
+            "label": "Newsletter design",
+            "default": "newsletter_design_1"
+          },
+          {
+            "type": "select",
+            "id": "socials_design",
+            "options": [
+              {
+                "value": "socials_design_1",
+                "label": "Style 1"
+              },
+              {
+                "value": "socials_design_2",
+                "label": "Style 2"
+              },
+              {
+                "value": "socials_design_3",
+                "label": "Style 3"
+              }
+            ],
+            "label": "Socials design",
+            "default": "socials_design_1"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "item_11",
+        "name": "Tags",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "block_style",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style3",
+                "label": "Style 2"
+              }
+            ],
+            "label": "== Title design",
+            "default": "style1"
+          },
+          {
+            "type": "select",
+            "id": "content_align",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "label": "== Content align",
+            "default": "center"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "== Title",
+            "default": "<p>Tags</p>"
+          },
+          {
+            "type": "text",
+            "id": "use_limit_tags",
+            "label": "Limit item tags",
+            "default": "15"
+          },
+          {
+            "type": "textarea",
+            "id": "tags_items",
+            "label": "Items tag",
+            "default": "shirt,coat,jean,t-shirt,dress"
+          },
+          {
+            "type": "select",
+            "id": "block_width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1/12"
+              },
+              {
+                "value": "2",
+                "label": "2/12"
+              },
+              {
+                "value": "3",
+                "label": "3/12"
+              },
+              {
+                "value": "4",
+                "label": " 4/12"
+              },
+              {
+                "value": "5",
+                "label": "5/12"
+              },
+              {
+                "value": "6",
+                "label": "50%"
+              },
+              {
+                "value": "7",
+                "label": "7/12"
+              },
+              {
+                "value": "8",
+                "label": "8/12"
+              },
+              {
+                "value": "9",
+                "label": "9/12"
+              },
+              {
+                "value": "10",
+                "label": "10/12"
+              },
+              {
+                "value": "11",
+                "label": "11/12"
+              },
+              {
+                "value": "12",
+                "label": "Full width"
+              }
+            ],
+            "label": "== Select column width",
+            "default": "12"
+          },
+          {
+            "type": "header",
+            "content": "== Hide on device?"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_medium",
+            "label": "___ Device medium",
+            "info": "Device medium ( 1199px - 992px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_small",
+            "label": "___ Device small",
+            "info": "Device small ( 991px - 768px )",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_extra_small",
+            "label": "___ Device Extra small",
+            "info": "Device small ( less 767px )",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "footer_bottom_1",
+        "name": "Footer bottom 1",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "footer_small_title_payment",
+            "label": "Title the payments block",
+            "default": "WE ACCEPT"
+          },
+          {
+             "type": "color",
+             "id": "title_color",
+             "label": "Color title",
+             "default": "#ffffff"
+          },
+          {
+             "type": "color",
+             "id": "border_color",
+             "label": "Color border",
+             "default": "#191919"
+          },
+          {
+            "type": "text",
+            "id": "footer_widget_title_payment",
+            "label": "Info the payments block",
+            "default": "Online Payment Be Secured"
+          },
+          {
+            "type": "image_picker",
+            "id": "payment_image_1",
+            "label": "Payment Image"
+          },
+          {
+            "id": "payment_call_to_action_1",
+            "type": "url",
+            "label": "Payment link"
+          },
+          {
+            "type": "image_picker",
+            "id": "payment_image_2",
+            "label": "Payment Image"
+          },
+          {
+            "id": "payment_call_to_action_2",
+            "type": "url",
+            "label": "Payment link"
+          },
+          {
+            "type": "image_picker",
+            "id": "payment_image_3",
+            "label": "Payment Image"
+          },
+          {
+            "id": "payment_call_to_action_3",
+            "type": "url",
+            "label": "Payment link"
+          },
+          {
+            "type": "image_picker",
+            "id": "payment_image_4",
+            "label": "Payment Image"
+          },
+          {
+            "id": "payment_call_to_action_4",
+            "type": "url",
+            "label": "Payment link"
+          },
+          {
+            "type": "image_picker",
+            "id": "payment_image_5",
+            "label": "Payment Image"
+          },
+          {
+            "id": "payment_call_to_action_5",
+            "type": "url",
+            "label": "Payment link"
+          },
+          {
+            "type": "image_picker",
+            "id": "payment_image_6",
+            "label": "Payment Image"
+          },
+          {
+            "id": "payment_call_to_action_6",
+            "type": "url",
+            "label": "Payment link"
+          }
+        ]
+      },
+      {
+        "type": "footer_bottom_2",
+        "name": "Footer bottom 2",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "copyright",
+            "label": "== Copyright customize"
+          },
+          {
+            "type": "text",
+            "id": "section_padding",
+            "label": "Paddings Integer px ( top-right-bottom-left )",
+            "info": "40px-0"
+          },
+          {
+             "type": "color",
+             "id": "border_color",
+             "label": "Color border",
+             "default": "#191919"
+          }
+        ]
+      },
+      {
+        "type": "footer_bottom_3",
+        "name": "Footer bottom 3",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "copyright",
+            "label": "== Copyright customize"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_footer_bottom",
+            "label": "Menu link the footer bottom",
+            "default": "main-menu"
+          },
+          {
+             "type": "color",
+             "id": "border_color",
+             "label": "Color border",
+             "default": "#191919"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

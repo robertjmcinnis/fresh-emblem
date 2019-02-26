@@ -1,0 +1,124 @@
+<div class="section-faqs" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}">
+  <div class="container">
+    <div class="clearfix" style="{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      {% if section.blocks.size != 0-%}
+        {%- assign tab_count = 0 -%}
+        {% for block in section.blocks-%}
+        {%-if block.type == 'item_1' -%}
+        {%-if block.settings.content_page != blank -%}
+        {{pages[block.settings.content_page].content|html}}
+        {%-elsif block.settings.title_area != blank-%}
+        {{block.settings.title|html}}
+        {%-else-%}
+        <h3>{{block.settings.title|html}}</h3>
+        {%-endif-%}
+        {%-else-%}
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="heading{{block.id}}">
+            <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{block.id}}" aria-expanded="{%if tab_count == 0%}true{%else%}false{%endif%}" aria-controls="collapse{{block.id}}">
+              <a href="javascript:void(0)">{{block.settings.title}}</a>
+            </h4>
+          </div>
+          <div id="collapse{{block.id}}" class="panel-collapse collapse{%if tab_count == 0%} in{%endif%}" role="tabpanel" aria-labelledby="heading{{block.id}}">
+            <div class="panel-body">
+              {%- if block.settings.content_page != blank -%}
+              {{pages[block.settings.content_page].content|html}}
+              {%-else-%}
+              {{block.settings.content}}
+              {%-endif-%}
+            </div>
+          </div>
+        </div>        
+        {%- assign tab_count = tab_count | plus: 1 -%}
+        {%-endif-%}
+        {% endfor %}
+      {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "FAQ's content",
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "FAQ's content",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "== Content settings"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item FAQ",
+        "settings": [
+          {
+             "type": "text",
+             "id": "title",
+             "label": "Title",
+             "default": "Title 1"
+          },
+          {
+             "type": "textarea",
+             "id": "content",
+             "label": "Content",
+             "default": "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS."
+          },
+          {
+             "type": "page",
+             "id": "content_page",
+             "label": "Content page"
+          }
+        ]
+      },
+      {
+        "type": "item_1",
+        "name": "Item Title",
+        "settings": [
+          {
+             "type": "richtext",
+             "id": "title",
+             "label": "Title",
+             "default": "<p>Title 1</p>"
+          },
+          {
+             "type": "textarea",
+             "id": "title_area",
+             "label": "Title html"
+          },
+          {
+             "type": "page",
+             "id": "content_page",
+             "label": "Customize title"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

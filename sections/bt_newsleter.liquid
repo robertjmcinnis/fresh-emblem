@@ -1,0 +1,137 @@
+<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+  <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+    <div class="row-flex justify-content-center align-items-center">
+      <div class="col-sm-12 col-md-7">
+        <div class="video video-lightbox">
+          {%- assign image_ = section.settings.image -%}
+          {% if image_ == blank %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 441"><title>{{shop.name}} placeholder</title><rect width="780" height="441" style="fill:{{settings.color_pt_bground}}"/><text transform="translate(250.87 {{441 | divided_by: 2 | round: 2 }})" style="font-size:72px;fill:gray;font-family:Roboto-Regular, Roboto">780x441</text></svg>
+          {%- else %}
+          <picture>
+            <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '720x' %}" media="(min-width: 1920px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '720x' %}" media="(min-width: 1200px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '550x' %}" media="(min-width: 1024px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '991x' %}" media="(min-width: 991px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '768x' %}" media="(min-width: 768px)">
+            <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '480x' %}">
+            <img class="lazyload" src="{% include 'kt_image_format',src: image_.src , size: '300x' %}" data-src="{% include 'kt_image_format',src: image_.src , size: '480x@2x' %}" alt="{{image_.alt}}">
+          </picture>
+          {%- endif %}
+          <div class="overlay"></div>
+          <a href="#" class="link-lightbox button-play" data-videoid="{{ section.settings.video_url.id }}" data-videosite="{{ section.settings.video_url.type }}" data-url="{{ section.settings.video_url }}"></a>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-5">
+        <div class="newsletter">
+          <div class="section-title text-center"><h3>{{section.settings.titlex}}</h3></div>
+          <i class="newsletter-info">{{section.settings.s_title}}</i>
+          {%- if settings.newslatter_mailchimp_url != "" -%}
+            <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="form-newsletter mailing-form" name="mc-embedded-subscribe-form" target="_blank">
+              <input type="email"
+                     name="contact[email]"
+                     id="contact_email{{section.id}}"
+                     class="input-text required-entry validate-email"
+                     value="{% if customer %}{{ customer.email }}{% endif %}"
+                     placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+              <span><button class="newsletter-submit" name="subscribe" id="subscribe{{section.id}}" type="submit">{{ 'general.newsletter_form.submit' | t }}</button></span>
+            </form>
+          {%- else -%}
+            {%-form 'customer', class: 'form-newsletter'-%}
+              {{ form.errors | default_errors }}
+              {%-if form.posted_successfully?-%}
+              <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+              {%-else-%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email"
+                     name="contact[email]"
+                     id="Email{{section.id}}"
+                     class="input-text required-entry validate-email"
+                     value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+                     placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+              <span><button type="submit" title="{{ 'general.newsletter_form.submit' | t }}" class="newsletter-submit">{{ 'general.newsletter_form.submit' | t }}</button></span>
+              {%-endif-%}
+            {%-endform-%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Home newsletter",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Home newsletter",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Preview image",
+        "info": "Size suggestion: 720x407 pixels"
+      },
+      {
+         "id": "video_url",
+         "type": "video_url",
+         "label": "Video URL",
+         "accept": ["youtube", "vimeo"],
+         "default": "https://vimeo.com/134060140"
+      },
+      {
+         "type": "text",
+         "id": "titlex",
+         "label": "Title",
+         "default": "NEWSLETTER"
+      },
+      {
+         "type": "text",
+         "id": "s_title",
+         "label": "Sub title",
+         "default": "Sign up for Our Newsletter & Promotions"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home newsletter",
+        "category": "Newsletter"
+      }
+    ]
+  }
+{% endschema %}

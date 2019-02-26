@@ -1,0 +1,268 @@
+{% if section.settings.product_related_enable %}
+{%-if settings.use_two_col_mb-%}
+  {%- assign reponsive = '{"0":{"items":1},"375":{"items":2,"margin":20},"600":{"items":3},"1000":{"items":'|append: section.settings.product_display|append:'}}' -%}
+{%-else-%}
+  {%- assign reponsive = '{"0":{"items":1,"margin":30},"480":{"items":2},"600":{"items":3},"1000":{"items":'|append: section.settings.product_display|append:'}}' -%}
+{%-endif-%}
+
+
+<div style="float:left;width:100%;{%-if section.settings.section_bg != blank -%}background-color:{{section.settings.section_bg}};{%-endif-%}{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}" data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+    <div class="clearfix" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}">
+      <div class="row">
+        <!-- Section Product Page Bottom -->
+        {%- assign product_limit = section.settings.product_items | plus: 0 | default: 4 -%}
+        {%- assign score = 2 -%}
+        {%- assign count = 0 -%}
+        {%- assign related = false -%}
+        {%- assign all_collection = 'related' -%}
+        {%- assign current_product_id = product.id -%}
+        {%- for c in product.collections -%}{%- if c.handle == all_collection -%}{%- assign collection = c -%}{%- endif -%}{%- endfor -%}
+        {% if section.settings.product_related_collection != blank and collections[section.settings.product_related_collection].products_count > 0 -%}
+        {%- assign related = true -%}
+        {% for prd in collections[section.settings.product_related_collection].products -%}                  
+          {%- unless prd.id == current_product_id or product.available == false -%}
+          {%- if count == 0 -%}
+        <div class="upsell-products col-lg-12">
+          <div class="section-title text-center">
+            <h3>
+              {{section.settings.product_related_title | default: "Related Products" }}
+            </h3>
+          </div>
+          <ul class="owl-carousel {%unless section.settings.product_grid_layout == ''%} style{{section.settings.product_grid_layout}}{% endunless %}" data-responsive='{{reponsive}}' data-autoplay="false" data-loop="false" data-items="{{section.settings.product_display}}" data-dots="false" data-nav="false" data-margin="30">
+          {%- endif -%}
+            {%- assign count = count | plus: 1 -%}
+            {% assign grid = section.settings.product_display %}
+            <li class="grid-item">{% include 'product-card-grid', product: prd, grid: grid, container: section.settings.width_section %}</li>
+          {%- endunless -%}
+          {%- if count > product_limit or forloop.last -%}
+          </ul>
+        </div>
+        {%break%}{%- endif -%}
+            {%- endfor %}
+          </ul>
+        </div>
+        {% elsif collection and collection.products_count > 1 -%}
+          {%- assign i = 0 -%}
+          {%- assign current_product = product -%}
+          {%- assign current_product_tags = current_product.tags | join: ' ' -%}
+          {% for prd in collection.products -%}{%- assign s = 0 -%}
+            {%- for tag in prd.tags -%}{%- if current_product_tags contains tag -%}{%- assign s = s | plus: 1 -%}{%- endif -%}{%- endfor -%}
+            {% if s >= score and i < product_limit and current_product.handle != prd.handle and product.available -%}{%- assign i = i | plus: 1 -%}
+              {%- if i == 1 -%}
+              {%- assign related = true -%}
+              <div class="upsell-products col-lg-12">
+                <div class="section-title text-center">
+                  <h3>
+                    {{section.settings.product_related_title | default: "Related Products" }}
+                  </h3>
+                </div>
+                <ul class="owl-carousel{%unless section.settings.product_grid_layout == ''%} style{{section.settings.product_grid_layout}}{% endunless %}" data-responsive='{{reponsive}}' data-autoplay="false" data-loop="false" data-items="{{section.settings.product_display}}" data-dots="false" data-nav="false" data-margin="30">
+              {%- endif -%}
+                    {% assign grid = section.settings.product_display %}
+                    <li class="grid-item">{% include 'product-card-grid', product: prd, grid: grid, container: section.settings.width_section %}</li>
+            {%- endif -%}
+          {%- endfor %}
+          {%- if i > 0 -%}
+                </ul>
+            </div>
+          {%- endif -%}
+        
+        {% elsif collections[product.collections.first.handle] != empty and collections[product.collections.first.handle].products_count > 1 -%}
+          {%- assign i = 0 -%}
+          {%- assign current_product = product -%}
+          {%- assign current_product_tags = current_product.tags | join: ' ' -%}
+          {% for prd in collections[product.collections.first.handle].products -%}{%- assign s = 0 -%}
+            {%- for tag in prd.tags -%}{%- if current_product_tags contains tag -%}{%- assign s = s | plus: 1 -%}{%- endif -%}{%- endfor -%}
+            {% if s >= 0 and i < product_limit and current_product.handle != prd.handle and product.available -%}{%- assign i = i | plus: 1 -%}
+              {%- if i == 1 -%}
+              {%- assign related = true -%}
+              <div class="upsell-products col-lg-12">
+                <div class="section-title text-center">
+                  <h3>
+                    {{section.settings.product_related_title | default: "Related Products" }}
+                  </h3>
+                </div>
+                <ul class="owl-carousel{%unless section.settings.product_grid_layout == ''%} style{{section.settings.product_grid_layout}}{% endunless %}" data-responsive='{{reponsive}}' data-autoplay="false" data-loop="false" data-items="{{section.settings.product_display}}" data-dots="false" data-nav="false" data-margin="30">
+              {%- endif -%}
+                    {% assign grid = section.settings.product_display %}
+                    <li class="grid-item">{% include 'product-card-grid', product: prd, grid: grid, container: section.settings.width_section %}</li>
+            {%- endif -%}
+          {%- endfor %}
+          {%- if i > 0 -%}
+                </ul>
+            </div>
+          {%- endif -%}
+        {% else -%}
+          {%- assign i = 0 -%}
+          {%- assign current_product = product -%}
+          {%- assign current_product_tags = current_product.tags | join: ' ' -%}
+          {% for product in collections['all'].products -%}{%- assign s = 0 -%}
+            {%- for tag in prd.tags -%}{%- if current_product_tags contains tag -%}{%- assign s = s | plus: 1 -%}{%- endif -%}{%- endfor -%}
+            {% if s > score and i < product_limit and current_product.handle != prd.handle and product.available -%}{%- assign i = i | plus: 1 -%}
+              {%- if i == 1 -%}
+              {%- assign related = true -%}
+              <div class="upsell-products col-lg-12">
+                <div class="section-title text-center">
+                  <h3>
+                    {{section.settings.product_related_title | default: "Related Products" }}
+                  </h3>
+                </div>
+                <ul class="owl-carousel{%unless section.settings.product_grid_layout == ''%} style{{section.settings.product_grid_layout}}{% endunless %}" data-responsive='{{reponsive}}' data-autoplay="false" data-loop="false" data-items="{{section.settings.product_display}}" data-dots="false" data-nav="false" data-margin="30">
+              {%- endif -%}
+                  {% assign grid = section.settings.product_display %}
+                  <li class="grid-item">{% include 'product-card-grid', product: prd, grid: grid, container: section.settings.width_section %}</li>
+            {%- endif -%}
+          {% endfor -%}
+          {%- if i > 0 -%}
+                </ul>
+            </div>
+          {%- endif -%}
+        {%- endif %}
+          <!-- Section Product Page Bottom end-->
+      {%- if related == false %}
+        {%- assign i = 0 -%}
+        {%- assign current_product = product -%}
+          <div class="upsell-products col-lg-12">
+            <div class="section-title text-center">
+              <h3>
+                {{section.settings.product_related_title | default: "Related Products" }}
+              </h3>
+            </div>
+            <ul class="owl-carousel{%unless section.settings.product_grid_layout == ''%} style{{section.settings.product_grid_layout}}{% endunless %}" data-responsive='{{reponsive}}' data-autoplay="false" data-loop="false" data-items="{{section.settings.product_display}}" data-dots="false" data-nav="false" data-margin="30">
+              {% for prd in collections['all'].products -%}
+                {%- if i < product_limit and current_product.handle != prd.handle and product.available -%}{%- assign i = i | plus: 1 -%}                
+                {% assign grid = section.settings.product_display %}
+                <li class="grid-item">{% include 'product-card-grid', product: prd, grid: grid, container: section.settings.width_section %}</li>
+                {%- endif -%}
+              {%- endfor %}
+            </ul>
+          </div>
+      {%- endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endif %}
+{% schema %}
+  {
+    "name": "Related Products",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Related Products"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "color",
+        "id": "section_bg",
+        "label": "Background color"
+      },
+      {
+        "type": "text",
+        "id": "product_related_title",
+        "label": "Title section",
+        "default": "Related Products"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_related_enable",
+        "label": "Enable Related products"
+      },
+      {
+        "type": "collection",
+        "id": "product_related_collection",
+        "label": "Choose collection"
+      },
+      {
+        "type": "text",
+        "id": "product_display",
+        "label": "Limit product display",
+        "default": "4"
+      },
+      {
+        "type": "text",
+        "id": "product_items",
+        "label": "Limit products",
+        "default": "8"
+      },
+      {
+        "type": "select",
+        "id": "product_grid_layout",
+        "label": "Product card grid layout",
+        "options": [
+          {
+            "value": "",
+            "label": "Default (By general settings)"
+          },
+          {
+            "label": "Layout 1",
+            "value": "1"
+          },
+          {
+            "label": "Layout 2",
+            "value": "2"
+          },
+          {
+            "label": "Layout 3",
+            "value": "3"
+          },
+          {
+            "label": "Layout 4",
+            "value": "4"
+          },
+          {
+            "label": "Layout 4.1",
+            "value": "4_1 style4"
+          },
+          {
+            "label": "Layout 5",
+            "value": "5"
+          },
+          {
+            "label": "Layout 7",
+            "value": "7"
+          },
+          {
+            "label": "Layout 8",
+            "value": "8"
+          },
+          {
+            "label": "Layout 8.1",
+            "value": "8_1 style8"
+          },
+          {
+            "label": "Layout 9",
+            "value": "9"
+          }
+        ],
+        "default": ""
+      }
+    ]
+  }
+{% endschema %}

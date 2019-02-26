@@ -1,0 +1,115 @@
+<div class="section-about" style="{%-if section.settings.section_bg != blank -%}background-color:{{section.settings.section_bg}};{%-endif-%}
+                                  {%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                                  {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}">
+  <div class="container">
+    <div class="clearfix" style="{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+      <!-- Team -->
+      <div class="section-title text-center style7">
+        <span class="sub-title">{{ section.settings.text }}</span>
+        <h3>{{ section.settings.titlex }}</h3>
+      </div>
+      {% if section.blocks.size != 0-%}
+      <div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+        <div class="teams owl-carousel nav-center-center nav-style7" data-loop="{% if section.blocks.size > 3 %}true{% else %}false{% endif %}" data-nav="{% if section.blocks.size > 3 %}true{% else %}false{% endif %}" data-dots="false" data-margin="30" data-responsive='{"0":{"items":1},"600":{"items":2},"1000":{"items":3}}'>
+          {% for block in section.blocks-%}
+          {%- assign image_item = block.settings.image_avatar -%}
+          {% if image_item %}
+          <div class="team" {{ block.shopify_attributes }}>
+            <div class="avatar">
+              {{ image_item | img_url: '512x' | img_tag: image_item.alt }}
+            </div>
+            <div class="info">
+              <h3 class="name">{{ block.settings.name }}</h3>
+              <span class="position">{{ block.settings.position }}</span>
+            </div>
+          </div>
+          {% endif %}
+          {%- endfor -%}
+        </div>
+      </div>
+      {% endif -%}
+      <!-- ./Team -->
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Section team",
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Section team",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "== Content settings"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "80px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px",
+        "default": "60px-0"
+      },
+      {
+        "type": "text",
+        "id": "titlex",
+        "label": "Title",
+        "default": "MEET OUR TEAM"
+      },
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Text",
+        "default": "Our Awesome Team!"
+      },
+      {
+        "type": "color",
+        "id": "section_bg",
+        "label": "Background color",
+        "default": "#f9f9f9"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+             "type": "image_picker",
+             "id": "image_avatar",
+             "label": "Image avatar"
+          },
+          {
+             "type": "text",
+             "id": "name",
+             "label": "Name",
+             "default": "John Doe"
+          },
+          {
+             "type": "text",
+             "id": "position",
+             "label": "Position",
+             "default": "CEO/Founder Boutique"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

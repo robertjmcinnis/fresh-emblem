@@ -1,0 +1,115 @@
+<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+  <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+    <div class="dp-flex justify-content-center align-items-center">
+      <div class="block-newletter">
+        <div class="head">
+          <div class="section-title text-center">
+            <h3>{{section.settings.titlex}}</h3>
+            <span class="sub-title">{{section.settings.s_title}}</span>
+          </div>
+        </div>
+        <div class="form">
+          {%- if settings.newslatter_mailchimp_url != "" -%}
+            <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="newletter mailing-form" name="mc-embedded-subscribe-form" target="_blank">
+              <input type="email"
+                     name="contact[email]"
+                     id="contact_email{{section.id}}"
+                     class="email-text required-entry validate-email"
+                     value="{% if customer %}{{ customer.email }}{% endif %}"
+                     placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+              <input name="subscribe" id="subscribe{{section.id}}" type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button">
+            </form>
+          {%- else -%}
+            {%-form 'customer', class: 'newletter'-%}
+              {{ form.errors | default_errors }}
+              {%-if form.posted_successfully?-%}
+              <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+              {%-else-%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email"
+                     name="contact[email]"
+                     id="Email{{section.id}}"
+                     class="email-text required-entry validate-email"
+                     value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+                     placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+              <input type="submit" value="{{ 'general.newsletter_form.submit' | t }}" class="button">
+              {%-endif-%}
+            {%-endform-%}
+          {%- endif -%}
+          <div class="desc">{{section.settings.description|html}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Home newsletter 3",
+    "class": "index-section index-section--kt bt_newsleeter2",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Home newsletter 3",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+         "type": "text",
+         "id": "titlex",
+         "label": "Title",
+         "default": "NEWSLETTER"
+      },
+      {
+         "type": "text",
+         "id": "s_title",
+         "label": "Sub title",
+         "default": "Sign up for Our Newsletter & Promotions"
+      },
+      {
+         "type": "textarea",
+         "id": "description",
+         "label": "Description",
+         "default": "<span class=\"text-primary\">SALE UPTO <span class=\"big-text\">30%</span></span><span>On your next purchase!</span>"
+      }      
+    ],
+    "presets": [
+      {
+        "name": "Home newsletter 3",
+        "category": "Newsletter"
+      }
+    ]
+  }
+{% endschema %}

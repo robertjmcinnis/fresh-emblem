@@ -1,0 +1,959 @@
+<script type="text/javascript">
+var headerBanner = {%- if section.blocks.size > 0 -%}{ {%- for block in section.blocks -%}{{block.id|json}}: {"type": {{block.type|json}},"settings": {{block.settings|json}} }{% unless forloop.last %},{% endunless %}{%- endfor -%} }{%-else-%}null{%- endif -%};
+</script>
+<div class="default" data-section-id="{{ section.id }}" id="BannerPage-{{ section.id }}" data-section-type="banner-page-section" style="display: none;">
+  {% comment %}{%- assign hasPhotos = false -%}
+  {%- if section.blocks.size > 0 -%}
+  {%- for block in section.blocks -%}
+  {%-if template contains 'product'-%}
+    {%- if block.type == 'product_banner' and template contains 'product' -%}
+      {%-if block.settings.image_1
+          or block.settings.image_2
+          or block.settings.image_3
+      -%}
+      {%- assign image = true -%}
+      {%-endif-%}
+      {%- if image -%}
+      {%- assign products = '' -%}
+      {%- for i in (1..10) -%}
+      {%- assign product_ = 'by_product_' | append: i -%}
+      {%- if block.settings[product_] != blank -%}
+      {%- assign products = products | append: block.settings[product_] -%}
+      {%- endif -%}
+      {%- if forloop.last -%}
+        {%- if block.settings.by_product_11 != blank -%}
+          {%- assign products = products | append: ',' | append: block.settings.by_product_11 -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- assign products = products | append: ',' -%}
+      {%- endif -%}
+      {%- endfor -%}
+      {%- assign products = products| split: ',' -%}
+      {%- for productUse in products -%}
+      {%- if product.handle == productUse -%}
+      <div class="{% if block.settings.width_section %}container{% endif %}" {{ block.shopify_attributes }}>
+        <div class="shop-banner" style="margin-bottom:{{block.settings.margin_bt}}px">
+          {%- assign count__kt_product_banner = 0 -%}
+          {%- for i in (1..3) -%}
+          {%- assign image = 'image_' | append: i -%}
+          {%- if block.settings[image] -%}
+          {%- assign count__kt_product_banner = count__kt_product_banner | plus: 1 -%}
+          {%- endif -%}
+          {%- endfor -%}
+          {%-if block.settings.use_parallax -%}            
+            {%- for i in (1..3) -%}
+            {%- assign image = 'image_' | append: i -%}
+            {%- if block.settings[image] -%}
+              <div class="parallax-section page-banner bg-parallax" style="background-image: url('{{ block.settings[image] | img_url: 'master' }}')" data-parallax-speed="0.1">
+                <div class="parallax_page_content">
+                  <div class="container">
+                    <div class="banner-content text-center"> <span class="subtitle">{{block.settings.text_parallax|default:'Welcome to Boutique - Let’s shop with us !'}}</span>
+                      <h2 class="title">{{block.settings.title_parallax|default: shop.name}}</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="overlay"></div>
+              </div>
+            {%-break-%}
+            {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- if count__kt_product_banner > 1 -%}
+            <div class="owl-carousel nav-center-center nav-style7 carouselLoading" data-autoplay="true" data-loop="true" data-items="1" data-dots="false" data-nav="true" data-auto-height="true" data-animateout="fadeOut" data-animatein="fadeIn">
+              {%- endif -%}
+              {%- for i in (1..3) -%}
+              {%- assign image = 'image_' | append: i -%}
+              {%- if block.settings[image] -%}
+              <img id="Image-{{ block.id }}"
+                   class="grid-view-item__image lazyload"
+                   src="{{ block.settings[image] | img_url: '768x' }}"
+                   data-src="{{ block.settings[image] | img_url: 'master' }}"
+                   alt="{{ block.settings[image].alt | escape }}">
+              {%- assign hasPhotos = true -%}
+              {%- endif -%}
+              {%- endfor -%}
+            {%- if count__kt_product_banner > 1 -%}
+            </div>
+              {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endif -%}
+      {%- endfor -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}  
+  {%-if template contains 'collection'-%}
+    {%- if hasPhotos == false -%}
+      {%-if block.settings.image_1
+          or block.settings.image_2
+          or block.settings.image_3
+      -%}
+      {%- assign image = true -%}
+      {%-endif-%}
+      {%- if image -%}
+        {%- assign collections = '' -%}
+        {%- for i in (1..10) -%}
+        {%- assign collection_ = 'by_collections_' | append: i -%}
+        {%- if block.settings[collection_] != blank -%}
+        {%- assign collections = collections | append: block.settings[collection_] -%}
+        {%- endif -%}
+        {%- if forloop.last -%}
+          {%- if block.settings.by_collections_11 != blank -%}{%- assign collections = collections | append: ',' | append: block.settings.by_collections_11 -%}{%- endif -%}
+        {%- else -%}
+          {%- assign collections = collections | append: ',' -%}
+        {%- endif -%}
+        {%- endfor -%}
+        {%- assign collections = collections| split: ',' -%}
+        {% for collectionUse in collections %}
+          {%- if collection.handle == collectionUse or product.collections.first.handle == collectionUse -%}
+            <div class="{% if block.settings.width_section %}container{% endif %}" {{ block.shopify_attributes }}>
+            <div class="shop-banner" style="margin-bottom:{{block.settings.margin_bt}}px">
+              {%- assign count__kt_collection_banner = 0 -%}
+              {%- for i in (1..3) -%}
+              {%- assign image = 'image_' | append: i -%}
+              {%- if block.settings[image] -%}
+              {%- assign count__kt_collection_banner = count__kt_collection_banner | plus: 1 -%}
+              {%- endif -%}
+              {%- endfor -%}
+              {%-if block.settings.use_parallax -%}            
+                {%- for i in (1..3) -%}
+                {%- assign image = 'image_' | append: i -%}
+                {%- if block.settings[image] -%}
+                  <div class="parallax-section page-banner bg-parallax" style="background-image: url('{{ block.settings[image] | img_url: 'master' }}')" data-parallax-speed="0.1">
+                    <div class="parallax_page_content">
+                      <div class="container">
+                        <div class="banner-content text-center"> <span class="subtitle">{{block.settings.text_parallax|default:'Welcome to Boutique - Let’s shop with us !'}}</span>
+                          <h2 class="title">{{block.settings.title_parallax|default: shop.name}}</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="overlay"></div>
+                  </div>
+                {%-break-%}
+                {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- if count__kt_collection_banner > 1 -%}
+                <div class="owl-carousel nav-center-center nav-style7 carouselLoading" data-autoplay="true" data-loop="true" data-items="1" data-dots="false" data-nav="true" data-auto-height="true" data-animateout="fadeOut" data-animatein="fadeIn">
+                  {%- endif -%}
+                  {%- for i in (1..3) -%}
+                  {%- assign image = 'image_' | append: i -%}
+                  {%- if block.settings[image] -%}
+                  <img id="Image-{{ block.id }}"
+                       class="grid-view-item__image lazyload"
+                       src="{{ block.settings[image] | img_url: '768x' }}"
+                       data-src="{{ block.settings[image] | img_url: 'master' }}"
+                       alt="{{ block.settings[image].alt | escape }}">
+                  {%- endif -%}
+                  {%- endfor -%}
+                {%- if count__kt_collection_banner > 1 -%}
+                </div>
+                  {%- endif -%}
+              {%- endif -%}
+            </div>
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%-endif-%}
+  {%-if template contains 'blog' or template contains 'article'-%}
+    {% if block.type == 'article_banner' and template contains 'article' %}
+      {%-if block.settings.image_1
+          or block.settings.image_2
+          or block.settings.image_3
+      -%}
+      {%- assign image = true -%}
+      {%-endif-%}
+      {%- if image -%}
+      {%- assign articles = '' -%}
+      {%- for i in (1..10) -%}
+      {%- assign article_ = 'by_article_' | append: i -%}
+      {%- if block.settings[article_] != blank -%}
+        {%- assign articles = articles | append: block.settings[article_] -%}
+      {%- endif -%}
+      {%- if forloop.last -%}
+        {%- if block.settings.by_article_11 != blank -%}
+          {%- assign articles = articles | append: ',' | append: block.settings.by_article_11 -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- assign articles = articles | append: ',' -%}
+      {%- endif -%}
+      {%- endfor -%}
+      {%- assign articles = articles| split: ',' -%}
+      {%- for articleUse in articles -%}
+      {%- if article.handle == articleUse -%}
+      <div class="{% if block.settings.width_section %}container{% endif %}" {{ block.shopify_attributes }}>
+        <div class="shop-banner" style="margin-bottom:{{block.settings.margin_bt}}px">
+          {%- assign count__kt_article_banner = 0 -%}
+          {%- for i in (1..3) -%}
+          {%- assign image = 'image_' | append: i -%}
+          {%- if block.settings[image] -%}
+          {%- assign count__kt_article_banner = count__kt_article_banner | plus: 1 -%}
+          {%- endif -%}
+          {%- endfor -%}
+          {%-if block.settings.use_parallax -%}            
+            {%- for i in (1..3) -%}
+            {%- assign image = 'image_' | append: i -%}
+            {%- if block.settings[image] -%}
+              <div class="parallax-section page-banner bg-parallax" style="background-image: url('{{ block.settings[image] | img_url: 'master' }}')" data-parallax-speed="0.1">
+                <div class="parallax_page_content">
+                  <div class="container">
+                    <div class="banner-content text-center"> <span class="subtitle">{{block.settings.text_parallax|default:'Welcome to Boutique - Let’s shop with us !'}}</span>
+                      <h2 class="title">{{block.settings.title_parallax|default: shop.name}}</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="overlay"></div>
+              </div>
+            {%-break-%}
+            {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- if count__kt_article_banner > 1 -%}
+            <div class="owl-carousel nav-center-center nav-style7 carouselLoading" data-autoplay="true" data-loop="true" data-items="1" data-dots="false" data-nav="true" data-auto-height="true" data-animateout="fadeOut" data-animatein="fadeIn">
+              {%- endif -%}
+              {%- for i in (1..3) -%}
+              {%- assign image = 'image_' | append: i -%}
+              {%- if block.settings[image] -%}
+              <img id="Image-{{ block.id }}"
+                   class="grid-view-item__image lazyload"
+                   src="{{ block.settings[image] | img_url: '768x' }}"
+                   data-src="{{ block.settings[image] | img_url: 'master' }}"
+                   alt="{{ block.settings[image].alt | escape }}">
+              {%- assign hasPhotos = true -%}
+              {%- endif -%}
+              {%- endfor -%}
+            {%- if count__kt_article_banner > 1 -%}
+            </div>
+              {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endif -%}
+      {%- endfor -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if hasPhotos == false -%}
+      {%-if block.settings.image_1
+          or block.settings.image_2
+          or block.settings.image_3
+      -%}
+      {%- assign image = true -%}
+      {%-endif-%}
+      {%- if image -%}
+      {%- assign blogs = '' -%}
+      {%- for i in (1..10) -%}
+      {%- assign blog_ = 'by_blog_' | append: i -%}
+      {%- if block.settings[blog_] != blank -%}
+        {%- assign blogs = blogs | append: block.settings[blog_] -%}
+      {%- endif -%}
+      {%- if forloop.last -%}
+        {%- if block.settings.by_blog_11 != blank -%}
+          {%- assign blogs = blogs | append: ',' | append: block.settings.by_blog_11 -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- assign collections = collections | append: ',' -%}
+      {%- endif -%}
+      {%- endfor -%}
+      {%- assign blogs = blogs| split: ',' -%}
+      {%- for blogUse in blogs -%}
+      {%- if blog.handle == blogUse -%}
+      <div class="{% if block.settings.width_section %}container{% endif %}" {{ block.shopify_attributes }}>
+        <div class="shop-banner">
+          {%- assign count__kt_blog_banner = 0 -%}
+          {%- for i in (1..3) -%}
+          {%- assign image = 'image_' | append: i -%}
+          {%- if block.settings[image] -%}
+          {%- assign count__kt_blog_banner = count__kt_blog_banner | plus: 1 -%}
+          {%- endif -%}
+          {%- endfor -%}
+          {%-if block.settings.use_parallax -%}            
+            {%- for i in (1..3) -%}
+            {%- assign image = 'image_' | append: i -%}
+            {%- if block.settings[image] -%}
+              <div class="parallax-section page-banner bg-parallax" style="background-image: url('{{ block.settings[image] | img_url: 'master' }}')" data-parallax-speed="0.1">
+                <div class="parallax_page_content">
+                  <div class="container">
+                    <div class="banner-content text-center"> <span class="subtitle">{{block.settings.text_parallax|default:'Welcome to Boutique - Let’s shop with us !'}}</span>
+                      <h2 class="title">{{block.settings.title_parallax|default: shop.name}}</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="overlay"></div>
+              </div>
+            {%-break-%}
+            {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+          {%- if count__kt_blog_banner > 1 -%}
+          <div class="owl-carousel nav-center-center nav-style7 carouselLoading" data-autoplay="true" data-loop="true" data-items="1" data-dots="false" data-nav="true" data-auto-height="true" data-animateout="fadeOut" data-animatein="fadeIn">
+            {%- endif -%}
+            {%- for i in (1..3) -%}
+            {%- assign image = 'image_' | append: i -%}
+            {%- if block.settings[image] -%}
+            <img id="Image-{{ block.id }}"
+                 class="grid-view-item__image lazyload"
+                 src="{{ block.settings[image] | img_url: '768x' }}"
+                 data-src="{{ block.settings[image] | img_url: 'master' }}"
+                 alt="{{ block.settings[image].alt | escape }}">
+            {%- endif -%}
+            {%- endfor -%}
+          {%- if count__kt_blog_banner > 1 -%}
+          </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endif -%}
+      {%- endfor -%}
+      {%- endif -%}
+    {%-endif-%}
+  {%-endif-%}
+  {%-if template contains 'page' -%}
+      {% if block.type == 'page_banner' %}
+      {%-if block.settings.image_1
+          or block.settings.image_2
+          or block.settings.image_3
+      -%}
+      {%- assign image = true -%}
+      {%-endif-%}
+      {%- if image -%}
+      {%- assign pages = '' -%}
+      {%- for i in (1..10) -%}
+      {%- assign page_ = 'by_page_' | append: i -%}
+      {%- if block.settings[page_] != blank -%}
+        {%- assign pages = pages | append: block.settings[page_] -%}
+      {%- endif -%}
+      {%- if forloop.last -%}
+        {%- if block.settings.by_page_11 != blank -%}
+          {%- assign pages = pages | append: ',' | append: block.settings.by_page_11 -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- assign pages = pages | append: ',' -%}
+      {%- endif -%}
+      {%- endfor -%}
+      {%- assign pages = pages| split: ',' -%}
+      {%- for pageUse in pages -%}
+      {%- if page.handle == pageUse -%}
+      <div class="{% if block.settings.width_section %}container{% endif %}" {{ block.shopify_attributes }}>
+        <div class="shop-banner">
+          {%- assign count__kt_page_banner = 0 -%}
+          {%- for i in (1..3) -%}
+          {%- assign image = 'image_' | append: i -%}
+          {%- if block.settings[image] -%}
+          {%- assign count__kt_page_banner = count__kt_page_banner | plus: 1 -%}
+          {%- endif -%}
+          {%- endfor -%}
+          {%-if block.settings.use_parallax -%}            
+            {%- for i in (1..3) -%}
+            {%- assign image = 'image_' | append: i -%}
+            {%- if block.settings[image] -%}
+              <div class="parallax-section page-banner bg-parallax" style="background-image: url('{{ block.settings[image] | img_url: 'master' }}')" data-parallax-speed="0.1">
+                <div class="parallax_page_content">
+                  <div class="container">
+                    <div class="banner-content text-center"> <span class="subtitle">{{block.settings.text_parallax|default:'Welcome to Boutique - Let’s shop with us !'}}</span>
+                      <h2 class="title">{{block.settings.title_parallax|default: shop.name}}</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="overlay"></div>
+              </div>
+            {%-break-%}
+            {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- if count__kt_page_banner > 1 -%}
+            <div class="owl-carousel nav-center-center nav-style7 carouselLoading" data-autoplay="true" data-loop="true" data-items="1" data-dots="false" data-nav="true" data-auto-height="true" data-animateout="fadeOut" data-animatein="fadeIn">
+              {%- endif -%}
+              {%- for i in (1..3) -%}
+              {%- assign image = 'image_' | append: i -%}
+              {%- if block.settings[image] -%}
+              <img id="Image-{{ block.id }}"
+                   class="grid-view-item__image lazyload"
+                   src="{{ block.settings[image] | img_url: '768x' }}"
+                   data-src="{{ block.settings[image] | img_url: 'master' }}"
+                   alt="{{ block.settings[image].alt | escape }}">
+              {%- assign hasPhotos = true -%}
+              {%- endif -%}
+              {%- endfor -%}
+            {%- if count__kt_page_banner > 1 -%}
+            </div>
+              {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endif -%}
+      {%- endfor -%}
+      {%- endif -%}
+    {%-endif-%}
+  {%-endif-%}
+  {%- endfor -%}
+  {%- endif -%}{% endcomment %}
+</div>
+{% schema %}
+  {
+    "name": "Banner settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "title",
+        "default": "Banner settings",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection_banner",
+        "name": "Collection Banner",
+        "settings": [
+          {
+            "type":"checkbox",
+            "id": "width_section",
+            "label": "Max width section",
+            "default": true,
+            "info": "Max width = 1200px"
+          },
+          {
+            "type": "range",
+            "id": "margin_bt",
+            "min": 10,
+            "max": 90,
+            "step": 2,
+            "label": "Margin bottom",
+            "default": 30
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_parallax",
+            "label": "Use parallax section",
+            "info": "Image size suggestion: 1855 x 1385 pixels"
+          },
+          {
+            "type": "text",
+            "id": "title_parallax",
+            "label": "Title parallax section"
+          },
+          {
+            "type": "text",
+            "id": "text_parallax",
+            "label": "Text parallax section"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_1",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_2",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_3",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_4",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_5",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_6",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_7",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_8",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_9",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "collection",
+            "id": "by_collections_10",
+            "label": "The collection uses banner image"
+          },
+          {
+            "type": "textarea",
+            "id": "by_collections_11",
+            "label": "The list handle of collection uses banner image",
+            "info": "Ex: collection-1,collection-2,..."
+          }
+        ]
+      },
+      {
+        "type": "product_banner",
+        "name": "Product Banner",
+        "settings": [
+          {
+            "type":"checkbox",
+            "id": "width_section",
+            "label": "Max width section",
+            "default": true,
+            "info": "Max width = 1200px"
+          },
+          {
+            "type": "range",
+            "id": "margin_bt",
+            "min": 10,
+            "max": 90,
+            "step": 2,
+            "label": "Margin bottom",
+            "default": 30
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_parallax",
+            "label": "Use parallax section",
+            "info": "Image size suggestion: 1855 x 1385 pixels"
+          },
+          {
+            "type": "text",
+            "id": "title_parallax",
+            "label": "Title parallax section"
+          },
+          {
+            "type": "text",
+            "id": "text_parallax",
+            "label": "Text parallax section"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_1",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_2",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_3",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_4",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_5",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_6",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_7",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_8",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_9",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "product",
+            "id": "by_product_10",
+            "label": "The product uses banner image"
+          },
+          {
+            "type": "textarea",
+            "id": "by_product_11",
+            "label": "The list handle of product uses banner image",
+            "info": "Ex: product-1,product-2,..."
+          }
+        ]
+      },
+      {
+        "type": "blog_banner",
+        "name": "Blog Banner",
+        "settings": [
+          {
+            "type":"checkbox",
+            "id": "width_section",
+            "label": "Max width section",
+            "default": true,
+            "info": "Max width = 1200px"
+          },
+          {
+            "type": "range",
+            "id": "margin_bt",
+            "min": 10,
+            "max": 90,
+            "step": 2,
+            "label": "Margin bottom",
+            "default": 30
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_parallax",
+            "label": "Use parallax section",
+            "info": "Image size suggestion: 1855 x 1385 pixels"
+          },
+          {
+            "type": "text",
+            "id": "title_parallax",
+            "label": "Title parallax section"
+          },
+          {
+            "type": "text",
+            "id": "text_parallax",
+            "label": "Text parallax section"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_1",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_2",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_3",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_4",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_5",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_6",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_7",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_8",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_9",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "blog",
+            "id": "by_blog_10",
+            "label": "The blog uses banner image"
+          },
+          {
+            "type": "textarea",
+            "id": "by_blog_11",
+            "label": "The list handle of blog uses banner image",
+            "info": "Ex: blog-1,blog-2,..."
+          }
+        ]
+      },
+      {
+        "type": "article_banner",
+        "name": "Article Banner",
+        "settings": [
+          {
+            "type":"checkbox",
+            "id": "width_section",
+            "label": "Max width section",
+            "default": true,
+            "info": "Max width = 1200px"
+          },
+          {
+            "type": "range",
+            "id": "margin_bt",
+            "min": 10,
+            "max": 90,
+            "step": 2,
+            "label": "Margin bottom",
+            "default": 30
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_parallax",
+            "label": "Use parallax section",
+            "info": "Image size suggestion: 1855 x 1385 pixels"
+          },
+          {
+            "type": "text",
+            "id": "title_parallax",
+            "label": "Title parallax section"
+          },
+          {
+            "type": "text",
+            "id": "text_parallax",
+            "label": "Text parallax section"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_1",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_2",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_3",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_4",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_5",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_6",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_7",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_8",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_9",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_10",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "textarea",
+            "id": "by_article_11",
+            "label": "The list handle of article uses banner image",
+            "info": "Ex: article-1,article-2,..."
+          }
+        ]
+      },
+      {
+        "type": "page_banner",
+        "name": "Page Banner",
+        "settings": [
+          {
+            "type":"checkbox",
+            "id": "width_section",
+            "label": "Max width section",
+            "default": true,
+            "info": "Max width = 1200px"
+          },
+          {
+            "type": "range",
+            "id": "margin_bt",
+            "min": 10,
+            "max": 90,
+            "step": 2,
+            "label": "Margin bottom",
+            "default": 30
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "use_parallax",
+            "label": "Use parallax section",
+            "info": "Image size suggestion: 1855 x 1385 pixels"
+          },
+          {
+            "type": "text",
+            "id": "title_parallax",
+            "label": "Title parallax section"
+          },
+          {
+            "type": "text",
+            "id": "text_parallax",
+            "label": "Text parallax section"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_1",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_2",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_3",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_4",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_5",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "article",
+            "id": "by_article_6",
+            "label": "The article uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_7",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_8",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_9",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "page",
+            "id": "by_page_10",
+            "label": "The page uses banner image"
+          },
+          {
+            "type": "textarea",
+            "id": "by_page_11",
+            "label": "The list handle of page uses banner image",
+            "info": "Ex: page-1,page-2,..."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

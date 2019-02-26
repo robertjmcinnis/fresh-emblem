@@ -1,0 +1,2695 @@
+{% if section.blocks.size > 0-%}
+<div data-section-id="{{ section.id }}" id="BannerGroup-{{ section.id }}" data-section-type="bt_banner_group-section">
+  <div style="{% if section.settings.section_margin_top != blank %}margin-top: {{section.settings.section_margin_top}};{% endif %}
+              {% if section.settings.section_margin_bottom != blank %}margin-bottom: {{section.settings.section_margin_bottom}};{% endif %}
+              {% if section.settings.section_padding != blank %}padding: {{section.settings.section_padding | replace : '-',' '}};{% endif %}float:left;width:100%">
+    {%-for block in section.blocks-%}
+      {%-if block.type == '1' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <!-- Banner -->
+          <div class="row banner__{{block.id}}">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="kt_single_banner kt_img1 layout1 default kt-banner margin-top-30 lazyload" data-height="680" data-reponsive='{"320":360,"480":360,"768":680,"992":680,"1024":680}'
+                  data-bgset="{% if block.settings.image_1-%}{%- include 'bgset', image: block.settings.image_1 -%}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/6.jpg{%-endif %}"
+                  data-sizes="auto"
+                  data-parent-fit="cover"
+                  style="background-image: url('{% if block.settings.image_1-%}{{block.settings.image_1|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/6_250x.jpg{%-endif %}')">
+                <div class="banner-effect1 shortcode-content bg-image">
+                  <div class="content banner-content">
+                    {% if block.settings.titlex != blank %}<h4 class="title">{{block.settings.titlex}}</h4>{% endif %}
+                    {% if block.settings.name_btn != blank %}<a class="link" target="_blank" href="{{block.settings.image_link_1}}">{{block.settings.name_btn}}</a>{% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="kt_single_banner kt_img2 default kt-banner margin-top-30 lazyload" data-height="368" data-reponsive='{"320":200,"480":250,"768":368,"992":368,"1024":368}'
+                data-bgset="{% if block.settings.image_2-%}{%- include 'bgset', image: block.settings.image_2 -%}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/7.jpg{%-endif %}"
+                data-sizes="auto"
+                data-parent-fit="cover"
+                style="background-image: url('{% if block.settings.image_2-%}{{block.settings.image_2|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/7_250x.jpg{%-endif %}')">
+                <div class="banner-effect1 shortcode-content bg-image">
+                  <div class="banner-content">
+                    {% if block.settings.titlexx != blank %}<h4 class="title">{{block.settings.titlexx}}</h4>{% endif %}
+                    {% if block.settings.name_btn != blank %}<a class="link" href="{{block.settings.image_link_2}}">{{block.settings.name_btnx}}</a>{% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="kt_featured_box default margin-top-30">
+                    <div class="shortcode-content" style="background-color: {{block.settings.color_bg1}};">
+                      {% if block.settings.icon != blank %}{{block.settings.icon}}{% endif %}
+                      <div class="inner-content">
+                        {% if block.settings.titlexxx != blank %}<div class="title"><a href="{{block.settings.image_link_3}}">{{block.settings.titlexxx}}</a></div>{% endif %}
+                        {% if block.settings.text_content != blank %}<div class="sub_title">{{block.settings.text_content}}</div>{% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="kt_featured_box default margin-top-30">
+                    <div class="shortcode-content" style="background-color: {{block.settings.color_bg2}};">
+                      {% if block.settings.iconx != blank %}{{block.settings.iconx}}{% endif %}
+                      <div class="inner-content">
+                        {% if block.settings.titlexxxx != blank %}<div class="title"><a href="{{block.settings.image_link_4}}">{{block.settings.titlexxxx}}</a></div>{% endif %}
+                        {% if block.settings.text_contentx != blank %}<div class="sub_title">{{block.settings.text_contentx}}</div>{% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ./Banner -->
+          <style type="text/css">
+            @media (min-width: 320px) {
+              .banner__{{block.id}} .kt_img1 .bg-image{min-height: 360px;}
+              .banner__{{block.id}} .kt_img2 .bg-image{min-height: 200px;}
+            }
+            @media (min-width: 480px) and (max-width: 767px) {
+              .banner__{{block.id}} .kt_img1 .bg-image{min-height: 360px;}
+              .banner__{{block.id}} .kt_img2 .bg-image{min-height: 250px;}
+            }
+            @media (min-width: 768px){
+              .banner__{{block.id}} .kt_img1 .bg-image{min-height: 680px;}
+              .banner__{{block.id}} .kt_img2 .bg-image{min-height: 368px;}
+            }
+            .banner__{{block.id}} .kt_single_banner .banner-content h4.title{
+              color: {{block.settings.color_title|default: '#fff'}};
+            }
+            .banner__{{block.id}} .kt_single_banner .banner-content a.link{
+              color: {{block.settings.color_text|default: '#fff'}};
+              background-color: {{block.settings.color_bg_text|default: '#000'}};
+              {% if block.settings.color_bg_text!= 'rgba(0,0,0,0)' %}
+              padding: 7px 15px;
+              text-decoration: none;
+              {% endif %}
+            }
+          </style>
+        </div>
+      {%-elsif block.type == '2' and block.settings.turnoff == false-%}
+        <!-- Banner -->
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="banner__{{block.id}}">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="kt_single_banner layout3 margin-bottom-30">
+                  <div class="shortcode-content">
+                    <div class="banner-image banner-effect4">
+                      {% if block.settings.image_1-%}{{block.settings.image_1|img_url:'570x', format: 'pjpg'|img_tag}}{%-else %}
+                        <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/11.jpg" alt="">{%-endif-%}
+                    </div>
+                    <div class="banner-content">
+                      {% if block.settings.titlex != blank %}<h4 class="title">{{block.settings.titlex}}</h4>{% endif %}
+                      {% if block.settings.name_btn != blank %}<a class="link" target="_blank" href="{{block.settings.image_link_1}}">{{block.settings.name_btn}}</a>{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="kt_single_banner layout3 margin-bottom-30">
+                  <div class="shortcode-content">
+                    <div class="banner-image banner-effect4">
+                      {% if block.settings.image_2-%}{{block.settings.image_2|img_url:'570x', format: 'pjpg'|img_tag}}{%-else %}
+                        <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/11.jpg" alt="">{%-endif-%}
+                    </div>
+                    <div class="banner-content">
+                      {% if block.settings.titlexx != blank %}<h4 class="title">{{block.settings.titlexx}}</h4>{% endif %}
+                      {% if block.settings.name_btnx != blank %}<a class="link" target="_blank" href="{{block.settings.image_link_2}}">{{block.settings.name_btnx}}</a>{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="kt_single_banner layout3 margin-bottom-30">
+                  <div class="shortcode-content">
+                    <div class="banner-image banner-effect4">
+                      {% if block.settings.image_3-%}{{block.settings.image_3|img_url:'570x', format: 'pjpg'|img_tag}}{%-else %}
+                        <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/11.jpg" alt="">{%-endif-%}
+                    </div>
+                    <div class="banner-content">
+                      {% if block.settings.titlexxx != blank %}<h4 class="title">{{block.settings.titlexxx}}</h4>{% endif %}
+                      {% if block.settings.name_btnxx != blank %}<a class="link" target="_blank" href="{{block.settings.image_link_3}}">{{block.settings.name_btnxx}}</a>{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="kt_single_banner layout3 margin-bottom-30">
+                  <div class="shortcode-content">
+                    <div class="banner-image banner-effect4">
+                      {% if block.settings.image_4-%}{{block.settings.image_4|img_url:'570x', format: 'pjpg'|img_tag}}{%-else %}
+                        <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/11.jpg" alt="">{%-endif-%}
+                    </div>
+                    <div class="banner-content">
+                      {% if block.settings.titlexxxx != blank %}<h4 class="title">{{block.settings.titlexxxx}}</h4>{% endif %}
+                      {% if block.settings.name_btnxxx != blank %}<a class="link" target="_blank" href="{{block.settings.image_link_4}}">{{block.settings.name_btnxxx}}</a>{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <style type="text/css">
+            .banner__{{block.id}} .kt_single_banner .banner-content h4.title{
+              color: {{block.settings.color_title|default: '#fff'}};
+            }
+            .banner__{{block.id}} .kt_single_banner .banner-content a.link{
+              color: {{block.settings.color_text|default: '#fff'}};
+              background-color: {{block.settings.color_bg_text|default: '#000'}};
+              {%- if block.settings.color_bg_text!= 'rgba(0,0,0,0)' %}
+              padding: 7px 15px;
+              text-decoration: none;
+              {% endif -%}
+            }
+            {%- if block.settings.align_content %}
+            .banner__{{block.id}} .kt_single_banner .banner-content{
+              text-align: left;
+            }
+            {% endif -%}
+          </style>
+        </div>
+        <!-- ./Banner -->
+      {%-elsif block.type == '3' and block.settings.turnoff == false-%}
+        <!-- Banner -->
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="section-banner banner__{{block.id}}">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="kt_single_banner layout2 margin-botom-70 padding-top-110">
+                  <div class="shortcode-content ">
+                    <div class="banner-image banner-effect6">
+                      {% if block.settings.image_1-%}{{block.settings.image_1|img_url:'530x', format: 'pjpg'|img_tag}}{%-else %}
+                      <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/9.jpg" alt="">{%-endif-%}
+                    </div>
+                    <div class="banner-content">
+                      {% if block.settings.titlex != blank %}<h4 class="title">{{block.settings.titlex}}</h4>{% endif %}
+                      {% if block.settings.name_btn != blank %}<a class="link" target="_blank" href="{{block.settings.image_link_1}}">{{block.settings.name_btn}}</a>{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="kt_single_banner layout2 margin-bottom-75">
+                  <div class="shortcode-content ">
+                    <div class="banner-image banner-effect6">
+                      {% if block.settings.image_2-%}{{block.settings.image_2|img_url:'559x', format: 'pjpg'|img_tag}}{%-else %}
+                      <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/10.jpg" alt="">{%-endif-%}            
+                    </div>
+                    <div class="banner-content">
+                      {% if block.settings.titlexx != blank %}<h4 class="title">{{block.settings.titlexx}}</h4>{% endif %}
+                      {% if block.settings.name_btnx != blank %}<a class="link" target="_blank" href="{{block.settings.image_link_2}}">{{block.settings.name_btnx}}</a>{% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style type="text/css">
+          .banner__{{block.id}} .kt_single_banner .banner-content h4.title{
+            color: {{block.settings.color_title|default: '#fff'}};
+          }
+          .banner__{{block.id}} .kt_single_banner .banner-content a.link{
+            color: {{block.settings.color_text|default: '#fff'}};
+            background-color: {{block.settings.color_bg_text|default: '#000'}};
+            {% if block.settings.color_bg_text!= 'rgba(0,0,0,0)' %}
+            padding: 7px 15px;
+            text-decoration: none;
+            {% endif %}
+          }
+        </style>
+        <!-- ./Banner -->
+      {%-elsif block.type == '4' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <!-- Banner -->
+          <div class="row margin-0 banner__{{block.id}}">
+          {% assign count = 0 %}
+          {% for i in (1..6) %}
+            {% assign image = 'image_' | append: i %}
+            {% assign image_link = 'image_link_' | append: i %}
+            {% assign title = 'title' | append: i %}
+            {% assign name_btn = 'name_btn' | append: i %}
+            {% if count == 0 %}
+            <div class="col-lg-4 col-md-12 col-sm-12 padding-0">
+              <div class="row margin-0">
+            {% endif %}
+                <div class="col-md-6 col-lg-12 col-sm-6 padding-0">
+                  <div class="kt_single_banner layout3 wpb_start_animation">
+                    <div class="shortcode-content kt7e2f3e31-57a0078129f8f">
+                      <div class="banner-image banner-effect3">
+                         {% if block.settings[image]-%}{{block.settings[image]|img_url:'640x', format: 'pjpg'|img_tag}}{%-else %}
+                          <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/24.jpg" alt="">{%-endif-%}
+                      </div>
+                      <div class="banner-content">
+                        <h4 class="title">{{block.settings[title]}}</h4>
+                        <a class="link" href="{{block.settings[image_link]}}">{{block.settings[name_btn]}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% if count == 1 or forloop.last %}{% assign count = 0 %}
+              </div>
+            </div>
+            {% else %}{% assign count = count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+          <style type="text/css">
+            .banner__{{block.id}} .kt_single_banner .banner-content h4.title{
+              color: {{block.settings.color_title|default: '#fff'}};
+            }
+            .banner__{{block.id}} .kt_single_banner .banner-content a.link{
+              color: {{block.settings.color_text|default: '#fff'}};
+              background-color: {{block.settings.color_bg_text|default: '#000'}};
+              {% if block.settings.color_bg_text!= 'rgba(0,0,0,0)' %}
+              padding: 7px 15px;
+              text-decoration: none;
+              {% endif %}
+            }
+            {%- if block.settings.align_content %}
+            .banner__{{block.id}} .kt_single_banner .banner-content{
+              text-align: left;
+            }
+            {% endif -%}
+          </style>
+          </div>
+          <!-- ./Banner -->
+        </div>
+      {%-elsif block.type == '5' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="row banner__{{block.id}}">
+          {% assign count = 1 %}
+          {% for i in (1..5) %}
+            {% assign image = 'image_' | append: i %}
+            {% assign image_link = 'image_link_' | append: i %}
+            {% assign title = 'title' | append: i %}
+            {% assign name_btn = 'name_btn' | append: i %}
+            {% if count == 3 %}
+              <div class="col-sm-4">
+                {% if block.settings[title] != blank %}
+                <div class="kt_single_banner kt_img1 layout7 kt-banner margin-bottom-30 lazyload" data-height="580" data-reponsive='{"320":300,"480":350,"768":470,"1024":580}'
+                    data-bgset="{% if block.settings[image]-%}{%- include 'bgset', image: block.settings[image] -%}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/33_997b685b-1801-4a41-aac9-6f3a71662ec1.jpg{%-endif %}"
+                    data-sizes="auto"
+                    data-parent-fit="cover"
+                    style="background-image: url('{% if block.settings[image]-%}{{block.settings[image]|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/33_997b685b-1801-4a41-aac9-6f3a71662ec1_250x.jpg{%-endif %}')">
+                  <div class="shortcode-content banner-effect5 bg-image" style="min-height: 580px">
+                    <div class="banner-content">
+                      <h4 class="title">{{block.settings[title]}}</h4>
+                        <a class="link" href="{{block.settings[image_link]}}">{{block.settings[name_btn]}}</a>
+                    </div>
+                  </div>
+                </div>
+                {%-else-%}
+                <a class="banner-opacity margin-bottom-30" href="{{block.settings[image_link]}}">
+                  <img src="{% if block.settings[image]-%}{{block.settings[image]|img_url:'370x', format: 'pjpg'}}{%-else %}https://cdn.shopify.com/s/files/1/1553/6143/files/33_997b685b-1801-4a41-aac9-6f3a71662ec1.jpg{%-endif-%}" alt="">
+                </a>
+                {%endif%}
+              </div>
+            {% else %}
+              {% if count == 1 or count == 4 %}
+              <div class="col-sm-4">{% endif %}
+                {% if block.settings[title] != blank %}
+                <div class="kt_single_banner kt_img{{count}} layout6 margin-bottom-30 kt-banner lazyload" data-height="276" data-reponsive='{"320":220,"480":220,"768":220,"1024":276}'
+                    data-bgset="{% if block.settings[image]-%}{%- include 'bgset', image: block.settings[image] -%}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/31_38b503c0-b406-4d9c-abb2-3390669ced16.jpg{%-endif %}"
+                    data-sizes="auto"
+                    data-parent-fit="cover"
+                    style="background-image: url('{% if block.settings[image]-%}{{block.settings[image]|img_url:'250x'}}{%-else %}//cdn.shopify.com/s/files/1/1553/6143/files/31_38b503c0-b406-4d9c-abb2-3390669ced16_250x.jpg{%-endif %}')">
+                  <div class="shortcode-content banner-effect5 bg-image" style="min-height: 276px">
+                    <div class="banner-content">
+                      <h4 class="title">{{block.settings[title]}}</h4>
+                        <a class="link" href="{{block.settings[image_link]}}">{{block.settings[name_btn]}}</a>
+                    </div>
+                  </div>
+                </div>
+                {%-else-%}
+                <a class="banner-opacity margin-bottom-30" href="{{block.settings[image_link]}}">
+                  <img src="{% if block.settings[image]-%}{{block.settings[image]|img_url:'370x', format: 'pjpg'}}{%-else %}https://cdn.shopify.com/s/files/1/1553/6143/files/31_38b503c0-b406-4d9c-abb2-3390669ced16.jpg{%-endif-%}" alt="">
+                </a>
+                {%endif%}
+              {% if count == 2 or count == 5 %}</div>{% endif %}
+            {% endif %}{% assign count = count | plus: 1 %}
+          {% endfor %}
+          </div>
+          <style type="text/css">
+            @media (min-width: 320px) {
+              .banner__{{block.id}} .kt_img1 .bg-image{min-height: 300px;}
+              .banner__{{block.id}} .kt_img2 .bg-image{min-height: 220px;}
+            }
+            @media (min-width: 480px) and (max-width: 767px) {
+              .banner__{{block.id}} .kt_img1 .bg-image{min-height: 350px;}
+            }
+            @media (min-width: 768px) and (max-width: 1023px){
+              .banner__{{block.id}} .kt_img1 .bg-image{min-height: 470px;}
+            }
+            @media (min-width: 1024px){
+              .banner__{{block.id}} .kt_img1 .bg-image{min-height: 580px;}
+              .banner__{{block.id}} .kt_img2 .bg-image{min-height: 276px;}
+            }
+            .banner__{{block.id}} .kt_single_banner .banner-content h4.title{
+              color: {{block.settings.color_title|default: '#fff'}};
+            }
+            .banner__{{block.id}} .kt_single_banner .banner-content a.link{
+              color: {{block.settings.color_text|default: '#fff'}};
+              background-color: {{block.settings.color_bg_text|default: '#000'}};
+              {%- if block.settings.color_bg_text!= 'rgba(0,0,0,0)' %}
+              padding: 7px 25px 7px 10px;
+              text-decoration: none;
+              {% endif -%}
+            }
+          </style>
+        </div>
+      {%-elsif block.type == '6' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="row banner__{{block.id}}">
+          {% for i in (1..3) %}
+            {% assign image = 'image_' | append: i %}
+            {% assign image_link = 'image_link_' | append: i %}
+            {% assign title = 'title' | append: i %}
+            {% assign text = 'text' | append: i %}
+            <div class="col-sm-4">
+              <div class="kt_single_banner  layout9 margin-top-50">
+                <div class="shortcode-content">
+                  <div class="banner-image">
+                    <a href="{{block.settings[image_link]}}">
+                      {% if block.settings[image]-%}{{block.settings[image]|img_url:'357x357', format: 'pjpg'|img_tag}}
+                      {%-else %}
+                      <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/42.jpg" alt="">{%-endif-%}
+                    </a>
+                  </div>
+                  <div class="banner-content">
+                    <h3 class="title">{{block.settings[title]}}</h3>
+                    <div class="subtitle">{{block.settings[text]}}</div>
+                    {% if block.settings[image_link] != blank %}<a class="link" href="{{block.settings[image_link]}}"></a>{% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%-endfor-%}
+          </div>
+          <style type="text/css">
+            .banner__{{block.id}} .kt_single_banner .banner-content h4.title{
+              color: {{block.settings.color_title|default: '#fff'}};
+            }
+            .banner__{{block.id}} .kt_single_banner .banner-content a.link{
+              color: {{block.settings.color_text|default: '#fff'}};
+              background-color: {{block.settings.color_bg_text|default: '#000'}};
+              {%- if block.settings.color_bg_text!= 'rgba(0,0,0,0)' %}
+              padding: 7px 15px;
+              text-decoration: none;
+              {% endif -%}
+            }
+            {%- if block.settings.align_content %}
+            .banner__{{block.id}} .kt_single_banner .banner-content{
+              text-align: left;
+            }
+            {% endif -%}
+          </style>
+        </div>
+      {%-elsif block.type == '7' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="banner__{{block.id}}">
+            <div class="group-banner">
+              <div class="row margin-0">
+                <div class="col-sm-12 col-md-6 padding-0 margin-top-30">
+                  <a class="banner-opacity" href="{{block.settings.image_link_1}}">
+                    {% if block.settings.image_1-%}
+                    {{block.settings.image_1|img_url:'600x', format: 'pjpg'|img_tag: block.settings.image_1.alt }}
+                    {%-else %}
+                    <img src="//cdn.shopify.com/s/files/1/2336/5331/files/b_place5.jpg" alt="">
+                    {%-endif-%}
+                  </a>
+                </div>
+                <div class="col-sm-12 col-md-6 padding-0">
+                  <div class="row margin-0">
+                    <div class="col-sm-6 padding-0 margin-top-30">
+                      <a class="banner-opacity" href="{{block.settings.image_link_2}}">
+                        {% if block.settings.image_2-%}
+                        {{block.settings.image_2|img_url:'480x', format: 'pjpg'|img_tag: block.settings.image_2.alt }}
+                        {%-else %}
+                        <img src="//cdn.shopify.com/s/files/1/2336/5331/files/b_place6.jpg" alt="">
+                        {%-endif-%}
+                      </a>
+                    </div>
+                    <div class="col-sm-6 padding-0 margin-top-30">
+                      <a class="banner-opacity" href="{{block.settings.image_link_3}}">
+                        {% if block.settings.image_3-%}
+                        {{block.settings.image_3|img_url:'480x', format: 'pjpg'|img_tag: block.settings.image_3.alt }}
+                        {%-else %}
+                        <img src="//cdn.shopify.com/s/files/1/2336/5331/files/b_place7.jpg" alt="">
+                        {%-endif-%}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%-elsif block.type == '8' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="banner__{{block.id}}">
+            <div class="group-banner">
+              <div class="row">
+                <div class="col-sm-4 margin-top-30">
+                  <a class="banner-opacity" href="{{block.settings.image_link_1}}">
+                    {% if block.settings.image_1-%}
+                    {{block.settings.image_1|img_url:'480x', format: 'pjpg'|img_tag: block.settings.image_1.alt }}
+                    {%-else %}
+                    <img src="//cdn.shopify.com/s/files/1/2336/5331/files/b-place8.jpg" alt="">
+                    {%-endif-%}
+                  </a>
+                </div>
+                <div class="col-sm-4 margin-top-30">
+                  <a class="banner-opacity" href="{{block.settings.image_link_2}}">
+                    {% if block.settings.image_2-%}
+                    {{block.settings.image_2|img_url:'480x', format: 'pjpg'|img_tag: block.settings.image_2.alt }}
+                    {%-else %}
+                    <img src="//cdn.shopify.com/s/files/1/2336/5331/files/b-place8.jpg" alt="">
+                    {%-endif-%}
+                  </a>
+                </div>
+                <div class="col-sm-4 margin-top-30">
+                  <a class="banner-opacity" href="{{block.settings.image_link_3}}">
+                    {% if block.settings.image_3-%}
+                    {{block.settings.image_3|img_url:'480x', format: 'pjpg'|img_tag: block.settings.image_3.alt }}
+                    {%-else %}
+                    <img src="//cdn.shopify.com/s/files/1/2336/5331/files/b-place8.jpg" alt="">
+                    {%-endif-%}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%-elsif block.type == '9' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="banner__{{block.id}}">
+
+          </div>
+        </div>
+      {%-elsif block.type == '10' and block.settings.turnoff == false-%}
+        <div class="owl-carousel nav-style4 nav-center-center " data-nav="true" data-dots="false" data-loop="true" data-autoplay="false" data-margin="0" data-responsive='{"0":{"items":1},"600":{"items":2},"1000":{"items":4}}'>
+          {% for i in (1..6) %}
+            {% assign image = 'image_' | append: i %}
+            {% assign image_link = 'image_link_' | append: i %}
+            {% assign text = 'text_' | append: i %}
+            {% assign name_btn = 'name_btn_' | append: i %}
+            {% if block.settings[image] != blank %}
+            <div class="banner-text style4">
+              <div class="image">
+                <a href="{{block.settings[image_link]}}">
+                {% if block.settings[image]-%}{{block.settings[image]|img_url:'530x', format: 'pjpg'|img_tag}}{%-else %}
+                <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/11-1_7678ccde-f1d3-4b8b-aa46-cb72ece6ee0a.png?2701408454371084438" alt="">{%-endif-%}
+                </a>
+              </div>  
+              <div class="content-text">
+                {% if block.settings[text]-%}{{block.settings[text]}}{%-endif-%}
+                <a class="shop-now" href="{{block.settings[image_link]}}">{{block.settings[name_btn]}}</a>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {%-elsif block.type == '11' and block.settings.turnoff == false-%}
+        <div class="owl-carousel nav-style4 nav-center-center " data-nav="true" data-dots="false" data-loop="true" data-autoplay="false" data-margin="0" data-responsive='{"0":{"items":1},"600":{"items":2},"1000":{"items":4}}'>
+          {% for i in (1..6) %}
+            {% assign image = 'image_' | append: i %}
+            {% assign icon = 'icon_' | append: i %}
+            {% assign image_link = 'image_link_' | append: i %}
+            {% assign text = 'text_' | append: i %}
+            {% assign name_btn = 'name_btn_' | append: i %}
+            {% if block.settings[image] != blank %}
+            <div class="{% cycle 'banner-text style3','banner-border primary' %}">
+              <div class="image">
+                <a href="{{block.settings[image_link]}}">
+                {% if block.settings[image]-%}{{block.settings[image]|img_url:'530x', format: 'pjpg'|img_tag}}{%-else %}
+                <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/11-1_7678ccde-f1d3-4b8b-aa46-cb72ece6ee0a.png?2701408454371084438" alt="">{%-endif-%}
+                </a>
+              </div>  
+              <div class="content-text{% cycle '',' hidden' %}">
+                <div class="inner">
+                  {% if block.settings[icon]-%}{{block.settings[icon]|img_url:'200x'|img_tag}}{%-else %}
+                  <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/29.png?6475525273100008075" alt="">{%-endif-%}
+                  {% if block.settings[text]-%}{{block.settings[text]}}{%-endif-%}
+                  <a href="{{block.settings[image_link]}}" class="box-link">{{block.settings[name_btn]}}</a>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {%-elsif block.type == '12' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="row">
+            <div class="col-sm-9">
+              <div class="butique-banner">
+                <div class="image">
+                  {% if block.settings.banner_description_image-%}                    
+                  <picture>
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 1920px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 768px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '480x' %}">
+                    <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '480x' %}" style="max-width: {{ 474 | times: block.settings.banner_description_image.aspect_ratio }}px;" alt="{{block.settings.banner_description_image.alt}}">
+                  </picture>
+                  {%-else %}
+                  <picture>
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/29_322x.jpg?14931048610077463760" media="(min-width: 1920px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/29_322x.jpg?14931048610077463760" media="(min-width: 768px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/29_480x.jpg?14931048610077463760">
+                    <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/29_100x.jpg?14931048610077463760" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/29.jpg?14931048610077463760" style="max-width: 322px;" alt="{{shop.name}}">
+                  </picture>
+                  {%-endif-%}
+                </div>
+                <div class="banner-inner">
+                  <div class="top">
+                    <span class="status">{{block.settings.banner_description_status}}</span>
+                    <div class="head">
+                      <h2 class="title">{{block.settings.banner_description_title}}</h2>
+                      <h3 class="subtitle">{{block.settings.banner_description_stitle}}</h3>
+                    </div>
+                  </div>
+                  <div class="bottom">
+                    <div class="desc">
+                      <p>{{block.settings.banner_description_description}}</p>
+                    </div>
+                    <a class="block-link" href="{{block.settings.banner_description_link}}">{{block.settings.banner_description_link_title}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="butique-banner style2">
+                <div class="image">                    
+                  {% if block.settings.banner_description_image_2-%}               
+                  <picture>
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 1920px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 768px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '322x' %}">
+                    <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '480x' %}" style="max-width: {{ 270 | times: block.settings.banner_description_image_2.aspect_ratio }}px;" alt="{{block.settings.banner_description_image_2.alt}}">
+                  </picture>
+                  {%-else %}
+                  <picture>
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/30_270x.jpg?14931048610077463760" media="(min-width: 1920px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/30_270x.jpg?14931048610077463760" media="(min-width: 768px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/30_480x.jpg?14931048610077463760">
+                    <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/30_100x.jpg?14931048610077463760" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/30.jpg?14931048610077463760" style="max-width: 270px;" alt="{{shop.name}}">
+                  </picture>
+                  {%-endif-%}
+                </div>
+                <div class="banner-inner">
+                  <div class="top">
+                    <div class="head">
+                      <h2 class="title"><a href="{{block.settings.banner_description_link_2}}">{{block.settings.banner_description_title_2}}</a></h2>
+                      <h3 class="subtitle">{{block.settings.banner_description_stitle_2}}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%-elsif block.type == '13' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="butique-banner style2 left">
+                <div class="image">                    
+                  {% if block.settings.banner_description_image_2-%}               
+                  <picture>
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 1920px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 768px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '322x' %}">
+                    <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '480x' %}" style="max-width: {{ 270 | times: block.settings.banner_description_image_2.aspect_ratio }}px;" alt="{{block.settings.banner_description_image_2.alt}}">
+                  </picture>                    
+                  {%-else %}
+                  <picture>
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/31_270x.jpg?14931048610077463760" media="(min-width: 1920px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/31_270x.jpg?14931048610077463760" media="(min-width: 768px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/31_480x.jpg?14931048610077463760">
+                    <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/31_100x.jpg?14931048610077463760" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/31.jpg?14931048610077463760" style="max-width: 270px;" alt="{{shop.name}}">
+                  </picture>
+                  {%-endif-%}
+                </div>
+                <div class="banner-inner">
+                  <div class="top">
+                    <div class="head">
+                      <h2 class="title"><a href="{{block.settings.banner_description_link_2}}">{{block.settings.banner_description_title_2}}</a></h2>
+                      <h3 class="subtitle">{{block.settings.banner_description_stitle_2}}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <div class="butique-banner left">
+                <div class="image">
+                  {% if block.settings.banner_description_image-%}                    
+                  <picture>
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 1920px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 768px)">
+                    <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '480x' %}">
+                    <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '480x' %}" style="max-width: {{ 474 | times: block.settings.banner_description_image.aspect_ratio }}px;" alt="{{block.settings.banner_description_image.alt}}">
+                  </picture>
+                  {%-else %}
+                  <picture>
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/32_322x.jpg?14931048610077463760" media="(min-width: 1920px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/32_322x.jpg?14931048610077463760" media="(min-width: 768px)">
+                    <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/32_480x.jpg?14931048610077463760">
+                    <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/32_100x.jpg?14931048610077463760" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/32.jpg?14931048610077463760" style="max-width: 322px;" alt="{{shop.name}}">
+                  </picture>
+                  {%-endif-%}
+                </div>
+                <div class="banner-inner">
+                  <div class="top">
+                    <span class="status">{{block.settings.banner_description_status}}</span>
+                    <div class="head">
+                      <h2 class="title">{{block.settings.banner_description_title}}</h2>
+                      <h3 class="subtitle">{{block.settings.banner_description_stitle}}</h3>
+                    </div>
+                  </div>
+                  <div class="bottom">
+                    <div class="desc">
+                      <p>{{block.settings.banner_description_description}}</p>
+                    </div>
+                    <a class="block-link" href="{{block.settings.banner_description_link}}">{{block.settings.banner_description_link_title}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%-elsif block.type == '14' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="row group-banner-text">
+            <div class="col-sm-4 item">
+              <div class="block-banner-text style2">
+                <div class="image">
+                  <a href="{{block.settings.banner_1_link}}">
+                    {% if block.settings.banner_1_img-%}               
+                    <picture>
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '270x' %}" media="(min-width: 768px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '322x' %}">
+                      <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
+                    </picture>                    
+                    {%-else %}
+                    <picture>
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/48_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/48_270x.jpg?5932670546860663904" media="(min-width: 768px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/48_480x.jpg?5932670546860663904">
+                      <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/48_100x.jpg?5932670546860663904" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/48.jpg?5932670546860663904" alt="{{shop.name}}">
+                    </picture>
+                    {%-endif-%}
+                  </a>
+                </div>
+                <div class="banner-content">
+                  <div class="inner">
+                    <h3 class="title">{{block.settings.banner_1_title}}</h3>
+                    <a href="{{block.settings.banner_1_link}}" class="banner-link">{{block.settings.banner_1_link_title}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 item">
+              <a class="banner-border margin-bottom-30" href="{{block.settings.banner_2_link}}">                
+                {% if block.settings.banner_2_img-%}               
+                <picture>
+                  <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                  <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '270x' %}" media="(min-width: 768px)">
+                  <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '322x' %}">
+                  <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '480x' %}" alt="{{block.settings.banner_2_img.alt}}">
+                </picture>                    
+                {%-else %}
+                <picture>
+                  <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/50_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
+                  <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/50_270x.jpg?5932670546860663904" media="(min-width: 768px)">
+                  <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/50_480x.jpg?5932670546860663904">
+                  <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/50_100x.jpg?5932670546860663904" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/50.jpg?5932670546860663904" alt="{{shop.name}}">
+                </picture>
+                {%-endif-%}
+              </a>
+            </div>
+            <div class="col-sm-4 item">
+              <div class="block-banner-text style2">
+                <div class="image">
+                  <a href="{{block.settings.banner_3_link}}">
+                    {% if block.settings.banner_3_img-%}               
+                    <picture>
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '270x' %}" media="(min-width: 768px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '322x' %}">
+                      <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '480x' %}" alt="{{block.settings.banner_3_img.alt}}">
+                    </picture>                    
+                    {%-else %}
+                    <picture>
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/49_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/49_270x.jpg?5932670546860663904" media="(min-width: 768px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/49_480x.jpg?5932670546860663904">
+                      <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/49_100x.jpg?5932670546860663904" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/49.jpg?5932670546860663904" alt="{{shop.name}}">
+                    </picture>
+                    {%-endif-%}
+                  </a>
+                </div>
+                <div class="banner-content">
+                  <div class="inner">
+                    <h3 class="title">{{block.settings.banner_3_title}}</h3>
+                    <a href="{{block.settings.banner_3_link}}" class="banner-link">{{block.settings.banner_3_link_title}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%-elsif block.type == '15' and block.settings.turnoff == false-%}
+        <div{% if section.settings.width_section %} class="container"{% else %} class="container-fluid"{% endif %}>
+          <div class="row group-banner-text">
+            <div class="col-sm-6 item">
+              <div class="block-banner-horizontal" data-color="#f1d8ae">
+                <div class="image">
+                  <a href="{block.settings.banner_1_link}}">
+                    {% if block.settings.banner_1_img-%}               
+                    <picture>
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '270x' %}" media="(min-width: 768px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '322x' %}">
+                      <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
+                    </picture>                    
+                    {%-else %}
+                    <picture>
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/51_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/51_270x.jpg?5932670546860663904" media="(min-width: 768px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/51_480x.jpg?5932670546860663904">
+                      <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/51_100x.jpg?5932670546860663904" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/51.jpg?5932670546860663904" alt="{{shop.name}}">
+                    </picture>
+                    {%-endif-%}
+                  </a>
+                </div>
+                <div class="content">
+                  <div class="inner">
+                    <h3 class="big-title">{{block.settings.banner_1_big_title}}</h3>
+                    <h4 class="medium-title">{{block.settings.banner_1_small_title}}</h4>
+                    <a href="{{block.settings.banner_1_link}}" class="banner-link">{{block.settings.banner_1_link_title}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 item">
+              <div class="block-banner-horizontal gray" data-color="#eaeaea">
+                <div class="image">
+                  <a href="{{block.settings.banner_2_link}}">                    
+                    {% if block.settings.banner_2_img-%}               
+                    <picture>
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '270x' %}" media="(min-width: 768px)">
+                      <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '322x' %}">
+                      <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '480x' %}" alt="{{block.settings.banner_2_img.alt}}">
+                    </picture>                    
+                    {%-else %}
+                    <picture>
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/52_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/52_270x.jpg?5932670546860663904" media="(min-width: 768px)">
+                      <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/52_480x.jpg?5932670546860663904">
+                      <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/52_100x.jpg?5932670546860663904" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/52.jpg?5932670546860663904" alt="{{shop.name}}">
+                    </picture>
+                    {%-endif-%}
+                  </a>
+                </div>
+                <div class="content">
+                  <div class="inner">
+                    <h4 class="medium-title">{{block.settings.banner_2_big_title}}</h4>
+                    <h5>{{block.settings.banner_2_small_title}}</h5>
+                    <a href="{{block.settings.banner_2_link}}" class="banner-link">{{block.settings.banner_2_link_title}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%-elsif block.type == '16' and block.settings.turnoff == false-%}
+        <div class="{% if section.settings.width_section %} container{% else %} container-fluid{% endif %}">
+          <div class="block-banner20">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <div class="inner">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="banner-item">
+                    <a class="banner-border" href="{{block.settings.banner_1_link}}">
+                      {% if block.settings.banner_1_img-%}               
+                      <picture>
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '270x' %}" media="(min-width: 768px)">
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '322x' %}">
+                        <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
+                      </picture>                    
+                      {%-else %}
+                      <picture>
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/65_380x.jpg?16052433451080034991" media="(min-width: 1200px)">
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/65_270x.jpg?16052433451080034991" media="(min-width: 768px)">
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/65_480x.jpg?16052433451080034991">
+                        <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/65_100x.jpg?16052433451080034991" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/65.jpg?16052433451080034991" alt="{{shop.name}}">
+                      </picture>
+                      {%-endif-%}
+                    </a>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="banner-item center">
+                    <a href="{{block.settings.banner_2_link}}">
+                      {% if block.settings.banner_2_img-%}               
+                      <picture>
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '270x' %}" media="(min-width: 768px)">
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '322x' %}">
+                        <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '480x' %}" alt="{{block.settings.banner_2_img.alt}}">
+                      </picture>                    
+                      {%-else %}
+                      <picture>
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/67_380x.jpg?16052433451080034991" media="(min-width: 1200px)">
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/67_270x.jpg?16052433451080034991" media="(min-width: 768px)">
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/67_480x.jpg?16052433451080034991">
+                        <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/67_100x.jpg?16052433451080034991" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/67.jpg?16052433451080034991" alt="{{shop.name}}">
+                      </picture>
+                      {%-endif-%}
+                    </a>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="banner-item">
+                    <a class="banner-border" href="{{block.settings.banner_3_link}}">
+                      {% if block.settings.banner_3_img-%}               
+                      <picture>
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '380x' %}" media="(min-width: 1200px)">
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '270x' %}" media="(min-width: 768px)">
+                        <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '322x' %}">
+                        <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
+                      </picture>                    
+                      {%-else %}
+                      <picture>
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/66_380x.jpg?16052433451080034991" media="(min-width: 1200px)">
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/66_270x.jpg?16052433451080034991" media="(min-width: 768px)">
+                        <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/66_480x.jpg?16052433451080034991">
+                        <img class="lazyload" src="https://cdn.shopify.com/s/files/1/2336/5331/files/66_100x.jpg?16052433451080034991" data-src="https://cdn.shopify.com/s/files/1/2336/5331/files/66.jpg?16052433451080034991" alt="{{shop.name}}">
+                      </picture>
+                      {%-endif-%}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%-endif-%}
+    {%-endfor-%}
+  </div>
+</div>
+{%-endif %}
+{% schema %}
+  {
+    "name": "Banner template",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Banner template",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "checkbox",
+        "id": "preview",
+        "label": "[* Preview demo](https://cdn.shopify.com/s/files/1/2336/5331/files/banner_preview.jpg?13013737223897303956)"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "1",
+        "name": "Banners type 1",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 1",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 1 settings"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "Title colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Button text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg_text",
+            "label": "Button background color",
+            "default": "#333333"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlex",
+            "label": "Title",
+            "default":"SALE 75% OFF"
+          },
+          {
+            "type":"text",
+            "id":"name_btn",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlexx",
+            "label": "Title",
+            "default":"Shoes TREND 2016"
+          },
+          {
+            "type":"text",
+            "id":"name_btnx",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "color",
+            "id": "color_bg1",
+            "label": "Color background",
+            "default": "#ff7b5f"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"icon",
+            "label": "Icon",
+            "default": "<i class=\"fa fa-send\" aria-hidden=\"true\"><\/i>"
+          },
+          {
+            "type":"textarea",
+            "id":"titlexxx",
+            "label": "Title",
+            "default":"FREE DELIVERY"
+          },
+          {
+            "type":"richtext",
+            "id":"text_content",
+            "label": "Title content",
+            "default":"<p>On all order over $99.00</p>"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 4 settings"
+          },
+          {
+            "type": "color",
+            "id": "color_bg2",
+            "label": "Color background",
+            "default": "#7c9fb7"
+          },
+          {
+            "type": "url",
+            "id": "image_link_4",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"iconx",
+            "label": "Icon",
+            "default": "<i class=\"fa fa-send\" aria-hidden=\"true\"><\/i>"
+          },
+          {
+            "type":"textarea",
+            "id":"titlexxxx",
+            "label": "Title",
+            "default":"STORE SECURED"
+          },
+          {
+            "type":"richtext",
+            "id":"text_contentx",
+            "label": "Title content",
+            "default":"<p>Secure all your payments</p>"
+          }
+        ]
+      },
+      {
+        "type": "2",
+        "name": "Banners type 2",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 2",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 2 settings"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "Title colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Button text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg_text",
+            "label": "Button background color",
+            "default": "#333333"
+          },
+          {
+            "type": "checkbox",
+            "id": "align_content",
+            "label": "Align left content"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlex",
+            "label": "Title",
+            "default":"DIGITAL ACCESSORIES"
+          },
+          {
+            "type":"text",
+            "id":"name_btn",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlexx",
+            "label": "Title",
+            "default":"PC &amp; LAPTOPs"
+          },
+          {
+            "type":"text",
+            "id":"name_btnx",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlexxx",
+            "label": "Title",
+            "default":"SUHD TELEVISION"
+          },
+          {
+            "type":"text",
+            "id":"name_btnxx",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 4 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_4",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_4",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlexxxx",
+            "label": "Title",
+            "default":"SOUND &amp; AUDIOS"
+          },
+          {
+            "type":"text",
+            "id":"name_btnxxx",
+            "label": "Name button",
+            "default":"Shop Now"
+          }
+        ]
+      },
+      {
+        "type": "3",
+        "name": "Banners type 3",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 3",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 3 settings"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "Title colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Button text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg_text",
+            "label": "Button background color",
+            "default": "#333333"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlex",
+            "label": "Title",
+            "default":"Men’s Accessories Lookbook"
+          },
+          {
+            "type":"text",
+            "id":"name_btn",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlexx",
+            "label": "Title",
+            "default":"NEW LOOK FROM WOMEN SUMMER COLLECTION"
+          },
+          {
+            "type":"text",
+            "id":"name_btnx",
+            "label": "Name button",
+            "default":"Shop Now"
+          }
+        ]
+      },
+      {
+        "type": "4",
+        "name": "Banners type 4",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 4",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 4 settings"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "Title colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Button text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg_text",
+            "label": "Button background color",
+            "default": "#333333"
+          },
+          {
+            "type": "checkbox",
+            "id": "align_content",
+            "label": "Align left content"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title1",
+            "label": "Title",
+            "default":"DIGITAL ACCESSORIES"
+          },
+          {
+            "type":"text",
+            "id":"name_btn1",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title2",
+            "label": "Title",
+            "default":"PC &amp; LAPTOPs"
+          },
+          {
+            "type":"text",
+            "id":"name_btn2",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title3",
+            "label": "Title",
+            "default":"SUHD TELEVISION"
+          },
+          {
+            "type":"text",
+            "id":"name_btn3",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 4 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_4",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_4",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title4",
+            "label": "Title",
+            "default":"SOUND &amp; AUDIOS"
+          },
+          {
+            "type":"text",
+            "id":"name_btn4",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 5 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_5",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_5",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title5",
+            "label": "Title",
+            "default":" PC &amp; LAPTOPs"
+          },
+          {
+            "type":"text",
+            "id":"name_btn5",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 6 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_6",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_6",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title6",
+            "label": "Title",
+            "default":"SOUND &amp; AUDIOS"
+          },
+          {
+            "type":"text",
+            "id":"name_btn6",
+            "label": "Name button",
+            "default":"Shop Now"
+          }
+        ]
+      },
+      {
+        "type": "5",
+        "name": "Banners type 5",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 5",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 5 settings"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "Title colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Button text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg_text",
+            "label": "Button background color",
+            "default": "#333333"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title1",
+            "label": "Title",
+            "default":"OUTDOOR"
+          },
+          {
+            "type":"text",
+            "id":"name_btn1",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title2",
+            "label": "Title",
+            "default":"ACCESSORIES"
+          },
+          {
+            "type":"text",
+            "id":"name_btn2",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title3",
+            "label": "Title",
+            "default":"SALE 75% OFF"
+          },
+          {
+            "type":"text",
+            "id":"name_btn3",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 4 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_4",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_4",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title4",
+            "label": "Title",
+            "default":"CHAIRS"
+          },
+          {
+            "type":"text",
+            "id":"name_btn4",
+            "label": "Name button",
+            "default":"Shop Now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 5 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_5",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_5",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title5",
+            "label": "Title",
+            "default":"DECORATION"
+          },
+          {
+            "type":"text",
+            "id":"name_btn5",
+            "label": "Name button",
+            "default":"Shop Now"
+          }
+        ]
+      },
+      {
+        "type": "6",
+        "name": "Banners type 6(Circle)",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 6",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 6 settings"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type":"text",
+            "id":"title1",
+            "label": "Title",
+            "default":"HANDMADE GIFTS"
+          },
+          {
+            "type":"text",
+            "id":"text1",
+            "label": "Text",
+            "default":"Many beautiful handmade gifts"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title2",
+            "label": "Title",
+            "default":"DECORATIONS"
+          },
+          {
+            "type":"text",
+            "id":"text2",
+            "label": "Title",
+            "default":"Let’s make your home beautiful"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"title3",
+            "label": "Title",
+            "default":"FLOWERS"
+          },
+          {
+            "type":"text",
+            "id":"text3",
+            "label": "Title",
+            "default":"Fresh flowers for your day!"
+          }
+        ]
+      },
+      {
+        "type": "7",
+        "name": "Banners type 7",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 7",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 7 settings"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          }
+        ]
+      },
+      {
+        "type": "8",
+        "name": "Banners type 8",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 8",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 8 settings"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          }
+        ]
+      },
+      {
+        "type": "10",
+        "name": "Banners type 10",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 10",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 10 settings"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "textarea",
+            "id": "text_1",
+            "label": "Text content",
+            "default": "<h4 class=\"subtitle\">Trending</h4><h3 class=\"title\">Men fashion</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_1",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "textarea",
+            "id": "text_2",
+            "label": "Text content",
+            "default": "<h4 class=\"subtitle\">Trending</h4><h3 class=\"title\">Men fashion</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_2",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "textarea",
+            "id": "text_3",
+            "label": "Text content",
+            "default": "<h4 class=\"subtitle\">Trending</h4><h3 class=\"title\">Men fashion</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_3",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 4 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_4",
+            "label": "Image banner"
+          },
+          {
+            "type": "textarea",
+            "id": "text_4",
+            "label": "Text content",
+            "default": "<h4 class=\"subtitle\">Trending</h4><h3 class=\"title\">Men fashion</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_4",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_4",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 5 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_5",
+            "label": "Image banner"
+          },
+          {
+            "type": "textarea",
+            "id": "text_5",
+            "label": "Text content",
+            "default": "<h4 class=\"subtitle\">Trending</h4><h3 class=\"title\">Men fashion</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_5",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_5",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 6 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_6",
+            "label": "Image banner"
+          },
+          {
+            "type": "textarea",
+            "id": "text_6",
+            "label": "Text content",
+            "default": "<h4 class=\"subtitle\">Trending</h4><h3 class=\"title\">Men fashion</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_6",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_6",
+            "label": "Button name",
+            "default": "Shop now"
+          }
+        ]
+      },
+      {
+        "type": "11",
+        "name": "Banners type 11",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 11",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 11 settings"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 1 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image banner"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon_1",
+            "label": "Icon image"
+          },
+          {
+            "type": "textarea",
+            "id": "text_1",
+            "label": "Text content",
+            "default": "<h2 class=\"title\">Printed SHIRT</h2><h3 class=\"subtitle\">Faux BACKPACK</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_1",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_1",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 2 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_2",
+            "label": "Link to"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 3 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_3",
+            "label": "Image banner"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon_3",
+            "label": "Icon image"
+          },
+          {
+            "type": "textarea",
+            "id": "text_3",
+            "label": "Text content",
+            "default": "<h2 class=\"title\">Printed SHIRT</h2><h3 class=\"subtitle\">Faux BACKPACK</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_3",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_3",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 4 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_4",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_4",
+            "label": "Link to"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 5 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_5",
+            "label": "Image banner"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon_5",
+            "label": "Icon image"
+          },
+          {
+            "type": "textarea",
+            "id": "text_5",
+            "label": "Text content",
+            "default": "<h2 class=\"title\">Printed SHIRT</h2><h3 class=\"subtitle\">Faux BACKPACK</h3>"
+          },
+          {
+            "type": "url",
+            "id": "image_link_5",
+            "label": "Link to"
+          },
+          {
+            "type": "text",
+            "id": "name_btn_5",
+            "label": "Button name",
+            "default": "Shop now"
+          },
+          {
+            "type": "header",
+            "content": "== Banner 6 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_6",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link_6",
+            "label": "Link to"
+          }
+        ]
+      },
+      {
+        "type": "12",
+        "name": "Banners type 12",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 12",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 12 settings"
+          },
+          {
+            "type": "paragraph",
+            "content": "-- Banner Description Middle"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_title",
+            "label": "Title",
+            "default": "Fashion"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_stitle",
+            "label": "Sub Title",
+            "default": "For Women"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_status",
+            "label": "Status",
+            "default": "-30<span>%<\/span>"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_description_description",
+            "label": "Description",
+            "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy ndustry's standard"
+          },
+          {
+            "type": "url",
+            "id": "banner_description_link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_link_title",
+            "label": "Title Button",
+            "default": "read more"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_description_image",
+            "label": "Image"
+          },
+          {
+            "type": "paragraph",
+            "content": "-- Banner Description Top Left"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_title_2",
+            "label": "Title",
+            "default": "WOMEN ACCESSORIES"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_stitle_2",
+            "label": "Sub Title",
+            "default": "112 model items"
+          },
+          {
+            "type": "url",
+            "id": "banner_description_link_2",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_description_image_2",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "type": "13",
+        "name": "Banners type 13",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 13",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 13 settings"
+          },
+          {
+            "type": "paragraph",
+            "content": "-- Banner Description Top Right"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_title_2",
+            "label": "Title",
+            "default": "WOMEN ACCESSORIES"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_stitle_2",
+            "label": "Sub Title",
+            "default": "112 model items"
+          },
+          {
+            "type": "url",
+            "id": "banner_description_link_2",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_description_image_2",
+            "label": "Image"
+          },
+          {
+            "type": "paragraph",
+            "content": "-- Banner Description Middle"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_title",
+            "label": "Title",
+            "default": "Fashion"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_stitle",
+            "label": "Sub Title",
+            "default": "For Women"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_status",
+            "label": "Status",
+            "default": "-30<span>%<\/span>"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_description_description",
+            "label": "Description",
+            "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy ndustry's standard"
+          },
+          {
+            "type": "url",
+            "id": "banner_description_link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "banner_description_link_title",
+            "label": "Title Button",
+            "default": "read more"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_description_image",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "type": "14",
+        "name": "Banners type 14",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 14",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 14 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_1_img",
+            "label": "Banner 1 image"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_1_title",
+            "label": "Banner 1 title",
+            "default": "Men Collection"
+          },
+          {
+            "type": "url",
+            "id": "banner_1_link",
+            "label": "Banner Top 1 Link"
+          },
+          {
+            "type": "text",
+            "id": "banner_1_link_title",
+            "label": "Banner 1 title link",
+            "default": "Shop now"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_2_img",
+            "label": "Banner 2 image"
+          },
+          {
+            "type": "url",
+            "id": "banner_2_link",
+            "label": "Banner 2 link"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_3_img",
+            "label": "Banner 3 image"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_3_title",
+            "label": "Banner 3 title",
+            "default": "Women Collection"
+          },
+          {
+            "type": "url",
+            "id": "banner_3_link",
+            "label": "Banner 3 link"
+          },
+          {
+            "type": "text",
+            "id": "banner_3_link_title",
+            "label": "Banner 3 title link",
+            "default": "Shop now"
+          }
+        ]
+      },
+      {
+        "type": "15",
+        "name": "Banners type 15",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 15",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 15 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_1_img",
+            "label": "Banner 1 image"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_1_big_title",
+            "label": "Banner 1 big title",
+            "default": "UK"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_1_small_title",
+            "label": "Banner 1 small title",
+            "default": "Fashions store"
+          },
+          {
+            "type": "url",
+            "id": "banner_1_link",
+            "label": "Banner 1 link"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_1_link_title",
+            "label": "Banner 1 title link",
+            "default": "Shop now"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_2_img",
+            "label": "Banner 2 image"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_2_big_title",
+            "label": "Banner 2 big title",
+            "default": "Top Products"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_2_small_title",
+            "label": "Banner 2 small title",
+            "default": "Milan Star Menswear 2016"
+          },
+          {
+            "type": "url",
+            "id": "banner_2_link",
+            "label": "Banner 2 link"
+          },
+          {
+            "type": "textarea",
+            "id": "banner_2_link_title",
+            "label": "Banner 2 title link",
+            "default": "Shop now"
+          }
+        ]
+      },
+      {
+        "type": "16",
+        "name": "Banners type 16",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Banner type 16",
+            "info": "Customize name block (no display item preview)"
+          },
+          {
+            "type": "header",
+            "content": "Banners type 16 settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_1_img",
+            "label": "Banner 1 image"
+          },
+          {
+            "type": "url",
+            "id": "banner_1_link",
+            "label": "Banner 1 link"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_2_img",
+            "label": "Banner 2 image"
+          },
+          {
+            "type": "url",
+            "id": "banner_2_link",
+            "label": "Banner 2 link"
+          },
+          {
+            "type": "image_picker",
+            "id": "banner_3_img",
+            "label": "Banner 3 image"
+          },
+          {
+            "type": "url",
+            "id": "banner_3_link",
+            "label": "Banner 3 link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner template",
+        "category": "Block Banner",
+        "blocks": [
+          {
+            "type": "1"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

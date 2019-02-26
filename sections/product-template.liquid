@@ -1,0 +1,203 @@
+{%- include 'kt_product-sizeGuide' -%}
+{%- include 'kt_product-shipping' -%}
+{%- assign settings_use_thumb = settings.use_thumb -%}
+{%- include 'kt_product_check'-%}
+{%- if section.settings.layout == '1' -%}
+{%- include 'product-layout1' -%}
+{%- elsif section.settings.layout == '2' -%}
+{%- include 'product-layout2' -%}
+{%- endif -%}
+<div class="{%-if section.settings.width_section-%}container{%-else-%}container-fluid{%-endif-%}">
+  <div class="tab-details-product padding-40-60">
+    {%-include 'bt_product_tabs'-%}
+  </div>
+</div>
+
+<div class="clearfix endProduct"></div>
+{%-unless product == empty-%}
+  <script type="application/json" id="ProductJson-{{ section.id }}">
+    {{ product | json }}
+  </script>
+{%-endunless-%}
+{%-assign use_review_st = settings.use_review_st -%}
+{%-comment-%}{%-include 'kt_check_variant'-%}{%-endcomment-%}
+{% include 'kt_addMoreModal' %}
+
+{%schema%}
+  {
+    "name": "Product pages default",
+    "settings": [
+      {
+        "type": "header",
+        "content": "####### Metafield"
+      },
+      {
+        "type": "paragraph",
+        "content": "Metafields allow you to attach metadata, which is additional information, to a store's resources."
+      },
+      {
+        "type": "paragraph",
+        "content": "=== Metafields Product short des: meta.short_description. Use tag [short description] short description content[/short description] from product content if you don't want use metafield"
+      },
+      {
+        "type": "paragraph",
+        "content": "=== Metafields Product additional_information: meta.additional_information"
+      },
+      {
+        "type": "paragraph",
+        "content": "=== Metafields Product size guide: meta.size_guide"
+      },
+      {
+        "type": "paragraph",
+        "content": "=== Metafields Product countdown (Ex value: 10/26/2017T12:00:00): event.countdown"
+      },
+      {
+        "type": "paragraph",
+        "content": "=== Metafields video. For example: link video (Ex value: link thumbnail|link video) : meta.video"
+      },
+      {
+        "type": "paragraph",
+        "content": "=== Metafields External/Affiliate product (Ex value: [Button name]link): purchase.on_link"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "-- Layout",
+        "options": [
+          {
+            "value": "1",
+            "label": "Layout 1"
+          },
+          {
+            "value": "2",
+            "label": "Layout 2"
+          }
+        ]
+      },
+      {
+        "type":"checkbox",
+        "id": "use_d_c_b",
+        "label": "Dynamic checkout buttons",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "== Tab Descriptions"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "tb_description",
+        "name": "Tab description",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_tab",
+            "label": "Show Tab",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Tilte",
+            "default": "The product"
+          }
+        ]
+      },
+      {
+        "type": "tb_details",
+        "name": "Tab details",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_tab",
+            "label": "Show Tab",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Tilte",
+            "default": "The details"
+          }
+        ]
+      },
+      {
+        "type": "tb_review",
+        "name": "Tab review",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_tab",
+            "label": "Show Tab",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Tilte",
+            "default": "Review(s)"
+          }
+        ]
+      },
+      {
+        "type": "tb_bundle",
+        "name": "Tab bundle (APP)",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_tab",
+            "label": "Show Tab",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Tilte",
+            "default": "Bundle"
+          }
+        ]
+      },
+      {
+        "type": "tb_customize",
+        "name": "Tab Customize",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_tab",
+            "label": "Show Tab",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "tab_title",
+            "label": "Tab Tilte",
+            "default": "Why buy from us?"
+          },
+          {
+            "type": "page",
+            "id": "tab_page_html",
+            "label": "Choose page"
+          },
+          {
+            "type": "html",
+            "id": "tab_html",
+            "label": "Content tab",
+            "default": "<li><a href=\"#\">10 years guarantee</a></li><li>Identical to the originals</li><li><a href=\"#\">High-quality materials</a></li><li>+300.000 happy customers</li><li><a href=\"#\">100% legal</a></li>"
+          }
+        ]
+      }
+    ]
+  }
+{%endschema%}

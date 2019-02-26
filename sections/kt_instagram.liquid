@@ -1,0 +1,63 @@
+<div data-section-id="{{ section.id }}" id="Instagram-{{ section.id }}" data-section-type="instagram-section">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div class="clearfix" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+      <div class="instagramWrapper row-flex flex-row justify-content-center" data-username="{{section.settings.instagramUser}}" data-limit="{{section.settings.images_limit}}"></div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Instagram",
+    "class": "index-section index-section--kt kt_instagram",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Instagram"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "text",
+        "id": "instagramUser",
+        "label": "Username instagram",
+        "info": "Ex: jsfashionstock"
+      },
+      {
+        "type": "text",
+        "id": "images_limit",
+        "label": "Limmit images",
+        "default": "12"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Instagram",
+        "category": "Socials"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,256 @@
+<div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+          {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+          {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+	<!-- Block group banner-->
+	<div class="margin-top-30">
+		<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+		    <div class="row">
+		      <div class="col-sm-8 col-md-9 col-xs-12">
+		        <div class="row">
+		          <div class="col-sm-7 col-md-8 col-xs-12">
+		            <div class="block-banner-text">
+		              <div class="image">
+		                <a href="{{section.settings.link_banner_1}}">
+		                  {% if section.settings.banner_1 == blank %}
+		                  <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/34_7bf478fa-1979-4a56-9e63-f5496a3599a5.jpg?5547829228597901766" alt="">
+		                  {% else %}
+		                  <img src="{{section.settings.banner_1 | img_url: '480x'}}" alt="">
+		                  {% endif %}
+		                </a>
+		              </div>
+		              <div class="content">
+		                <h2 class="title">{{section.settings.title_banner_1}}</h2>
+		                <h3 class="subtitle">{{section.settings.stitle_banner_1}}</h3>
+		                <span class="text"><a href="{{section.settings.link_banner_1}}">{{section.settings.des_title_banner_1}}</a></span>
+		              </div>
+		            </div>
+		          </div>
+		          <div class="col-sm-5 col-md-4 col-xs-12">
+		            <div class="block-text-border">
+		              <div class="content">
+		                <h2 class="title">{{section.settings.title_banner_2}}</h2>
+		                <h3 class="subtitle">{{section.settings.stitle_banner_2}}</h3>
+		                <a href="{{section.settings.link_banner_2}}" class="link">{{section.settings.title_link_banner_2}}</a>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		        <div class="row">
+		          <div class="col-sm-5 col-md-4 col-xs-12 padding-right-5 margin-bottom-20">
+		            <a href="{{section.settings.link_banner_3}}" class="banner-border">
+		              {% if section.settings.banner_3 == blank %}
+		              <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/34_7bf478fa-1979-4a56-9e63-f5496a3599a5.jpg?5547829228597901766" alt="">
+		              {% else %}
+		              <img src="{{section.settings.banner_3 | img_url: '480x'}}" alt="">
+		              {% endif %}
+		            </a>
+		          </div>
+		          <div class="col-sm-7 col-md-8 col-xs-12">
+		            <div class="block-banner-text">
+		              <div class="image">
+		                <a href="{{section.settings.link_banner_4}}">
+		                  {% if section.settings.banner_4 == blank %}
+		                  <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/34_7bf478fa-1979-4a56-9e63-f5496a3599a5.jpg?5547829228597901766" alt="">
+		                  {% else %}
+		                  <img src="{{section.settings.banner_4 | img_url: '480x'}}" alt="">
+		                  {% endif %}
+		                </a>
+		              </div>
+		              <div class="content">
+		                <h2 class="title">{{section.settings.title_banner_4}}</h2>
+		                <h3 class="subtitle">{{section.settings.stitle_banner_4}}</h3>
+		                <span class="text"><a href="{{section.settings.link_banner_4}}">{{section.settings.des_title_banner_4}}</a></span>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		      <div class="col-sm-4 col-md-3 col-xs-12 margin-bottom-20">
+		        <a href="{{section.settings.link_banner_5}}" class="banner-border">
+		          {% if section.settings.banner_5 == blank %}
+		          <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/33_238a5b44-8bb0-4fe3-840f-ac75635c6d8c.jpg?5547829228597901766" alt="">
+		          {% else %}
+		          <img src="{{section.settings.banner_5 | img_url: '480x'}}" alt="">
+		          {% endif %}
+		        </a>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	<!-- ./Block group banner-->
+</div>
+{% schema %}
+  {
+    "name": "Banner collections",
+    "class": "index-section index-section--kt bt_banner_collections",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Banner collections",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_banner",
+        "label": "[* Tutorial Image](https:\/\/cdn.shopify.com\/s\/files\/1\/1227\/4348\/files\/Banner-1-Home-15.gif?16278465154998890825)",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "-- Item 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_1",
+        "label": "Image Banner"
+      },
+      {
+        "type": "url",
+        "id": "link_banner_1",
+        "label": "Link To"
+      },
+      {
+        "type": "text",
+        "id": "title_banner_1",
+        "label": "Title",
+        "default": "On Sale"
+      },
+      {
+        "type": "text",
+        "id": "stitle_banner_1",
+        "label": "Sub title",
+        "default": "leather watch"
+      },
+      {
+        "type": "text",
+        "id": "des_banner_1",
+        "label": "Description",
+        "default": "2016 Collection"
+      },
+      {
+        "type": "paragraph",
+        "content": "-- Item 2"
+      },
+      {
+        "type": "url",
+        "id": "link_banner_2",
+        "label": "Link To"
+      },
+      {
+        "type": "text",
+        "id": "title_banner_2",
+        "label": "Title",
+        "default": "Lookbook"
+      },
+      {
+        "type": "text",
+        "id": "stitle_banner_2",
+        "label": "Sub title",
+        "default": "New collection"
+      },
+      {
+        "type": "text",
+        "id": "title_link_banner_2",
+        "label": "Title Link",
+        "default": "Explore Now!"
+      },
+      {
+        "type": "paragraph",
+        "content": "-- Item 3"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_3",
+        "label": "Image Banner"
+      },
+      {
+        "type": "url",
+        "id": "link_banner_3",
+        "label": "Link To"
+      },
+      {
+        "type": "paragraph",
+        "content": "-- Item 4"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_4",
+        "label": "Image Banner"
+      },
+      {
+        "type": "url",
+        "id": "link_banner_4",
+        "label": "Link To"
+      },
+      {
+        "type": "text",
+        "id": "title_banner_4",
+        "label": "Title",
+        "default": "New Arrival"
+      },
+      {
+        "type": "text",
+        "id": "stitle_banner_4",
+        "label": "Sub title",
+        "default": "diamond jewelry"
+      },
+      {
+        "type": "text",
+        "id": "des_banner_4",
+        "label": "Description",
+        "default": "sale 30% off"
+      },
+      {
+        "type": "paragraph",
+        "content": "-- Item 5"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_5",
+        "label": "Image Banner"
+      },
+      {
+        "type": "url",
+        "id": "link_banner_5",
+        "label": "Link To"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner collections",
+        "category": "Block Banner"
+      }
+    ]
+  }
+{% endschema %}

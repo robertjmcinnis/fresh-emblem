@@ -1,0 +1,377 @@
+{%-if section.settings.turnoff == false-%}
+{% if section.blocks.size > 0-%}
+{% capture banner_customize %}
+<div style="{%- if section.settings.section_margin_top != blank %}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+            {%- if section.settings.section_margin_bottom != blank %}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+            {%- if section.settings.section_padding != blank %}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+  {%-for block in section.blocks-%}
+    {%-if block.type == 'open'-%}
+      {%- if block.settings.type_start == 'section_st' -%}
+      <div class="{%- if section.settings.width_section -%}container{%-else-%}container-fluid{%-endif-%}">
+        <div class="row">
+      {%- else -%}
+      <div class="col-lg-{{block.settings.row_width}} col-ms-{{block.settings.row_width}} col-sm-12 col-xs-12">
+        <div class="row">
+      {%- endif -%}
+    {%-endif-%}
+        
+    {%-if block.type == 'item'-%}
+        {%-unless block.settings.turnoff -%}
+          {%-unless block.settings.end_col -%}
+          <div class="col-lg-{{block.settings.banner_width}}
+                      {%- if block.settings.hide_medium %} hidden-md{%- else %} col-ms-{{block.settings.banner_width}}{%- endif %}
+                      {%- if block.settings.hide_small %} hidden-sm{%- else %} col-sm-{{ block.settings.banner_width }}{%- endif %}
+                      {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-xs-12{%- endif %}{% if block.settings.nopadding %} padding-0{% endif %}">
+          {%-endunless-%}
+            {%-if block.settings.open_col -%}
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12{% if block.settings.nopadding %} padding-0{% endif %}">
+            {%-endif-%}
+              <div class="banner-text{% if block.settings.stitle == "" %} style2{%endif%}">
+                <div class="image">
+                  <a class="banner-opacity" href="{{ block.settings.image_link | default: '#' }}">
+                    {%- if block.settings.image != blank -%}
+                      <img src="{{block.settings.image|img_url:'550x'}}" alt="{{block.settings.image.alt}}">
+                    {%- endif -%}
+                  </a>
+                </div>
+                {%- if block.settings.titlex != blank or block.settings.name_btn != blank -%}
+                <div class="content-text">
+                  {%- if block.settings.titlex != blank -%}<h3 class="title">{{block.settings.titlex|html}}</h3>{%- endif -%}
+                  {%- if block.settings.stitle != blank -%}<div class="sub-title">{{block.settings.stitle}}</div>{%- endif -%}
+                  {%- if block.settings.name_btn != blank -%}<a href="#" class="button">{{block.settings.name_btn}}</a>{%- endif -%}
+                </div>
+                {%- endif -%}
+              </div>
+          {%-if block.settings.end_col -%}
+              </div>
+            </div>
+          </div>
+          {%-else-%}
+            {%-unless block.settings.open_col -%}
+              </div>
+            {%-endunless-%}
+          {%-endif-%}
+        {%-endunless-%}
+    {%-endif-%} 
+        
+  
+    {%-if block.type == 'close'-%}
+        {%- if block.settings.type_end == 'section_en' -%}</div>{%-endif-%}
+      </div>
+    {%-endif-%}
+  {%-endfor-%}
+</div>
+{% endcapture %}
+  <div data-section-id="{{ section.id }}" id="BannerCustomize-{{ section.id }}" data-section-type="bt_banner_customize-section">
+  {{banner_customize|html}}
+  </div>
+{%-endif %}
+{%-endif-%}
+{% schema %}
+  {
+    "name": "Banner customize",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "turnoff",
+        "label": "Turn off section"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Banner customize",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "open",
+        "name": "Start banner block",
+        "settings": [
+          {
+             "type": "radio",
+             "id": "type_start",
+             "options": [
+                { "value": "section_st", "label": "Start section"},
+                { "value": "row_st", "label": "Start row"}
+             ],
+             "label": "Initialization block"
+          },
+          {
+             "type": "select",
+             "id": "row_width",
+             "options": [
+              {
+                 "value": "1",
+                 "label": "1 column - 1/12"
+               },
+               {
+                 "value": "2",
+                 "label": "2 columns - 1/6"
+               },
+               {
+                 "value": "3",
+                 "label": "3 columns - 1/4"
+               },
+               {
+                 "value": "4",
+                 "label": "4 columns - 1/3"
+               },
+               {
+                 "value": "5",
+                 "label": "5 columns - 5/12"
+               },
+               {
+                 "value": "6",
+                 "label": "6 columns - 1/2"
+               },
+               {
+                 "value": "7",
+                 "label": "7 columns - 7/12"
+               },
+               {
+                 "value": "8",
+                 "label": "8 columns - 2/3"
+               },
+               {
+                 "value": "9",
+                 "label": "9 columns - 3/4"
+               },
+               {
+                 "value": "10",
+                 "label": "10 columns - 5/6"
+               },
+               {
+                 "value": "11",
+                 "label": "11 columns - 11/12"
+               },
+               {
+                 "value": "12",
+                 "label": "12 columns - 1/1"
+               }
+             ],
+             "label": "== Select row width",
+             "default": "4"
+           }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Item banner",
+        "settings": [
+          {
+             "type": "checkbox",
+             "id": "open_col",
+             "label": "Open column"
+          },
+          {
+             "type": "checkbox",
+             "id": "end_col",
+             "label": "End column"
+          },
+          {
+            "type": "header",
+            "content": "Content settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+             "type": "select",
+             "id": "banner_width",
+             "options": [
+              {
+                 "value": "1",
+                 "label": "1 column - 1/12"
+               },
+               {
+                 "value": "2",
+                 "label": "2 columns - 1/6"
+               },
+               {
+                 "value": "3",
+                 "label": "3 columns - 1/4"
+               },
+               {
+                 "value": "4",
+                 "label": "4 columns - 1/3"
+               },
+               {
+                 "value": "5",
+                 "label": "5 columns - 5/12"
+               },
+               {
+                 "value": "6",
+                 "label": "6 columns - 1/2"
+               },
+               {
+                 "value": "7",
+                 "label": "7 columns - 7/12"
+               },
+               {
+                 "value": "8",
+                 "label": "8 columns - 2/3"
+               },
+               {
+                 "value": "9",
+                 "label": "9 columns - 3/4"
+               },
+               {
+                 "value": "10",
+                 "label": "10 columns - 5/6"
+               },
+               {
+                 "value": "11",
+                 "label": "11 columns - 11/12"
+               },
+               {
+                 "value": "12",
+                 "label": "12 columns - 1/1"
+               }
+             ],
+             "label": "== Select column width",
+             "default": "4"
+           },
+          {
+            "type": "checkbox",
+            "id": "nopadding",
+            "label": "No padding"
+          },
+           {
+            "type": "header",
+            "content": "==  Hide on device?"
+          },
+           {
+           "type": "checkbox",
+             "id": "hide_medium",
+             "label": "___ Device medium",
+             "info": "Device medium ( 1199px - 992px )",
+             "default": false
+           },
+           {
+           "type": "checkbox",
+             "id": "hide_small",
+             "label": "___ Device small",
+             "info": "Device small ( 991px - 768px )",
+             "default": false
+           },
+           {
+           "type": "checkbox",
+             "id": "hide_extra_small",
+             "label": "___ Device Extra small",
+             "info": "Device small ( less 767px )",
+             "default": false
+           },
+        {
+          "type": "header",
+          "content": "== Promo Banner settings"
+        },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlex",
+            "label": "== Title"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "Title colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type":"richtext",
+            "id":"stitle",
+            "label": "== Subtitle"
+          },
+          {
+            "type": "color",
+            "id": "color_stitle",
+            "label": "Subtitle colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type":"text",
+            "id":"name_btn",
+            "label": "== Name button"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Button text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg_text",
+            "label": "Button background color",
+            "default": "#333333"
+          }
+        ]
+      },
+      {
+        "type": "close",
+        "name": "End banner block",
+        "settings": [
+          {
+             "type": "radio",
+             "id": "type_end",
+             "options": [
+                { "value": "section_en", "label": "End section"},
+                { "value": "row_en", "label": "End row"}
+             ],
+             "label": "End block"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner customize",
+        "category": "Block Banner"
+      }
+    ]
+  }
+{% endschema %}

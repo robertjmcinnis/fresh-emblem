@@ -1,0 +1,257 @@
+<div class="main-container no-sidebar{% if cart.item_count == 0 %} cart-empty_{% endif %}" data-section-id="{{ section.id }}" data-section-type="cart-template">
+  <div class="container">
+    <div class="main-content margin-bottom-60">
+      {% if cart.item_count > 0 %}
+      <div class="page-title text-center section-title">
+        <h3>{{ 'cart.general.title' | t }}</h3>
+      </div>
+      {% endif %}
+      <div class="row">
+        {% if cart.item_count > 0 %}
+        <div class="col-sm-12 col-md-8">
+          <form action="/cart" method="post" novalidate class="cart">
+            <table class="shop_table cart">
+              <thead class="cart__row cart__header">
+                <th colspan="2" class="product-name">{{ 'cart.label.product' | t }}</th>
+                <th class="product-price">{{ 'cart.label.price' | t }}</th>
+                <th class="product-quantity text-center">{{ 'cart.label.quantity' | t }}</th>
+                <th class="product-subtotal text-right">{{ 'cart.label.total' | t }}</th>
+                <th class="product-remove">&nbsp;</th>
+              </thead>
+              <tbody>
+                {% for item in cart.items %}
+                <tr class="cart__row line{{ forloop.index }} cart-flex{% if forloop.first %} border-top{% endif %}">
+                  <td class="product-thumbnail cart__image-wrapper cart-flex-item">
+                    <a href="{{ item.url | within: collections.all }}">
+                      {%- if item.image -%}
+                        {%- assign check_break = false -%}
+                        {%- assign check_not_img_one = false -%}
+                        {%- if item.variant.featured_image != null or item.product.has_only_default_variant -%}
+                          <img class="cart__image" alt="{{ item.title | escape |strip_html }}" src="{{ item| img_url: '104x120', crop:'top'}}">                   
+                       {%- else -%}
+                           {%- assign check_break = false -%}
+                           {%- assign check_not_img_one = false -%}
+                           {%- for option in item.product.options -%}
+                              {%- assign downcased_option = option | downcase -%}
+                              {%- if downcased_option == 'color' or downcased_option == 'colour' or gl_color_name contains downcased_option_check -%}
+                                 {%- assign item_title_variant = item.variant.options[forloop.index0] -%}
+                                 {%- for image in item.product.images -%}
+                                    {%- if image.attached_to_variant? -%}
+                                       {% for variant in image.variants %}
+                                          {%- if variant.title contains item_title_variant and variant.image.src != blank -%}
+                                             <img class="cart__image" alt="{{ image.alt | escape |strip_html }}" src="{{ image.src| img_url: '104x120', crop:'top' }}">
+                                             {%- assign check_not_img_one = false -%}
+                                             {%- assign check_break = true -%}
+                                             {%- break -%}
+                                          {%- else -%}
+                                             {%- assign check_not_img_one = true -%}
+                                          {%- endif-%}
+                                       {% endfor %}
+                                       {%- if check_break -%}{%- break -%}{%- endif-%}
+                                    {%- else -%}
+                                       {%- assign check_not_img_one = true -%}
+                                    {%- endif-%}
+                                 {%- endfor -%}
+                              {%- else -%}
+                                 {%- assign check_not_img_one = true -%}
+                              {%- endif -%}
+                           {%- endfor -%}
+                        {%- endif -%}
+                        {%- if check_not_img_one and check_break == false -%}
+                        <img class="cart__image" alt="{{ item.title | escape |strip_html }}" src="{{ item| img_url: '104x120', crop:'top' }}">
+                        {%- endif -%}
+                     {%- else-%}
+                        {{ 'noimage.gif'| asset_img_url: '104x120', crop:'top' | img_tag }}
+                     {%- endif -%}
+                    </a>
+                  </td>
+                  <td class="product-name cart__meta cart-flex-item">
+                    <div class="list-view-item__title">
+                      <a href="{{ item.url }}">
+                        {{ item.product.title }}
+                        {% if item.quantity > 1 %}
+                        <span class="visible-xs-inline-block"><span class="visually-hidden">{{ 'cart.label.quantity' | t }}</span>(x{{ item.quantity }})</span>
+                        {% endif %}
+                      </a>
+                    </div>
+                    {% unless item.variant.title contains 'Default' %}
+                    <div class="cart__meta-text">
+                      {% for option in item.product.options %}
+                      {{ option }}: {{ item.variant.options[forloop.index0] }}<br>
+                      {% endfor %}
+                    </div>
+                    {% endunless %}
+                    {%- assign property_size = item.properties | size -%}
+                    {% if property_size > 0 %}
+                      <div class="cart__meta-text">
+                        {% for p in item.properties %}
+                          {% unless p.last == blank %}
+                              {% if p.last contains 'h5' %}
+                                <div class="bundle_properties">{{ p.first }}: {{ p.last}}</div>
+                              {% else %}
+                            {{ p.first }}:
+                            {% if p.last contains '/uploads/' %}
+                              <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                            {% else %}
+                              {{ p.last}}                    
+                            {% endif %}
+                            {% endif %}
+                          {% endunless %}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </td>
+                  <td class="cart__price-wrapper cart-flex-item">
+                    {{ item.price | money }}
+
+                    {% for discount in item.discounts %}
+                    <div class="cart-item__discount visible-xs-inline-block">{{ discount.title }}</div>
+                    {% endfor %}
+
+                    <div class="cart__edit visible-xs-inline-block">
+                      <button type="button" class="btn btn--secondary btn--small js-edit-toggle cart__edit--active" data-target="line{{ forloop.index }}">
+                        <span class="cart__edit-text--edit">{{ 'cart.general.edit' | t }}</span>
+                        <span class="cart__edit-text--cancel">{{ 'cart.general.cancel' | t }}</span>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="cart__update-wrapper cart-flex-item text-right">
+                    <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="btn btn--small btn--secondary cart__remove visible-xs-inline-block">{{ 'cart.general.remove' | t }}</a>
+<!--                     <div class="cart__qty">
+                      <input class="cart__qty-input form-control" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" pattern="[0-9]*">
+                    </div> -->
+                    <div class="cart__qty quantity">
+                      <div class="quantity-inner">
+                        <label for="Quantity" class="hidden">{{ 'products.product.quantity' | t }}</label>
+                        <input class="cart__qty-input form-control input-text qty text" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" pattern="[0-9]*">
+                        <div class="quantity-nav">
+                          <div class="quantity-button quantity-up"></div>
+                          <div class="quantity-button quantity-down"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="submit" name="update" class="btn btn--small btn--secondary cart__update visible-xs-inline-block" value="{{ 'cart.general.update_small' | t }}">
+                  </td>
+                  <td class="text-right hidden-xs">
+                    {% if item.original_line_price != item.line_price %}
+                    <div class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></div>
+                    {% endif %}
+
+                    <div>
+                      {{ item.line_price | money }}
+                    </div>
+
+                    {% for discount in item.discounts %}
+                    <div class="cart-item__discount">{{ discount.title }}</div>
+                    {% endfor %}
+                  </td>
+                  <td class="hidden-xs product-remove">
+                    <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" title="{{ 'cart.general.remove' | t }}">
+                      <i class="fa fa-close"></i>
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="6" style="padding: 0;padding-top: 15px;">
+                    {% if section.settings.cart_notes_enable == false %}
+                    <a href="collections/all" class="button medium border">{{ 'cart.general.continue_shopping' | t }}</a>
+                    <button class="button medium" style="float: right;" name="update">{{ 'cart.general.update' | t }}</button>
+                    {% endif %}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            {% if section.settings.cart_notes_enable %}
+            <div class="row">
+              <div class="grid__item col-lg-12 col-xs-12 cart-note">
+                <label for="CartSpecialInstructions" class="cart-note__label small--text-center">{{ 'cart.general.note' | t }}</label>
+                <textarea rows="3" name="note" id="CartSpecialInstructions" class="cart-note__input">{{ cart.note }}</textarea>
+                <a href="collections/all" class="button medium border" style="margin-right: 15px;">{{ 'cart.general.continue_shopping' | t }}</a>
+                <button class="button medium" style="margin-top: 15px;">{{ 'cart.general.update' | t }}</button>
+              </div>
+            </div>
+            {% endif %}
+          </form>
+        </div>
+        <div class="col-sm-12 col-md-4">
+          <div class="box-cart-total box-cart-total-JS">
+            <h5 class="title">{{'cart.general.cart_totals'|t}}</h5>
+            <table>
+              <tr class="subTotal" style="display: none;">
+                <td>{{ 'cart.general.subtotal' | t }}</td>
+                <td colspan="2"><span class="price" id="subTotal" data-price="{{ cart.total_price | json }}">{{ cart.total_price | money }}</span></td>
+              </tr>
+              {% if cart.total_discounts > 0 %}          
+              <tr>
+                <td>{{ 'cart.general.savings' | t }}</td>
+                <td colspan="2"><span class="cart__savings-amount">{{ cart.total_discounts | money }}</span></td>
+              </tr>
+              {% endif %}
+              <tr class="shippingBox" style="display: none;">
+                <td>Shipping</td>
+                <td colspan="2" class="shippingText">
+                  {% comment %}
+                  <label><input name="shipping" type="radio">Free Shipping</label>
+                  <label>
+                    <input name="shipping" type="radio">Local Delivery
+                    <span class="price">£50</span>
+                  </label>
+                  <label>
+                    <input name="shipping" type="radio">Flat Rate
+                    <span class="price">£100</span>
+                  </label>
+                  <label>
+                    <input name="shipping" type="radio">International
+                    <span class="price">£150</span>
+                  </label>
+                  {% endcomment %}
+                </td>
+              </tr>
+              <tr class="order-total">
+                <td>{{'cart.label.total'|t}}</td>
+                <td colspan="2"><span class="price">{{ cart.total_price | money }}</span></td>
+              </tr>
+            </table>
+            <form action="/checkout" method="POST">
+              <div class="box-coupon">
+                <div class="coupon">
+                  {% comment %}<h3 class="coupon-box-title">Coupon</h3>{% endcomment %}
+                  <div class="inner-box">
+                    <input type="text" name="discount" class="input-text" id="coupon_code" value="" placeholder="{{ 'cart.general.coupon_code' | t }}">
+                    {% comment %}<input type="submit" class="button" name="apply_coupon" value="Apply Coupon">{% endcomment %}
+                  </div>
+                </div>
+              </div>              
+              <button class="button btn-primary medium checkout-button">{{ 'cart.general.checkout' | t }}</button>
+              {% if additional_checkout_buttons %}
+              <div class="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+        {% else %}
+        <div class="imgKT">{{'cart_1.svg'| asset_url | img_tag}}</div>
+        <p class="cart-empty">{{ 'cart.general.empty_page' | t }}</p>
+        <div class="basel-empty-cart-text">{{ 'cart.general.guest_note_html' | t }}</div>
+        <p class="return-to-shop"><a href="collections/all" class="button wc-backward">{{ 'cart.general.continue_shopping' | t }}</a></p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Cart page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable cart notes",
+        "default": false
+      }
+    ]
+  }
+{% endschema %}

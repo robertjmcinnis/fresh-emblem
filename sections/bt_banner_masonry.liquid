@@ -1,0 +1,417 @@
+<div data-section-id="{{ section.id }}" id="BannerMasory-{{ section.id }}" data-section-type="bt_banner_masonry">
+{% if section.blocks.size > 0-%}
+{% capture banner_customize %}
+<div class="{%- if section.settings.width_section -%}container{%-else-%}container-fluid{%-endif-%}">
+  <div class="row">
+    <div class="banner_masonry{%if section.settings.banner_style_content == '2' %} group-banner-masonry{%endif%}" style="{%- if section.settings.section_margin_top != blank %}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank %}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                {%- if section.settings.section_padding != blank %}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+      {%-for block in section.blocks-%}
+      <div class="banner--grid-item{%if section.settings.banner_style_content == '2' %} banner-masonry-item{%endif%} col-lg-{{block.settings.banner_width}}
+                  {%- if block.settings.hide_medium %} hidden-md{%- else %} col-ms-{{block.settings.banner_width}}{%- endif %}
+                  {%- if block.settings.hide_small %} hidden-sm{%- else %} col-sm-{{ block.settings.banner_width }}{%- endif %}
+                  {%- if block.settings.hide_extra_small %} hidden-xs{%- else %} col-xs-12{%- endif %}{% if block.settings.nopadding %} padding-0{% endif %}" {{ block.shopify_attributes }}>
+        {%- if section.settings.banner_style_content == '1' -%}
+        <div class="banner-text{% if block.settings.stitle == "" %} style2{%endif%}">
+          <div class="image">
+            <a class="banner-opacity" href="{{block.settings.image_link}}">
+              {%- if block.settings.image != blank -%}
+              <picture>
+                <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '510x' %}" media="(min-width: 1920px)">
+                <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '476x' %}" media="(min-width: 1200px)">
+                <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '256x' %}" media="(min-width: 1024px)">
+                <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '570x' %}" media="(min-width: 991px)">
+                <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '384x' %}" media="(min-width: 768px)">
+                <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '480x' %}">
+                <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.image, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.image, size: '480x@2x' %}" alt="{{block.settings.image.alt}}">
+              </picture>
+              {%- endif -%}
+            </a>
+          </div>
+          {%- if block.settings.titlex != blank or block.settings.name_btn != blank -%}
+          <div class="content-text">
+            {%- if block.settings.titlex != blank -%}<h3 class="title">{{block.settings.titlex|html}}</h3>{%- endif -%}
+            {%- if block.settings.stitle != blank -%}<div class="sub-title">{{block.settings.stitle}}</div>{%- endif -%}
+            {%- if block.settings.name_btn != blank -%}<a href="{{block.settings.image_link}}" class="button">{{block.settings.name_btn}}</a>{%- endif -%}
+          </div>
+          {%- endif -%}
+        </div>
+        {%- elsif section.settings.banner_style_content == '2' -%}
+        <div class="inner">
+          {%- if block.settings.image != blank -%}
+            <picture>
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '510x' %}" media="(min-width: 1920px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '476x' %}" media="(min-width: 1200px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '256x' %}" media="(min-width: 1024px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '570x' %}" media="(min-width: 991px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '384x' %}" media="(min-width: 768px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '480x' %}">
+              <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.image, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.image, size: '480x@2x' %}" alt="{{block.settings.image.alt}}">
+            </picture>
+          {%- endif -%}
+          {%- if block.settings.titlex != blank or block.settings.name_btn != blank -%}
+          <div class="content">
+            {%- if block.settings.titlex != blank -%}<h2 class="title">{{block.settings.titlex|html}}</h2>{%- endif -%}
+            {%- if block.settings.stitle != blank -%}<h3 class="subtitle">{{block.settings.stitle}}</h3>{%- endif -%}
+            {%- if block.settings.name_btn != blank -%}<a href="{{block.settings.image_link}}" class="link">{{block.settings.name_btn}}</a>{%- endif -%}
+          </div>
+          {%- endif -%}
+        </div>
+        {%- elsif section.settings.banner_style_content == '3' and block.type == 'item3' -%}
+        <a href="{{block.settings.image_link}}" class="banner-border">
+          {%- if block.settings.image != blank -%}
+            <picture>
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: 'master' %}" media="(min-width: 1920px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: 'master' %}" media="(min-width: 1200px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '512x' %}" media="(min-width: 1024px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '512x' %}" media="(min-width: 991px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '768x' %}" media="(min-width: 768px)">
+              <source data-srcset="{% include 'kt_image_format',src: block.settings.image, size: '768x' %}">
+              <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.image, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.image, size: '480x@2x' %}" alt="{{block.settings.image.alt}}" style="width: 100%;">
+            </picture>
+          {%- endif -%}
+        </a>
+        {%- endif -%}
+      </div>
+      {%-endfor-%}
+    </div>
+  </div>
+</div>
+{% endcapture %}
+{%-endif %}
+  {{banner_customize|html}}
+</div>
+{% schema %}
+  {
+    "name": "Banner masonry",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "turnoff",
+        "label": "Turn off section"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Banner masonry",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "select",
+        "id": "banner_style_content",
+        "options": [
+        {
+           "value": "1",
+           "label": "Style 1"
+         },
+         {
+           "value": "2",
+           "label": "Style 2"
+         },
+         {
+           "value": "3",
+           "label": "Style 2"
+         }
+        ],
+        "label": "== Banner style content",
+        "default": "1"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item banner",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+             "type": "select",
+             "id": "banner_width",
+             "options": [
+              {
+                 "value": "1",
+                 "label": "1 column - 1/12"
+               },
+               {
+                 "value": "2",
+                 "label": "2 columns - 1/6"
+               },
+               {
+                 "value": "3",
+                 "label": "3 columns - 1/4"
+               },
+               {
+                 "value": "4",
+                 "label": "4 columns - 1/3"
+               },
+               {
+                 "value": "5",
+                 "label": "5 columns - 5/12"
+               },
+               {
+                 "value": "6",
+                 "label": "6 columns - 1/2"
+               },
+               {
+                 "value": "7",
+                 "label": "7 columns - 7/12"
+               },
+               {
+                 "value": "8",
+                 "label": "8 columns - 2/3"
+               },
+               {
+                 "value": "9",
+                 "label": "9 columns - 3/4"
+               },
+               {
+                 "value": "10",
+                 "label": "10 columns - 5/6"
+               },
+               {
+                 "value": "11",
+                 "label": "11 columns - 11/12"
+               },
+               {
+                 "value": "12",
+                 "label": "12 columns - 1/1"
+               }
+             ],
+             "label": "== Select column width",
+             "default": "4"
+          },
+          {
+            "type": "checkbox",
+            "id": "nopadding",
+            "label": "No padding"
+          },
+          {
+            "type": "header",
+            "content": "==  Hide on device?"
+          },
+          {
+           "type": "checkbox",
+             "id": "hide_medium",
+             "label": "___ Device medium",
+             "info": "Device medium ( 1199px - 992px )",
+             "default": false
+          },
+          {
+           "type": "checkbox",
+             "id": "hide_small",
+             "label": "___ Device small",
+             "info": "Device small ( 991px - 768px )",
+             "default": false
+          },
+          {
+           "type": "checkbox",
+             "id": "hide_extra_small",
+             "label": "___ Device Extra small",
+             "info": "Device small ( less 767px )",
+             "default": false
+          },
+          {
+            "type": "header",
+            "content": "== Promo Banner settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Link to"
+          },
+          {
+            "type":"textarea",
+            "id":"titlex",
+            "label": "== Title"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+            "label": "Title colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type":"richtext",
+            "id":"stitle",
+            "label": "== Subtitle"
+          },
+          {
+            "type": "color",
+            "id": "color_stitle",
+            "label": "Subtitle colors",
+            "default": "#e5e5e5"
+          },
+          {
+            "type":"text",
+            "id":"name_btn",
+            "label": "== Name button"
+          }
+        ]
+      },
+      {
+        "type": "item3",
+        "name": "Item banner(style3)",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+             "type": "select",
+             "id": "banner_width",
+             "options": [
+              {
+                 "value": "1",
+                 "label": "1 column - 1/12"
+               },
+               {
+                 "value": "2",
+                 "label": "2 columns - 1/6"
+               },
+               {
+                 "value": "3",
+                 "label": "3 columns - 1/4"
+               },
+               {
+                 "value": "4",
+                 "label": "4 columns - 1/3"
+               },
+               {
+                 "value": "5",
+                 "label": "5 columns - 5/12"
+               },
+               {
+                 "value": "6",
+                 "label": "6 columns - 1/2"
+               },
+               {
+                 "value": "7",
+                 "label": "7 columns - 7/12"
+               },
+               {
+                 "value": "8",
+                 "label": "8 columns - 2/3"
+               },
+               {
+                 "value": "9",
+                 "label": "9 columns - 3/4"
+               },
+               {
+                 "value": "10",
+                 "label": "10 columns - 5/6"
+               },
+               {
+                 "value": "11",
+                 "label": "11 columns - 11/12"
+               },
+               {
+                 "value": "12",
+                 "label": "12 columns - 1/1"
+               }
+             ],
+             "label": "== Select column width",
+             "default": "4"
+          },
+          {
+            "type": "checkbox",
+            "id": "nopadding",
+            "label": "No padding"
+          },
+          {
+            "type": "header",
+            "content": "==  Hide on device?"
+          },
+          {
+           "type": "checkbox",
+             "id": "hide_medium",
+             "label": "___ Device medium",
+             "info": "Device medium ( 1199px - 992px )",
+             "default": false
+          },
+          {
+           "type": "checkbox",
+             "id": "hide_small",
+             "label": "___ Device small",
+             "info": "Device small ( 991px - 768px )",
+             "default": false
+          },
+          {
+           "type": "checkbox",
+             "id": "hide_extra_small",
+             "label": "___ Device Extra small",
+             "info": "Device small ( less 767px )",
+             "default": false
+          },
+          {
+            "type": "header",
+            "content": "== Promo Banner settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image banner"
+          },
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Link to"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner masonry",
+        "category": "Block Banner"
+      }
+    ]
+  }
+{% endschema %}

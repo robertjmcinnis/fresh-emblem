@@ -1,0 +1,609 @@
+<div data-section-id="{{ section.id }}" data-section-type="slideshow-section">
+  {% if section.blocks.size > 0 %}
+  <div class="slideshow-wrapper{% if section.settings.width_section %} container{% endif %} home-slide1">
+      <button type="button" class="visually-hidden slideshow__pause" data-id="{{ section.id }}" aria-live="polite">
+        <span class="slideshow__pause-stop">
+          {% include 'icon-pause' %}
+          <span class="icon__fallback-text">{{ 'sections.slideshow.pause_slideshow' | t }}</span>
+        </span>
+        <span class="slideshow__pause-play">
+          {% include 'icon-play' %}
+          <span class="icon__fallback-text">{{ 'sections.slideshow.play_slideshow' | t }}</span>
+        </span>
+      </button>
+      {%- capture settings_fonts -%}{{settings.font_content_family.family}},{{settings.font_accent_family.family}},{{settings.font_quote_family.family}},{{settings.font_service_footer_family.family}}{%- endcapture -%}
+      {%- assign fonts = settings_fonts | split: ',' | uniq -%}
+      <div class="slideshow slideshow--{{ section.settings.slideshow_height }}" id="Slideshow-{{ section.id }}" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.autoplay_speed }}" data-arrows="{%-if section.settings.width_section == false -%}false{%-else-%}true{%-endif-%}">
+        {% for block in section.blocks %}
+          {%- assign is_background_video = false -%}
+          {% if block.type == 'video' %}
+            {% if block.settings.video_type == 'background' or block.settings.video_type =='background-chrome' %}
+              {%- assign is_background_video = true -%}
+            {% endif %}
+          {% endif %}
+          <div class="slideshow__slide slideshow__slide--{{ block.id }}{% if is_background_video %} slideshow__slide--background-video{% endif %}"
+              data-responsive='{{block.settings.responsive_item|strip_newlines}}'
+              data-responsive-subtitle='{{block.settings.responsive_item_subheading|strip_newlines}}'
+              data-responsive-description='{{block.settings.responsive_item_description|strip_newlines}}'
+              data-slide-blockid="{{ block.id }}" {{ block.shopify_attributes }}>
+            {% if block.settings.link != blank and block.settings.textBtn == blank %}
+              <a href="{{ block.settings.link }}">
+            {% endif %}
+
+            {% if block.type == 'video' %}
+              {% if block.settings.video_url != blank %}
+                <div class="video-loader"></div>
+              {% endif %}
+              {% unless block.settings.video_type == 'background' %}
+                <button type="button" class="text-link slideshow__video-control slideshow__video-control--close" data-controls="SlideshowVideo-{{ block.id }}">
+                  {% include 'icon-close' %}
+                  <span class="icon__fallback-text">{{ 'sections.slideshow.close_video' | t }}</span>
+                </button>
+              {% endunless %}
+              {% if block.settings.video_url != blank %}
+                <div id="SlideshowVideo-{{ block.id }}" class="slideshow__video {% if is_background_video %}slideshow__video--background{% endif %} slideshow__video--{{ block.settings.video_type }}"
+                  data-id="{{ block.settings.video_url.id }}"
+                  data-type="{{ block.settings.video_type }}"
+                  data-slideshow="Slideshow-{{ section.id }}"></div>
+              {% endif %}
+            {% endif %}
+
+                {% if section.settings.slideshow_height == 'auto' %}
+                {% if block.settings.image == blank %}
+                <div class="slideshow__image js">
+                  <div class="placeholder-background">
+                    {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                </div>
+                {% else %}
+                <div class="slideshow__image">
+                  <img id="Image-{{ block.id }}"
+                       class="grid-view-item__image lazyload{% unless forloop.first == true %} lazypreload{% endunless %}"
+                       src="{{ block.settings.image | img_url: '768x' }}"
+                       data-src="{{ block.settings.image | img_url: 'master' }}"
+                       alt="{{ block.settings.image.alt | escape }}">                
+                </div>
+                {% endif %}
+                {% else %}
+                {% if block.settings.image == blank %}
+                <div class="slideshow__image js">
+                  <div class="placeholder-background">
+                    {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                </div>
+                {% else %}
+                <div class="slideshow__image box ratio-container lazyload{% unless forloop.first == true %} lazypreload{% endunless %} js"
+                     data-bgset="{% include 'bgset', image: block.settings.image %}"
+                     data-sizes="auto"
+                     data-parent-fit="cover"
+                     style="background-position: {{ block.settings.alignment }};{% if forloop.first == true %} background-image: url('{{ block.settings.image | img_url: '300x300' }});{% endif %}">
+                </div>
+                {% endif %}
+                {% endif %}
+            <noscript>
+              <div class="slideshow__image"{% if block.settings.image %} style="background-image: url('{{ block.settings.image | img_url: '2048x' }}'); background-position: {{ block.settings.alignment }};"{% endif %}>
+                {% if block.settings.image == blank %}
+                  <div class="placeholder-background">
+                    {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                    {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {% endif %}
+              </div>
+            </noscript>
+            <div class="slideshow__text-wrap{% comment %}{% if block.settings.heading != blank or block.settings.subheading != blank %} slideshow__overlay{% endif %}{% endcomment %}">
+              <div class="slideshow__text-content" style="
+                {%- if block.settings.text_alignment_top != 0 -%}
+                top:{{block.settings.text_alignment_top|append:'%'}};max-height: calc(100% - {{block.settings.text_alignment_top|append:'%'}});max-height: -moz-calc(100% - {{block.settings.text_alignment_top|append:'%'}});max-height: -webkit-calc(100% - {{block.settings.text_alignment_top|append:'%'}});max-height: -o-calc(100% - {{block.settings.text_alignment_top|append:'%'}});
+                {%- endif -%}
+                {%- if block.settings.text_alignment_left == 0 and block.settings.text_alignment_right != 0 -%}
+                right:{{block.settings.text_alignment_right|append:'%'}};max-width: calc(100% - {{block.settings.text_alignment_right|append:'%'}});max-width: -moz-calc(100% - {{block.settings.text_alignment_right|append:'%'}});max-width: -webkit-calc(100% - {{block.settings.text_alignment_right|append:'%'}});max-width: -o-calc(100% - {{block.settings.text_alignment_right|append:'%'}});
+                text-align: right;
+                {%- else -%}
+                left:{{block.settings.text_alignment_left|append:'%'}};max-width: calc(100% - {{block.settings.text_alignment_left|append:'%'}});max-width: -moz-calc(100% - {{block.settings.text_alignment_left|append:'%'}});max-width: -webkit-calc(100% - {{block.settings.text_alignment_left|append:'%'}});max-width: -o-calc(100% - {{block.settings.text_alignment_left|append:'%'}});
+                text-align: left;
+                {%- endif -%}
+                {%- if block.settings.text_alignment_top != 0 and block.settings.text_alignment_left == 0 and block.settings.text_alignment_right == 0 -%}
+                {% assign tY = block.settings.text_alignment_top|divided_by: 2.0|append:'%' %}
+                transform: translateY(-{{tY}});-moz-transform: translateY(-{{tY}});-webkit-transform: translateY(-{{tY}});-o-transform: translateY(-{{tY}});
+                {%- endif -%}
+                {%- if block.settings.text_alignment_top == 0 and block.settings.text_alignment_left != 0 -%}
+                  {%- if block.settings.text_alignment_left != 0 and block.settings.text_alignment_right == 0 -%}
+                  {% assign tX = block.settings.text_alignment_left|divided_by: 2.0|append:'%' %}
+                  {%- else -%}
+                  {% assign tX = block.settings.text_alignment_right|divided_by: 2.0|append:'%' %}
+                  {%- endif -%}
+                transform: translateX(-{{tX}});-moz-transform: translateX(-{{tX}});-webkit-transform: translateY(-{{tX}});-o-transform: translateY(-{{tX}});
+                {%- endif -%}
+                {%- if block.settings.text_alignment_top != 0 and block.settings.text_alignment_left != 0-%}
+                  {% assign tY = block.settings.text_alignment_top|divided_by: 2.0|append:'%' %}
+                  {% assign tX = block.settings.text_alignment_left|divided_by: 2.0|append:'%' %}
+                transform: translate(-{{tX}},-{{tY}});-moz-transform: translate(-{{tX}},-{{tY}});-webkit-transform: translate(-{{tX}},-{{tY}});-o-transform: translate(-{{tX}},-{{tY}});
+                {%- endif -%}
+                {%- if block.settings.text_alignment_top != 0 and block.settings.text_alignment_right != 0-%}
+                  {% assign tY = block.settings.text_alignment_top|divided_by: 2.0|append:'%' %}
+                  {% assign tX = block.settings.text_alignment_right|divided_by: 2.0|append:'%' %}
+                transform: translate({{tX}},-{{tY}});-moz-transform: translate({{tX}},-{{tY}});-webkit-transform: translate({{tX}},-{{tY}});-o-transform: translate({{tX}},-{{tY}});
+                {%- endif -%}">
+                <div class="page-width text-{{block.settings.text_alignment}}">
+                  {% unless block.settings.heading == blank %}
+                    <h2 class="h1 mega-title slideshow__title" style="font-family:{{block.settings.font_title.family}};font-weight: {{block.settings.font_title.weight}};font-style: {{block.settings.font_title.style}}">
+                      {{ block.settings.heading }}
+                    </h2>
+                    {%- unless fonts contains settings.font_title -%}
+                    {%- assign fonts = fonts | join: ',' | append: settings.font_title.family | split: ',' -%}
+                      <style>
+                        {{ block.settings.font_title | font_face }}
+                      </style>
+                    {%- endunless -%}
+
+                  {% endunless %}
+                  {% unless block.settings.subheading == blank %}
+                    <span class="mega-subtitle slideshow__subtitle"  style="font-family:{{block.settings.font_subheading.family}};font-weight: {{block.settings.font_subheading.weight}};font-style: {{block.settings.font_subheading.style}}">
+                      {{ block.settings.subheading }}
+                    </span>
+                    {%- unless fonts contains settings.font_title -%}
+                    {%- assign fonts = fonts | join: ',' | append: settings.font_subheading.family | split: ',' -%}
+                      <style>
+                        {{ block.settings.font_subheading | font_face }}
+                      </style>
+                    {%- endunless -%}
+                  {% endunless %}
+                  {% unless block.settings.description == blank %}
+                    <span class="mega-description slideshow__description"  style="font-family:{{block.settings.font_description.family}};font-weight: {{block.settings.font_description.weight}};font-style: {{block.settings.font_description.style}}">
+                      {{ block.settings.description }}
+                    </span>
+                    {%- unless fonts contains settings.font_description -%}
+                    {%- assign fonts = fonts | join: ',' | append: settings.font_description.family | split: ',' -%}
+                      <style>
+                        {{ block.settings.font_description | font_face }}
+                      </style>
+                    {%- endunless -%}
+                  {% endunless %}
+                  {% if block.settings.textBtn != blank and block.settings.link != blank %}
+                    <span class="mega-button slideshow__button">
+                      <a class="button" href="{{ block.settings.link }}"><span>{{ block.settings.textBtn }}</span></a>
+                    </span>
+                  {% endif %}
+                  
+                  {% if block.type == 'video' %}
+                    {% unless block.settings.video_type == 'background' %}
+                      <div class="slideshow__video-control--play-wrapper{% if block.settings.heading != blank or block.settings.subheading != blank %} slideshow__video-control--play-wrapper--push{% endif %}">
+                        <button type="button" class="text-link slideshow__video-control slideshow__video-control--play" data-controls="SlideshowVideo-{{ block.id }}">
+                          {% include 'icon-play-video' %}
+                          <span class="icon__fallback-text">{{ 'sections.slideshow.play_video' | t }}</span>
+                        </button>
+                      </div>
+                    {% endunless %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% if block.settings.link != blank %}
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size == 0 %}
+    <div class="placeholder-noblocks">
+      {{ 'homepage.onboarding.no_content' | t }}
+    </div>
+  {% endif %}
+  <div class="margin-bottom-10 clearfix"></div>
+</div>
+{%- assign fontText = settings.slideshow_font_text -%}
+{% schema %}
+  {
+    "name": "Slideshow",
+    "class": "index-section index-section--kt",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "title",
+        "default": "Slideshow",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "autoplay_speed",
+        "label": "Change slides every",
+        "options": [
+          { "value": "5000", "label": "5 seconds" },
+          { "value": "6000", "label": "6 seconds" },
+          { "value": "7000", "label": "7 seconds" },
+          { "value": "8000", "label": "8 seconds" },
+          { "value": "9000", "label": "9 seconds" },
+          { "value": "10000", "label": "10 seconds" }
+        ],
+        "default": "7000"
+      },
+      {
+        "type": "select",
+        "id": "slideshow_height",
+        "label": "Section height",
+        "default": "auto",
+        "options": [
+          {
+            "label": "Auto",
+            "value": "auto"
+          },
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Full Screen",
+            "value": "full"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "select",
+            "id": "alignment",
+            "label": "Image alignment",
+            "default": "top",
+            "options": [
+              {
+                "value": "top",
+                "label": "Top"
+              },
+              {
+                "value": "center",
+                "label": "Middle"
+              },
+              {
+                "value": "bottom",
+                "label": "Bottom"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "font_picker",
+            "id": "font_title",
+            "label": "Font text heading",
+            "default": "poppins_n7"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive_item",
+            "label": "Responsive item heading",
+            "default": "{\n\t\"0\": \"\npadding: 8px 0;\nfont-size: 16px;\nline-height: 17px;\ncolor: #666666;\nletter-spacing: 12px;\ntext-transform: uppercase;\nmargin-bottom: 20px;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 16px;\n\t\",\n\t\"992\": \"\n font-size: 16px;\n\t\",\n\t\"1200\": \"\n    font-size: 16px;\n\t\"\n}"
+          },
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+          },
+          {
+            "type": "font_picker",
+            "id": "font_subheading",
+            "label": "Font text Subheading",
+            "default": "poppins_n7"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive_item_subheading",
+            "label": "Responsive item subheading",
+            "default": "{\n\t\"0\": \"\n    font-size: 55px;\n    line-height: 55px;\n    color: #333333;\n    padding: 8px 0;\n    margin-bottom: 30px;\n\t\",\n\t\"480\": \"\n font-size: 55px;\n\t\",\n\t\"768\": \"\n font-size: 55px;\n\t\",\n\t\"992\": \"\n font-size: 55px;\n\t\",\n\t\"1200\": \"\n    font-size: 55px;\n\t\"\n}"
+          },
+          {
+            "type": "text",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "font_picker",
+            "id": "font_description",
+            "label": "Font text Description",
+            "default": "poppins_n4"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive_item_description",
+            "label": "Responsive item description",
+            "default": "{\n\t\"0\": \"\ntext-transform: uppercase;\nfont-weight: 600;\nfont-size: 14px;\nmargin-bottom:20px;\nfont-style: normal;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 18px;\n\t\",\n\t\"992\": \"\n font-size: 24px;\n\t\",\n\t\"1200\": \"\n    font-size: 24px;\n\t\"\n}"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Slide link"
+          },
+          {
+            "type": "text",
+            "id": "textBtn",
+            "label": "Button name"
+          },
+          {
+            "type": "header",
+            "content": "Display settings"
+          },
+          {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text alignment",
+            "options": [
+              {
+                "label": "Left",
+                "value": "left"
+              },
+              {
+                "label": "Center",
+                "value": "center"
+              },
+              {
+                "label": "Right",
+                "value": "right"
+              }
+            ],
+            "default": "center"
+          },
+          {
+            "type": "range",
+            "id": "text_alignment_top",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "label": "Textbox alignment top",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "text_alignment_left",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Textbox alignment left",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "text_alignment_right",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Textbox alignment right",
+            "default": 0
+          },
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "title",
+            "default": "Item image",
+            "info": "Customize name block (no display item preview)"
+          }
+        ]
+      },
+      {
+        "type": "video",
+        "name": "Video slide",
+        "settings": [
+          {
+            "type": "video_url",
+            "id": "video_url",
+            "label": "Video link",
+            "accept": ["youtube"],
+            "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+          },
+          {
+            "type": "select",
+            "id": "video_type",
+            "label": "Style",
+            "options": [
+              {
+                "value": "chrome",
+                "label": "Image with play button"
+              },
+              {
+                "value": "background-chrome",
+                "label": "Background video with play button"
+              },
+              {
+                "value": "background",
+                "label": "Background video"
+              }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Fallback when autoplaying video is not supported on mobile devices"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "font_picker",
+            "id": "font_title",
+            "label": "Font text heading",
+            "default": "poppins_n7"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive_item",
+            "label": "Responsive item heading",
+            "default": "{\n\t\"0\": \"\nfont-size: 32px;\nline-height: 22px;\n\t\",\n\t\"480\": \"\n font-size: 40px;\n\t\",\n\t\"768\": \"\n font-size: 40px;\n\t\",\n\t\"992\": \"\n font-size: 40px;\nline-height: 38px;\n\t\",\n\t\"1200\": \"\n    font-size: 50px;\n\t\"\n}"
+          },
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+          },
+          {
+            "type": "font_picker",
+            "id": "font_subheading",
+            "label": "Font text Subheading",
+            "default": "poppins_n7"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive_item_subheading",
+            "label": "Responsive item subheading",
+            "default": "{\n\t\"0\": \"\ntext-transform: uppercase;\nfont-weight: 600;\nfont-size: 14px;\nmargin-bottom:20px;\nfont-style: normal;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 18px;\n\t\",\n\t\"992\": \"\n font-size: 24px;\n\t\",\n\t\"1200\": \"\n    font-size: 24px;\n\t\"\n}"
+          },
+          {
+            "type": "text",
+            "id": "description",
+            "label": "Description"
+          },
+          {
+            "type": "font_picker",
+            "id": "font_description",
+            "label": "Font text Description",
+            "default": "poppins_n4"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive_item_description",
+            "label": "Responsive item description",
+            "default": "{\n\t\"0\": \"\ntext-transform: uppercase;\nfont-weight: 600;\nfont-size: 14px;\nmargin-bottom:20px;\nfont-style: normal;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 18px;\n\t\",\n\t\"992\": \"\n font-size: 24px;\n\t\",\n\t\"1200\": \"\n    font-size: 24px;\n\t\"\n}"
+          },
+          {
+            "type": "text",
+            "id": "textBtn",
+            "label": "Button name"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Button link"
+          },
+          {
+            "type": "header",
+            "content": "Display settings"
+          },
+          {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text alignment",
+            "options": [
+              {
+                "label": "Left",
+                "value": "left"
+              },
+              {
+                "label": "Center",
+                "value": "center"
+              },
+              {
+                "label": "Right",
+                "value": "right"
+              }
+            ],
+            "default": "center"
+          },
+          {
+            "type": "range",
+            "id": "text_alignment_top",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "label": "Textbox alignment top",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "text_alignment_left",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Textbox alignment left",
+            "default": 16
+          },
+          {
+            "type": "range",
+            "id": "text_alignment_right",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Textbox alignment right",
+            "default": 0
+          },
+          {
+            "type": "checkbox",
+            "id": "turnoff",
+            "label": "Turn off block"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Item video",
+            "info": "Customize name block (no display item preview)"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Slick slideshow",
+      "category": "Image",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": "5000"
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }]
+  }
+{% endschema %}

@@ -1,0 +1,81 @@
+<div class="section-about">
+  <div class="container">
+    <div class="clearfix" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                                 {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                                 {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+      <div class="section-title text-center style7">
+        <span class="sub-title">{{section.settings.text}}</span>
+        <h3>{{section.settings.titlex}}</h3>
+      </div>
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+          <blockquote class="style2 margin-bottom-10">{{section.settings.blockquote}}</blockquote>
+        </div>
+      </div>
+      <div class="text-center GreatVibes">
+        {{section.settings.author}}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Section about",
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Section about",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "== Content settings"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "text",
+        "id": "titlex",
+        "label": "Title",
+        "default": "THE BOUTIQUE"
+      },
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Text",
+        "default": "Welcome to Boutique - Beautiful Creative Ecommerce Template!"
+      },
+      {
+        "type": "textarea",
+        "id": "blockquote",
+        "label": "Blockquote",
+        "default": "Praesent accumsan, nunc eget semper cursus, tellus nisl sagittis massa, vel egestas erat odio sed sapien. In malesuada ipsum ut elit vestim pretium. In a luctus tellus. Fusce id euismod justo. Vivamus ullamcorper, lacus at congue feugiat, metus justo fermentum mauris Etiam rhoncus enim non nulla posuere bibendum et non lacus. Aliquam rhoncus vel metus vel elementum."
+      },
+      {
+        "type": "text",
+        "id": "author",
+        "label": "Author",
+        "default": "Johnathan Doe"
+      }
+    ]
+  }
+{% endschema %}

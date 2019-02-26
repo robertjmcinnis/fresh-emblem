@@ -1,0 +1,79 @@
+<style>
+/*ADD NEW */li._dusty-pink .swatch {background-color:#dbbebb;}li._taupe .swatch {background-color: #e3d9d7;}li._bark .swatch {background-color: #ad4e22;}li._shell .swatch {background-color: #efe5e3;}
+  {%- for block in section.blocks -%}
+  {%-if block.settings.title != "" -%}
+  li._{{block.settings.title | handleize }} .swatch{
+    {%-if block.settings.color_1_c != blank and block.settings.color_2_c == blank -%}
+    background-color: {{block.settings.color_1_c}};
+    {%-endif -%}
+    {%-if block.settings.color_1_c != blank and block.settings.color_2_c != blank -%}
+    background: {{block.settings.color_1_c}}; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient({{block.settings.color_1_c}} 50%, {{block.settings.color_2_c}} 50%); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient({{block.settings.color_1_c}} 50%, {{block.settings.color_2_c}} 50%); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient({{block.settings.color_1_c}} 50%, {{block.settings.color_2_c}} 50%); /* For Firefox 3.6 to 15 */
+    background: linear-gradient({{block.settings.color_1_c}} 50%, {{block.settings.color_2_c}} 50%); /* Standard syntax (must be last) */
+    {%-endif -%}
+    {%- if block.settings.color_img and block.settings.color_jpg != blank %}
+    background-image: url({{ block.settings.color_jpg | img_url: '37x37', crop: 'center' | split:'?' | first }});
+    {%-endif -%}
+  }
+  {%-endif -%}
+  {%- endfor -%}
+  {%- for block in section.blocks -%}
+  {%-if block.settings.title != "" -%}
+  {%- if block.settings.color_img and block.settings.color_jpg != blank -%}
+  li._{{block.settings.title | handleize }} span.title:before{
+    height: 100px;
+    background-image: url({{ block.settings.color_jpg | img_url: 'small', crop: 'center' | split:'?' | first }});
+  }
+  {%-endif -%}
+  {%-endif -%}
+  {%- endfor -%}
+</style>
+
+{%- schema -%}
+  {
+    "name": "Custom color variation",
+    "settings": [
+  		{
+        "type": "paragraph",
+        "content": "Name the color name and select the color code you want to customize"
+    	}
+  	],
+    "blocks": [
+    	{
+        "type":"color_color",
+         "name":"Choose color",
+          "settings": [
+    		{
+          "type": "text",
+          "id": "title",
+          "label": "Color Names",
+          "info": "eg: yellow"
+        },
+        {
+          "type": "color",
+          "id": "color_1_c",
+          "label": "Select color"
+        },
+        {
+          "type": "color",
+          "id": "color_2_c",
+          "label": "Select color 2 (optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "color_img",
+          "label": "Show image?"
+        },
+        {
+          "type": "image_picker",
+          "id": "color_jpg",
+          "label": "Color image",
+          "info": "30px x 30px recommended"
+        }
+       ]
+    	}
+  	]
+  }
+{% endschema %}

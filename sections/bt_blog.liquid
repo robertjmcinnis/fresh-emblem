@@ -1,0 +1,487 @@
+<div style="{%-if section.settings.section_bg != blank -%}background-color:{{section.settings.section_bg}};{%-endif-%}{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div class="clearfix" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}">
+      {%- if section.blocks.size > 0 -%}
+      <div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+      {%- assign aspect_ratioW = settings.aspect_ratio_related_post | split: '/' | first | strip | plus: 0.00 -%}
+      {%- assign aspect_ratioH = settings.aspect_ratio_related_post | split: '/' | last | strip | plus: 0.00 -%}
+        {%- assign aspect_cs = aspect_ratioW|divided_by:aspect_ratioH | round: 2 -%}
+      {%- for block in section.blocks-%}
+        <div class="{% if section.settings.use_fsidebar == fasle %}section-lasttest-blog{% else %}lasttest-blog{% endif %}" {{ block.shopify_attributes }}>
+          {% if block.settings.title != blank %}
+          <div class="section-title style{{block.settings.title_style}}{% if section.settings.use_fsidebar == false %} text-center{% else %} line-top padding-top-30 margin-bottom-30{% endif %}{%if block.settings.title_style == '6'%} margin-bottom-40{%endif%}">
+            {% if block.settings.text_head != blank and block.settings.title_style == '4' %}<span class="text-head">{{block.settings.text_head}}</span>{% endif %}
+            <h3>{{block.settings.title}}</h3>
+            {% if block.settings.s_title != blank %}
+            <span class="sub-title">{{block.settings.s_title}}</span>
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="lastest-blog style{{block.settings.blog_style}} owl-carousel{% if block.settings.nav_position != '' %} {{block.settings.nav_position}}{% endif %}{% if block.settings.nav_style != '' %} nav-style{{block.settings.nav_style}}{% endif -%} {% if block.settings.no_overflow %} no-overflow{% endif %}" data-nav="true" data-dots="false" data-loop="true" data-margin="30"
+               data-responsive='{{block.settings.responsive|strip_newlines|remove:'		'|remove:'	'}}'>
+            {% for article in blogs[block.settings.blog].articles limit: 8 %}
+              {%- assign aspect_image = article.image.width | times:1.00 |divided_by:article.image.height| round: 2 -%}
+              {%- capture image_fit -%}
+                {%- if aspect_ratioW < aspect_ratioH -%}
+                  {%- if article.image.width == article.image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+                {%- elsif aspect_ratioW > aspect_ratioH -%}
+                  {%- if article.image.width == article.image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+                {%- else -%} nonheight_ nonwidth
+                {%- endif -%}
+              {%- endcapture -%}
+              {%- capture article_image -%}
+              {%- if aspect_ratioW < aspect_ratioH -%}
+                <picture>
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: '510x' %}" media="(min-width: 1920px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: '476x' %}" media="(min-width: 1200px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: '455x' %}" media="(min-width: 1024px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: '570x' %}" media="(min-width: 991px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: '768x' %}" media="(min-width: 768px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: '480x' %}">
+                  <img class="lazyload" src="{{'bt_placeholder_blog_slide.svg'|asset_url}}" data-src="{% include 'kt_image_format',src: article.image.src , size: '480x@2x' %}" alt="{{article.title}}">
+                </picture>
+              {%- else -%}
+                <picture>
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: 'x510' %}" media="(min-width: 1920px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: 'x476' %}" media="(min-width: 1200px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: 'x455' %}" media="(min-width: 1024px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: 'x570' %}" media="(min-width: 991px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: 'x768' %}" media="(min-width: 768px)">
+                  <source data-srcset="{% include 'kt_image_format',src: article.image.src , size: 'x480' %}">
+                  <img class="lazyload" src="{{'bt_placeholder_blog_slide.svg'|asset_url}}" data-src="{% include 'kt_image_format',src: article.image.src , size: '480x@2x' %}" alt="{{article.title}}">
+                </picture>
+              {%- endif -%}
+              {%- endcapture -%}
+              {% if block.settings.blog_style == '2' %}
+                <div class="item-blog">
+                  <div class="right">
+                    {% if article.image %}
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">               
+                      <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+                      <a href="{{ article.url }}" class="banner-{{block.settings.hover_effect}}">
+                        {{article_image}}
+                      </a>
+                    </div>
+                    {% endif %}
+                  </div>
+                  <div class="blog-date">
+                    <span class="day">{{ article.published_at | date: '%d' }}</span>
+                    <span class="group">
+                      <span class="month">/{{ article.published_at | date: '%b' | upcase }}</span><br>
+                      <span class="year">{{ article.published_at | date: '%Y' }}</span>
+                    </span>
+                  </div>
+                  <div class="left">
+                    <h3 class="blog-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                    <div class="meta">
+                      <span class="author">                  
+                        {% comment %}<img alt="avatar" src="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=20&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=40&d=mm&r=g 2x" class="avatar" height="20" width="20">{% endcomment %}
+                        {{ article.author }}
+                      </span>
+                      <span class="comment"><i class="fa fa-comment"></i> {{'blogs.comments.comments_with_count'|t:count:article.comments_count}}</span>
+                    </div>
+                  </div>
+                </div>
+              {% elsif block.settings.blog_style == '3' %}
+                <div class="item-blog">
+                  <h3 class="blog-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                  {% if article.image %}
+                  <div class="thumb">
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">               
+                      <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+                      <a href="{{ article.url }}" class="banner-{{block.settings.hover_effect}}">
+                        {{article_image}}
+                      </a>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="metas">
+                    <span>
+                      <a href="{{article.user.homepage| default: '#'}}">
+                        {% comment %}<img alt="avatar" src="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=20&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=40&d=mm&r=g 2x" class="avatar" height="20" width="20">{% endcomment %}
+                        {{ article.author }}
+                      </a>
+                    </span>
+                    <span class="date">{{ article.published_at | date: '%d %b %Y' }}</span>
+                    <span class="comment"><i class="fa fa-comment"></i> {{'blogs.comments.comments_with_count'|t:count:article.comments_count}}</span>
+                  </div>
+                  <div class="desc">
+                    <p>{{article.excerpt_or_content|strip_html|truncatewords:12}}</p>
+                  </div> 
+                </div>
+              {% elsif block.settings.blog_style == '4' %}
+                <div class="item-blog row-flex align-items-center">
+                  <div class="left col-12 col-sm-6">
+                    <div class="blog-date">
+                      <span class="day">{{ article.published_at | date: '%d' }}</span>
+                      <span class="month">/{{ article.published_at | date: '%b' | upcase }}</span><br>
+                      <span class="year">{{ article.published_at | date: '%Y' }}</span>
+                    </div>
+                    <h3 class="blog-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                    <div class="meta">
+                      <span class="author">
+                        {% comment %}<img alt="avatar" src="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=20&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=40&d=mm&r=g 2x" class="avatar" height="20" width="20">{% endcomment %}
+                        {{ article.author }}
+                      </span>
+                      <span class="comment"><i class="fa fa-comment"></i> {{'blogs.comments.comments_with_count'|t:count:article.comments_count}}</span>
+                    </div>
+                  </div>
+                  <div class="right col-12 col-sm-6">
+                    {% if article.image %}
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">               
+                      <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+                      <a href="{{ article.url }}" class="banner-{{block.settings.hover_effect}}">
+                        {{article_image}}
+                      </a>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% elsif block.settings.blog_style == '5' %}
+                <div class="item-blog">
+                  <div class="thumb">
+                    {% if article.image %}
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">               
+                      <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+                      <a href="{{ article.url }}" class="banner-{{block.settings.hover_effect}}">
+                        {{article_image}}
+                      </a>
+                    </div>
+                    {% endif %}
+                  </div>
+                  <div class="info">
+                    <div class="metas">
+                      <span class="date">
+                        <span class="day">{{ article.published_at | date: '%d' }}</span>
+                        <span class="month">{{ article.published_at | date: '%b' | upcase }}</span>
+                      </span>
+                      <span><a href="{{article.user.homepage| default: '#'}}">{{ article.author }}</a></span>
+                    </div>
+                    <h3 class="blog-title"><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h3>
+                    <a class="readmore" href="{{ article.url }}">{{'blogs.article.read_more'|t}}</a>
+                  </div>                
+                </div>
+              {% elsif block.settings.blog_style == '6' %}
+                <div class="item-blog">
+                  <div class="thumb">
+                    {% if article.image %}
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                      <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+                      <a href="{{ article.url }}" class="banner-{{block.settings.hover_effect}}">
+                        {{article_image}}
+                      </a>
+                    </div>
+                    {% endif %}
+                  </div>
+                  <div class="info">
+                    <div class="date">
+                      <span class="day">{{ article.published_at | date: '%d' }}</span>
+                      <div class="my">
+                        <span class="month">{{ article.published_at | date: '%b' | upcase }}</span>
+                        <span class="year">{{ article.published_at | date: '%Y' | upcase }}</span>
+                      </div>
+                    </div>
+                    <h3 class="blog-title"><a href="{{ article.url }}" title="{{ article.title }}">{{ article.title }}</a></h3>
+                  </div>
+                  <div class="metas">
+                    <span class="author">
+                      <a href="{{article.user.homepage| default: '#'}}">
+                        {% comment %}<img alt="avatar" src="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=20&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=40&d=mm&r=g 2x" class="avatar" height="20" width="20">{% endcomment %}
+                        {{ article.author }}
+                      </a>
+                    </span>
+                    <span class="comment"><i class="fa fa-comment"></i> {{'blogs.comments.comments_with_count'|t:count:article.comments_count}}</span>
+                  </div>               
+                </div>
+              {% else %}
+                <div class="item-blog row-flex align-items-center">
+                  <div class="left col-12 col-sm-6">
+                    <div class="blog-date">
+                      <span class="day">{{ article.published_at | date: '%d' }}</span>
+                      <span class="month">/{{ article.published_at | date: '%b' | upcase }}</span><br>
+                      <span class="year">{{ article.published_at | date: '%Y' }}</span>
+                    </div>
+                    <h3 class="blog-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                    <div class="meta">
+                      <span class="author">                  
+                        {% comment %}<img alt="avatar" src="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=20&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=40&d=mm&r=g 2x" class="avatar" height="20" width="20">{% endcomment %}
+                        {{ article.author }}
+                      </span>
+                      <span class="comment"><i class="fa fa-comment"></i> {{'blogs.comments.comments_with_count'|t:count:article.comments_count}}</span>
+                    </div>
+                  </div>
+                  <div class="right col-12 col-sm-6">
+                    {% if article.image %}
+                    <div class="image__product aspectRatioPlaceholder {{image_fit}}">
+                      <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+                      <a href="{{ article.url }}" class="banner-{{block.settings.hover_effect}}">
+                        {{article_image}}
+                      </a>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Related post",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Related post",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type":"checkbox",
+        "id": "use_fsidebar",
+        "label": "Use for sidebar",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "30px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px",
+        "default": "0-0-60px-0"
+      },
+      {
+        "type": "color",
+        "id": "section_bg",
+        "label": "Background color"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+             "type": "text",
+             "id": "text_head",
+             "label": "Text head (Title style 4)",
+             "default": "B"
+          },
+          {
+             "type": "text",
+             "id": "title",
+             "label": "Title",
+             "default": "Our BLog"
+          },
+          {
+             "type": "text",
+             "id": "s_title",
+             "label": "Subtitle",
+             "default": "Find more our news & Promotions"
+          },
+          {
+            "type": "select",
+            "id": "title_style",
+            "options": [
+              {
+                "value": "1",
+                "label": "Style 1"
+              },
+              {
+                "value": "2",
+                "label": "Style 2"
+              },
+              {
+                "value": "3",
+                "label": "Style 3"
+              },
+              {
+                "value": "4",
+                "label": "Style 4"
+              },
+              {
+                "value": "6",
+                "label": "Style 5"
+              }
+            ],
+            "label": "Title style",
+            "default": "1"
+          },
+          {
+             "type": "blog",
+             "id": "blog",
+             "label": "== Chose blog"
+          },
+          {
+            "type": "select",
+            "id": "blog_style",
+            "options": [
+              {
+                "value": "1",
+                "label": "Style 1"
+              },
+              {
+                "value": "2",
+                "label": "Style 2"
+              },
+              {
+                "value": "3",
+                "label": "Style 3"
+              },
+              {
+                "value": "4",
+                "label": "Style 4"
+              },
+              {
+                "value": "5",
+                "label": "Style 5"
+              },
+              {
+                "value": "6",
+                "label": "Style 6"
+              }
+            ],
+            "label": "== Select blog style",
+            "default": "1"
+          },
+          {
+            "type": "select",
+            "id": "hover_effect",
+            "options": [
+              {
+                "value": "border",
+                "label": "Effect 1"
+              },
+              {
+                "value": "opacity",
+                "label": "Effect 2"
+              },
+              {
+                "value": "text",
+                "label": "Effect 3"
+              }
+            ],
+            "label": "== Select hover effect",
+            "default": "border"
+          },
+          {
+            "type": "select",
+            "id": "nav_style",
+            "options": [
+              {
+                "value": "1",
+                "label": "Style 1"
+              },
+              {
+                "value": "2",
+                "label": "Style 2"
+              },
+              {
+                "value": "3",
+                "label": "Style 3"
+              },
+              {
+                "value": "4",
+                "label": "Style 4"
+              },
+              {
+                "value": "5",
+                "label": "Style 5"
+              },
+              {
+                "value": "6",
+                "label": "Style 6"
+              },
+              {
+                "value": "7",
+                "label": "Style 7"
+              },
+              {
+                "value": "8",
+                "label": "Style 8"
+              }
+            ],
+            "label": "== Select navigation style",
+            "default": "7"
+          },
+          {
+            "type": "select",
+            "id": "nav_position",
+            "options": [
+              {
+                "value": "nav-default",
+                "label": "Null"
+              },
+              {
+                "value": "nav-center-center",
+                "label": "Center center"
+              },
+              {
+                "value": "nav-center-outside",
+                "label": "Center outside"
+              },
+              {
+                "value": "nav-top-right",
+                "label": "Top right"
+              },
+              {
+                "value": "nav-top-left",
+                "label": "Top left"
+              }
+            ],
+            "label": "== Select navigation position",
+            "default": "nav-center-center"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive",
+            "label": "== Responsive",
+            "default": "{\n\t\"0\": {\n\t\t\"items\": 1,\n\t\t\"margin\": 30\n\t},\n\t\"480\": {\n\t\t\"items\": 1,\n\t\t\"margin\": 30\n\t},\n\t\"768\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t},\n\t\"992\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t},\n\t\"1200\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t}\n}"
+          },
+          {
+             "type": "checkbox",
+             "id": "no_overflow",
+             "label": "== No overflow content items"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Related post",
+        "category": "Blog"
+      }
+    ]
+  }
+{% endschema %}

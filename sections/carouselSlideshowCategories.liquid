@@ -1,0 +1,723 @@
+{% if section.blocks.size != 0-%}
+<div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+  <div class="{% if section.settings.width_section %} container{% endif %}">
+    <div class="home-top-category-slide">
+      <a href="#" class="block-toggle"><span class="icon pe-7s-close"></span></a>
+      <div class="block-category-carousel scrollbar style2 open">
+        <div class="inner">
+          <h3 class="title">{{section.settings.title_categories}}</h3>
+          <span class="sub-title">{{section.settings.stitle_categories}}</span>
+          <div class="block-inner owl-carousel" data-nav="false" data-dots="true" data-items="1" data-loop="true">
+            {%- assign count = 0 -%}
+            {%- for i in (1..12) -%}
+              {%- assign cat_icon = 'cat_icon' | append: i -%}
+              {%- assign cat_collection = 'cat_collection' | append: i -%}
+              {%- if settings[cat_collection] != blank or settings[cat_icon] -%}
+              {%-if count == 0 -%}
+              <ul class="list-cat">
+              {%-endif-%}
+                <li>
+                  <a href="/collections/{{settings[cat_collection]}}">
+                    <img src="{{settings[cat_icon] | img_url: 'small'}}" alt="icon {{settings[cat_collection]}}">
+                    {{settings[cat_collection] | capitalize | replace: '-', ' ' }}
+                  </a>
+                </li>
+              {%- assign count = count | plus: 1 -%}
+              {%-if count == section.settings.item_per_col or forloop.last -%}
+              </ul>
+              {%- assign count = 0 -%}
+              {%-endif-%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+      <!-- Home slide -->  
+      <div class="kt_home_slide owl-carousel carouselLoading home-slide{{section.settings.import_type}}{% if section.settings.nav_position != '' %} {{section.settings.nav_position}}{% endif %}{% if section.settings.nav_style != '' %} nav-style{{section.settings.nav_style}}{% endif -%}
+                  {%- if section.settings.number_items != '0' %} items__{{section.settings.number_items}}{%endif%}"
+           data-dots="{%-if section.settings.import_type == '20'-%}true{%-else-%}false{%-endif-%}"
+           data-nav="{%-if section.settings.import_type == '20'-%}false{%-else-%}true{%-endif-%}"
+           data-auto-height="false"
+           data-nav-text='["{{'sections.slideshow.previous_slide'|t}}","{{'sections.slideshow.next_slide'|t}}"]'
+           data-autoplay="{{section.settings.autoplay}}"
+           data-autoplay-timeout="{{section.settings.autoplay_speed | plus: 0}}"
+           data-loop="true"
+           data-animateout="{{section.settings.animateout}}" 
+           data-animatein="{{section.settings.animatein}}" 
+           data-items="{{section.settings.number_items}}"
+           {%-if section.settings.margin_items != blank -%}data-margin="{{section.settings.margin_items|plus:0}}"{%-endif-%}>
+        {% for block in section.blocks-%}
+        {%- if block.settings.turnoff == false %}
+        {%- if block.settings.image-%}
+        {%- capture img_id -%}SlideImage-{{ block.id }}{%- endcapture -%}
+        {%- assign image_item = block.settings.image -%}
+        {%- assign img_url = image_item | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <div class="item__" {{ block.shopify_attributes }}>
+          {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}">
+            {% endif %}
+            {%-if section.settings.fullscreen-%}
+            <div class="item-slide full-height lazyload{% unless forloop.first == true %} lazypreload{% endunless %}"
+                 data-bgset="{%- include 'bgset', image: image_item -%}"
+                 data-sizes="auto"
+                 data-parent-fit="cover"
+                 style="background-image: url('{{ image_item | img_url: '300x' }}');">
+           </div>
+            {%-else-%}
+            <img id="{{ img_id }}"
+                 class="grid-view-item__image lazyload{% unless forloop.first == true %} lazypreload{% endunless %}"
+                 src="{{ image_item | img_url: '300x300' }}"
+                 data-src="{{ img_url }}"
+                 data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                 data-aspectratio="{{ image_item.aspect_ratio }}"
+                 data-sizes="auto"
+                 alt="{{ image_item.alt | escape }}">
+            {%-endif-%}
+            <noscript>
+              {%- capture image_size -%}300x300{%- endcapture -%}
+              <img class="grid-view-item__image" src="{{ image_item | img_url: image_size, scale: 2 }}" alt="{{ image_item.alt }}" style="max-width: {{ 960 | times: image_item.aspect_ratio }}px;">
+            </noscript>
+            {% if block.settings.link != blank %}
+          </a>
+          {% endif %}
+        </div>
+        {%- else -%}
+        <div class="item__">
+          <div class="placeholder-background">
+            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+            {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        </div>
+        {%- endif -%}
+        {% endif -%}
+        {%-endfor %}
+      </div>
+    </div>
+  </div>
+  <!-- ./Home slide -->
+</div>
+{% assign optimize_image_1 = settings.optimize_image_1 %}
+{% assign optimize_image_2 = settings.optimize_image_2 %}
+{% assign optimize_image_3 = settings.optimize_image_3 %}
+{% assign optimize_image_4 = settings.optimize_image_4 %}
+{%-endif %}
+{%-schema-%}
+{
+  "name": "Slideshow and Categories",
+  "class": "index-section index-section--kt",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Slideshow and Categories",
+      "info": "Customize name section (no display item preview)"
+    },
+    {
+      "type": "header",
+      "content": "Content settings"
+    },
+    {
+      "type":"checkbox",
+      "id": "width_section",
+      "label": "Max width section",
+      "default": true,
+      "info": "Max width = 1200px"
+    },
+    {
+      "type": "select",
+      "id": "number_items",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 item"
+        },
+        {
+          "value": "2",
+          "label": "2 items"
+        },
+        {
+          "value": "3",
+          "label": "3 items"
+        },
+        {
+          "value": "4",
+          "label": "4 items"
+        },
+        {
+          "value": "5",
+          "label": "5 items"
+        }
+      ],
+      "label": "== Items display",
+      "default": "1"
+    },
+    {
+      "type": "text",
+      "id": "margin_items",
+      "label": "Distance between items",
+      "info": "Integer"
+    },
+    {
+      "type": "select",
+      "id": "import_type",
+      "options": [
+        {
+          "value": "1",
+          "label": "Default"
+        },
+        {
+          "value": "3",
+          "label": "Home 3"
+        },
+        {
+          "value": "7",
+          "label": "Home 7"
+        },
+        {
+          "value": "9",
+          "label": "Home 9"
+        },
+        {
+          "value": "20",
+          "label": "Home 20"
+        }
+      ],
+      "label": "== Select Type slider",
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "nav_style",
+      "options": [
+        {
+          "value": "",
+          "label": "Null"
+        },
+        {
+          "value": "1",
+          "label": "Style 1"
+        },
+        {
+          "value": "2",
+          "label": "Style 2"
+        },
+        {
+          "value": "3",
+          "label": "Style 3"
+        },
+        {
+          "value": "4",
+          "label": "Style 4"
+        },
+        {
+          "value": "5",
+          "label": "Style 5"
+        },
+        {
+          "value": "6",
+          "label": "Style 6"
+        },
+        {
+          "value": "7",
+          "label": "Style 7"
+        },
+        {
+          "value": "8",
+          "label": "Style 8"
+        }
+      ],
+      "label": "== Select style navigation",
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "nav_position",
+      "options": [
+        {
+          "value": "",
+          "label": "Null"
+        },
+        {
+          "value": "nav-center-center",
+          "label": "Center center"
+        },
+        {
+          "value": "nav-center-outside",
+          "label": "Center outside"
+        }
+      ],
+      "label": "== Select navigation position",
+      "default": ""
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "fullscreen",
+      "label": "Use slideshow full screen"
+    },
+    {
+      "type": "select",
+      "id": "autoplay_speed",
+      "label": "Change slides every",
+      "options": [
+        { "value": "5000", "label": "5 seconds" },
+        { "value": "6000", "label": "6 seconds" },
+        { "value": "7000", "label": "7 seconds" },
+        { "value": "8000", "label": "8 seconds" },
+        { "value": "9000", "label": "9 seconds" },
+        { "value": "10000", "label": "10 seconds" }
+      ],
+      "default": "7000"
+    },
+    {
+      "type": "select",
+      "id": "animatein",
+      "label": "Change slides every",
+      "options": [
+        {
+          "group": "Bouncing Entrances",
+          "value": "bounceIn",
+          "label": "Bounce In"
+        },
+        {
+          "group": "Bouncing Entrances",
+          "value": "bounceInDown",
+          "label": "Bounce In Down"
+        },
+        {
+          "group": "Bouncing Entrances",
+          "value": "bounceInLeft",
+          "label": "Bounce In Left"
+        },
+        {
+          "group": "Bouncing Entrances",
+          "value": "bounceInRight",
+          "label": "Bounce In Right"
+        },
+        {
+          "group": "Bouncing Entrances",
+          "value": "bounceInUp",
+          "label": "Bounce In Up"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeIn",
+          "label": "Fade In"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInDown",
+          "label": "Fade In Down"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInDownBig",
+          "label": "Fade In Down Big"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInLeft",
+          "label": "Fade In Left"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInLeftBig",
+          "label": "Fade In Left Big"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInRight",
+          "label": "Fade In Right"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInRightBig",
+          "label": "Fade In Right Big"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInUp",
+          "label": "Fade In Up"
+        },
+        {
+          "group": "Fading Entrances",
+          "value": "fadeInUpBig",
+          "label": "Fade In Up Big"
+        },
+        {
+          "group": "Flippers",
+          "value": "flip",
+          "label": "flip"
+        },
+        {
+          "group": "Flippers",
+          "value": "flipInX",
+          "label": "Flip In X"
+        },
+        {
+          "group": "Flippers",
+          "value": "flipInY",
+          "label": "Flip In Y"
+        },
+        {
+          "group": "Lightspeed",
+          "value": "lightSpeedIn",
+          "label": "Lightspeed In"
+        },
+        {
+          "group": "Rotating Entrances",
+          "value": "rotateIn",
+          "label": "Rotate In"
+        },
+        {
+          "group": "Rotating Entrances",
+          "value": "rotateInDownLeft",
+          "label": "Rotate In Down Left"
+        },
+        {
+          "group": "Rotating Entrances",
+          "value": "rotateInDownRight",
+          "label": "Rotate In Down Right"
+        },
+        {
+          "group": "Rotating Entrances",
+          "value": "rotateInUpLeft",
+          "label": "Rotate In Up Left"
+        },
+        {
+          "group": "Rotating Entrances",
+          "value": "rotateInUpRight",
+          "label": "Rotate Up Down Right"
+        },
+        {
+          "group": "Sliding Entrances",
+          "value": "slideInUp",
+          "label": "Slide In Up"
+        },
+        {
+          "group": "Sliding Entrances",
+          "value": "slideInDown",
+          "label": "Slide In Down"
+        },
+        {
+          "group": "Sliding Entrances",
+          "value": "slideInLeft",
+          "label": "Slide In Left"
+        },
+        {
+          "group": "Sliding Entrances",
+          "value": "slideInRight",
+          "label": "Slide In Right"
+        },
+        {
+          "group": "Zoom Entrances",
+          "value": "zoomIn",
+          "label": "Zoom In"
+        },
+        {
+          "group": "Zoom Entrances",
+          "value": "zoomInDown",
+          "label": "Zoom In Down"
+        },
+        {
+          "group": "Zoom Entrances",
+          "value": "zoomInLeft",
+          "label": "Zoom In Left"
+        },
+        {
+          "group": "Zoom Entrances",
+          "value": "zoomInRight",
+          "label": "Zoom In Right"
+        },
+        {
+          "group": "Zoom Entrances",
+          "value": "zoomInUp",
+          "label": "Zoom In Up"
+        },
+        {
+          "group": "Specials",
+          "value": "hinge",
+          "label": "Hinge"
+        },
+        {
+          "group": "Specials",
+          "value": "jackInTheBox",
+          "label": "Jack In The Box"
+        },
+        {
+          "group": "Specials",
+          "value": "rollIn",
+          "label": "Roll In"
+        }
+      ],
+      "default": "slideInRight",
+      "info": "Animate in( Only works when there is 1 item display )"
+    },
+    {
+      "type": "select",
+      "id": "animateout",
+      "label": "Change slides every",
+      "options": [
+        {
+          "group": "Bouncing Exits",
+          "value": "bounceOut",
+          "label": "Bounce Out"
+        },
+        {
+          "group": "Bouncing Exits",
+          "value": "bounceOutDown",
+          "label": "Bounce Out Down"
+        },
+        {
+          "group": "Bouncing Exits",
+          "value": "bounceOutLeft",
+          "label": "Bounce Out Left"
+        },
+        {
+          "group": "Bouncing Exits",
+          "value": "bounceOutRight",
+          "label": "Bounce Out Right"
+        },
+        {
+          "group": "Bouncing Exits",
+          "value": "bounceOutUp",
+          "label": "bounce Out Up"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOut",
+          "label": "Fade Out"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutDown",
+          "label": "Fade Out Down"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutDownBig",
+          "label": "Fade Out Down Big"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutLeft",
+          "label": "Fade Out Left"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutLeftBig",
+          "label": "Fade Out Left Big"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutRight",
+          "label": "Fade Out Right"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutRightBig",
+          "label": "Fade Out Right Big"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutUp",
+          "label": "Fade Out Up"
+        },
+        {
+          "group": "Fading Exits",
+          "value": "fadeOutUpBig",
+          "label": "Fade Out Up Big"
+        },
+        {
+          "group": "Flippers",
+          "value": "flip",
+          "label": "flip"
+        },
+        {
+          "group": "Flippers",
+          "value": "flipOutX",
+          "label": "Flip Out X"
+        },
+        {
+          "group": "Flippers",
+          "value": "flipOutY",
+          "label": "Flip Out Y"
+        },
+        {
+          "group": "Lightspeed",
+          "value": "lightSpeedOut",
+          "label": "Lightspeed Out"
+        },
+        {
+          "group": "Rotating Entrances",
+          "value": "rotateInUpRight",
+          "label": "Rotate Up Down Right"
+        },
+        {
+          "group": "Rotating Exits",
+          "value": "rotateOut",
+          "label": "Rotate Out"
+        },
+        {
+          "group": "Rotating Exits",
+          "value": "rotateOutDownLeft",
+          "label": "Rotate Out Down Left"
+        },
+        {
+          "group": "Rotating Exits",
+          "value": "rotateOutDownRight",
+          "label": "Rotate Out Down Right"
+        },
+        {
+          "group": "Rotating Exits",
+          "value": "rotateOutUpLeft",
+          "label": "Rotate Out Up Left"
+        },
+        {
+          "group": "Rotating Exits",
+          "value": "rotateOutUpRight",
+          "label": "Rotate Out Up Right"
+        },
+        {
+          "group": "Sliding Exits",
+          "value": "slideOutUp",
+          "label": "Slide Out Up"
+        },
+        {
+          "group": "Sliding Exits",
+          "value": "slideOutDown",
+          "label": "Slide Out Down"
+        },
+        {
+          "group": "Sliding Exits",
+          "value": "slideOutLeft",
+          "label": "Slide Out Left"
+        },
+        {
+          "group": "Sliding Exits",
+          "value": "slideOutRight",
+          "label": "Slide Out Right"
+        },
+        {
+          "group": "Zoom Exits",
+          "value": "zoomOut",
+          "label": "Zoom Out"
+        },
+        {
+          "group": "Zoom Exits",
+          "value": "zoomOutDown",
+          "label": "Zoom Out Down"
+        },
+        {
+          "group": "Zoom Exits",
+          "value": "zoomOutLeft",
+          "label": "Zoom Out Left"
+        },
+        {
+          "group": "Zoom Exits",
+          "value": "zoomOutRight",
+          "label": "Zoom Out Right"
+        },
+        {
+          "group": "Zoom Exits",
+          "value": "zoomOutUp",
+          "label": "Zoom Out Up"
+        },
+        {
+          "group": "Specials",
+          "value": "hinge",
+          "label": "Hinge"
+        },
+        {
+          "group": "Specials",
+          "value": "jackInTheBox",
+          "label": "Jack In The Box"
+        },
+        {
+          "group": "Specials",
+          "value": "rollOut",
+          "label": "Roll Out"
+        }
+      ],
+      "default": "slideOutLeft",
+      "info": "Animate out( Only works when there is 1 item display )"
+    },
+    {
+      "type": "paragraph",
+      "content": "======================="
+    },
+    {
+      "type": "text",
+      "id": "title_categories",
+      "label": "Title categories",
+      "default": "Our categories"
+    },
+    {
+      "type": "text",
+      "id": "stitle_categories",
+      "label": "Subtitle categories",
+      "default": "Find all items you want by select our featured categories"
+    },
+    {
+      "type": "range",
+      "id": "item_per_col",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Item per col",
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Item slideshow",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Slide link"
+        },
+        {
+          "type": "header",
+          "content": "Display settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "turnoff",
+          "label": "Turn off block"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "title",
+          "default": "Item image",
+          "info": "Customize name block (no display item preview)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slideshow and Categories",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

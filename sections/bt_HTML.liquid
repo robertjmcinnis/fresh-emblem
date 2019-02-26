@@ -1,0 +1,80 @@
+<div style="{% if section.settings.section_margin_top != blank %}margin-top: {{section.settings.section_margin_top}};{% endif %}
+            {% if section.settings.section_margin_bottom != blank %}margin-bottom: {{section.settings.section_margin_bottom}};{% endif %}
+            {% if section.settings.section_padding != blank %}padding: {{section.settings.section_padding | replace : '-',' '}};{% endif %}float:left;width:100%;
+            {% if section.settings.bg_img %}background-image: url({{section.settings.bg_img|img_url: "1024x"|fomart: "pjpg"}});
+    background-repeat: no-repeat;
+    background-size: cover;{% endif %}">
+  {% if section.settings.page != blank %}
+  <div class="clearfix">{{pages[section.settings.page].content|html}}</div>
+  {% else %}
+  <div class="panel-grid panel-has-style">
+    <div class="container-fluid panel-row-style">
+      <div class="panel-grid-cell">
+        <div class="so-panel widget">
+          <div class="panel-widget-style container" {% if section.settings.bg_img %} style="background-color: rgba(255, 255, 255, 0.8);padding: 50px;"{% endif %}>
+            {% if section.settings.title != blank %}<h3 class="widget-title" style="margin-bottom: 15px;">{{section.settings.title}}</h3>{% endif %}
+            {% if section.settings.subtitle != blank %}<div class="textwidget" style="margin-bottom: 15px;">{{section.settings.subtitle}}</div>{% endif %}
+            {% if section.settings.text != blank %}<div class="textcontent" style="margin-top: 15px;">{{section.settings.text}}</div>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Section Customize",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Text content"
+      },
+      {
+        "type": "page",
+        "id": "page",
+        "label": "Chose page"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_img",
+        "label": "Background image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Section Customize",
+        "category": "Customize"
+      }
+    ]
+  }
+{% endschema %}

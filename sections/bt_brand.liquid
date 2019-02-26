@@ -1,0 +1,186 @@
+<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+  <div class="{%if section.settings.border_top%}line-top{% endif %}{%if section.settings.border_bottom%} line-bottom{% endif %}"
+       style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+    {%- assign aspect_ratioW = settings.aspect_ratio_brand | split: '/' | first | strip | plus: 0.00 -%}
+    {%- assign aspect_ratioH = settings.aspect_ratio_brand | split: '/' | last | strip | plus: 0.00 -%}
+    {%- assign aspect_cs = aspect_ratioW|divided_by:aspect_ratioH | round: 2 -%}
+    {%- if section.blocks.size > 0 -%}
+    <div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+      <div class="section-brand-slide">
+        <div class="brands-slide owl-carousel{% if section.settings.nav_position != '' %} {{section.settings.nav_position}}{% endif %}{% if section.settings.nav_style != '' %} nav-style{{section.settings.nav_style}}{% endif -%}" data-nav="true" data-dots="false" data-loop="true" data-margin="60" data-responsive='{{section.settings.responsive|strip_newlines|remove:'		'|remove:'	'}}'>
+        {%- for block in section.blocks-%}
+          {%- if block.settings.image -%}
+          {%- assign image_ = block.settings.image -%}
+              {%- assign aspect_image = article.image.width | times:1.00 |divided_by:article.image.height| round: 2 -%}
+              {%- capture image_fit -%}
+                {%- if aspect_ratioW < aspect_ratioH -%}
+                  {%- if article.image.width == article.image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+                {%- elsif aspect_ratioW > aspect_ratioH -%}
+                  {%- if article.image.width == article.image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+                {%- else -%} nonheight_ nonwidth
+                {%- endif -%}
+              {%- endcapture -%}
+              <div class="image__product aspectRatioPlaceholder {{image_fit}}">             
+                <img src="{{'bt_placeholder_brand_slide.svg'|asset_url}}">
+                <a href="{{ block.settings.brand_call_to_action }}" title="{{image_.alt}}">
+                  <picture>
+                    <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '510x' %}" media="(min-width: 1920px)">
+                    <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '476x' %}" media="(min-width: 1200px)">
+                    <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '455x' %}" media="(min-width: 1024px)">
+                    <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '570x' %}" media="(min-width: 991px)">
+                    <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '768x' %}" media="(min-width: 768px)">
+                    <source data-srcset="{% include 'kt_image_format',src: image_.src , size: '480x' %}">
+                    <img class="lazyload" src="{{'bt_placeholder_brand_slide.svg'|asset_url}}" data-src="{% include 'kt_image_format',src: image_.src , size: '480x@2x' %}" alt="{{image_.alt}}">
+                  </picture>
+                </a>
+              </div>
+          {%- endif -%}
+        {%- endfor -%}
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+</div>
+{%- assign aspect_ratio = settings.aspect_ratio_brand -%}
+{% schema %}
+  {
+    "name": "Home brand",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Home brand",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px",
+        "default": "60px-0-0-0"
+      },
+      {
+        "type": "checkbox",
+        "id": "border_top",
+        "label": "Use border top",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "border_bottom",
+        "label": "Use border bottom"
+      },
+      {
+        "type": "select",
+        "id": "nav_style",
+        "options": [
+          {
+            "value": "2",
+            "label": "Style 2"
+          },
+          {
+            "value": "3",
+            "label": "Style 3"
+          },
+          {
+            "value": "5",
+            "label": "Style 5"
+          },
+          {
+            "value": "6",
+            "label": "Style 6"
+          },
+          {
+            "value": "7",
+            "label": "Style 7"
+          },
+          {
+            "value": "8",
+            "label": "Style 8"
+          }
+        ],
+        "label": "== Select navigation style",
+        "default": "7"
+      },
+      {
+        "type": "select",
+        "id": "nav_position",
+        "options": [
+          {
+            "value": "",
+            "label": "Null"
+          },
+          {
+            "value": "nav-center-center",
+            "label": "Center center"
+          },
+          {
+            "value": "nav-center-outside",
+            "label": "Center outside"
+          }
+        ],
+        "label": "== Select navigation position",
+        "default": "nav-center-center"
+      },
+      {
+        "type": "textarea",
+        "id": "responsive",
+        "label": "== Responsive",
+        "default": "{\n\t\"0\": {\n\t\t\"items\": 1,\n\t\t\"margin\": 30\n\t},\n\t\"480\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t},\n\t\"768\": {\n\t\t\"items\": 3,\n\t\t\"margin\": 30\n\t},\n\t\"992\": {\n\t\t\"items\": 4,\n\t\t\"margin\": 30\n\t},\n\t\"1200\": {\n\t\t\"items\": 5,\n\t\t\"margin\": 60\n\t}\n}"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Brand image",
+            "info": "Size suggestion: 170 x 125 pixels"
+          },
+          {
+            "id": "brand_call_to_action",
+            "type": "url",
+            "label": "Brand link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home brand",
+        "category": "Brand"
+      }
+    ]
+  }
+{% endschema %}

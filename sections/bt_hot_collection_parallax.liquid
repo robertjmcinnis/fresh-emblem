@@ -1,0 +1,122 @@
+<div class="{% if section.settings.hot_collection_image == blank %}bg-parallax {% endif %}block-paralax3 lazyload pr"
+     style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+            {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+            {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%;
+            {%-if section.settings.hot_collection_background-%}
+            background-image: {{section.settings.hot_collection_background|img_url: "300x"}};background-position: center center; background-size: cover;
+            {%-else %}                
+            background-image: url('https://cdn.shopify.com/s/files/1/2336/5331/files/pralax4.2_300x.jpg?2583290842254490630');background-position: center center; background-size: cover;
+            {%-endif-%}"
+     data-bgset="{%-if section.settings.hot_collection_background-%}{%- include 'bgset', image: section.settings.hot_collection_background -%}{%-else-%}https://cdn.shopify.com/s/files/1/2336/5331/files/pralax4.2.jpg?2583290842254490630{%-endif-%}"
+     data-sizes="auto"
+     data-parent-fit="cover">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    {% if section.settings.hot_collection_image != blank %}
+    {%-assign height = section.settings.hot_collection_image.height -%}
+    {%-assign width = section.settings.hot_collection_image.width -%}
+    <div class="bg-parallax_child1 lazyload"
+         style="height: {{height}}px;
+                margin: 0 auto;
+                padding: 0;
+                position: absolute;
+                left: 8%;
+                top: 0;
+                width: {{width}}px;
+                z-index: 0;background: url({{section.settings.hot_collection_image| img_url:'100x'}}) 10% 50% no-repeat fixed;"
+        data-bgset="{%- include 'bgset', image: section.settings.hot_collection_image -%}"
+        data-sizes="auto"
+        data-parent-fit="cover">
+    </div>
+    {% endif %}
+    <div class="section-content text-center pr">
+      {% if section.settings.titlex != blank %}<h2 class="title">{{section.settings.titlex}}</h2>{% endif %}
+      {% if section.settings.subtitle != blank %}<h3 class="sub-title text-primary">{{section.settings.subtitle}}</h3>{% endif %}
+      {% if section.settings.link_title != blank %}<a class="button btn-primary small" href="{{section.settings.link}}">{{section.settings.link_title}}</a>{% endif %}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Hot Collection Parallax",
+    "class": "index-section index-section--kt bt_testimonials",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Hot Collection Parallax",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px",
+        "default": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px",
+        "default": "87px-0-110px-0"
+      },
+      {
+         "type": "textarea",
+         "id": "titlex",
+         "label": "Title",
+         "default": "<strong>LOOKBOOK</strong> 2015/2016"
+      },
+      {
+        "type": "textarea",
+        "id": "subtitle",
+        "label": "Sub title",
+        "default": "THE NEW COLLECTION"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Link to"
+      },
+      {
+        "type": "text",
+        "id": "link_title",
+        "label": "Title Button",
+        "default": "View all"
+      },
+      {
+        "type": "image_picker",
+        "id": "hot_collection_background",
+        "label": "Background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "hot_collection_image",
+        "label": "Item image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hot Collection Parallax",
+        "category": "Promo"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,91 @@
+<div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+              {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+
+  <div class="newsletter style2">
+    <div class="section-title text-center"><h3>{{section.settings.titlex}}</h3></div>
+    <i class="newsletter-info">{{section.settings.s_title}}</i>
+    {%- if settings.newslatter_mailchimp_url != "" -%}
+    <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="form-newsletter mailing-form" name="mc-embedded-subscribe-form" target="_blank">
+      <input type="email"
+             name="contact[email]"
+             id="contact_email{{section.id}}"
+             class="input-text required-entry validate-email"
+             value="{% if customer %}{{ customer.email }}{% endif %}"
+             placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+      <span><button class="newsletter-submit" name="subscribe" id="subscribe{{section.id}}" type="submit">{{ 'general.newsletter_form.submit' | t }}</button></span>
+    </form>
+    {%- else -%}
+    {%-form 'customer', class: 'form-newsletter'-%}
+    {{ form.errors | default_errors }}
+    {%-if form.posted_successfully?-%}
+    <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+    {%-else-%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <input type="email"
+           name="contact[email]"
+           id="Email{{section.id}}"
+           class="input-text required-entry validate-email"
+           value="{%-if customer-%}{{ customer.email }}{%-endif-%}"
+           placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
+    <span><button type="submit" title="{{ 'general.newsletter_form.submit' | t }}" class="newsletter-submit">{{ 'general.newsletter_form.submit' | t }}</button></span>
+    {%-endif-%}
+    {%-endform-%}
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Home newsletter 2",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Home newsletter 2",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+         "type": "text",
+         "id": "titlex",
+         "label": "Title",
+         "default": "NEWSLETTER"
+      },
+      {
+         "type": "text",
+         "id": "s_title",
+         "label": "Sub title",
+         "default": "Sign up for Our Newsletter & Promotions"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home newsletter 2",
+        "category": "Newsletter"
+      }
+    ]
+  }
+{% endschema %}

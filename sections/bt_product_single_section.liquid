@@ -1,0 +1,127 @@
+{% assign product = all_products[section.settings.product] %}
+{%-include 'kt_label_check'-%}
+<div class="pid_{{product.id}}" itemscope itemtype="http://schema.org/Product" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product">
+  <meta itemprop="name" content="{{ product.title }}">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: '800x' }}">
+  <span property="brand" class="hidden">{{ product.vendor }}</span>
+  {%- capture reviewsForm -%}{{ product.metafields.spr.reviews }}{%- endcapture -%}
+  {%- if reviewsForm != blank -%}
+  <div itemscope itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating" class="hidden">
+    {{ product.metafields.spr.reviews | split: 'AggregateRating">' | last | split: "<i" | first | append: '</span>' }}
+  </div>
+  {%- endif -%}
+  <span property="mpn" class="hidden">{{product.selected_or_first_available_variant.sku}}</span>
+  <div class="section-block-single-product{{section.settings.section_style}}">
+    <div class="container">
+      <div class="block-single-product style{{section.settings.section_style}} row">
+        {% if section.settings.section_style == "2" %}
+        <div class="product-image col-sm-5">
+          <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+        </div>
+        {% endif %}
+        <div class="product-info col-sm-7">
+          <h3 class="product-name"><a href="{{ product.url | within: collection }}">{{ product.title }}</a> </h3>
+          <div class="desc">
+            {%- if product.metafields.meta.short_description -%}
+            {{ product.metafields.meta.short_description }}
+            {% elsif product.description contains  '[/short description]' %}
+            {{ product.description | split: '[/short description]' | first | split: '[short description]'| last | html }}
+            {%-else-%}
+            {{ product.description | strip_html | truncatewords: 40 }}
+            {%-endif-%}
+          </div>
+          {%- assign colour_count = 0 -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign downcased_option = option.name | downcase -%}
+            {%- assign downcased_option_check = option | downcase | prepend: '"' | append: '"' | strip -%} 
+            {%- if downcased_option contains 'olo' -%}
+              {%- assign colour_count = option.values.size -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {% if colour_count > 1 %}
+          <div class="attributes">
+            <span class="title">{{'products.product_single_section.title_color'|t}}</span>
+            <div class="item">
+              {% include 'swatches_on_grid' , image_size: 'thumb'%}
+            </div>
+          </div>
+          {% endif %}
+          <span class="price">
+            {% if on_sale %}
+            <ins id="ProductPrice">{{product.price | money }}</ins>
+            <del id="ComparePrice">{{product.compare_at_price | money }}</del>
+            {% else %}
+            <ins id="ProductPrice">{{product.price | money }}</ins>
+            {% endif %}
+          </span>
+          <div style="display: inline-block">            
+            {%- if product.metafields.purchase.on_link != blank %}
+            <a href="{{product.metafields.purchase.on_link | split: "]" | last }}" class="button button-add-cart out_site">
+              <span>{{product.metafields.purchase.on_link | split: "]" | first | remove: "["}}</span>
+            </a>
+            {%- else %}
+            <button type="button" onclick="Shopify.KT_addItem('{{ product.selected_or_first_available_variant.id }}',1)" name="add" id="AddToCart-{{ section.id }}" {% unless sold_out == false  %}disabled="disabled"{% endunless %} class="addtocart">
+              <span id="AddToCartText-{{ section.id }}">
+                {%- if preOrder -%}
+                <span class="pe-7s-cart"></span>{{'products.product.pre_order'|t}}
+                {%- elsif sold_out == false -%}
+                <span class="pe-7s-cart"></span>+ {{'products.product.add_to_cart'|t}}
+                {%- else -%}
+                {{'products.product.sold_out'|t}}
+                {%- endif -%}
+              </span>
+            </button>
+            {% endif -%}
+            {% comment %}<div class="ttaddtocart{% if current_variant.price != 0 %} hidden{% endif %}">
+              <a href="tel:{{settings.top_phone_number}}">
+                <span class="exclusive phone"><span>{{ 'products.product.contact_button' | t }}</span> </span>
+              </a>
+            </div>{% endcomment %}
+          </div>
+        </div>
+
+        {% if section.settings.section_style != "2" %}
+        <div class="product-image col-sm-5">
+          <img src="{{ product.featured_image.src | img_url: '480x' }}" alt="{{ product.featured_image.alt | escape }}">
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Product single",
+    "settings": [
+      {
+        "type": "product",
+        "id": "product",
+        "label": "Choose product"
+      },
+      {
+        "type": "select",
+        "id": "section_style",
+        "options": [
+          {
+            "value": "",
+            "label": "Style 1"
+          },
+          {
+            "value": "2",
+            "label": "Style 2"
+          }
+        ],
+        "label": "Section style",
+        "default": ""
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product single",
+        "category": "Products"
+      }
+    ]
+  }
+{% endschema %}

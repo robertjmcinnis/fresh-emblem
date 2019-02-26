@@ -1,0 +1,285 @@
+{%- if section.blocks.size > 0 -%}
+<div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+{%- for block in section.blocks -%}
+{%- if block.settings.collection -%}
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}" {{ block.shopify_attributes }}>
+    <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+      <div class="box-product-featured{% if block.settings.align_right %} right{% endif %}">
+        <div class="box-head {{banner_opacity_9}}">
+          <a href="{{ collections[block.settings.collection].title }}" title="{{ collections[block.settings.collection].title }}">
+            {% if block.settings.image %}
+            <picture>
+              <source srcset="{% include 'kt_image_format',src: block.settings.image.src , size: '270x' %}" media="(min-width: 1920px)">
+              <source srcset="{% include 'kt_image_format',src: block.settings.image.src , size: '270x' %}" media="(min-width: 1200px)">
+              <source srcset="{% include 'kt_image_format',src: block.settings.image.src , size: '256x' %}" media="(min-width: 1024px)">
+              <source srcset="{% include 'kt_image_format',src: block.settings.image.src , size: '570x' %}" media="(min-width: 991px)">
+              <source srcset="{% include 'kt_image_format',src: block.settings.image.src , size: '384x' %}" media="(min-width: 768px)">
+              <source srcset="{% include 'kt_image_format',src: block.settings.image.src , size: '480x' %}">
+              <img src="{% include 'kt_image_format',src: block.settings.image.src , size: '480x@2x' %}" alt="{{ block.settings.image.alt |default: collections[block.settings.collection].title }}">
+            </picture>
+            {% endif %}
+          </a>
+          <div class="inner">
+            <h2 class="box-title">{{block.settings.title}}</h2>
+            <span class="box-sub-title">{{block.settings.stitle}}</span>
+            <a href="{{block.settings.banner_call_to_action}}" class="box-link">{{block.settings.text_button}}</a>
+          </div>
+        </div>
+        <div class="box-content">
+          <div class="box-content-inner">
+            <ul class="box-product-list owl-carousel{%unless block.settings.product_grid_layout == ''%} KiTi_Card style{{block.settings.product_grid_layout}}{% endunless %} {{block.settings.nav_position}} nav-style{{block.settings.nav_style}}" data-nav="true" data-dots="false" data-margin="30" data-loop="true" data-responsive='{{block.settings.responsive|strip_newlines|remove:'		'|remove:'	'}}'>
+              {% for product in collections[block.settings.collection].products limit: block.settings.limit_prd %}              
+              <li class="grid-item">
+              {% include "product-card-grid" %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- else -%}
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Collection with banner",
+    "class": "index-section index-section--kt bt_banner_collection",
+    "max_blocks": 1,
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Collection with banner",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title block",
+            "default": "Featured items"
+          },
+          {
+            "type": "textarea",
+            "id": "stitle",
+            "label": "Subtitle block",
+            "default": "Our Featured today!"
+          },
+          {
+            "type": "checkbox",
+            "id": "align_right",
+            "label": "Banner right"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Banner image",
+            "info": "Text in placeholder image is size suggestion"
+          },
+          {
+            "id": "banner_call_to_action",
+            "type": "url",
+            "label": "Banner button link"
+          },
+          {
+            "id": "text_button",
+            "type": "text",
+            "label": "Text button",
+            "default": "Shop more items"
+          },
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Chose collection"
+          },
+          {
+            "type": "range",
+            "id": "limit_prd",
+            "min": 5,
+            "max": 50,
+            "step": 1,
+            "label": "Limit display product",
+            "default": 8
+          },
+          {
+            "type": "select",
+            "id": "product_grid_layout",
+            "label": "Product card grid layout",
+            "options": [
+              {
+                "value": "",
+                "label": "Default (By general settings)"
+              },
+              {
+                "label": "Layout 1",
+                "value": "1"
+              },
+              {
+                "label": "Layout 2",
+                "value": "2"
+              },
+              {
+                "label": "Layout 3",
+                "value": "3"
+              },
+              {
+                "label": "Layout 4",
+                "value": "4"
+              },
+              {
+                "label": "Layout 4.1",
+                "value": "4_1 style4"
+              },
+              {
+                "label": "Layout 5",
+                "value": "5"
+              },
+              {
+                "label": "Layout 7",
+                "value": "7"
+              },
+              {
+                "label": "Layout 8",
+                "value": "8"
+              },
+              {
+                "label": "Layout 8.1",
+                "value": "8_1 style8"
+              },
+              {
+                "label": "Layout 9",
+                "value": "9"
+              }
+            ],
+            "default": ""
+          },
+          {
+            "type": "header",
+            "content": "Slider settings"
+          },
+          {
+            "type": "select",
+            "id": "nav_style",
+            "options": [
+              {
+                "value": "1",
+                "label": "Style 1"
+              },
+              {
+                "value": "2",
+                "label": "Style 2"
+              },
+              {
+                "value": "3",
+                "label": "Style 3"
+              },
+              {
+                "value": "4",
+                "label": "Style 4"
+              },
+              {
+                "value": "5",
+                "label": "Style 5"
+              },
+              {
+                "value": "6",
+                "label": "Style 6"
+              },
+              {
+                "value": "7",
+                "label": "Style 7"
+              },
+              {
+                "value": "8",
+                "label": "Style 8"
+              }
+            ],
+            "label": "== Select navigation style",
+            "default": "2"
+          },
+          {
+            "type": "select",
+            "id": "nav_position",
+            "options": [
+              {
+                "value": "",
+                "label": "Null"
+              },
+              {
+                "value": "nav-center-center",
+                "label": "Center center"
+              },
+              {
+                "value": "nav-center-outside",
+                "label": "Center outside"
+              },
+              {
+                "value": "nav-top-right",
+                "label": "Top right"
+              },
+              {
+                "value": "nav-top-left",
+                "label": "Top left"
+              }
+            ],
+            "label": "== Select navigation position",
+            "default": "nav-center-center"
+          },
+          {
+            "type": "textarea",
+            "id": "responsive",
+            "label": "== Responsive",
+            "default": "{\n\t\"0\": {\n\t\t\"items\": 1,\n\t\t\"margin\": 30\n\t},\n\t\"480\": {\n\t\t\"items\": 1,\n\t\t\"margin\": 30\n\t},\n\t\"768\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t},\n\t\"992\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t},\n\t\"1200\": {\n\t\t\"items\": 3,\n\t\t\"margin\": 30\n\t}\n}"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection with banner",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}

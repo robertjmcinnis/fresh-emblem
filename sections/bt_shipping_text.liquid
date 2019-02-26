@@ -1,0 +1,105 @@
+<div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+  <div class="clearfix" style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+              {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}">
+    {%- if section.blocks.size > 0 -%}
+    {%- for block in section.blocks-%}
+    {% if block.settings.announcement_border != blank %}
+    <div class="text-border" style="{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}color:{{block.settings.color_text}};background-color:{{block.settings.color_bg}}">
+      {{block.settings.message_richtext }}
+    </div>
+    {% else %}        
+    <div class="header-text text-center" style="{%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}color:{{block.settings.color_text}};background-color:{{block.settings.color_bg}}">
+      {{block.settings.message_richtext}}
+    </div>
+    {% endif %}
+    {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Announcement text",
+    "class": "index-section index-section--kt",
+    "settings": [
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Announcement text",
+          "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      }
+    ],
+  "blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "limit": 1,
+        "settings": [
+          {
+             "type": "richtext",
+             "id": "message_richtext",
+             "label": "Announcement text",
+             "default": "<p>Announce something here</p>"
+          },
+          {
+            "type": "color",
+            "id": "color_text",
+            "label": "Announcement text color",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "color_bg",
+            "label": "Announcement background color",
+            "default": "#7796A8"
+          },
+          {
+            "type": "checkbox",
+            "id": "announcement_border",
+            "label": "Use border for announcement"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Announcement text",
+        "category": "Promo",
+        "blocks": [
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

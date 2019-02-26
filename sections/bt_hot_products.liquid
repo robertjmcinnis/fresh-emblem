@@ -1,0 +1,258 @@
+<div data-section-id="{{ section.id }}" id="Carousel-{{ section.id }}" data-section-type="carousel-section">
+  <div class="{%- if section.settings.width_section -%} container{%- else -%} container-fluid{%- endif -%}">
+    <div style="{%- if section.settings.section_margin_top != blank -%}margin-top: {{section.settings.section_margin_top}};{%- endif -%}
+                {%- if section.settings.section_margin_bottom != blank -%}margin-bottom: {{section.settings.section_margin_bottom}};{%- endif -%}
+                {%- if section.settings.section_padding != blank -%}padding: {{section.settings.section_padding | replace : '-',' '}};{%- endif -%}float:left;width:100%">
+        <div class="section-title border"><h3>{{section.settings.titlex}}</h3></div>
+        {% if section.settings.products != blank -%}
+		<ul class="hotdeal-slide owl-carousel nav-style5 KiTi_Card style6" data-nav="true" data-dots="false" data-loop="true" data-autoplay="{{section.settings.autoplay}}" data-margin="30" data-responsive='{{section.settings.responsive|strip_newlines|remove:'		'|remove:'	'}}'>
+			{% for product in collections[section.settings.products].products limit: section.settings.limit %}
+			{%- assign money_price = price | money -%}			
+		    {%- assign current_variant = product.selected_or_first_available_variant -%}
+			{%-include 'kt_label_check'-%}
+			<li class="grid-item style3">
+				<div class="product-item">
+					<div class="product-inner row">
+						<div class="col-sm-6">
+							{%- assign aspect_ratioW = settings.aspect_ratio | split: '/' | first | strip | plus: 0.00 -%}
+					        {%- assign aspect_ratioH = settings.aspect_ratio | split: '/' | last | strip | plus: 0.00 -%}
+					        {%- assign aspect_cs = aspect_ratioW|divided_by:aspect_ratioH | round: 2 -%}
+					        {%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+					        {%- capture image_fit -%}
+					          {%- if aspect_ratioW < aspect_ratioH -%}
+					            {%- if product.featured_image.width == product.featured_image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs >= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+					          {%- elsif aspect_ratioW > aspect_ratioH -%}
+					            {%- if product.featured_image.width == product.featured_image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+					          {%- else -%}
+					             nonheight nonwidth_
+					          {%- endif -%}
+					        {%- endcapture -%}
+							<div class="product-thumb{% if settings.use_second_img and product.images.size > 1 %} has-back-image{%-endif-%}">
+						        <a class="front-image {{image_fit}}" href="{{product.url| within: collection}}" title="{{product.title}}">					
+							        <picture>
+										<source data-srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '380x' %}" media="(min-width: 1920px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '320x' %}" media="(min-width: 1200px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '256x' %}" media="(min-width: 1024px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '570x' %}" media="(min-width: 991px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '384x' %}" media="(min-width: 768px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.featured_image.src, size: '480x' %}">
+										<img class="lazyload" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{% include 'kt_image_format',src: product.featured_image.src, size: '480x@2x' %}" alt="{{product.title}}">
+							        </picture>
+								</a>								
+						        <img src="{{'bt_placeholder.svg'|asset_url}}">
+								{% if settings.use_second_img and product.images.size > 1-%}
+									{%- if ly != 'ms' -%}
+									{%- assign aspect_image = product.featured_image.width | times:1.00 |divided_by:product.featured_image.height| round: 2 -%}
+									{%- capture image_fit -%}
+									  {%- if aspect_ratioW < aspect_ratioH -%}
+									    {%- if product.images[1].width == product.images[1].height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs >= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+									  {%- elsif aspect_ratioW > aspect_ratioH -%}
+									    {%- if product.images[1].width == product.images[1].height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+									  {%- else -%}
+									     nonheight nonwidth_
+									  {%- endif -%}
+									{%- endcapture -%}
+									{%- endif -%}
+								<a class="back-image {{image_fit}}" href="{{product.url| within: collection}}">
+									<picture>
+										<source data-srcset="{% include 'kt_image_format',src: product.images[1].src, size: '370x' %}" media="(min-width: 1920px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.images[1].src, size: '320x' %}" media="(min-width: 1200px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.images[1].src, size: '256x' %}" media="(min-width: 1024px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.images[1].src, size: '570x' %}" media="(min-width: 991px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.images[1].src, size: '384x' %}" media="(min-width: 768px)">
+										<source data-srcset="{% include 'kt_image_format',src: product.images[1].src, size: '480x' %}">
+										<img class="lazyload" src="{{'bt_placeholder.svg'|asset_url}}" data-src="{% include 'kt_image_format',src: product.images[1].src, size: '480x@2x' %}" alt="{{product.title}}">
+									</picture>
+								</a>		
+								{%- endif -%}
+								{%- if settings.use_quickview-%}<a href="javascript:void(0);" class="quick-view" data-view="{{product.url}}" data-target="#myModal"><i class="icon-magnifier"></i></a>{%- endif -%}			
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="product-info">
+								<h3 class="product-name"><a href="{{product.url| within: collection}}" title="{{product.title}}">{{product.title}}</a></h3>
+								<span class="price">
+									<ins>
+							          {{ product.price | money }}
+							        </ins>
+							        <del{% if on_sale == false %} class="hidden"{%-endif-%}>
+							          {{ product.compare_at_price | default: 0 | money }}
+							        </del>
+							        {%-if on_sale == true and settings.use_sale_label == true-%}        
+							        {%- assign money_save = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price| round -%}
+									<span class="discount">{% if money_save >= 15 %}<span class="text">-{{ money_save }}%</span>{% else %}<span class="text">{{'products.product.on_sale'|t}}
+							        </span>{% endif %}</span>
+									{%-endif-%}
+								</span>
+								{%- if settings.review_app == 'shopifyreview' %}
+						          <div class="rating">
+						            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+						          </div>
+						        {%- elsif settings.review_app == 'ryviu' %}
+						          <div class="rating">
+						            <div class="ryviu-widget"></div>
+						          </div>
+						        {%- elsif settings.review_app == 'yotpo' %}
+						          <div class="clearfix margin-top-10"></div>
+						          <div class="yotpo bottomLine rating"
+						            data-appkey="5SyMaw47YkHv19ipX1Dt7XSY4ADnSj8DnTZi34sB"
+						            data-domain="{{shop.permanent_domain | escape }}"
+						            data-product-id="{{ product.id }}"
+						            data-product-models="{{ product.id }}"
+						            data-name="{{ product.title | escape }}"
+						            data-url="{{ shop.url }}{{ product.url }}"
+						            data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+						            data-description="{{ product.description | escape }}"
+						            data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+						          </div>
+						        {% endif -%}
+	                            <div class="short-desc">
+	                            	{%- if product.metafields.meta.short_description -%}
+						            {{ product.metafields.meta.short_description }}
+						            {% elsif product.description contains  '[/short description]' %}
+						            {{ product.description | split: '[/short description]' | first | split: '[short description]'| last | html }}
+						            {%-else-%}
+						            {{ product.description | strip_html | truncatewords: 40 }}
+						            {%-endif-%}
+	                            </div>
+								<div class="gorup-buttons">
+									{%- if product.metafields.purchase.on_link != blank %}
+				                    <a href="{{product.metafields.purchase.on_link | split: "]" | last }}" class="button button-add-cart out_site add_to_cart_button">
+				                      <span>{{product.metafields.purchase.on_link | split: "]" | first | remove: "["}}</span>
+				                    </a>
+				                    {%- else %}
+				                    <button type="button" onclick="Shopify.KT_addItemFromForm('cart-form--{{ section.id }}');$(this).addClass('loading').removeClass('loaded')" name="add" id="AddToCart-{{ section.id }}" {% unless sold_out == false  %}disabled="disabled"{% endunless %} class="button button-add-cart add_to_cart_button">
+				                      <span id="AddToCartText-{{ section.id }}">
+				                        {%- if preOrder -%}
+				                        {{'products.product.pre_order'|t}}
+				                        {%- elsif sold_out == false -%}
+				                        {{'products.product.add_to_cart'|t}}
+				                        {%- else -%}
+				                        {{'products.product.sold_out'|t}}
+				                        {%- endif -%}
+				                      </span>
+				                    </button>
+				                    {% endif -%}
+				                    {% comment %}<div class="ttaddtocart{% if current_variant.price != 0 %} hidden{% endif %}">
+				                      <a href="tel:{{settings.top_phone_number}}">
+				                        <span class="exclusive phone"><span>{{ 'products.product.contact_button' | t }}</span> </span>
+				                      </a>
+				                    </div>{% endcomment %}
+									{%- if settings.use_wishlist and pages[settings.page_wishlist].url != blank -%}
+				                    <div class="wishlist button padding-0" href="#">{%- include 't-wishlist-product' -%}</div>
+				                    {%- endif -%}
+				                    {%- if settings.use_compare-%}<a href="javascript:void(0);" class="button compare padding-0" data-pid="{{product.handle}}"><i class="icon-refresh"></i></a>{%- endif -%}
+								</div>
+								{%- if preOrder and product.selected_or_first_available_variant.incoming -%}
+				                <div class="clearfix"></div>
+				                <div class="preOrder margin-top-20 clearfix"><span><em>*</em>{{'products.product.pre_order_text'|t}} {{product.selected_or_first_available_variant.next_incoming_date|date: '%B %d %Y'}}</span></div>
+				                {%- endif -%}
+								{% if product.metafields.event.countdown %}
+								{% assign countdown_ = product.metafields.event.countdown | split: '+' | first %}
+								{% assign countdown__ = countdown_ | split: 'T' | first | split: '/' %}
+								{% assign countdown___ = countdown_ | split: 'T' | last | split: ':' %}
+								<div class="product-count-down text-left">
+									<div class="kt-countdown"
+									     data-y="{{countdown__[2]|default:00}}"
+									     data-m="{{countdown__[0]|default:00}}"
+									     data-d="{{countdown__[1]|default:00}}"
+									     data-h="{{countdown___[0]|default:00}}"
+									     data-i="{{countdown___[1]|default:00}}"
+									     data-s="{{countdown___[2]|default:00}}">
+									</div>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+		{%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Hot products",
+    "class": "index-section index-section--kt bt_hot_products",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Hot products",
+        "info": "Customize name section (no display item preview)"
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type":"checkbox",
+        "id": "width_section",
+        "label": "Max width section",
+        "default": true,
+        "info": "Max width = 1200px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_top",
+        "label": "Margin top",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_margin_bottom",
+        "label": "Margin bottom",
+        "info": "60px"
+      },
+      {
+        "type": "text",
+        "id": "section_padding",
+        "label": "Paddings Integer px ( top-right-bottom-left )",
+        "info": "60px-60px-0-60px"
+      },
+      {
+        "type": "text",
+        "id": "titlex",
+        "label": "Title",
+        "default": "Hot Deals"
+      },
+	  {
+	    "type": "collection",
+	    "id": "products",
+	    "label": "Chose collection"
+	  },
+      {
+        "type": "range",
+        "id": "limit",
+        "min": 1,
+        "max": 50,
+        "step": 1,
+        "label": "Limit display product",
+        "default": 8
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "responsive",
+        "label": "== Responsive",
+        "default": "{\n\t\"0\": {\n\t\t\"items\": 1,\n\t\t\"nav\": false\n\t},\n\t\"600\": {\n\t\t\"items\": 1,\n\t\t\"nav\": false\n\t},\n\t\"1000\": {\n\t\t\"items\": 2\n\t}\n}"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hot products",
+        "category": "Products"
+      }
+    ]
+  }
+{% endschema %}

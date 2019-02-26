@@ -1,0 +1,232 @@
+{%- assign new_comment = false -%}
+{% if comment and comment.created_at %}
+  {%- assign new_comment = true -%}
+  {%- assign new_comment_id = comment.id -%}
+{% endif %}
+{% if new_comment %}
+  {%- assign duplicate_comment = false %}
+  {% for comment in article.comments %}
+    {% if comment.id == new_comment_id %}
+      {%- assign duplicate_comment = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+  {% if duplicate_comment %}
+    {%- assign number_of_comments = article.comments_count -%}
+  {% else %}
+    {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+  {% endif %}
+{% else %}
+  {%- assign number_of_comments = article.comments_count -%}
+{% endif %}
+
+<div class="blog-detail" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+  <article class="blog-item">
+    <h3 class="blog-title" itemprop="name">
+      <a href="{{ article.url }}" itemprop="url">{{ article.title }}</a>
+    </h3>
+    <div class="entry-meta">
+      {% if section.settings.blog_show_date %}
+      <span class="post-date" itemprop="datePublished" datetime="{{article.published_at}}">{{ article.published_at | date: '%d %b %Y' }}</span>
+      {% endif %}
+      <span class="blog-comment"><i class="fa fa-comment"></i><span class="count-comment">{{ number_of_comments }}</span></span>                                   
+    </div>
+    <div class="post-thumbnail" itemscope="itemscope" itemtype="http://schema.org/ImageObject">
+      {% if article.content contains '//www.youtube.com/embed/' %}
+      {% assign video = article.content | split: '></iframe>' | first | split: '<iframe' | last %}
+      <iframe {{video}}></iframe>
+      {% elsif article.content contains '//player.vimeo.com/video/' %}
+      {% assign video = article.content | split: '></iframe>' | first | split: '<iframe' | last %}
+      <iframe {{video}}></iframe>
+      {% elsif article.content contains '//w.soundcloud.com/player/' %}
+      {% assign video = article.content | split: '></iframe>' | first | split: '<iframe' | last %}
+      <iframe class="audio" {{video}}></iframe>
+      {% else article.image %}
+      <a href="{{ article.url }}">
+        <img src="{{ article | img_url: '345x', scale: 2}}" 
+             class="attachment-full size-full wp-post-image" alt="{{article.title}}" 
+             srcset="{{ article | img_url: '1170x'}} 1200w, 
+                     {{ article | img_url: '300x'}} 300w"
+             sizes="(max-width: 1200px) 100vw, 1200px">
+      </a>
+      {% endif %}
+    </div> 
+    <div class="blog-short-desc">
+      {% capture remove_frame %}<iframe{{video}}></iframe>{% endcapture %}
+      {% assign article_content =  article.content | remove: remove_frame %}
+      {% include 'shortcode' load: article_content %}
+    </div>
+  </article>
+</div>
+<div class="comment-social">  
+  {% if blog.comments_enabled? %}
+  <h4>{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h4>      
+  {% endif %}
+  <div class="social">
+    <span>Share</span>
+    {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image, style: 'social-base' %}
+  </div>
+</div>
+{% if section.settings.blog_show_author %}
+<div class="author-info-wrap">
+  <div class="avatar">
+    <img alt="avatar" src="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=130&d=mm&r=g" srcset="https://www.gravatar.com/avatar/{{ article.user.email | remove: ' ' | strip_newlines | downcase | md5 }}?s=130&d=mm&r=g 2x" class="avatar" height="130" width="130">
+  </div>
+  <div class="content">
+    <div class="author-name"><a href="{{article.user.homepage}}">{% if article.user.account_owner == true %}Admin: {{ article.author }}{% else %}Staff members: {{ article.author }}{% endif %}</a></div>
+    <div class="text"><p>{{article.user.bio | strip_html }}</p></div>
+  </div>
+</div>
+{% endif %}
+{% if section.settings.recent_posts %}
+<div class="related-wrap">
+  <h4 class="related-title"> {{ 'blogs.article.title_recent_post' | t }}</h4>                            
+  <ul class="blog-related row">
+    {%-assign limit = 0-%}
+    {% for article_ in blogs[blog.handle].articles %}    
+    {% if article_.handle == article.handle %}
+    {% continue %}
+    {% else %}
+    {%-assign limit = limit | plus: 1-%}
+    {%- assign aspect_image = article_.image.width | times:1.00 |divided_by:article_.image.height| round: 2 -%}
+    {%- capture image_fit -%}
+    {%- if aspect_ratioW < aspect_ratioH -%}
+    {%- if article.image.width == article.image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+    {%- elsif aspect_ratioW > aspect_ratioH -%}
+    {%- if article.image.width == article.image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+    {%- else -%} nonheight_ nonwidth
+    {%- endif -%}
+    {%- endcapture -%}
+    <li class="blog-item col-sm-3">
+      <div class="post-thumbnail">
+        <div class="image__product aspectRatioPlaceholder {{image_fit}}">               
+          <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+          <a href="{{ article_.url }}" class="banner-opacity">
+            <picture>
+              <source srcset="{% include 'kt_image_format',src: article_.image.src , size: '510x' %}" media="(min-width: 1920px)">
+              <source srcset="{% include 'kt_image_format',src: article_.image.src , size: '476x' %}" media="(min-width: 1200px)">
+              <source srcset="{% include 'kt_image_format',src: article_.image.src , size: '455x' %}" media="(min-width: 1024px)">
+              <source srcset="{% include 'kt_image_format',src: article_.image.src , size: '570x' %}" media="(min-width: 991px)">
+              <source srcset="{% include 'kt_image_format',src: article_.image.src , size: '768x' %}" media="(min-width: 768px)">
+              <source srcset="{% include 'kt_image_format',src: article_.image.src , size: '480x' %}">
+              <img src="{% include 'kt_image_format',src: article_.image.src , size: '480x@2x' %}" alt="{{article_.title}}">
+            </picture>
+          </a>
+        </div>
+      </div> 
+      <h3 class="blog-title"><a href="{{ article_.url }}">{{ article_.title }}</a></h3>
+      <div class="entry-meta">
+        <span class="post-date">{{ article_.published_at | date: "%d %b %Y" }}</span>
+        <span class="blog-comment"><i class="fa fa-comment"></i>
+          {% if blog.comments_enabled? %}
+          <span class="count-comment">{{article_.comments_count}}</span>   
+          {% endif %}                            
+        </span>                                   
+      </div>
+    </li>
+    {% endif %} 
+    {% if limit == 4 %}
+    {% break %}
+    {% endif %}
+    {% endfor %}           
+  </ul>
+</div>
+{% endif %}
+{% if blog.comments_enabled? %}
+{% paginate article.comments by 5 %}        
+<div id="comments" class="margin-bottom-60">
+  {% if blog.comments_enabled? %}
+  <h4 class="comment-list-title">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h4>
+  {% endif %}
+  {% if comment and comment.created_at %}
+  <p class="note form-success">
+    {% if blog.moderated? %}
+    {{ 'blogs.comments.success_moderated' | t }}
+    {% else %}
+    {{ 'blogs.comments.success' | t }}
+    {% endif %}
+  </p>
+  {% endif %}
+  {% if number_of_comments > 0 %}    
+  <div id="comments" class="comments-area">
+    <ul class="comment-list">
+      {% if new_comment %}
+      <li id="{{ comment.id }}" class="comment">
+        <div class="comment-item">
+          {% include 'comment' %}
+        </div>
+        <br>
+      </li>
+      {% endif %}
+      {% unless number_of_comments == 1 and new_comment %}
+      <li class="comment-list">
+        <div class="comment-item">
+          {% for comment in article.comments %}
+          {% unless comment.id == new_comment_id %}
+          {% include 'comment' %}
+          {% endunless %}
+          {% endfor %}
+        </div>
+      </li>
+      {% endunless %}
+    </ul>
+  </div>
+  {% if paginate.pages > 1 %}
+  <div class="navigation">
+    {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+  </div>
+  {% endif %}
+  {% endif %}
+  <div class="comment-form-reply">
+    <h3 class="comment-reply-title">{{ 'blogs.comments.title' | t }}</h3>
+    {% form 'new_comment', article %}
+    {{ form.errors | default_errors }}
+    <p class="comment-notes">
+      <span>{{ 'blogs.comments.note' | t }}</span>
+    </p>
+    <input type="text" name="comment[author]" id="CommentAuthor" class="input-full{% if form.errors contains 'author' %} error{% endif %}" placeholder="{{ 'blogs.comments.name' | t }}" value="{{ form.author }}" autocapitalize="words">
+    <input type="text" name="comment[email]" id="CommentEmail" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'blogs.comments.email' | t }}" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+    <textarea name="comment[body]" id="CommentBody" cols="45" rows="8" class="comment-form-comment {% if form.errors contains 'body' %} error{% endif %}" placeholder="{{ 'blogs.comments.message' | t }}">{{ form.body }}</textarea>                         
+    <div class="clear"></div>
+    {% if blog.moderated? %}
+    <p>{{ 'blogs.comments.moderated' | t }}</p>
+    {% endif %}  
+    <input type="submit" name="button" id="submit" class="submit style2" value="{{ 'blogs.comments.post' | t }}">
+    <input class="button" type="hidden" name="comment_parent" id="comment_parent" value="0">
+    {% endform %}
+  </div>  
+</div>
+{% endpaginate %}
+{% endif %}
+{%- assign aspect_ratio = settings.aspect_ratio_banner_products -%}
+{% schema %}
+  {
+    "name": "Posts",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "-- Show social sharing buttons",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "recent_posts",
+        "label": "-- Show Recent Posts",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

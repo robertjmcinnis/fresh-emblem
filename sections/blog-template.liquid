@@ -1,0 +1,324 @@
+{% paginate blog.articles by section.settings.pagination %}
+<div class="main-container{% if section.settings.blog_style == '0' %} list-blogs{% elsif section.settings.blog_style == '1'%} left-sidebar{% else %} right-sidebar{% endif %}" style="padding: 50px 0;">
+  <div class="container">
+    {% if section.settings.blog_style != '0' %}
+    <div class="row">
+      <div class="main-content col-md-9 col-sm-8">
+    {% endif %}
+    <h2 class="page-title">{{ blog.title }}</h2>
+    {% if blog.articles_count > 0 %}
+      <div class="blog-grid butique-masonry{% if section.settings.masonry %} ly__ms_items{% endif %}" data-section-id="{{ section.id }}" id="Masory-{{ section.id }}" data-section-type="masory-section">
+        <div class="masonry-grid{% if section.settings.blog_style == '0' %} desktop-columns-3 tablet-columns-3 mobile-columns-2{% else %} desktop-columns-2 tablet-columns-2 mobile-columns-2{% endif %}">
+          {% for article in blog.articles %}
+          {%- assign aspect_image = article.image.width | times:1.00 |divided_by:article.image.height| round: 2 -%}
+          {%- capture image_fit -%}
+          {%- if aspect_ratioW < aspect_ratioH -%}
+          {%- if article.image.width == article.image.height -%}nonheight_ nonwidth{%- else -%}{%- if aspect_cs <= aspect_image -%}nonheight{%- else -%}nonwidth{%- endif -%}{%- endif -%}
+          {%- elsif aspect_ratioW > aspect_ratioH -%}
+          {%- if article.image.width == article.image.height -%}nonheight nonwidth_{%- else -%}{%- if aspect_cs <= aspect_image -%}nonwidth{%- else -%}nonheight{%- endif -%}{%- endif -%}
+          {%- else -%} nonheight_ nonwidth
+          {%- endif -%}
+          {%- endcapture -%}
+          <div class="grid-item masonry-item{% if section.settings.blog_style == '0' %} col-lg-4 col-md-4 col-sm-4 col-xs-6 col-kiti-12{% else %} col-lg-6 col-md-6 col-sm-6 col-xs-6 col-kiti-12{% endif %}">         
+            <div class="blog-item">  
+              <div class="post-thumbnail">
+                {% if section.settings.masonry %}
+                  <a href="{{ article.url }}" class="banner-opacity{% if article.content contains '//w.soundcloud.com/player/' %} banne-audio{% endif %}">
+                    <picture>
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '510x' %}" media="(min-width: 1920px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '476x' %}" media="(min-width: 1200px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '455x' %}" media="(min-width: 1024px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '570x' %}" media="(min-width: 991px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '768x' %}" media="(min-width: 768px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '480x' %}">
+                      <img src="{% include 'kt_image_format',src: article.image.src , size: '480x@2x' %}" alt="{{article.title}}">
+                    </picture>
+                  </a>
+                  {%- assign video_id = '' -%}
+                  {%- if article.content contains '//www.youtube.com/embed/' -%}
+                  {%- assign video_id = article.content | split: '></iframe>' | first | split: '//www.youtube.com/embed/' | last | split: '"' | first | split: '?' | first -%}
+                  {%- assign video_site = 'youtube' -%}
+                  {%- elsif article.content contains '//player.vimeo.com/video/' -%}
+                  {%- assign video_id = article.content | split: '></iframe>' | first | split: '//player.vimeo.com/video/' | last | split: '"' | first | split: '?' | first -%}
+                  {%- assign video_site = 'vimeo' -%}
+                  {%- endif -%}
+                  {%- if video_id != '' -%}
+                  <a href="#" class="link-lightbox button-play" data-videoid="{{ video_id }}" data-videosite="{{ video_site }}"></a>
+                  {%- endif -%}
+                  {% if article.content contains '//w.soundcloud.com/player/' %}
+                  {% assign audio = article.content | split: '></iframe>' | first | split: '<iframe' | last %}
+                  <iframe class="audio" {{audio | remove: "auto_play=true&amp;"}}></iframe>
+                  {% endif %}
+                {% else %}
+                <div class="image__product aspectRatioPlaceholder {{image_fit}}">               
+                  <img src="{{'bt_placeholder_blog_slide.svg'|asset_url}}">
+                  <a href="{{ article.url }}" class="banner-opacity{% if article.content contains '//w.soundcloud.com/player/' %} banne-audio{% endif %}">
+                    <picture>
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '510x' %}" media="(min-width: 1920px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '476x' %}" media="(min-width: 1200px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '455x' %}" media="(min-width: 1024px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '570x' %}" media="(min-width: 991px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '768x' %}" media="(min-width: 768px)">
+                      <source srcset="{% include 'kt_image_format',src: article.image.src , size: '480x' %}">
+                      <img src="{% include 'kt_image_format',src: article.image.src , size: '480x@2x' %}" alt="{{article.title}}">
+                    </picture>
+                  </a>
+                  {%- assign video_id = '' -%}           
+                  {%- if article.content contains '//www.youtube.com/embed/' -%}
+                  {%- assign video_id = article.content | split: '></iframe>' | first | split: '//www.youtube.com/embed/' | last | split: '"' | first | split: '?' | first -%}
+                  {%- assign video_site = 'youtube' -%}
+                  {%- elsif article.content contains '//player.vimeo.com/video/' -%}
+                  {%- assign video_id = article.content | split: '></iframe>' | first | split: '//player.vimeo.com/video/' | last | split: '"' | first | split: '?' | first -%}
+                  {%- assign video_site = 'vimeo' -%}
+                  {%- endif -%}
+                  {%- if video_id != '' -%}
+                  <a href="#" class="link-lightbox button-play" data-videoid="{{ video_id }}" data-videosite="{{ video_site }}"></a>
+                  {%- endif -%}
+                  {% if article.content contains '//w.soundcloud.com/player/' %}
+                  {% assign audio = article.content | split: '></iframe>' | first | split: '<iframe' | last %}
+                  <iframe class="audio" {{audio | remove: "auto_play=true&amp;"}}></iframe>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+              <h3 class="blog-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+              <div class="entry-meta">
+                <span class="post-date">{{ article.published_at | date: "%d %b %Y" }}</span>
+                <span class="blog-comment"><i class="fa fa-comment"></i>
+                  {% if blog.comments_enabled? %}
+                  <span class="count-comment">{{article.comments_count}}</span>   
+                  {% endif %}
+                </span>                                   
+              </div>
+              <div class="blog-short-desc">
+                <p>
+                  {% if article.excerpt.size > 0 %}
+                  {{ article.excerpt }}
+                  {% else %}
+                  {{ article.content | strip_html | truncate: 200 }}
+                  {% endif %}
+                </p> 
+              </div>
+              <a class="readmore" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}</a>
+            </div>                                                            
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% if paginate.pages > 1 %}
+      <div class="navigation pagination">
+        <div class="nav-links">
+          {{ paginate | default_pagination | replace: '&laquo; Previous' | replace: 'Next &raquo;'}}
+        </div>
+      </div>
+      {% endif %}
+    {% else %}
+    <p class="text-left">{{'blogs.general.no_article' | t}}</p>
+    {% endif %}
+    {% if section.settings.blog_style != '0' %}
+      </div>
+      <div class="sidebar col-md-3 col-sm-4">
+        <div id="widget-area" class="widget-area">           
+          {% if section.settings.catt and section.blocks.size > 0 %}
+          <div id="categories" class="widget widget_categories">
+            <h3 class="widget-title">{{ 'blogs.sidebar.categories' | t }}</h3>
+              <ul>
+                {% for block in section.blocks %}
+                {% unless block.settings.blog == '' %}
+                <li class="cat-item">
+                  <a href="{{blogs[block.settings.blog].url}}" title="{{blogs[block.settings.blog].title}}">{{blogs[block.settings.blog].title}}</a> ({{blogs[block.settings.blog].articles_count}})
+                </li>
+                {% endunless %}
+                {% endfor %}
+              </ul>
+          </div>
+          {% endif %}
+          {% if section.settings.flick_photos %}
+          <div id="categories-2" class="widget fick_photo">
+            <h3 class="widget-title">{{ 'blogs.sidebar.flick_photos' | t }}</h3>
+            <div id="flickr_badge_wrapper">
+              {%- capture count -%}count={{settings.badge_code| split:'count='|last|split:'&'|first}}{%- endcapture -%}
+              <script type="text/javascript" src="{{settings.badge_code|replace: count, 'count=9'}}"></script>
+            </div>
+          </div>
+          {% endif %}
+          {% if section.settings.instagram_photos %}
+          <div id="categories-3" class="widget fick_photo">
+            <h3 class="widget-title">{{ 'blogs.sidebar.instagram_photos' | t }}</h3>
+            <ul id="instafeed_1" class="fick-photo hidden"></ul>            
+            <script type="text/javascript">
+              {%- assign instafeed_img = '{{image}}' -%}
+              {%- assign instafeed_link = '{{link}}' -%}
+              document.addEventListener('DOMContentLoaded', function(event){
+                var feed = new Instafeed({
+                  target: 'instafeed_1',
+                  get: 'user',
+                  userId: '{{settings.user_id|default: '3311466850'}}',
+                  accessToken: '{{settings.accessToken_instagram|default: '3311466850.1677ed0.84b4d7bf4b6f49b4887a8fe93707d9b5'}}',
+                  sortBy: 'most-recent',
+                  limit: 9,
+                  template: '<li><a href="{{instafeed_link}}"><img width="83" src="{{instafeed_img}}" /></a><li>'
+                });
+                feed.run();
+              })
+            </script>
+          </div>
+          {% endif %}
+          {% if section.settings.recent_posts and blog.articles_count > 0 %}
+          <div id="recent-posts-2" class="widget widget_recent_entries widget_categories"> 
+            <h3 class="widget-title">{{ 'blogs.sidebar.recent_articles' | t }}</h3>
+            <ul>
+              {% for article in blog.articles limit:6 %}
+              <li>
+                <a href="{{ article.url }}">{{ article.title | truncatewords: 5 }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          {% if section.settings.tags %}
+          <div id="tag_cloud-4" class="widget widget_tag_cloud">
+            {% if blog.all_tags.size > 0 %}
+            <h3 class="widget-title">{{ 'blogs.sidebar.tags' | t }}</h3>
+            <div class="tagcloud">
+              {%-if section.settings.blog_tags_ != blank-%}
+              {%-assign tags = section.settings.blog_tags_ | split: ','-%}
+                {% for tag in tags %}
+                <a class="tag-link-position-{{forloop.index1}}" href="{{ shop.url}}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}">{{ tag | strip }}</a>
+                {% endfor %}
+              {%-else-%}
+                {% if blog.all_tags != blank %}
+                {% for tag in blog.all_tags limit: 15 %}
+                <a class="tag-link-position-{{forloop.index1}}" href="{{ shop.url}}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+                {% endfor %}
+                {% endif %}
+              {% endif %}
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endpaginate %}
+{%- assign aspect_ratio = settings.aspect_ratio_related_post -%}
+{% schema %}
+  {
+    "name": "Blog pages",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "masonry",
+        "label": "Using masonry layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "catt_on_head",
+        "label": "Show Categories on head",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "blog_style",
+        "options": [
+          {
+            "value": "0",
+            "label": "No sidebar"
+          },
+          {
+            "value": "1",
+            "label": "Left sidebar"
+          },
+          {
+            "value": "2",
+            "label": "right sidebar"
+          }
+        ],
+        "label": "== Select blog style",
+        "default": "1"
+      },
+      {
+        "type": "range",
+        "id": "pagination",
+        "min": 6,
+        "max": 18,
+        "step": 3,
+        "label": "Pagination",
+        "default": 9
+      },
+      {
+        "type": "header",
+        "content": "== Sidebar"
+      },
+      {
+        "type": "checkbox",
+        "id": "catt",
+        "label": "Show blogs categories",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "flick_photos",
+        "label": "Show flick photos",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "instagram_photos",
+        "label": "Show instagram photos",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "recent_posts",
+        "label": "Show recent posts",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "tags",
+        "label": "Show blog tags",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "blog_tags_",
+        "label": "Tags",
+        "default": "Beauty,\n Cotton,\n Fashion,\n Style, \nWomen",
+        "placeholder": "tag1, tag2, ..."
+      },
+      {
+        "type": "header",
+        "content": "=== Item blog"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "blog",
+        "name": "blog",
+        "settings": [
+          {
+            "label": "Blog",
+            "id": "blog",
+            "type": "blog"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
