@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+{%- assign aspect_ratioW = settings.aspect_ratio_banner_products | split: '/' | first | strip | plus: 0.00 -%}
+{%- assign aspect_ratioH = settings.aspect_ratio_banner_products | split: '/' | last | strip | plus: 0.00 -%}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 {{aspect_ratioH | times:750.00 | divided_by:aspect_ratioW | plus: 30 | divided_by: 2 | plus: 561 | round }}">
+  <title>{{shop.name}} placeholder</title>
+  <rect width="780" height="{{aspect_ratioH | times:750.00 | divided_by:aspect_ratioW | plus: 30 | divided_by: 2 | plus: 561 | round }}" style="fill:{{settings.color_pt_bground}}"/>
+  <text transform="translate(250.87 {{aspect_ratioH | times:750.00 | divided_by:aspect_ratioW | plus: 30 | divided_by: 2 | plus: 561 | divided_by: 2 | round }})" style="font-size:72px;fill:gray;font-family:Roboto-Regular, Roboto">780x{{aspect_ratioH | times:750.00 | divided_by:aspect_ratioW | plus: 30 | divided_by: 2 | plus: 561 | round }}</text>
+</svg>

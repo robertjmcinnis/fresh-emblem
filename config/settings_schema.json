@@ -1,1 +1,2868 @@
-[{"name":"theme_info","theme_name":"Boutique+","theme_author":"The4Studio","theme_version":"2.1.6","theme_documentation_url":"https:\/\/the4studio.net\/shopify\/boutique\/Document\/","theme_support_url":"https:\/\/support.the4.co\/"},{"name":"Social media","settings":[{"type":"header","content":"Social sharing options"},{"type":"checkbox","id":"share_facebook","label":"Share on Facebook","default":true},{"type":"checkbox","id":"share_twitter","label":"Tweet on Twitter","default":true},{"type":"checkbox","id":"share_google_plus","label":"Share on Google+","default":true},{"type":"checkbox","id":"share_pinterest","label":"Pin on Pinterest","default":true},{"type":"checkbox","id":"share_tumblr","label":"Share on Tumblr","default":true},{"type":"header","content":"Social accounts"},{"type":"text","id":"title_social","label":"Social accounts title","default":"Social Media"},{"type":"text","id":"social_twitter_link","label":"Twitter","info":"https:\/\/twitter.com\/shopify"},{"type":"text","id":"social_facebook_link","label":"Facebook","info":"https:\/\/facebook.com\/shopify"},{"type":"text","id":"social_googleplus_link","label":"Google plus","info":"https:\/\/plus.google.com\/?hl=vi"},{"type":"text","id":"social_pinterest_link","label":"Pinterest","info":"https:\/\/pinterest.com\/shopify"},{"type":"text","id":"social_instagram_link","label":"Instagram","info":"http:\/\/instagram.com\/shopify"},{"type":"text","id":"social_vk_link","label":"Vk","info":"https:\/\/vk.com\/id"},{"type":"text","id":"social_tumblr_link","label":"Tumblr","info":"http:\/\/shopify.tumblr.com"},{"type":"text","id":"social_snapchat_link","label":"Snapchat","info":"https:\/\/www.snapchat.com\/add\/shopify"},{"type":"text","id":"social_youtube_link","label":"YouTube","info":"https:\/\/www.youtube.com\/shopify"},{"type":"text","id":"social_vimeo_link","label":"Vimeo","info":"https:\/\/vimeo.com\/shopify"}]},{"name":"Favicon","settings":[{"type":"image_picker","id":"favicon","label":"Favicon image","info":"Will be scaled down to 32 x 32px"}]},{"name":"Colors","settings":[{"type":"color","id":"color_head_bg","label":"Background header body","default":"#ffffff"},{"type":"color","id":"color_body_bg","label":"Background body","default":"#ffffff"},{"type":"color","id":"color_primary_background","label":"Primary buttons and links background","default":"#111111"},{"type":"color","id":"color_primary","label":"Primary buttons and links hover","default":"#c99947"},{"type":"color","id":"color_body_text","label":"Text","default":"#222222"},{"type":"color","id":"color_product_bg","label":"Background color product single(layout 1)","default":"#eaeaea"},{"type":"header","content":"== Product label"},{"type":"color","id":"color_label_new","label":"Background color label new","default":"#5e6ebf"},{"type":"color","id":"color_label_sale","label":"Background color label sale","default":"#c99947"},{"type":"color","id":"color_label_soldout","label":"Background color label soldout","default":"#000"}]},{"name":"General Settings","settings":[{"type":"header","content":"== Info settings"},{"type":"text","id":"phone_contact","label":"___ Phone number","default":"+98 765 432"},{"type":"text","id":"email_contact","label":"___ Email","default":"info@demo.com"},{"type":"header","content":"== Aspect ratio settings"},{"type":"text","id":"aspect_ratio","label":"Image product aspect ratio","info":"Ex: 3\/4. Image product auto fit size","default":"1.047\/1"},{"type":"header","content":"== Location settings"},{"type":"textarea","id":"mapIframe","label":"Iframe google map","default":"<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d7062.289680675729!2d144.81240662484888!3d-37.74698974260446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65fa6dec24bad%3A0x6dc7abb8163efdc5!2s184+Main+Rd+E%2C+St+Albans+VIC+3021%2C+Australia!5e0!3m2!1sen!2sus!4v1440345347207\" width=\"800\" height=\"300\" frameborder=\"0\" style=\"border:0\" allowfullscreen=\"\"><\/iframe>"},{"type":"header","content":"== Product item settings"},{"type":"color","id":"color_pt_bground","label":"Background color","default":"#fcfcfc"},{"type":"checkbox","id":"use_two_col_mb","label":"Use two collumn product in once row on mobile","default":true},{"type":"checkbox","id":"use_second_img","label":"Use second image","default":true},{"type":"checkbox","id":"use_sale_label","label":"Use Sale Label","default":true},{"type":"checkbox","id":"use_new_label","label":"Use new label","default":true},{"type":"select","id":"label_style","label":"Style for label","options":[{"value":"1","label":"Style 1"},{"value":"2","label":"Style 2"},{"value":"3","label":"Style 3"}],"default":"1"},{"type":"checkbox","id":"use_quickview","label":"Use Quickview","default":true},{"type":"checkbox","id":"use_quickshop","label":"Use Quickshop","default":true},{"type":"text","id":"new_day","label":"New in .. days","info":"Integer(1-366)","default":"30"},{"type":"paragraph","content":"You can easily add the desired category of products to this theme by installing our free [Nitro Wishlist](https:\/\/wishlist.teathemes.net) app."},{"type":"checkbox","id":"use_wishlist","label":"Use Wishlist?","default":true},{"type":"page","id":"page_wishlist","label":"Add wishlist page"},{"type":"checkbox","id":"use_compare","label":"Use Compare","default":true},{"type":"header","content":"== Review APP"},{"type":"select","id":"review_app","label":"Chose review app using","options":[{"value":"shopifyreview","label":"Shopify Product Reviews"},{"value":"ryviu","label":"Ryviu"},{"value":"yotpo","label":"YOTPO"}],"default":"ryviu"},{"type":"header","content":"== Instagram"},{"type":"text","id":"user_id","label":"User Id (Instagram)","info":"Use when Get Image from: 'User'. [Where do I find User ID and Access Token?](http:\/\/instagram.pixelunion.net\/)"},{"type":"text","id":"accessToken_instagram","label":"Access Token (Instagram)","info":"Required to use when Get Image from: 'User'."},{"type":"text","id":"limit_instagram","label":"Limit the number of images to show (Instagram)","default":"8"},{"type":"header","content":"== Flick"},{"type":"text","id":"badge_code","label":"Flick badge code url","info":"[Where do I find badge code url?](http:\/\/www.flickrbadge.com\/) -Ex: \/\/www.flickr.com\/badge_code_v2.gne?count=8&display=latest&size=s&layout=x&source=user&user=141016621@N07","default":"\/\/www.flickr.com\/badge_code_v2.gne?count=8&display=latest&size=s&layout=x&source=user&user=141016621@N07"},{"type":"header","content":"== Copyright"},{"type":"textarea","id":"copyright","label":"___ Copyright text"},{"type":"image_picker","id":"trust_image_","label":"Trust Image"},{"type":"image_picker","id":"trust_image_addmore","label":"Trust Image Popup Addmore"},{"type":"header","content":"== Meta keywords for Homepage(SEO)"},{"type":"textarea","id":"home_page_keywords","label":"Keywords for Homepage"},{"type":"textarea","id":"newslatter_mailchimp_url","label":"== MailChimp Form Action URL"},{"type":"paragraph","content":"[Where do I get my MailChimp Form Action?](http:\/\/support.shopify.com\/customer\/portal\/articles\/640278)"},{"type":"paragraph","content":"Use Default Shopify: Any customers who sign up will have an account created for them in Shopify. [View customers](\/admin\/customers?query=&accepts_marketing=1)"}]},{"name":"Google SEO JSON-LD Settings","settings":[{"type":"header","content":"== Business settings"},{"type":"image_picker","id":"business_use_jsonld","label":"Use"},{"type":"select","id":"business_type_jsonld","label":"Select a Business Type","default":"Clothing Store","options":[{"label":"Animal Shelter","value":"Animal Shelter"},{"label":"Child Care","value":"Child Care"},{"label":"Dry Cleaning Or Laundry","value":"Dry Cleaning Or Laundry"},{"label":"Employment Agency","value":"Employment Agency"},{"label":"Government Office","value":"Government Office"},{"label":"Internet Cafe","value":"Internet Cafe"},{"label":"Radio Station","value":"Radio Station"},{"label":"Real Estate Agent","value":"Real Estate Agent"},{"label":"Recycling Center","value":"Recycling Center"},{"label":"Self Storage","value":"Self Storage"},{"label":"Shopping Center","value":"Shopping Center"},{"label":"Television Station","value":"Television Station"},{"label":"Tourist Information Center","value":"Tourist Information Center"},{"label":"Travel Agency","value":"Travel Agency"},{"group":"Automotive","label":"Auto Body Shop","value":"Auto Body Shop"},{"group":"Automotive","label":"Auto Dealer","value":"Auto Dealer"},{"group":"Automotive","label":"Auto Parts Store","value":"Auto Parts Store"},{"group":"Automotive","label":"Auto Rental","value":"Auto Rental"},{"group":"Automotive","label":"Auto Repair","value":"Auto Repair"},{"group":"Automotive","label":"Auto Wash","value":"Auto Wash"},{"group":"Automotive","label":"Gas Station","value":"Gas Station"},{"group":"Automotive","label":"Motorcycle Dealer","value":"Motorcycle Dealer"},{"group":"Automotive","label":"Motorcycle Repair","value":"Motorcycle Repair"},{"group":"Emergency","label":"Emergency Service","value":"Emergency Service"},{"group":"Emergency","label":"Fire Station","value":"Fire Station"},{"group":"Emergency","label":"Hospital","value":"Hospital"},{"group":"Emergency","label":"Police Station","value":"Police Station"},{"group":"Entertainment","label":"Entertainment Business","value":"Entertainment Business"},{"group":"Entertainment","label":"Adult Entertainment","value":"Adult Entertainment"},{"group":"Entertainment","label":"Amusement Park","value":"Amusement Park"},{"group":"Entertainment","label":"Art Gallery","value":"Art Gallery"},{"group":"Entertainment","label":"Casino","value":"Casino"},{"group":"Entertainment","label":"Comedy Club","value":"Comedy Club"},{"group":"Entertainment","label":"Movie Theater","value":"Movie Theater"},{"group":"Entertainment","label":"Night Club","value":"Night Club"},{"group":"Financial","label":"Accounting Service","value":"Accounting Service"},{"group":"Financial","label":"Automated Teller","value":"Automated Teller"},{"group":"Financial","label":"Bank Or Credit Union","value":"Bank Or Credit Union"},{"group":"Financial","label":"Insurance Agency","value":"Insurance Agency"},{"group":"Food","label":"Food Establishment","value":"Food Establishment"},{"group":"Food","label":"Bakery","value":"Bakery"},{"group":"Food","label":"Bar Or Pub","value":"Bar Or Pub"},{"group":"Food","label":"Brewery","value":"Brewery"},{"group":"Food","label":"Cafe Or Coffee Shop","value":"Cafe Or Coffee Shop"},{"group":"Food","label":"Fast Food Restaurant","value":"Fast Food Restaurant"},{"group":"Food","label":"Ice Cream Shop","value":"Ice Cream Shop"},{"group":"Food","label":"Restaurant","value":"Restaurant"},{"group":"Food","label":"Winery","value":"Winery"},{"group":"Health And Beauty","label":"Health And Beauty Business","value":"Health And Beauty Business"},{"group":"Health And Beauty","label":"Beauty Salon","value":"Beauty Salon"},{"group":"Health And Beauty","label":"Day Spa","value":"Day Spa"},{"group":"Health And Beauty","label":"Hair Salon","value":"Hair Salon"},{"group":"Health And Beauty","label":"Health Club","value":"Health Club"},{"group":"Health And Beauty","label":"Nail Salon","value":"Nail Salon"},{"group":"Health And Beauty","label":"Tattoo Parlor","value":"Tattoo Parlor"},{"group":"Home And Construction","label":"Home And Construction Business","value":"Home And Construction Business"},{"group":"Home And Construction","label":"Electrician","value":"Electrician"},{"group":"Home And Construction","label":"General Contractor","value":"general_contractor"},{"group":"Home And Construction","label":"HVAC Business","value":"hvac_business"},{"group":"Home And Construction","label":"House Painter","value":"house_painter"},{"group":"Home And Construction","label":"Locksmith","value":"Locksmith"},{"group":"Home And Construction","label":"Moving Company","value":"Moving Company"},{"group":"Home And Construction","label":"Plumber","value":"Plumber"},{"group":"Home And Construction","label":"RoofingContractor","value":"RoofingContractor"},{"group":"Lodging","label":"Lodging Business","value":"Lodging Business"},{"group":"Lodging","label":"Bed And Breakfast","value":"Bed And Breakfast"},{"group":"Lodging","label":"Hostel","value":"Hostel"},{"group":"Lodging","label":"Hotel","value":"Hotel"},{"group":"Medical\/Dental","label":"Dentist","value":"Dentist(Medical\/Dental)"},{"group":"Medical\/Dental","label":"Diagnostic Lab","value":"Diagnostic Lab"},{"group":"Medical\/Dental","label":"Hospital","value":"Hospital(Medical\/Dental)"},{"group":"Medical\/Dental","label":"Medical Clinic","value":"Medical Clinic"},{"group":"Medical\/Dental","label":"Optician","value":"Optician"},{"group":"Medical\/Dental","label":"Pharmacy","value":"Pharmacy"},{"group":"Medical\/Dental","label":"Physician","value":"Physician"},{"group":"Medical\/Dental","label":"Veterinary Care","value":"Veterinary Care"},{"group":"Professional Services","label":"Professional Service","value":"Professional Service"},{"group":"Professional Services","label":"Accounting Service","value":"Accounting Service(Professional Services)"},{"group":"Professional Services","label":"Attorney","value":"Attorney"},{"group":"Professional Services","label":"Dentist","value":"Dentist"},{"group":"Professional Services","label":"Electrician","value":"Electrician(Professional Services)"},{"group":"Professional Services","label":"General Contractor","value":"General Contractor(Professional Services)"},{"group":"Professional Services","label":"House Painter","value":"House Painter(Professional Services)"},{"group":"Professional Services","label":"Locksmith","value":"Locksmith(Professional Services)"},{"group":"Professional Services","label":"Notary","value":"Notary"},{"group":"Professional Services","label":"Plumber","value":"Plumber(Professional Services)"},{"group":"Professional Services","label":"Roofing Contractor","value":"Roofing Contractor(Professional Services)"},{"group":"Sports Activities","label":"Sports Activity Location","value":"Sports Activity Location"},{"group":"Sports Activities","label":"Bowling Alley","value":"Bowling Alley"},{"group":"Sports Activities","label":"Exercise Gym","value":"Exercise Gym"},{"group":"Sports Activities","label":"Golf Course","value":"Golf Course"},{"group":"Sports Activities","label":"Health Club","value":"Health Club(Sports Activities)"},{"group":"Sports Activities","label":"Public Swimming Pool","value":"Public Swimming Pool"},{"group":"Sports Activities","label":"Ski Resort","value":"Ski Resort"},{"group":"Sports Activities","label":"Sports Club","value":"Sports Club"},{"group":"Sports Activities","label":"Stadium Or Arena","value":"Stadium Or Arena"},{"group":"Sports Activities","label":"Tennis Complex","value":"Tennis Complex"},{"group":"Stores","label":"Store","value":"Store"},{"group":"Stores","label":"Auto Parts Store","value":"Auto Parts Store(Stores)"},{"group":"Stores","label":"Bike Store","value":"Bike Store"},{"group":"Stores","label":"Book Store","value":"Book Store"},{"group":"Stores","label":"Clothing Store","value":"Clothing Store"},{"group":"Stores","label":"Computer Store","value":"Computer Store"},{"group":"Stores","label":"Convenience Store","value":"Convenience Store"},{"group":"Stores","label":"Department Store","value":"Department Store"},{"group":"Stores","label":"Electronics Store","value":"Electronics Store"},{"group":"Stores","label":"Florist","value":"Florist"},{"group":"Stores","label":"Furniture Store","value":"Furniture Store"},{"group":"Stores","label":"Garden Store","value":"Garden Store"},{"group":"Stores","label":"Grocery Store","value":"Grocery Store"},{"group":"Stores","label":"Hardware Store","value":"Hardware Store"},{"group":"Stores","label":"Hobby Shop","value":"Hobby Shop"},{"group":"Stores","label":"Home Goods Store","value":"Home Goods Store"},{"group":"Stores","label":"Jewelry Store","value":"Jewelry Store"},{"group":"Stores","label":"Liquor Store","value":"Liquor Store"},{"group":"Stores","label":"Mens Clothing Store","value":"Mens Clothing Store"},{"group":"Stores","label":"Mobile Phone Store","value":"Mobile Phone Store"},{"group":"Stores","label":"Movie Rental Store","value":"Movie Rental Store"},{"group":"Stores","label":"Music Store","value":"Music Store"},{"group":"Stores","label":"Office Equipment Store","value":"Office Equipment Store"},{"group":"Stores","label":"Outlet Store","value":"Outlet Store"},{"group":"Stores","label":"Pawn Shop","value":"Pawn Shop"},{"group":"Stores","label":"Pet Store","value":"Pet Store"},{"group":"Stores","label":"Shoe Store","value":"Shoe Store"},{"group":"Stores","label":"Sporting Goods Store","value":"Sporting Goods Store"},{"group":"Stores","label":"Tire Shop","value":"Tire Shop"},{"group":"Stores","label":"Toy Store","value":"Toy Store"},{"group":"Stores","label":"Wholesale Store","value":"Wholesale Store"}]},{"type":"image_picker","id":"business_logo_jsonld","label":"Logo image"},{"type":"image_picker","id":"business_image_jsonld","label":"Image (Logo image)"},{"type":"text","id":"business_phone_jsonld","label":"Phone number"},{"type":"text","id":"business_openinghours_jsonld","label":"Opening hours","info":"Ex: Mo, Tu, We, Th, Fr 09:00-17:00"},{"type":"textarea","id":"business_sameas_jsonld","label":"Same as","info":"Ex: https:\/\/www.facebook.com\/__,https:\/\/www.instagram.com\/__,https:\/\/www.pinterest.com\/__,https:\/\/twitter.com\/__"},{"type":"text","id":"business_hasmap_jsonld","label":"Map","info":"Ex: https:\/\/www.google.com\/maps?ie=UTF8&hq&ll=47.1234,11.1234&z=13"},{"type":"text","id":"business_pricerange_jsonld","label":"Price range","info":"Ex: 50-900"},{"type":"text","id":"business_brand_jsonld","label":"Name brand"},{"type":"text","id":"business_saddress_jsonld","label":"Street address"},{"type":"text","id":"business_caddress_jsonld","label":"City address"},{"type":"text","id":"business_paddress_jsonld","label":"Province address"},{"type":"text","id":"business_zaddress_jsonld","label":"Zip address"},{"type":"text","id":"business_coaddress_jsonld","label":"Country address"}]},{"name":"Add To Cart widget","settings":[{"type":"header","content":"Addmore modal"},{"type":"richtext","id":"title_modal","label":"Title","default":"<p>FREE SHIPPING FOR ORDERS OVER $200.99. ADD MORE PRODUCTS TO SAVE YOUR MONEY!<\/p>"},{"type":"header","content":"Calculate Free Shipping Threshold"},{"type":"checkbox","id":"use_threshold","label":"Use Calculate Free Shipping Threshold in shopping cart widget?","default":false},{"type":"text","id":"free_shipping_above","label":"free shipping above (integer)","default":"200.99"}]},{"name":"Cart popup settings","settings":[{"type":"checkbox","id":"cart_popup_enable","label":"Enable cart popup","default":true},{"type":"checkbox","id":"note_enable","label":"Enable cart note","default":true},{"type":"checkbox","id":"cart_auto_shipping_enable","label":"Enable cart auto shipping","default":true},{"type":"checkbox","id":"trust_image","label":"Enable trust seal","default":true},{"type":"checkbox","id":"upsell_enable","label":"Enable upsell products","default":true},{"type":"product","id":"product_1","label":"Product 1"},{"type":"product","id":"product_2","label":"Product 2"},{"type":"product","id":"product_3","label":"Product 3"},{"type":"product","id":"product_4","label":"Product 4"},{"type":"product","id":"product_5","label":"Product 5"},{"type":"product","id":"product_6","label":"Product 6"},{"type":"product","id":"product_7","label":"Product 7"},{"type":"product","id":"product_8","label":"Product 8"},{"type":"product","id":"product_9","label":"Product 9"},{"type":"product","id":"product_10","label":"Product 10"}]},{"name":"Collection page","settings":[{"type":"checkbox","id":"sort_enable","label":"Enable sorting","default":true},{"type":"checkbox","id":"list_categories_enable","label":"Enable list categories(Sidebar)","default":true},{"type":"link_list","id":"list_categories_linklist","label":"Linklist categories(Sidebar)"}]},{"name":"Product filter","settings":[{"type":"checkbox","id":"use_color_library","label":"Use color library for Swatch(>1000 color)","default":true},{"type":"textarea","id":"filter_price_list","label":"Price list for filter","info":"Separate by a comma, i.e \"$7-$50, $50-$150, $150-$500\".","default":"$7-$50, $50-$150, $150-$500"}]},{"name":"Search page","settings":[{"type":"checkbox","id":"use_search_by_collection","label":"Use search by collection","default":true},{"type":"image_picker","id":"image_bg_search","label":"Background head image"},{"type":"range","id":"limit_search","min":5,"max":50,"step":1,"label":"Limit display product","default":15}]},{"name":"Product page","settings":[{"type":"select","id":"product_layout","label":"Product layout","options":[{"label":"Image Left","value":"image_left"},{"label":"Image Right","value":"image_right"}],"default":"image_left"},{"type":"select","id":"image_type","label":"Product Photos type","options":[{"value":"type_1","label":"Type 1"},{"value":"type_2","label":"Type 2"},{"value":"type_3","label":"Type 3"}],"default":"type_1"},{"type":"select","id":"image_size","label":"Product Photos size","options":[{"value":"small","label":"Small"},{"value":"medium","label":"Medium"},{"value":"large","label":"Large"},{"value":"full","label":"Full-width"}],"default":"medium"},{"type":"checkbox","id":"use_zoom","label":"Use Photo zoom","default":true},{"type":"select","id":"thumbnail_alignment","label":"Product Thumbnail alignment","options":[{"label":"Left","value":"thumbnail-left"},{"label":"Right","value":"thumbnail-right"}],"default":"thumbnail-left"},{"type":"checkbox","id":"use_thumb","label":"Use thumbnail","default":true},{"type":"checkbox","id":"use_thumb_vertical","label":"Use vertical thumbnail","default":true},{"type":"checkbox","id":"gallery","label":"Use variant gallery thumbnail","default":true},{"type":"checkbox","id":"show_shortdes","label":"Show short description","default":true},{"type":"checkbox","id":"use_inventory_management","label":"Use inventory management","default":true},{"type":"checkbox","id":"trust_image_prdsingle","label":"Enable trust seal","default":true},{"type":"checkbox","id":"show_vendor","label":"Show vendor","default":true},{"type":"checkbox","id":"show_type","label":"Show type","default":true},{"type":"checkbox","id":"show_price","label":"Show Price","default":true},{"type":"checkbox","id":"show_bundle","label":"Show bundle (APP)"},{"type":"checkbox","id":"show_sku","label":"Show SKU","default":true},{"type":"checkbox","id":"show_categories","label":"Show Categories","default":true},{"type":"checkbox","id":"show_tags","label":"Show Tags","default":true},{"type":"checkbox","id":"show_quantity_selector","label":"Show quantity selector","default":true},{"type":"checkbox","id":"show_add_more_button","label":"Show add more button","default":true},{"type":"checkbox","id":"show_share_buttons","label":"Show social sharing buttons","default":true},{"type":"checkbox","id":"show_variant_labels","label":"Show variant labels","default":true},{"type":"select","id":"swatch_style","label":"Swatch layout","options":[{"label":"Swatch image variant","value":"image_variant"},{"label":"Swatch crop image variant","value":"crop_image"},{"label":"Swatch color","value":"color"}],"default":"color"},{"type":"text","id":"op_swatch1","label":"=== Name option 1 using swatch","default":"Color"},{"type":"checkbox","id":"is_use1","label":"Is swatch color(image)","default":true},{"type":"select","id":"option_style_1","label":"Style for option 1","options":[{"label":"Combobox","value":"combobox"},{"label":"Combobox with out variant image","value":"combobox with_out_variant_image"},{"label":"Swatch circle","value":"not_select circle"},{"label":"Swatch square 1","value":"not_select square_1"},{"label":"Swatch square 2","value":"not_select square_2"},{"label":"Radio button","value":"not_select radio_button"},{"label":"Radio button(inline)","value":"not_select radio_button inline"}],"default":"combobox","info":"If option is swatch color(image) dont chose radio button"},{"type":"text","id":"op_swatch2","label":"=== Name option 2 using swatch"},{"type":"checkbox","id":"is_use2","label":"Is swatch color(image)"},{"type":"select","id":"option_style_2","label":"Style for option 2","options":[{"label":"Combobox","value":"combobox"},{"label":"Combobox with out variant image","value":"combobox with_out_variant_image"},{"label":"Swatch circle","value":"not_select circle"},{"label":"Swatch square 1","value":"not_select square_1"},{"label":"Swatch square 2","value":"not_select square_2"},{"label":"Radio button","value":"not_select radio_button"},{"label":"Radio button(inline)","value":"not_select radio_button inline"}],"default":"combobox","info":"If option is swatch color(image) dont chose radio button"},{"type":"text","id":"op_swatch3","label":"=== Name option 3 using swatch"},{"type":"checkbox","id":"is_use3","label":"Is swatch color(image)"},{"type":"select","id":"option_style_3","label":"Style for option 3","options":[{"label":"Combobox","value":"combobox"},{"label":"Combobox with out variant image","value":"combobox with_out_variant_image"},{"label":"Swatch circle","value":"not_select circle"},{"label":"Swatch square 1","value":"not_select square_1"},{"label":"Swatch square 2","value":"not_select square_2"},{"label":"Radio button","value":"not_select radio_button"},{"label":"Radio button(inline)","value":"not_select radio_button inline"}],"default":"combobox","info":"If option is swatch color(image) dont chose radio button"},{"type":"text","id":"op_swatch4","label":"=== Name option 4 using swatch"},{"type":"checkbox","id":"is_use4","label":"Is swatch color(image)"},{"type":"select","id":"option_style_4","label":"Style for option 4","options":[{"label":"Combobox","value":"combobox"},{"label":"Combobox with out variant image","value":"combobox with_out_variant_image"},{"label":"Swatch circle","value":"not_select circle"},{"label":"Swatch square 1","value":"not_select square_1"},{"label":"Swatch square 2","value":"not_select square_2"},{"label":"Radio button","value":"not_select radio_button"},{"label":"Radio button(inline)","value":"not_select radio_button inline"}],"default":"combobox","info":"If option is swatch color(image) dont chose radio button"},{"type":"text","id":"op_swatch5","label":"=== Name option 5 using swatch"},{"type":"checkbox","id":"is_use5","label":"Is swatch color(image)"},{"type":"select","id":"option_style_5","label":"Style for option 5","options":[{"label":"Combobox","value":"combobox"},{"label":"Combobox with out variant image","value":"combobox with_out_variant_image"},{"label":"Swatch circle","value":"not_select circle"},{"label":"Swatch square 1","value":"not_select square_1"},{"label":"Swatch square 2","value":"not_select square_2"},{"label":"Radio button","value":"not_select radio_button"},{"label":"Radio button(inline)","value":"not_select radio_button inline"}],"default":"combobox","info":"If option is swatch color(image) dont chose radio button"},{"type":"image_picker","id":"size_guide","label":"Size guide image"},{"type":"header","content":"== Review section"},{"type":"checkbox","id":"use_review_st","label":"Use review section"},{"type":"header","content":"== Fake options"},{"type":"header","content":"-- Product Real time Visitor "},{"type":"checkbox","id":"show_real_time_visitor","label":"Show fake real time Visitor","default":true},{"type":"range","id":"real_time_max","min":10,"max":1000,"step":10,"label":"Max fake real time Visitor","default":100},{"type":"range","id":"real_interval_time","min":1,"max":20,"step":1,"unit":"sec","label":"Interval time","default":2},{"type":"text","id":"text_visitor","label":"Text Visitor","default":"Visitor right now"}]},{"name":"Quickview settings","settings":[{"type":"select","id":"qv_product_layout","label":"Product layout","options":[{"label":"Image Left","value":"image_left"},{"label":"Image Right","value":"image_right"}],"default":"image_left"},{"type":"select","id":"qv_image_size","label":"Image size","options":[{"value":"small","label":"Small"},{"value":"medium","label":"Medium"},{"value":"large","label":"Large"},{"value":"full","label":"Full-width"}],"default":"medium"},{"type":"select","id":"qv_thumbnail_alignment","label":"Product Thumbnail alignment","options":[{"label":"Left","value":"thumbnail-left"},{"label":"Right","value":"thumbnail-right"}],"default":"thumbnail-left"},{"type":"checkbox","id":"qv_use_thumb","label":"Use thumbnail","default":true},{"type":"checkbox","id":"qv_use_thumb_vertical","label":"Use vertical thumbnail","default":true},{"type":"checkbox","id":"qv_show_shortdes","label":"Show short description","default":true}]},{"name":"Sticky Add to Cart Button","settings":[{"type":"paragraph","content":"Consider this: a customer is shopping on your client’s page and scrolling through a product’s awesome description. The customer is getting excited to buy the product, but as they scroll further, they don’t see a buy button. They soon realize they have to scroll all the way back to the top to look for it, and in this moment, their excitement to buy the product is overshadowed by their need to search for the ‘add to cart’ button. Once this happens, your client might lose the customer’s interest and could potentially miss out on a sale."},{"type":"checkbox","id":"show_sticky_add","label":"Show Sticky Add to Cart Button On Scroll?","default":false},{"type":"checkbox","id":"show_sticky_add_mobile","label":"Show Sticky Add to Cart Button on Mobile?","default":false},{"type":"select","id":"sticky_position","label":"Position","default":"bottom","options":[{"value":"top","label":"Top"},{"value":"bottom","label":"Bottom"}]},{"type":"select","id":"sticky_align","label":"Align","default":"text-left","options":[{"value":"text-left","label":"Left"},{"value":"text-center","label":"Center"},{"value":"text-right","label":"Right"}]},{"type":"checkbox","id":"show_sticky_countdown","label":"Show Countdown timer?","info":"== Show timer for products that have scheduled date for the sale price","default":false},{"type":"checkbox","id":"show_sticky_img","label":"Show Image?","default":false},{"type":"checkbox","id":"show_sticky_quantiny","label":"Show quantiny?","default":false}]},{"name":"Stock countdown","settings":[{"type":"checkbox","id":"stock_countdown","label":"Show Stock countdown","default":false},{"type":"range","id":"total_items_days","label":"Countdown Timer Loop Days","min":0,"max":30,"step":1,"default":0},{"type":"range","id":"total_items_hours","label":"Countdown Timer Loop Hours","min":1,"max":24,"step":1,"default":8},{"type":"range","id":"total_items_minutes","label":"Countdown Timer Loop Minutes","min":1,"max":60,"step":1,"default":60},{"type":"range","id":"total_items_seconds","label":"Countdown Timer Loop Seconds","min":1,"max":60,"step":1,"default":60},{"type":"range","id":"total_items","label":"Total items","min":10,"max":100,"step":10,"default":50},{"type":"header","content":"Random"},{"type":"range","id":"stock_from","label":"from","min":1,"max":19,"step":1,"default":12},{"type":"range","id":"stock_to","label":"to","min":20,"max":70,"step":1,"default":20},{"type":"header","content":"Translate labels"},{"type":"textarea","id":"stock_message","label":"Message (You can leave it blank)","info":"Hurry! Only {{stock_number}} left in stock.","default":"Hurry! Only {{stock_number}} left in stock."},{"type":"text","id":"days","label":"Days","default":"Days"},{"type":"text","id":"hours","label":"Hours","default":"Hours"},{"type":"text","id":"minutes","label":"Minutes","default":"Minutes"},{"type":"text","id":"seconds","label":"Seconds","default":"Seconds"},{"type":"header","content":"Custom Background"},{"type":"color","id":"stock_bg_process","label":"Process color","default":"#56cfe1"},{"type":"color","id":"stock_bg","label":"Background color","default":"#bddfe4"}]},{"name":"Login page","settings":[{"type":"header","content":"Layout settings"},{"type":"select","id":"layout_style","label":"Layout page","options":[{"label":"Layout 1","value":"1"},{"label":"Layout 2","value":"2"}],"default":"1"},{"type":"header","content":"Sidebar settings(Layout2)"},{"type":"html","id":"account_text","label":"Policy","default":"<li>Fast and easy check out<\/li><li>Easy access to your order history and status<\/li><li>Even faster checkout for future purchases<\/li><li>Receive our FREE e-newsletter with exclusive discounts and offers<\/li><li>You can easily unsubscribe at any time<\/li>","info":"<li>Text 1<\/li><li>Text 2<\/li>","placeholder":"<li>Text 1<\/li><li>Text 2<\/li>"}]},{"name":"Categories Settings","settings":[{"type":"checkbox","id":"show_cat","label":"-- Show categories group","default":false},{"type":"image_picker","id":"image_categories","label":"Background image"},{"type":"image_picker","id":"cat_icon1","label":"___ Icon categorie 01"},{"type":"collection","id":"cat_collection1","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon2","label":"___ Icon categorie 02"},{"type":"collection","id":"cat_collection2","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon3","label":"___ Icon categorie 03"},{"type":"collection","id":"cat_collection3","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon4","label":"___ Icon categorie 04"},{"type":"collection","id":"cat_collection4","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon5","label":"___ Icon categorie 05"},{"type":"collection","id":"cat_collection5","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon6","label":"___ Icon categorie 06"},{"type":"collection","id":"cat_collection6","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon7","label":"___ Icon categorie 07"},{"type":"collection","id":"cat_collection7","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon8","label":"___ Icon categorie 08"},{"type":"collection","id":"cat_collection8","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon9","label":"___ Icon categorie 09"},{"type":"collection","id":"cat_collection9","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon10","label":"___ Icon categorie 10"},{"type":"collection","id":"cat_collection10","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon11","label":"___ Icon categorie 11"},{"type":"collection","id":"cat_collection11","label":"Choose Collection"},{"type":"image_picker","id":"cat_icon12","label":"___ Icon categorie 12"},{"type":"collection","id":"cat_collection12","label":"Choose Collection"}]},{"name":"Cookie Law Info","settings":[{"type":"paragraph","content":"Under EU privacy regulations, websites must make it clear to visitors what information about them is being stored. This specifically includes cookies. Turn on this option and user will see info box at the bottom of the page that your web-site is using cookies. If set \"Accept\" next show will be after 60 days."},{"type":"textarea","id":"text_cookies_popup","label":"Popup text","info":"Place here some information about cookies usage that will be shown in the popup.","default":"We use cookies to improve your experience on our website. By browsing this website, you agree to our use of cookies."},{"type":"checkbox","id":"popup_cookies_btn_infor","label":"Show button info","default":true},{"type":"url","id":"link_btn_infor","label":"Link","info":"Optional"},{"type":"header","content":"Select page to display"},{"type":"checkbox","id":"display_popup_cookies_index","label":"Home page","default":false,"info":"Popup Cookies will display on home page"},{"type":"checkbox","id":"display_popup_cookies_product","label":"Product single","default":false,"info":"Popup Cookies will display on Product single"},{"type":"checkbox","id":"display_popup_cookies_collection","label":"Collection page","default":false,"info":"Popup Cookies will display on Collection page"},{"type":"checkbox","id":"display_popup_cookies_article","label":"Article page","default":false,"info":"Popup Cookies will display on Article page"},{"type":"checkbox","id":"display_popup_cookies_blog","label":"Blog page","default":false,"info":"Popup Cookies will display on Blog page"},{"type":"checkbox","id":"display_popup_cookies_cart","label":"Cart page","default":false,"info":"Popup Cookies will display on Cart page"},{"type":"checkbox","id":"display_popup_cookies_page","label":"Other page","default":false,"info":"Popup Cookies will display on Other page"}]},{"name":"Suggest Products","settings":[{"type":"checkbox","id":"enable_suggest_products","label":"Show suggest products","default":false},{"type":"collection","label":"Select collection to display","id":"collection_suggest"},{"type":"header","content":"Select page to display"},{"type":"checkbox","id":"display_index","label":"Home page","default":true,"info":"Suggest products will display on home page"},{"type":"checkbox","id":"display_product","label":"Product single","default":true,"info":"Suggest products will display on Product single"},{"type":"checkbox","id":"display_collection","label":"Collection page","default":false,"info":"Suggest products will display on Collection page"},{"type":"checkbox","id":"display_article","label":"Article page","default":false,"info":"Suggest products will display on Article page"},{"type":"checkbox","id":"display_blog","label":"Blog page","default":false,"info":"Suggest products will display on Blog page"},{"type":"checkbox","id":"display_cart","label":"Cart page","default":false,"info":"Suggest products will display on Cart page"},{"type":"checkbox","id":"display_page","label":"Other page","default":false,"info":"Suggest products will display on Other page"},{"type":"header","content":"General settings"},{"type":"checkbox","id":"random_delay_time","label":"Random delay time","default":true},{"type":"text","id":"delay_time","default":"7000","label":"Delay time (Integer millisecond)"},{"type":"text","id":"show_time","default":"7000","label":"Show time (Integer millisecond)"},{"type":"checkbox","id":"use_suggest","label":"Use fake suggest","default":true},{"type":"checkbox","id":"use_fake_location","label":"Use fake location in suggest","default":true},{"type":"textarea","id":"fake_location","default":"Melbourne, Australia | Washington | Nevada","label":"List location","placeholder":"location1 | location2 | ...'","info":"Melbourne, Australia | Washington | Nevada"},{"type":"checkbox","id":"show_close_suggest","label":"Show close button","default":true}]},{"name":"Promo popup","settings":[{"type":"checkbox","id":"enable_popup","label":"Enable promo popup","info":"Show promo popup to users when they enter the site.  if customer close the popup, next show will be after 7 days.","default":true},{"type":"checkbox","id":"promo_popup_hide_mobile","label":"Hide for mobile devices","default":true},{"type":"html","id":"popup_newsletter_description","label":"Promo popup text","info":"Place here some promo text or use HTM"},{"type":"text","id":"popup_newsletter_coupon_code","label":"Coupon code","default":"BOUTIQUE25%OFF"},{"type":"header","content":"== Show popup after Settings"},{"type":"text","id":"time_popup_delay","label":"__ Popup delay","info":"Show popup after some time (in minute). Integer","default":"10"},{"type":"text","id":"scroll_popup_delay","label":"__ Show after user scroll down the page","info":"Set the number of pixels users have to scroll down before popup opens (100 -5000). Integer","default":"800"}]},{"name":"Typography","settings":[{"type":"font_picker","label":"Font Body text","id":"font_base_family","default":"montserrat_n4"},{"type":"font_picker","label":"Font Content text","id":"font_content_family","default":"roboto_n4"},{"type":"font_picker","label":"Font Buttons text","id":"font_accent_family","default":"montserrat_n4"},{"type":"font_picker","label":"Font Quote text","id":"font_quote_family","default":"playfair_display_i4"},{"type":"font_picker","label":"Font Service footer text","id":"font_service_footer_family","default":"oswald_n3"},{"type":"paragraph","content":"Need install customize font? install this awesome app: [Fontify-Customize font for your store](https:\/\/apps.shopify.com\/fontify-change-customize-font-for-your-store)"}]},{"name":"Header","settings":[{"type":"checkbox","id":"two_header","label":"== Use two header"},{"type":"header","content":"== Logo"},{"type":"text","id":"body_logo_svg","label":"___ Logo SVG","placeholder":"Logo__1.svg","info":"[Upload svg file to Files](\/admin\/settings\/files) and copy name file to input."},{"type":"image_picker","id":"logo","label":"___ Logo image","info":"Dimension: 300px - 91px"},{"type":"range","id":"logo_max_width","min":100,"max":270,"step":5,"unit":"px","label":"___ Logo width","info":"Custom logo width (in pixels)","default":270},{"type":"image_picker","id":"logo_sticky","label":"___ Logo image for sticky header"},{"type":"image_picker","id":"logomn","label":"___ Mini logo image"},{"type":"header","content":"== Slogan"},{"type":"textarea","id":"slogan_header","label":"___ Slogan Text","default":"Boutique is a reflection of you!"},{"type":"font_picker","label":"Font text Slogan","id":"font_slogan_header","default":"helvetica_n4","info":"Default: Helvetica"},{"type":"range","id":"font_slogan_header_size","min":12,"max":24,"step":1,"unit":"px","label":"___ Slogan font size","default":24},{"type":"header","content":"== VERTICAL MENU SETTINGS"},{"type":"link_list","id":"vertical_menu_links","label":"___ Choose the vertical menu"}]},{"name":"Footer","settings":[{"type":"header","content":"== General Settings"},{"type":"color","id":"title_color_footer","label":"Title color","default":"#eeeeee"},{"type":"color","id":"stitle_color_footer","label":"Small title color","default":"#c99947"},{"type":"color","id":"text_color_footer","label":"Text color","default":"#888"},{"type":"color","id":"link_color_footer","label":"Link hover color","default":"#888"},{"type":"color","id":"note_color_footer","label":"Note color","default":"#fff"},{"type":"color","id":"social_color_footer","label":"Social color","default":"#2c2c2c"},{"type":"color","id":"social_hover_color_footer","label":"Social hover color","default":"#c99947"},{"type":"color","id":"tag_color_footer","label":"Tags color","default":"#cccccc"},{"type":"color","id":"tag_hover_color_footer","label":"Tags hover color","default":"#666666"},{"type":"color","id":"border_color_footer","label":"Border color","default":"#191919"},{"type":"color","id":"background_footer","label":"Background color","default":"#0b0b0b"},{"type":"header","content":"=== Footer Background"},{"type":"checkbox","id":"use_background_footer_img","label":"-- Use background image"},{"type":"image_picker","id":"background_footer_img","label":"Background image"},{"type":"checkbox","id":"use_background_footer_parallax","label":"-- Use background parallax"}]},{"name":"Custom CSS","settings":[{"type":"checkbox","id":"show_custom_css","label":"Enable Custom CSS","default":false},{"type":"textarea","id":"global_custom_css","label":"Global Custom CSS"},{"type":"textarea","id":"desktop_custom_css","label":"Custom CSS for desktop"},{"type":"textarea","id":"tablet_custom_css","label":"Custom CSS for tablet"},{"type":"textarea","id":"landscape_custom_css","label":"Custom CSS for mobile landscape"},{"type":"textarea","id":"mobile_custom_css","label":"Custom CSS for mobile"}]},{"name":"Currency","settings":[{"type":"paragraph","content":"To offer multiple currencies on your online store, you must first [edit your store's currency formatting](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/help-script-find-money-formats)."},{"type":"checkbox","id":"show_multiple_currencies","label":"== Show Currency Converter","default":true,"info":"Even though prices are displayed in different currencies, orders will still be processed in your store's currency."},{"type":"checkbox","id":"use_auto_currencies","label":"== Use auto Converter","default":true},{"type":"select","id":"currency_format","label":"Format","options":[{"value":"money_format","label":"Without currency ($10.00)"},{"value":"money_with_currency_format","label":"With currency ($10.00 CAD)"}],"default":"money_with_currency_format"},{"type":"textarea","id":"supported_currencies","label":"Supported currencies","default":"INR GBP CAD USD AUD EUR JPY","info":"Use the country's ISO [currency code](http:\/\/www.xe.com\/iso4217.php). Separate your currency codes with a space."},{"type":"text","id":"default_currency","label":"Default currency","default":"USD"}]},{"name":"Aspect ratio images","settings":[{"type":"header","content":"== Aspect ratio section Banner Products"},{"type":"text","id":"aspect_ratio_banner_products","label":"Image product aspect ratio","info":"Ex: 1\/1. Image product auto fit size","default":"1\/1"},{"type":"header","content":"== Aspect ratio section Related Post"},{"type":"text","id":"aspect_ratio_related_post","label":"Image article aspect ratio","info":"Ex: 1\/1. Image article auto fit size","default":"1\/1"},{"type":"header","content":"== Aspect ratio section Brand"},{"type":"text","id":"aspect_ratio_brand","label":"Image brand aspect ratio","info":"Ex: 3.8\/2.7. Image brand auto fit size","default":"3.8\/2.7"}]}]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Boutique+",
+    "theme_author": "The4Studio",
+    "theme_version": "2.1.6",
+    "theme_documentation_url": "https:\/\/the4studio.net\/shopify\/boutique\/Document\/",
+    "theme_support_url": "https:\/\/support.the4.co\/"
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_google_plus",
+        "label": "Share on Google+",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pin on Pinterest",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_tumblr",
+        "label": "Share on Tumblr",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "title_social",
+        "label": "Social accounts title",
+        "default": "Social Media"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https:\/\/twitter.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https:\/\/facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_googleplus_link",
+        "label": "Google plus",
+        "info": "https:\/\/plus.google.com\/?hl=vi"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https:\/\/pinterest.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "http:\/\/instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vk_link",
+        "label": "Vk",
+        "info": "https:\/\/vk.com\/id"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr",
+        "info": "http:\/\/shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat",
+        "info": "https:\/\/www.snapchat.com\/add\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "info": "https:\/\/www.youtube.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo",
+        "info": "https:\/\/vimeo.com\/shopify"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_head_bg",
+        "label": "Background header body",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_body_bg",
+        "label": "Background body",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_background",
+        "label": "Primary buttons and links background",
+        "default": "#111111"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary buttons and links hover",
+        "default": "#c99947"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Text",
+        "default": "#222222"
+      },
+      {
+        "type": "color",
+        "id": "color_product_bg",
+        "label": "Background color product single(layout 1)",
+        "default": "#eaeaea"
+      },
+      {
+        "type": "header",
+        "content": "== Product label"
+      },
+      {
+        "type": "color",
+        "id": "color_label_new",
+        "label": "Background color label new",
+        "default": "#5e6ebf"
+      },
+      {
+        "type": "color",
+        "id": "color_label_sale",
+        "label": "Background color label sale",
+        "default": "#c99947"
+      },
+      {
+        "type": "color",
+        "id": "color_label_soldout",
+        "label": "Background color label soldout",
+        "default": "#000"
+      }
+    ]
+  },
+  {
+    "name": "General Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Info settings"
+      },
+      {
+        "type": "text",
+        "id": "phone_contact",
+        "label": "___ Phone number",
+        "default": "+98 765 432"
+      },
+      {
+        "type": "text",
+        "id": "email_contact",
+        "label": "___ Email",
+        "default": "info@demo.com"
+      },
+      {
+        "type": "header",
+        "content": "== Aspect ratio settings"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio",
+        "label": "Image product aspect ratio",
+        "info": "Ex: 3\/4. Image product auto fit size",
+        "default": "1.047\/1"
+      },
+      {
+        "type": "header",
+        "content": "== Location settings"
+      },
+      {
+        "type": "textarea",
+        "id": "mapIframe",
+        "label": "Iframe google map",
+        "default": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d7062.289680675729!2d144.81240662484888!3d-37.74698974260446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65fa6dec24bad%3A0x6dc7abb8163efdc5!2s184+Main+Rd+E%2C+St+Albans+VIC+3021%2C+Australia!5e0!3m2!1sen!2sus!4v1440345347207\" width=\"800\" height=\"300\" frameborder=\"0\" style=\"border:0\" allowfullscreen=\"\"><\/iframe>"
+      },
+      {
+        "type": "header",
+        "content": "== Product item settings"
+      },
+      {
+        "type": "color",
+        "id": "color_pt_bground",
+        "label": "Background color",
+        "default": "#fcfcfc"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_two_col_mb",
+        "label": "Use two collumn product in once row on mobile",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_second_img",
+        "label": "Use second image",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_sale_label",
+        "label": "Use Sale Label",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_new_label",
+        "label": "Use new label",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "label_style",
+        "label": "Style for label",
+        "options": [
+          {
+            "value": "1",
+            "label": "Style 1"
+          },
+          {
+            "value": "2",
+            "label": "Style 2"
+          },
+          {
+            "value": "3",
+            "label": "Style 3"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_quickview",
+        "label": "Use Quickview",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_quickshop",
+        "label": "Use Quickshop",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "new_day",
+        "label": "New in .. days",
+        "info": "Integer(1-366)",
+        "default": "30"
+      },
+      {
+        "type": "paragraph",
+        "content": "You can easily add the desired category of products to this theme by installing our free [Nitro Wishlist](https:\/\/wishlist.teathemes.net) app."
+      },
+      {
+        "type": "checkbox",
+        "id": "use_wishlist",
+        "label": "Use Wishlist?",
+        "default": true
+      },
+      {
+        "type": "page",
+        "id": "page_wishlist",
+        "label": "Add wishlist page"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_compare",
+        "label": "Use Compare",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "== Review APP"
+      },
+      {
+        "type": "select",
+        "id": "review_app",
+        "label": "Chose review app using",
+        "options": [
+          {
+            "value": "shopifyreview",
+            "label": "Shopify Product Reviews"
+          },
+          {
+            "value": "ryviu",
+            "label": "Ryviu"
+          },
+          {
+            "value": "yotpo",
+            "label": "YOTPO"
+          }
+        ],
+        "default": "ryviu"
+      },
+      {
+        "type": "header",
+        "content": "== Instagram"
+      },
+      {
+        "type": "text",
+        "id": "user_id",
+        "label": "User Id (Instagram)",
+        "info": "Use when Get Image from: 'User'. [Where do I find User ID and Access Token?](http:\/\/instagram.pixelunion.net\/)"
+      },
+      {
+        "type": "text",
+        "id": "accessToken_instagram",
+        "label": "Access Token (Instagram)",
+        "info": "Required to use when Get Image from: 'User'."
+      },
+      {
+        "type": "text",
+        "id": "limit_instagram",
+        "label": "Limit the number of images to show (Instagram)",
+        "default": "8"
+      },
+      {
+        "type": "header",
+        "content": "== Flick"
+      },
+      {
+        "type": "text",
+        "id": "badge_code",
+        "label": "Flick badge code url",
+        "info": "[Where do I find badge code url?](http:\/\/www.flickrbadge.com\/) -Ex: \/\/www.flickr.com\/badge_code_v2.gne?count=8&display=latest&size=s&layout=x&source=user&user=141016621@N07",
+        "default": "\/\/www.flickr.com\/badge_code_v2.gne?count=8&display=latest&size=s&layout=x&source=user&user=141016621@N07"
+      },
+      {
+        "type": "header",
+        "content": "== Copyright"
+      },
+      {
+        "type": "textarea",
+        "id": "copyright",
+        "label": "___ Copyright text"
+      },
+      {
+        "type": "image_picker",
+        "id": "trust_image_",
+        "label": "Trust Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "trust_image_addmore",
+        "label": "Trust Image Popup Addmore"
+      },
+      {
+        "type": "header",
+        "content": "== Meta keywords for Homepage(SEO)"
+      },
+      {
+        "type": "textarea",
+        "id": "home_page_keywords",
+        "label": "Keywords for Homepage"
+      },
+      {
+        "type": "textarea",
+        "id": "newslatter_mailchimp_url",
+        "label": "== MailChimp Form Action URL"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Where do I get my MailChimp Form Action?](http:\/\/support.shopify.com\/customer\/portal\/articles\/640278)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use Default Shopify: Any customers who sign up will have an account created for them in Shopify. [View customers](\/admin\/customers?query=&accepts_marketing=1)"
+      }
+    ]
+  },
+  {
+    "name": "Google SEO JSON-LD Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Business settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "business_use_jsonld",
+        "label": "Use"
+      },
+      {
+        "type": "select",
+        "id": "business_type_jsonld",
+        "label": "Select a Business Type",
+        "default": "Clothing Store",
+        "options": [
+          {
+            "label": "Animal Shelter",
+            "value": "Animal Shelter"
+          },
+          {
+            "label": "Child Care",
+            "value": "Child Care"
+          },
+          {
+            "label": "Dry Cleaning Or Laundry",
+            "value": "Dry Cleaning Or Laundry"
+          },
+          {
+            "label": "Employment Agency",
+            "value": "Employment Agency"
+          },
+          {
+            "label": "Government Office",
+            "value": "Government Office"
+          },
+          {
+            "label": "Internet Cafe",
+            "value": "Internet Cafe"
+          },
+          {
+            "label": "Radio Station",
+            "value": "Radio Station"
+          },
+          {
+            "label": "Real Estate Agent",
+            "value": "Real Estate Agent"
+          },
+          {
+            "label": "Recycling Center",
+            "value": "Recycling Center"
+          },
+          {
+            "label": "Self Storage",
+            "value": "Self Storage"
+          },
+          {
+            "label": "Shopping Center",
+            "value": "Shopping Center"
+          },
+          {
+            "label": "Television Station",
+            "value": "Television Station"
+          },
+          {
+            "label": "Tourist Information Center",
+            "value": "Tourist Information Center"
+          },
+          {
+            "label": "Travel Agency",
+            "value": "Travel Agency"
+          },
+          {
+            "group": "Automotive",
+            "label": "Auto Body Shop",
+            "value": "Auto Body Shop"
+          },
+          {
+            "group": "Automotive",
+            "label": "Auto Dealer",
+            "value": "Auto Dealer"
+          },
+          {
+            "group": "Automotive",
+            "label": "Auto Parts Store",
+            "value": "Auto Parts Store"
+          },
+          {
+            "group": "Automotive",
+            "label": "Auto Rental",
+            "value": "Auto Rental"
+          },
+          {
+            "group": "Automotive",
+            "label": "Auto Repair",
+            "value": "Auto Repair"
+          },
+          {
+            "group": "Automotive",
+            "label": "Auto Wash",
+            "value": "Auto Wash"
+          },
+          {
+            "group": "Automotive",
+            "label": "Gas Station",
+            "value": "Gas Station"
+          },
+          {
+            "group": "Automotive",
+            "label": "Motorcycle Dealer",
+            "value": "Motorcycle Dealer"
+          },
+          {
+            "group": "Automotive",
+            "label": "Motorcycle Repair",
+            "value": "Motorcycle Repair"
+          },
+          {
+            "group": "Emergency",
+            "label": "Emergency Service",
+            "value": "Emergency Service"
+          },
+          {
+            "group": "Emergency",
+            "label": "Fire Station",
+            "value": "Fire Station"
+          },
+          {
+            "group": "Emergency",
+            "label": "Hospital",
+            "value": "Hospital"
+          },
+          {
+            "group": "Emergency",
+            "label": "Police Station",
+            "value": "Police Station"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Entertainment Business",
+            "value": "Entertainment Business"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Adult Entertainment",
+            "value": "Adult Entertainment"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Amusement Park",
+            "value": "Amusement Park"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Art Gallery",
+            "value": "Art Gallery"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Casino",
+            "value": "Casino"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Comedy Club",
+            "value": "Comedy Club"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Movie Theater",
+            "value": "Movie Theater"
+          },
+          {
+            "group": "Entertainment",
+            "label": "Night Club",
+            "value": "Night Club"
+          },
+          {
+            "group": "Financial",
+            "label": "Accounting Service",
+            "value": "Accounting Service"
+          },
+          {
+            "group": "Financial",
+            "label": "Automated Teller",
+            "value": "Automated Teller"
+          },
+          {
+            "group": "Financial",
+            "label": "Bank Or Credit Union",
+            "value": "Bank Or Credit Union"
+          },
+          {
+            "group": "Financial",
+            "label": "Insurance Agency",
+            "value": "Insurance Agency"
+          },
+          {
+            "group": "Food",
+            "label": "Food Establishment",
+            "value": "Food Establishment"
+          },
+          {
+            "group": "Food",
+            "label": "Bakery",
+            "value": "Bakery"
+          },
+          {
+            "group": "Food",
+            "label": "Bar Or Pub",
+            "value": "Bar Or Pub"
+          },
+          {
+            "group": "Food",
+            "label": "Brewery",
+            "value": "Brewery"
+          },
+          {
+            "group": "Food",
+            "label": "Cafe Or Coffee Shop",
+            "value": "Cafe Or Coffee Shop"
+          },
+          {
+            "group": "Food",
+            "label": "Fast Food Restaurant",
+            "value": "Fast Food Restaurant"
+          },
+          {
+            "group": "Food",
+            "label": "Ice Cream Shop",
+            "value": "Ice Cream Shop"
+          },
+          {
+            "group": "Food",
+            "label": "Restaurant",
+            "value": "Restaurant"
+          },
+          {
+            "group": "Food",
+            "label": "Winery",
+            "value": "Winery"
+          },
+          {
+            "group": "Health And Beauty",
+            "label": "Health And Beauty Business",
+            "value": "Health And Beauty Business"
+          },
+          {
+            "group": "Health And Beauty",
+            "label": "Beauty Salon",
+            "value": "Beauty Salon"
+          },
+          {
+            "group": "Health And Beauty",
+            "label": "Day Spa",
+            "value": "Day Spa"
+          },
+          {
+            "group": "Health And Beauty",
+            "label": "Hair Salon",
+            "value": "Hair Salon"
+          },
+          {
+            "group": "Health And Beauty",
+            "label": "Health Club",
+            "value": "Health Club"
+          },
+          {
+            "group": "Health And Beauty",
+            "label": "Nail Salon",
+            "value": "Nail Salon"
+          },
+          {
+            "group": "Health And Beauty",
+            "label": "Tattoo Parlor",
+            "value": "Tattoo Parlor"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "Home And Construction Business",
+            "value": "Home And Construction Business"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "Electrician",
+            "value": "Electrician"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "General Contractor",
+            "value": "general_contractor"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "HVAC Business",
+            "value": "hvac_business"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "House Painter",
+            "value": "house_painter"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "Locksmith",
+            "value": "Locksmith"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "Moving Company",
+            "value": "Moving Company"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "Plumber",
+            "value": "Plumber"
+          },
+          {
+            "group": "Home And Construction",
+            "label": "RoofingContractor",
+            "value": "RoofingContractor"
+          },
+          {
+            "group": "Lodging",
+            "label": "Lodging Business",
+            "value": "Lodging Business"
+          },
+          {
+            "group": "Lodging",
+            "label": "Bed And Breakfast",
+            "value": "Bed And Breakfast"
+          },
+          {
+            "group": "Lodging",
+            "label": "Hostel",
+            "value": "Hostel"
+          },
+          {
+            "group": "Lodging",
+            "label": "Hotel",
+            "value": "Hotel"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Dentist",
+            "value": "Dentist(Medical\/Dental)"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Diagnostic Lab",
+            "value": "Diagnostic Lab"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Hospital",
+            "value": "Hospital(Medical\/Dental)"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Medical Clinic",
+            "value": "Medical Clinic"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Optician",
+            "value": "Optician"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Pharmacy",
+            "value": "Pharmacy"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Physician",
+            "value": "Physician"
+          },
+          {
+            "group": "Medical\/Dental",
+            "label": "Veterinary Care",
+            "value": "Veterinary Care"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Professional Service",
+            "value": "Professional Service"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Accounting Service",
+            "value": "Accounting Service(Professional Services)"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Attorney",
+            "value": "Attorney"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Dentist",
+            "value": "Dentist"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Electrician",
+            "value": "Electrician(Professional Services)"
+          },
+          {
+            "group": "Professional Services",
+            "label": "General Contractor",
+            "value": "General Contractor(Professional Services)"
+          },
+          {
+            "group": "Professional Services",
+            "label": "House Painter",
+            "value": "House Painter(Professional Services)"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Locksmith",
+            "value": "Locksmith(Professional Services)"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Notary",
+            "value": "Notary"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Plumber",
+            "value": "Plumber(Professional Services)"
+          },
+          {
+            "group": "Professional Services",
+            "label": "Roofing Contractor",
+            "value": "Roofing Contractor(Professional Services)"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Sports Activity Location",
+            "value": "Sports Activity Location"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Bowling Alley",
+            "value": "Bowling Alley"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Exercise Gym",
+            "value": "Exercise Gym"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Golf Course",
+            "value": "Golf Course"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Health Club",
+            "value": "Health Club(Sports Activities)"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Public Swimming Pool",
+            "value": "Public Swimming Pool"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Ski Resort",
+            "value": "Ski Resort"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Sports Club",
+            "value": "Sports Club"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Stadium Or Arena",
+            "value": "Stadium Or Arena"
+          },
+          {
+            "group": "Sports Activities",
+            "label": "Tennis Complex",
+            "value": "Tennis Complex"
+          },
+          {
+            "group": "Stores",
+            "label": "Store",
+            "value": "Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Auto Parts Store",
+            "value": "Auto Parts Store(Stores)"
+          },
+          {
+            "group": "Stores",
+            "label": "Bike Store",
+            "value": "Bike Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Book Store",
+            "value": "Book Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Clothing Store",
+            "value": "Clothing Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Computer Store",
+            "value": "Computer Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Convenience Store",
+            "value": "Convenience Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Department Store",
+            "value": "Department Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Electronics Store",
+            "value": "Electronics Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Florist",
+            "value": "Florist"
+          },
+          {
+            "group": "Stores",
+            "label": "Furniture Store",
+            "value": "Furniture Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Garden Store",
+            "value": "Garden Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Grocery Store",
+            "value": "Grocery Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Hardware Store",
+            "value": "Hardware Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Hobby Shop",
+            "value": "Hobby Shop"
+          },
+          {
+            "group": "Stores",
+            "label": "Home Goods Store",
+            "value": "Home Goods Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Jewelry Store",
+            "value": "Jewelry Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Liquor Store",
+            "value": "Liquor Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Mens Clothing Store",
+            "value": "Mens Clothing Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Mobile Phone Store",
+            "value": "Mobile Phone Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Movie Rental Store",
+            "value": "Movie Rental Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Music Store",
+            "value": "Music Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Office Equipment Store",
+            "value": "Office Equipment Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Outlet Store",
+            "value": "Outlet Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Pawn Shop",
+            "value": "Pawn Shop"
+          },
+          {
+            "group": "Stores",
+            "label": "Pet Store",
+            "value": "Pet Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Shoe Store",
+            "value": "Shoe Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Sporting Goods Store",
+            "value": "Sporting Goods Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Tire Shop",
+            "value": "Tire Shop"
+          },
+          {
+            "group": "Stores",
+            "label": "Toy Store",
+            "value": "Toy Store"
+          },
+          {
+            "group": "Stores",
+            "label": "Wholesale Store",
+            "value": "Wholesale Store"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "business_logo_jsonld",
+        "label": "Logo image"
+      },
+      {
+        "type": "image_picker",
+        "id": "business_image_jsonld",
+        "label": "Image (Logo image)"
+      },
+      {
+        "type": "text",
+        "id": "business_phone_jsonld",
+        "label": "Phone number"
+      },
+      {
+        "type": "text",
+        "id": "business_openinghours_jsonld",
+        "label": "Opening hours",
+        "info": "Ex: Mo, Tu, We, Th, Fr 09:00-17:00"
+      },
+      {
+        "type": "textarea",
+        "id": "business_sameas_jsonld",
+        "label": "Same as",
+        "info": "Ex: https:\/\/www.facebook.com\/__,https:\/\/www.instagram.com\/__,https:\/\/www.pinterest.com\/__,https:\/\/twitter.com\/__"
+      },
+      {
+        "type": "text",
+        "id": "business_hasmap_jsonld",
+        "label": "Map",
+        "info": "Ex: https:\/\/www.google.com\/maps?ie=UTF8&hq&ll=47.1234,11.1234&z=13"
+      },
+      {
+        "type": "text",
+        "id": "business_pricerange_jsonld",
+        "label": "Price range",
+        "info": "Ex: 50-900"
+      },
+      {
+        "type": "text",
+        "id": "business_brand_jsonld",
+        "label": "Name brand"
+      },
+      {
+        "type": "text",
+        "id": "business_saddress_jsonld",
+        "label": "Street address"
+      },
+      {
+        "type": "text",
+        "id": "business_caddress_jsonld",
+        "label": "City address"
+      },
+      {
+        "type": "text",
+        "id": "business_paddress_jsonld",
+        "label": "Province address"
+      },
+      {
+        "type": "text",
+        "id": "business_zaddress_jsonld",
+        "label": "Zip address"
+      },
+      {
+        "type": "text",
+        "id": "business_coaddress_jsonld",
+        "label": "Country address"
+      }
+    ]
+  },
+  {
+    "name": "Add To Cart widget",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Addmore modal"
+      },
+      {
+        "type": "richtext",
+        "id": "title_modal",
+        "label": "Title",
+        "default": "<p>FREE SHIPPING FOR ORDERS OVER $200.99. ADD MORE PRODUCTS TO SAVE YOUR MONEY!<\/p>"
+      },
+      {
+        "type": "header",
+        "content": "Calculate Free Shipping Threshold"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_threshold",
+        "label": "Use Calculate Free Shipping Threshold in shopping cart widget?",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_above",
+        "label": "free shipping above (integer)",
+        "default": "200.99"
+      }
+    ]
+  },
+  {
+    "name": "Cart popup settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_popup_enable",
+        "label": "Enable cart popup",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "note_enable",
+        "label": "Enable cart note",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_auto_shipping_enable",
+        "label": "Enable cart auto shipping",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "trust_image",
+        "label": "Enable trust seal",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "upsell_enable",
+        "label": "Enable upsell products",
+        "default": true
+      },
+      {
+        "type": "product",
+        "id": "product_1",
+        "label": "Product 1"
+      },
+      {
+        "type": "product",
+        "id": "product_2",
+        "label": "Product 2"
+      },
+      {
+        "type": "product",
+        "id": "product_3",
+        "label": "Product 3"
+      },
+      {
+        "type": "product",
+        "id": "product_4",
+        "label": "Product 4"
+      },
+      {
+        "type": "product",
+        "id": "product_5",
+        "label": "Product 5"
+      },
+      {
+        "type": "product",
+        "id": "product_6",
+        "label": "Product 6"
+      },
+      {
+        "type": "product",
+        "id": "product_7",
+        "label": "Product 7"
+      },
+      {
+        "type": "product",
+        "id": "product_8",
+        "label": "Product 8"
+      },
+      {
+        "type": "product",
+        "id": "product_9",
+        "label": "Product 9"
+      },
+      {
+        "type": "product",
+        "id": "product_10",
+        "label": "Product 10"
+      }
+    ]
+  },
+  {
+    "name": "Collection page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "sort_enable",
+        "label": "Enable sorting",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "list_categories_enable",
+        "label": "Enable list categories(Sidebar)",
+        "default": true
+      },
+      {
+        "type": "link_list",
+        "id": "list_categories_linklist",
+        "label": "Linklist categories(Sidebar)"
+      }
+    ]
+  },
+  {
+    "name": "Product filter",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "use_color_library",
+        "label": "Use color library for Swatch(>1000 color)",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "filter_price_list",
+        "label": "Price list for filter",
+        "info": "Separate by a comma, i.e \"$7-$50, $50-$150, $150-$500\".",
+        "default": "$7-$50, $50-$150, $150-$500"
+      }
+    ]
+  },
+  {
+    "name": "Search page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "use_search_by_collection",
+        "label": "Use search by collection",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg_search",
+        "label": "Background head image"
+      },
+      {
+        "type": "range",
+        "id": "limit_search",
+        "min": 5,
+        "max": 50,
+        "step": 1,
+        "label": "Limit display product",
+        "default": 15
+      }
+    ]
+  },
+  {
+    "name": "Product page",
+    "settings": [
+      {
+        "type": "select",
+        "id": "product_layout",
+        "label": "Product layout",
+        "options": [
+          {
+            "label": "Image Left",
+            "value": "image_left"
+          },
+          {
+            "label": "Image Right",
+            "value": "image_right"
+          }
+        ],
+        "default": "image_left"
+      },
+      {
+        "type": "select",
+        "id": "image_type",
+        "label": "Product Photos type",
+        "options": [
+          {
+            "value": "type_1",
+            "label": "Type 1"
+          },
+          {
+            "value": "type_2",
+            "label": "Type 2"
+          },
+          {
+            "value": "type_3",
+            "label": "Type 3"
+          }
+        ],
+        "default": "type_1"
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Product Photos size",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          },
+          {
+            "value": "full",
+            "label": "Full-width"
+          }
+        ],
+        "default": "medium"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_zoom",
+        "label": "Use Photo zoom",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "thumbnail_alignment",
+        "label": "Product Thumbnail alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "thumbnail-left"
+          },
+          {
+            "label": "Right",
+            "value": "thumbnail-right"
+          }
+        ],
+        "default": "thumbnail-left"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_thumb",
+        "label": "Use thumbnail",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_thumb_vertical",
+        "label": "Use vertical thumbnail",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "gallery",
+        "label": "Use variant gallery thumbnail",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_shortdes",
+        "label": "Show short description",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_inventory_management",
+        "label": "Use inventory management",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "trust_image_prdsingle",
+        "label": "Enable trust seal",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show vendor",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_type",
+        "label": "Show type",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_price",
+        "label": "Show Price",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_bundle",
+        "label": "Show bundle (APP)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sku",
+        "label": "Show SKU",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_categories",
+        "label": "Show Categories",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_tags",
+        "label": "Show Tags",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_quantity_selector",
+        "label": "Show quantity selector",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_add_more_button",
+        "label": "Show add more button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show social sharing buttons",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_variant_labels",
+        "label": "Show variant labels",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "swatch_style",
+        "label": "Swatch layout",
+        "options": [
+          {
+            "label": "Swatch image variant",
+            "value": "image_variant"
+          },
+          {
+            "label": "Swatch crop image variant",
+            "value": "crop_image"
+          },
+          {
+            "label": "Swatch color",
+            "value": "color"
+          }
+        ],
+        "default": "color"
+      },
+      {
+        "type": "text",
+        "id": "op_swatch1",
+        "label": "=== Name option 1 using swatch",
+        "default": "Color"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_use1",
+        "label": "Is swatch color(image)",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "option_style_1",
+        "label": "Style for option 1",
+        "options": [
+          {
+            "label": "Combobox",
+            "value": "combobox"
+          },
+          {
+            "label": "Combobox with out variant image",
+            "value": "combobox with_out_variant_image"
+          },
+          {
+            "label": "Swatch circle",
+            "value": "not_select circle"
+          },
+          {
+            "label": "Swatch square 1",
+            "value": "not_select square_1"
+          },
+          {
+            "label": "Swatch square 2",
+            "value": "not_select square_2"
+          },
+          {
+            "label": "Radio button",
+            "value": "not_select radio_button"
+          },
+          {
+            "label": "Radio button(inline)",
+            "value": "not_select radio_button inline"
+          }
+        ],
+        "default": "combobox",
+        "info": "If option is swatch color(image) dont chose radio button"
+      },
+      {
+        "type": "text",
+        "id": "op_swatch2",
+        "label": "=== Name option 2 using swatch"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_use2",
+        "label": "Is swatch color(image)"
+      },
+      {
+        "type": "select",
+        "id": "option_style_2",
+        "label": "Style for option 2",
+        "options": [
+          {
+            "label": "Combobox",
+            "value": "combobox"
+          },
+          {
+            "label": "Combobox with out variant image",
+            "value": "combobox with_out_variant_image"
+          },
+          {
+            "label": "Swatch circle",
+            "value": "not_select circle"
+          },
+          {
+            "label": "Swatch square 1",
+            "value": "not_select square_1"
+          },
+          {
+            "label": "Swatch square 2",
+            "value": "not_select square_2"
+          },
+          {
+            "label": "Radio button",
+            "value": "not_select radio_button"
+          },
+          {
+            "label": "Radio button(inline)",
+            "value": "not_select radio_button inline"
+          }
+        ],
+        "default": "combobox",
+        "info": "If option is swatch color(image) dont chose radio button"
+      },
+      {
+        "type": "text",
+        "id": "op_swatch3",
+        "label": "=== Name option 3 using swatch"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_use3",
+        "label": "Is swatch color(image)"
+      },
+      {
+        "type": "select",
+        "id": "option_style_3",
+        "label": "Style for option 3",
+        "options": [
+          {
+            "label": "Combobox",
+            "value": "combobox"
+          },
+          {
+            "label": "Combobox with out variant image",
+            "value": "combobox with_out_variant_image"
+          },
+          {
+            "label": "Swatch circle",
+            "value": "not_select circle"
+          },
+          {
+            "label": "Swatch square 1",
+            "value": "not_select square_1"
+          },
+          {
+            "label": "Swatch square 2",
+            "value": "not_select square_2"
+          },
+          {
+            "label": "Radio button",
+            "value": "not_select radio_button"
+          },
+          {
+            "label": "Radio button(inline)",
+            "value": "not_select radio_button inline"
+          }
+        ],
+        "default": "combobox",
+        "info": "If option is swatch color(image) dont chose radio button"
+      },
+      {
+        "type": "text",
+        "id": "op_swatch4",
+        "label": "=== Name option 4 using swatch"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_use4",
+        "label": "Is swatch color(image)"
+      },
+      {
+        "type": "select",
+        "id": "option_style_4",
+        "label": "Style for option 4",
+        "options": [
+          {
+            "label": "Combobox",
+            "value": "combobox"
+          },
+          {
+            "label": "Combobox with out variant image",
+            "value": "combobox with_out_variant_image"
+          },
+          {
+            "label": "Swatch circle",
+            "value": "not_select circle"
+          },
+          {
+            "label": "Swatch square 1",
+            "value": "not_select square_1"
+          },
+          {
+            "label": "Swatch square 2",
+            "value": "not_select square_2"
+          },
+          {
+            "label": "Radio button",
+            "value": "not_select radio_button"
+          },
+          {
+            "label": "Radio button(inline)",
+            "value": "not_select radio_button inline"
+          }
+        ],
+        "default": "combobox",
+        "info": "If option is swatch color(image) dont chose radio button"
+      },
+      {
+        "type": "text",
+        "id": "op_swatch5",
+        "label": "=== Name option 5 using swatch"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_use5",
+        "label": "Is swatch color(image)"
+      },
+      {
+        "type": "select",
+        "id": "option_style_5",
+        "label": "Style for option 5",
+        "options": [
+          {
+            "label": "Combobox",
+            "value": "combobox"
+          },
+          {
+            "label": "Combobox with out variant image",
+            "value": "combobox with_out_variant_image"
+          },
+          {
+            "label": "Swatch circle",
+            "value": "not_select circle"
+          },
+          {
+            "label": "Swatch square 1",
+            "value": "not_select square_1"
+          },
+          {
+            "label": "Swatch square 2",
+            "value": "not_select square_2"
+          },
+          {
+            "label": "Radio button",
+            "value": "not_select radio_button"
+          },
+          {
+            "label": "Radio button(inline)",
+            "value": "not_select radio_button inline"
+          }
+        ],
+        "default": "combobox",
+        "info": "If option is swatch color(image) dont chose radio button"
+      },
+      {
+        "type": "image_picker",
+        "id": "size_guide",
+        "label": "Size guide image"
+      },
+      {
+        "type": "header",
+        "content": "== Review section"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_review_st",
+        "label": "Use review section"
+      },
+      {
+        "type": "header",
+        "content": "== Fake options"
+      },
+      {
+        "type": "header",
+        "content": "-- Product Real time Visitor "
+      },
+      {
+        "type": "checkbox",
+        "id": "show_real_time_visitor",
+        "label": "Show fake real time Visitor",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "real_time_max",
+        "min": 10,
+        "max": 1000,
+        "step": 10,
+        "label": "Max fake real time Visitor",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "real_interval_time",
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "unit": "sec",
+        "label": "Interval time",
+        "default": 2
+      },
+      {
+        "type": "text",
+        "id": "text_visitor",
+        "label": "Text Visitor",
+        "default": "Visitor right now"
+      }
+    ]
+  },
+  {
+    "name": "Quickview settings",
+    "settings": [
+      {
+        "type": "select",
+        "id": "qv_product_layout",
+        "label": "Product layout",
+        "options": [
+          {
+            "label": "Image Left",
+            "value": "image_left"
+          },
+          {
+            "label": "Image Right",
+            "value": "image_right"
+          }
+        ],
+        "default": "image_left"
+      },
+      {
+        "type": "select",
+        "id": "qv_image_size",
+        "label": "Image size",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          },
+          {
+            "value": "full",
+            "label": "Full-width"
+          }
+        ],
+        "default": "medium"
+      },
+      {
+        "type": "select",
+        "id": "qv_thumbnail_alignment",
+        "label": "Product Thumbnail alignment",
+        "options": [
+          {
+            "label": "Left",
+            "value": "thumbnail-left"
+          },
+          {
+            "label": "Right",
+            "value": "thumbnail-right"
+          }
+        ],
+        "default": "thumbnail-left"
+      },
+      {
+        "type": "checkbox",
+        "id": "qv_use_thumb",
+        "label": "Use thumbnail",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "qv_use_thumb_vertical",
+        "label": "Use vertical thumbnail",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "qv_show_shortdes",
+        "label": "Show short description",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Sticky Add to Cart Button",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Consider this: a customer is shopping on your client’s page and scrolling through a product’s awesome description. The customer is getting excited to buy the product, but as they scroll further, they don’t see a buy button. They soon realize they have to scroll all the way back to the top to look for it, and in this moment, their excitement to buy the product is overshadowed by their need to search for the ‘add to cart’ button. Once this happens, your client might lose the customer’s interest and could potentially miss out on a sale."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sticky_add",
+        "label": "Show Sticky Add to Cart Button On Scroll?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sticky_add_mobile",
+        "label": "Show Sticky Add to Cart Button on Mobile?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "sticky_position",
+        "label": "Position",
+        "default": "bottom",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "sticky_align",
+        "label": "Align",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sticky_countdown",
+        "label": "Show Countdown timer?",
+        "info": "== Show timer for products that have scheduled date for the sale price",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sticky_img",
+        "label": "Show Image?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sticky_quantiny",
+        "label": "Show quantiny?",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Stock countdown",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "stock_countdown",
+        "label": "Show Stock countdown",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "total_items_days",
+        "label": "Countdown Timer Loop Days",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "total_items_hours",
+        "label": "Countdown Timer Loop Hours",
+        "min": 1,
+        "max": 24,
+        "step": 1,
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "total_items_minutes",
+        "label": "Countdown Timer Loop Minutes",
+        "min": 1,
+        "max": 60,
+        "step": 1,
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "total_items_seconds",
+        "label": "Countdown Timer Loop Seconds",
+        "min": 1,
+        "max": 60,
+        "step": 1,
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "total_items",
+        "label": "Total items",
+        "min": 10,
+        "max": 100,
+        "step": 10,
+        "default": 50
+      },
+      {
+        "type": "header",
+        "content": "Random"
+      },
+      {
+        "type": "range",
+        "id": "stock_from",
+        "label": "from",
+        "min": 1,
+        "max": 19,
+        "step": 1,
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "stock_to",
+        "label": "to",
+        "min": 20,
+        "max": 70,
+        "step": 1,
+        "default": 20
+      },
+      {
+        "type": "header",
+        "content": "Translate labels"
+      },
+      {
+        "type": "textarea",
+        "id": "stock_message",
+        "label": "Message (You can leave it blank)",
+        "info": "Hurry! Only {{stock_number}} left in stock.",
+        "default": "Hurry! Only {{stock_number}} left in stock."
+      },
+      {
+        "type": "text",
+        "id": "days",
+        "label": "Days",
+        "default": "Days"
+      },
+      {
+        "type": "text",
+        "id": "hours",
+        "label": "Hours",
+        "default": "Hours"
+      },
+      {
+        "type": "text",
+        "id": "minutes",
+        "label": "Minutes",
+        "default": "Minutes"
+      },
+      {
+        "type": "text",
+        "id": "seconds",
+        "label": "Seconds",
+        "default": "Seconds"
+      },
+      {
+        "type": "header",
+        "content": "Custom Background"
+      },
+      {
+        "type": "color",
+        "id": "stock_bg_process",
+        "label": "Process color",
+        "default": "#56cfe1"
+      },
+      {
+        "type": "color",
+        "id": "stock_bg",
+        "label": "Background color",
+        "default": "#bddfe4"
+      }
+    ]
+  },
+  {
+    "name": "Login page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout settings"
+      },
+      {
+        "type": "select",
+        "id": "layout_style",
+        "label": "Layout page",
+        "options": [
+          {
+            "label": "Layout 1",
+            "value": "1"
+          },
+          {
+            "label": "Layout 2",
+            "value": "2"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "header",
+        "content": "Sidebar settings(Layout2)"
+      },
+      {
+        "type": "html",
+        "id": "account_text",
+        "label": "Policy",
+        "default": "<li>Fast and easy check out<\/li><li>Easy access to your order history and status<\/li><li>Even faster checkout for future purchases<\/li><li>Receive our FREE e-newsletter with exclusive discounts and offers<\/li><li>You can easily unsubscribe at any time<\/li>",
+        "info": "<li>Text 1<\/li><li>Text 2<\/li>",
+        "placeholder": "<li>Text 1<\/li><li>Text 2<\/li>"
+      }
+    ]
+  },
+  {
+    "name": "Categories Settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_cat",
+        "label": "-- Show categories group",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "image_categories",
+        "label": "Background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon1",
+        "label": "___ Icon categorie 01"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection1",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon2",
+        "label": "___ Icon categorie 02"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection2",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon3",
+        "label": "___ Icon categorie 03"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection3",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon4",
+        "label": "___ Icon categorie 04"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection4",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon5",
+        "label": "___ Icon categorie 05"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection5",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon6",
+        "label": "___ Icon categorie 06"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection6",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon7",
+        "label": "___ Icon categorie 07"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection7",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon8",
+        "label": "___ Icon categorie 08"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection8",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon9",
+        "label": "___ Icon categorie 09"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection9",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon10",
+        "label": "___ Icon categorie 10"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection10",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon11",
+        "label": "___ Icon categorie 11"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection11",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "image_picker",
+        "id": "cat_icon12",
+        "label": "___ Icon categorie 12"
+      },
+      {
+        "type": "collection",
+        "id": "cat_collection12",
+        "label": "Choose Collection"
+      }
+    ]
+  },
+  {
+    "name": "Cookie Law Info",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Under EU privacy regulations, websites must make it clear to visitors what information about them is being stored. This specifically includes cookies. Turn on this option and user will see info box at the bottom of the page that your web-site is using cookies. If set \"Accept\" next show will be after 60 days."
+      },
+      {
+        "type": "textarea",
+        "id": "text_cookies_popup",
+        "label": "Popup text",
+        "info": "Place here some information about cookies usage that will be shown in the popup.",
+        "default": "We use cookies to improve your experience on our website. By browsing this website, you agree to our use of cookies."
+      },
+      {
+        "type": "checkbox",
+        "id": "popup_cookies_btn_infor",
+        "label": "Show button info",
+        "default": true
+      },
+      {
+        "type": "url",
+        "id": "link_btn_infor",
+        "label": "Link",
+        "info": "Optional"
+      },
+      {
+        "type": "header",
+        "content": "Select page to display"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_popup_cookies_index",
+        "label": "Home page",
+        "default": false,
+        "info": "Popup Cookies will display on home page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_popup_cookies_product",
+        "label": "Product single",
+        "default": false,
+        "info": "Popup Cookies will display on Product single"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_popup_cookies_collection",
+        "label": "Collection page",
+        "default": false,
+        "info": "Popup Cookies will display on Collection page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_popup_cookies_article",
+        "label": "Article page",
+        "default": false,
+        "info": "Popup Cookies will display on Article page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_popup_cookies_blog",
+        "label": "Blog page",
+        "default": false,
+        "info": "Popup Cookies will display on Blog page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_popup_cookies_cart",
+        "label": "Cart page",
+        "default": false,
+        "info": "Popup Cookies will display on Cart page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_popup_cookies_page",
+        "label": "Other page",
+        "default": false,
+        "info": "Popup Cookies will display on Other page"
+      }
+    ]
+  },
+  {
+    "name": "Suggest Products",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_suggest_products",
+        "label": "Show suggest products",
+        "default": false
+      },
+      {
+        "type": "collection",
+        "label": "Select collection to display",
+        "id": "collection_suggest"
+      },
+      {
+        "type": "header",
+        "content": "Select page to display"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_index",
+        "label": "Home page",
+        "default": true,
+        "info": "Suggest products will display on home page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_product",
+        "label": "Product single",
+        "default": true,
+        "info": "Suggest products will display on Product single"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_collection",
+        "label": "Collection page",
+        "default": false,
+        "info": "Suggest products will display on Collection page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_article",
+        "label": "Article page",
+        "default": false,
+        "info": "Suggest products will display on Article page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_blog",
+        "label": "Blog page",
+        "default": false,
+        "info": "Suggest products will display on Blog page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_cart",
+        "label": "Cart page",
+        "default": false,
+        "info": "Suggest products will display on Cart page"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_page",
+        "label": "Other page",
+        "default": false,
+        "info": "Suggest products will display on Other page"
+      },
+      {
+        "type": "header",
+        "content": "General settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "random_delay_time",
+        "label": "Random delay time",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "delay_time",
+        "default": "7000",
+        "label": "Delay time (Integer millisecond)"
+      },
+      {
+        "type": "text",
+        "id": "show_time",
+        "default": "7000",
+        "label": "Show time (Integer millisecond)"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_suggest",
+        "label": "Use fake suggest",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "use_fake_location",
+        "label": "Use fake location in suggest",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "fake_location",
+        "default": "Melbourne, Australia | Washington | Nevada",
+        "label": "List location",
+        "placeholder": "location1 | location2 | ...'",
+        "info": "Melbourne, Australia | Washington | Nevada"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_close_suggest",
+        "label": "Show close button",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Promo popup",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_popup",
+        "label": "Enable promo popup",
+        "info": "Show promo popup to users when they enter the site.  if customer close the popup, next show will be after 7 days.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "promo_popup_hide_mobile",
+        "label": "Hide for mobile devices",
+        "default": true
+      },
+      {
+        "type": "html",
+        "id": "popup_newsletter_description",
+        "label": "Promo popup text",
+        "info": "Place here some promo text or use HTM"
+      },
+      {
+        "type": "text",
+        "id": "popup_newsletter_coupon_code",
+        "label": "Coupon code",
+        "default": "BOUTIQUE25%OFF"
+      },
+      {
+        "type": "header",
+        "content": "== Show popup after Settings"
+      },
+      {
+        "type": "text",
+        "id": "time_popup_delay",
+        "label": "__ Popup delay",
+        "info": "Show popup after some time (in minute). Integer",
+        "default": "10"
+      },
+      {
+        "type": "text",
+        "id": "scroll_popup_delay",
+        "label": "__ Show after user scroll down the page",
+        "info": "Set the number of pixels users have to scroll down before popup opens (100 -5000). Integer",
+        "default": "800"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "label": "Font Body text",
+        "id": "font_base_family",
+        "default": "montserrat_n4"
+      },
+      {
+        "type": "font_picker",
+        "label": "Font Content text",
+        "id": "font_content_family",
+        "default": "roboto_n4"
+      },
+      {
+        "type": "font_picker",
+        "label": "Font Buttons text",
+        "id": "font_accent_family",
+        "default": "montserrat_n4"
+      },
+      {
+        "type": "font_picker",
+        "label": "Font Quote text",
+        "id": "font_quote_family",
+        "default": "playfair_display_i4"
+      },
+      {
+        "type": "font_picker",
+        "label": "Font Service footer text",
+        "id": "font_service_footer_family",
+        "default": "oswald_n3"
+      },
+      {
+        "type": "paragraph",
+        "content": "Need install customize font? install this awesome app: [Fontify-Customize font for your store](https:\/\/apps.shopify.com\/fontify-change-customize-font-for-your-store)"
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "two_header",
+        "label": "== Use two header"
+      },
+      {
+        "type": "header",
+        "content": "== Logo"
+      },
+      {
+        "type": "text",
+        "id": "body_logo_svg",
+        "label": "___ Logo SVG",
+        "placeholder": "Logo__1.svg",
+        "info": "[Upload svg file to Files](\/admin\/settings\/files) and copy name file to input."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "___ Logo image",
+        "info": "Dimension: 300px - 91px"
+      },
+      {
+        "type": "range",
+        "id": "logo_max_width",
+        "min": 100,
+        "max": 270,
+        "step": 5,
+        "unit": "px",
+        "label": "___ Logo width",
+        "info": "Custom logo width (in pixels)",
+        "default": 270
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_sticky",
+        "label": "___ Logo image for sticky header"
+      },
+      {
+        "type": "image_picker",
+        "id": "logomn",
+        "label": "___ Mini logo image"
+      },
+      {
+        "type": "header",
+        "content": "== Slogan"
+      },
+      {
+        "type": "textarea",
+        "id": "slogan_header",
+        "label": "___ Slogan Text",
+        "default": "Boutique is a reflection of you!"
+      },
+      {
+        "type": "font_picker",
+        "label": "Font text Slogan",
+        "id": "font_slogan_header",
+        "default": "helvetica_n4",
+        "info": "Default: Helvetica"
+      },
+      {
+        "type": "range",
+        "id": "font_slogan_header_size",
+        "min": 12,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "___ Slogan font size",
+        "default": 24
+      },
+      {
+        "type": "header",
+        "content": "== VERTICAL MENU SETTINGS"
+      },
+      {
+        "type": "link_list",
+        "id": "vertical_menu_links",
+        "label": "___ Choose the vertical menu"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== General Settings"
+      },
+      {
+        "type": "color",
+        "id": "title_color_footer",
+        "label": "Title color",
+        "default": "#eeeeee"
+      },
+      {
+        "type": "color",
+        "id": "stitle_color_footer",
+        "label": "Small title color",
+        "default": "#c99947"
+      },
+      {
+        "type": "color",
+        "id": "text_color_footer",
+        "label": "Text color",
+        "default": "#888"
+      },
+      {
+        "type": "color",
+        "id": "link_color_footer",
+        "label": "Link hover color",
+        "default": "#888"
+      },
+      {
+        "type": "color",
+        "id": "note_color_footer",
+        "label": "Note color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "social_color_footer",
+        "label": "Social color",
+        "default": "#2c2c2c"
+      },
+      {
+        "type": "color",
+        "id": "social_hover_color_footer",
+        "label": "Social hover color",
+        "default": "#c99947"
+      },
+      {
+        "type": "color",
+        "id": "tag_color_footer",
+        "label": "Tags color",
+        "default": "#cccccc"
+      },
+      {
+        "type": "color",
+        "id": "tag_hover_color_footer",
+        "label": "Tags hover color",
+        "default": "#666666"
+      },
+      {
+        "type": "color",
+        "id": "border_color_footer",
+        "label": "Border color",
+        "default": "#191919"
+      },
+      {
+        "type": "color",
+        "id": "background_footer",
+        "label": "Background color",
+        "default": "#0b0b0b"
+      },
+      {
+        "type": "header",
+        "content": "=== Footer Background"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_footer_img",
+        "label": "-- Use background image"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_footer_img",
+        "label": "Background image"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_background_footer_parallax",
+        "label": "-- Use background parallax"
+      }
+    ]
+  },
+  {
+    "name": "Custom CSS",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_custom_css",
+        "label": "Enable Custom CSS",
+        "default": false
+      },
+      {
+        "type": "textarea",
+        "id": "global_custom_css",
+        "label": "Global Custom CSS"
+      },
+      {
+        "type": "textarea",
+        "id": "desktop_custom_css",
+        "label": "Custom CSS for desktop"
+      },
+      {
+        "type": "textarea",
+        "id": "tablet_custom_css",
+        "label": "Custom CSS for tablet"
+      },
+      {
+        "type": "textarea",
+        "id": "landscape_custom_css",
+        "label": "Custom CSS for mobile landscape"
+      },
+      {
+        "type": "textarea",
+        "id": "mobile_custom_css",
+        "label": "Custom CSS for mobile"
+      }
+    ]
+  },
+  {
+    "name": "Currency",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "To offer multiple currencies on your online store, you must first [edit your store's currency formatting](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/help-script-find-money-formats)."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_multiple_currencies",
+        "label": "== Show Currency Converter",
+        "default": true,
+        "info": "Even though prices are displayed in different currencies, orders will still be processed in your store's currency."
+      },
+      {
+        "type": "checkbox",
+        "id": "use_auto_currencies",
+        "label": "== Use auto Converter",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "currency_format",
+        "label": "Format",
+        "options": [
+          {
+            "value": "money_format",
+            "label": "Without currency ($10.00)"
+          },
+          {
+            "value": "money_with_currency_format",
+            "label": "With currency ($10.00 CAD)"
+          }
+        ],
+        "default": "money_with_currency_format"
+      },
+      {
+        "type": "textarea",
+        "id": "supported_currencies",
+        "label": "Supported currencies",
+        "default": "INR GBP CAD USD AUD EUR JPY",
+        "info": "Use the country's ISO [currency code](http:\/\/www.xe.com\/iso4217.php). Separate your currency codes with a space."
+      },
+      {
+        "type": "text",
+        "id": "default_currency",
+        "label": "Default currency",
+        "default": "USD"
+      }
+    ]
+  },
+  {
+    "name": "Aspect ratio images",
+    "settings": [
+      {
+        "type": "header",
+        "content": "== Aspect ratio section Banner Products"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_banner_products",
+        "label": "Image product aspect ratio",
+        "info": "Ex: 1\/1. Image product auto fit size",
+        "default": "1\/1"
+      },
+      {
+        "type": "header",
+        "content": "== Aspect ratio section Related Post"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_related_post",
+        "label": "Image article aspect ratio",
+        "info": "Ex: 1\/1. Image article auto fit size",
+        "default": "1\/1"
+      },
+      {
+        "type": "header",
+        "content": "== Aspect ratio section Brand"
+      },
+      {
+        "type": "text",
+        "id": "aspect_ratio_brand",
+        "label": "Image brand aspect ratio",
+        "info": "Ex: 3.8\/2.7. Image brand auto fit size",
+        "default": "3.8\/2.7"
+      }
+    ]
+  }
+]

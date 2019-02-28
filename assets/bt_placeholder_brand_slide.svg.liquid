@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+{%- assign aspect_ratioW = settings.aspect_ratio_brand | split: '/' | first | strip | plus: 0.00 -%}
+{%- assign aspect_ratioH = settings.aspect_ratio_brand | split: '/' | last | strip | plus: 0.00 -%}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 {{aspect_ratioH | times:100.00 | divided_by:aspect_ratioW| round}}"><title>{{shop.name}} placeholder</title><rect width="100" height="{{aspect_ratioH | times:100.00 | divided_by:aspect_ratioW| round}}" style="fill:#fff"/></svg>
