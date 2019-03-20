@@ -6,42 +6,42 @@
     "share_pinterest": true,
     "share_tumblr": true,
     "title_social": "Social Media",
-    "social_twitter_link": "#",
-    "social_facebook_link": "#",
-    "social_googleplus_link": "#",
+    "social_twitter_link": "",
+    "social_facebook_link": "",
+    "social_googleplus_link": "",
     "social_pinterest_link": "",
-    "social_instagram_link": "#",
+    "social_instagram_link": "https:\/\/www.instagram.com\/freshemblem\/",
     "social_vk_link": "",
     "social_tumblr_link": "",
     "social_snapchat_link": "",
-    "social_youtube_link": "#",
+    "social_youtube_link": "",
     "social_vimeo_link": "",
-    "favicon": "",
+    "favicon": "shopify:\/\/shop_images\/fresh-emblem-favicon.png",
     "color_head_bg": "#ffffff",
     "color_body_bg": "#ffffff",
     "color_primary_background": "#111111",
-    "color_primary": "#c99947",
+    "color_primary": "#111111",
     "color_body_text": "#222222",
     "color_product_bg": "#eaeaea",
-    "color_label_new": "#5e6ebf",
-    "color_label_sale": "#c99947",
+    "color_label_new": "#47bfc9",
+    "color_label_sale": "#111111",
     "color_label_soldout": "#000",
     "phone_contact": "204-981-7896",
     "email_contact": "hello@freshemblem.com",
-    "aspect_ratio": "2.7\/3.5",
+    "aspect_ratio": "1\/1.05",
     "mapIframe": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d7062.289680675729!2d144.81240662484888!3d-37.74698974260446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65fa6dec24bad%3A0x6dc7abb8163efdc5!2s184+Main+Rd+E%2C+St+Albans+VIC+3021%2C+Australia!5e0!3m2!1sen!2sus!4v1440345347207\" width=\"800\" height=\"300\" frameborder=\"0\" style=\"border:0\" allowfullscreen=\"\"><\/iframe>",
-    "color_pt_bground": "#fcfcfc",
+    "color_pt_bground": "rgba(0,0,0,0)",
     "use_two_col_mb": true,
-    "use_second_img": true,
+    "use_second_img": false,
     "use_sale_label": true,
-    "use_new_label": true,
+    "use_new_label": false,
     "label_style": "1",
-    "use_quickview": true,
-    "use_quickshop": true,
+    "use_quickview": false,
+    "use_quickshop": false,
     "new_day": "30",
-    "use_wishlist": true,
+    "use_wishlist": false,
     "page_wishlist": "",
-    "use_compare": true,
+    "use_compare": false,
     "review_app": "ryviu",
     "user_id": "",
     "accessToken_instagram": "",
@@ -51,7 +51,7 @@
     "trust_image_": "",
     "trust_image_addmore": "",
     "home_page_keywords": "",
-    "newslatter_mailchimp_url": "\/\/rdcma.us12.list-manage.com\/subscribe\/post-json?u=453fe31fe58b055e4ac91dec5&amp;id=d56eea7449&c=?",
+    "newslatter_mailchimp_url": "",
     "business_use_jsonld": "",
     "business_type_jsonld": "Clothing Store",
     "business_logo_jsonld": "",
@@ -68,7 +68,7 @@
     "business_zaddress_jsonld": "",
     "business_coaddress_jsonld": "",
     "title_modal": "<p>FREE SHIPPING FOR ORDERS OVER $200.99. ADD MORE PRODUCTS TO SAVE YOUR MONEY!<\/p>",
-    "use_threshold": true,
+    "use_threshold": false,
     "free_shipping_above": "200.99",
     "cart_popup_enable": true,
     "note_enable": true,
@@ -85,7 +85,7 @@
     "product_8": "",
     "product_9": "",
     "product_10": "",
-    "sort_enable": true,
+    "sort_enable": false,
     "list_categories_enable": true,
     "list_categories_linklist": "",
     "use_color_library": true,
@@ -150,7 +150,7 @@
     "show_sticky_countdown": true,
     "show_sticky_img": true,
     "show_sticky_quantiny": true,
-    "stock_countdown": true,
+    "stock_countdown": false,
     "total_items_days": 0,
     "total_items_hours": 8,
     "total_items_minutes": 60,
@@ -220,8 +220,8 @@
     "fake_location": "Melbourne, Australia | Washington | Nevada",
     "show_close_suggest": true,
     "enable_popup": true,
-    "promo_popup_hide_mobile": true,
-    "popup_newsletter_description": "<h3>BoutiQue<\/h3>\n<img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/2336\/5331\/files\/arow-popup.png?9186020016364948628\" alt=\"\">\n<p class=\"notice\">enter your email and get\n<span class=\"primary\">25% off<\/span>\nYOUR first purchase!<\/p>",
+    "promo_popup_hide_mobile": false,
+    "popup_newsletter_description": "<h3>Fresh Emblem<\/h3>\n<img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/2336\/5331\/files\/arow-popup.png?9186020016364948628\" alt=\"\">\n<p class=\"notice\">Join our mailing list for exclusive offers.<\/p>",
     "popup_newsletter_coupon_code": "BOUTIQUE25%OFF",
     "time_popup_delay": "10",
     "scroll_popup_delay": "800",
@@ -231,11 +231,11 @@
     "font_quote_family": "playfair_display_i4",
     "font_service_footer_family": "oswald_n3",
     "two_header": false,
-    "body_logo_svg": "Logo__1.svg",
-    "logo": "",
-    "logo_max_width": 210,
-    "logo_sticky": "",
-    "logomn": "",
+    "body_logo_svg": "",
+    "logo": "shopify:\/\/shop_images\/fresh-emblem.png",
+    "logo_max_width": 165,
+    "logo_sticky": "shopify:\/\/shop_images\/fresh-emblem.png",
+    "logomn": "shopify:\/\/shop_images\/fresh-emblem.png",
     "slogan_header": "Boutique is a reflection of you!",
     "font_slogan_header": "helvetica_n4",
     "font_slogan_header_size": 24,
@@ -243,10 +243,10 @@
     "title_color_footer": "#eeeeee",
     "stitle_color_footer": "#c99947",
     "text_color_footer": "#888",
-    "link_color_footer": "#888",
+    "link_color_footer": "#888888",
     "note_color_footer": "#fff",
     "social_color_footer": "#2c2c2c",
-    "social_hover_color_footer": "#c99947",
+    "social_hover_color_footer": "#888888",
     "tag_color_footer": "#cccccc",
     "tag_hover_color_footer": "#666666",
     "border_color_footer": "#191919",
@@ -260,7 +260,7 @@
     "tablet_custom_css": "",
     "landscape_custom_css": "",
     "mobile_custom_css": "",
-    "show_multiple_currencies": true,
+    "show_multiple_currencies": false,
     "use_auto_currencies": true,
     "currency_format": "money_format",
     "supported_currencies": "INR GBP CAD USD AUD EUR JPY",
@@ -269,8 +269,8 @@
     "aspect_ratio_related_post": "1\/1",
     "aspect_ratio_brand": "3.8\/2.7",
     "checkout_header_image": "",
-    "checkout_logo_image": "",
-    "checkout_logo_position": "left",
+    "checkout_logo_image": "shopify:\/\/shop_images\/fresh-emblem.png",
+    "checkout_logo_position": "center",
     "checkout_logo_size": "medium",
     "checkout_body_background_image": "",
     "checkout_body_background_color": "#fff",
@@ -279,8 +279,8 @@
     "checkout_sidebar_background_color": "#fafafa",
     "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
     "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-    "checkout_accent_color": "#197bbd",
-    "checkout_button_color": "#197bbd",
+    "checkout_accent_color": "#000000",
+    "checkout_button_color": "#000000",
     "checkout_error_color": "#e32c2b",
     "interval_time": "7000",
     "type_base_family": "Montserrat",
@@ -321,98 +321,20 @@
     "sections": {
       "header": {
         "type": "header",
-        "blocks": {
-          "1523267060787": {
-            "type": "promo",
-            "settings": {
-              "menu_links": "",
-              "name_item": "Home",
-              "menu_links_width": "1920px",
-              "menu_links_per_col": "1",
-              "button_link": "\/",
-              "label": "",
-              "color": "#ffffff",
-              "promo_width": "12",
-              "promo_image": "",
-              "promo_link": "",
-              "use_promo_html": true,
-              "page_promo_html": "",
-              "textarea_promo_html": ""
-            }
-          },
-          "1523267118888": {
-            "type": "multi_collumn",
-            "settings": {
-              "menu_links": "",
-              "menu_links_width": "1920px",
-              "menu_links_per_col": "3",
-              "button_link": "",
-              "label": "",
-              "color": "#ffffff",
-              "bg_image": ""
-            }
-          },
-          "1523267245008": {
-            "type": "multi_collumn",
-            "settings": {
-              "menu_links": "",
-              "menu_links_width": "1920px",
-              "menu_links_per_col": "4",
-              "button_link": "shopify:\/\/collections\/all",
-              "label": "",
-              "color": "#ffffff",
-              "bg_image": ""
-            }
-          },
-          "1523267366251": {
-            "type": "promo",
-            "settings": {
-              "menu_links": "",
-              "name_item": "Features",
-              "menu_links_width": "1920px",
-              "menu_links_per_col": "1",
-              "button_link": "shopify:\/\/pages\/features",
-              "label": "",
-              "color": "#ffffff",
-              "promo_width": "12",
-              "promo_image": "",
-              "promo_link": "",
-              "use_promo_html": true,
-              "page_promo_html": "",
-              "textarea_promo_html": ""
-            }
-          },
-          "1523267429082": {
-            "type": "standard",
-            "settings": {
-              "menu_links": "",
-              "button_link": "",
-              "label": "",
-              "color": "#ffffff"
-            }
-          }
-        },
-        "block_order": [
-          "1523267060787",
-          "1523267118888",
-          "1523267245008",
-          "1523267366251",
-          "1523267429082"
-        ],
         "settings": {
-          "import_header": "1",
+          "import_header": "9",
           "stickey_menu": true,
-          "message": false,
+          "message": true,
           "message_onm": false,
           "message_ont": false,
-          "message_richtext": "<p>Announce something here<\/p>",
+          "message_richtext": "<p>This is the announcement bar!<\/p>",
           "color_text": "#fff",
-          "color_bg": "#7796a8",
+          "color_bg": "#5ebfb7",
           "announcement_border": false,
           "announcement_margin_top": "",
           "announcement_margin_bottom": "",
           "icon_settings": "config",
-          "menu_settings_dropdown": "",
+          "menu_settings_dropdown": "footer",
           "main_linklist": "main-menu",
           "padding_size": 20
         }
@@ -423,12 +345,12 @@
           "1523269473467": {
             "type": "item_3",
             "settings": {
-              "block_style": "style1",
-              "content_align": "center",
-              "stitle": "Talk to Us Now !",
+              "block_style": "style3",
+              "content_align": "left",
+              "stitle": "",
               "title": "<p>Contact Us<\/p>",
-              "footer_widget_address_contact": "5701 Outlets at Tejon Pkwy, Tejon ranch CA 93203 UK.",
-              "footer_widget_phone_contact": "(+800) 6868 2268",
+              "footer_widget_address_contact": "<a href=\"mailto:hello@freshemblem.com\">hello@freshemblem.com<\/a>",
+              "footer_widget_phone_contact": "204-981-7896",
               "font_size_phone": 18,
               "phone_color": "#ffffff",
               "block_width": "4",
@@ -440,58 +362,37 @@
           "1523269589497": {
             "type": "item_2",
             "settings": {
-              "block_style": "style1",
-              "content_align": "center",
-              "stitle": "Talk to Us Now !",
-              "title": "<p>OUR SERVICES<\/p>",
-              "footer_link": "footer",
+              "block_style": "style3",
+              "content_align": "left",
+              "stitle": "",
+              "title": "<p>Site Map<\/p>",
+              "footer_link": "main-menu",
               "block_width": "4",
               "hide_medium": false,
               "hide_small": false,
               "hide_extra_small": false
             }
           },
-          "1523269669236": {
-            "type": "item_5",
+          "1552754234045": {
+            "type": "item_10",
             "settings": {
-              "block_style": "style1",
-              "content_align": "center",
-              "stitle": "Talk to Us Now !",
-              "title": "<p>Follow Us<\/p>",
+              "block_style": "style3",
+              "content_align": "left",
+              "title": "<p>Newsletter<\/p>",
+              "text_newsletter": "",
+              "newsletter_design": "newsletter_design_2",
               "socials_design": "socials_design_1",
               "block_width": "4",
               "hide_medium": false,
               "hide_small": false,
               "hide_extra_small": false
             }
-          },
-          "1523269754343": {
-            "type": "footer_bottom_1",
-            "settings": {
-              "footer_small_title_payment": "WE ACCEPT",
-              "title_color": "#ffffff",
-              "border_color": "#191919",
-              "footer_widget_title_payment": "Online Payment Be Secured",
-              "payment_image_1": "",
-              "payment_call_to_action_1": "",
-              "payment_image_2": "",
-              "payment_call_to_action_2": "",
-              "payment_image_3": "",
-              "payment_call_to_action_3": "",
-              "payment_image_4": "",
-              "payment_call_to_action_4": "",
-              "payment_image_5": "",
-              "payment_call_to_action_5": "",
-              "payment_image_6": "",
-              "payment_call_to_action_6": ""
-            }
           }
         },
         "block_order": [
           "1523269473467",
           "1523269589497",
-          "1523269669236",
-          "1523269754343"
+          "1552754234045"
         ],
         "settings": {
           "use_footer": true,
@@ -645,69 +546,23 @@
       "1523268329616": {
         "type": "carouselSlideshow",
         "blocks": {
-          "1523268329616-0": {
-            "type": "image",
-            "settings": {
-              "image": "",
-              "heading": "",
-              "font_heading": "poppins_n7",
-              "responsive_item": "{\n\t\"0\": \"\npadding: 8px 0;\nfont-size: 16px;\nline-height: 17px;\ncolor: #666666;\nletter-spacing: 12px;\ntext-transform: uppercase;\nmargin-bottom: 20px;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 16px;\n\t\",\n\t\"992\": \"\n font-size: 16px;\n\t\",\n\t\"1200\": \"\n    font-size: 16px;\n\t\"\n}",
-              "subheading": "",
-              "font_subheading": "poppins_n7",
-              "responsive_item_subheading": "{\n\t\"0\": \"\n    font-size: 55px;\n    line-height: 55px;\n    color: #333333;\n    padding: 8px 0;\n    margin-bottom: 30px;\n\t\",\n\t\"480\": \"\n font-size: 55px;\n\t\",\n\t\"768\": \"\n font-size: 55px;\n\t\",\n\t\"992\": \"\n font-size: 55px;\n\t\",\n\t\"1200\": \"\n    font-size: 55px;\n\t\"\n}",
-              "description": "",
-              "font_description": "poppins_n4",
-              "responsive_item_description": "{\n\t\"0\": \"\ntext-transform: uppercase;\nfont-weight: 600;\nfont-size: 14px;\nmargin-bottom:20px;\nfont-style: normal;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 18px;\n\t\",\n\t\"992\": \"\n font-size: 24px;\n\t\",\n\t\"1200\": \"\n    font-size: 24px;\n\t\"\n}",
-              "link": "",
-              "textBtn": "",
-              "text_alignment": "center",
-              "text_alignment_top": 16,
-              "text_alignment_left": 16,
-              "text_alignment_right": 0,
-              "turnoff": false,
-              "title": "Item image"
-            }
-          },
           "1523268420749": {
             "type": "image",
             "settings": {
-              "image": "",
-              "heading": "",
+              "image": "shopify:\/\/shop_images\/IMG_2391_dce0746a-11d5-4696-8230-64a561f62915.jpg",
+              "heading": "Premium Wood Air Fresheners",
               "font_heading": "poppins_n7",
-              "responsive_item": "{\n\t\"0\": \"\npadding: 8px 0;\nfont-size: 16px;\nline-height: 17px;\ncolor: #666666;\nletter-spacing: 12px;\ntext-transform: uppercase;\nmargin-bottom: 20px;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 16px;\n\t\",\n\t\"992\": \"\n font-size: 16px;\n\t\",\n\t\"1200\": \"\n    font-size: 16px;\n\t\"\n}",
-              "subheading": "",
+              "responsive_item": "{\n\t\"0\": \"\npadding: 8px 0;\nfont-size: 16px;\nline-height: 17px;\ncolor: #ffffff;\nletter-spacing: 12px;\ntext-transform: uppercase;\nmargin-bottom: 20px;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 16px;\n\t\",\n\t\"992\": \"\n font-size: 16px;\n\t\",\n\t\"1200\": \"\n    font-size: 16px;\n\t\"\n}",
+              "subheading": "Fresh Emblem",
               "font_subheading": "poppins_n7",
-              "responsive_item_subheading": "{\n\t\"0\": \"\n    font-size: 55px;\n    line-height: 55px;\n    color: #333333;\n    padding: 8px 0;\n    margin-bottom: 30px;\n\t\",\n\t\"480\": \"\n font-size: 55px;\n\t\",\n\t\"768\": \"\n font-size: 55px;\n\t\",\n\t\"992\": \"\n font-size: 55px;\n\t\",\n\t\"1200\": \"\n    font-size: 55px;\n\t\"\n}",
+              "responsive_item_subheading": "{\n\t\"0\": \"\n    font-size: 55px;\n    line-height: 55px;\n    color: #ffffff;\n    padding: 8px 0;\n    margin-bottom: 30px;\n\t\",\n\t\"480\": \"\n font-size: 55px;\n\t\",\n\t\"768\": \"\n font-size: 55px;\n\t\",\n\t\"992\": \"\n font-size: 55px;\n\t\",\n\t\"1200\": \"\n    font-size: 55px;\n\t\"\n}",
               "description": "",
               "font_description": "poppins_n4",
               "responsive_item_description": "{\n\t\"0\": \"\ntext-transform: uppercase;\nfont-weight: 600;\nfont-size: 14px;\nmargin-bottom:20px;\nfont-style: normal;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 18px;\n\t\",\n\t\"992\": \"\n font-size: 24px;\n\t\",\n\t\"1200\": \"\n    font-size: 24px;\n\t\"\n}",
-              "link": "",
-              "textBtn": "",
+              "link": "shopify:\/\/collections",
+              "textBtn": "View Products",
               "text_alignment": "center",
-              "text_alignment_top": 16,
-              "text_alignment_left": 16,
-              "text_alignment_right": 0,
-              "turnoff": false,
-              "title": "Item image"
-            }
-          },
-          "1523268468684": {
-            "type": "image",
-            "settings": {
-              "image": "",
-              "heading": "",
-              "font_heading": "poppins_n7",
-              "responsive_item": "{\n\t\"0\": \"\npadding: 8px 0;\nfont-size: 16px;\nline-height: 17px;\ncolor: #666666;\nletter-spacing: 12px;\ntext-transform: uppercase;\nmargin-bottom: 20px;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 16px;\n\t\",\n\t\"992\": \"\n font-size: 16px;\n\t\",\n\t\"1200\": \"\n    font-size: 16px;\n\t\"\n}",
-              "subheading": "",
-              "font_subheading": "poppins_n7",
-              "responsive_item_subheading": "{\n\t\"0\": \"\n    font-size: 55px;\n    line-height: 55px;\n    color: #333333;\n    padding: 8px 0;\n    margin-bottom: 30px;\n\t\",\n\t\"480\": \"\n font-size: 55px;\n\t\",\n\t\"768\": \"\n font-size: 55px;\n\t\",\n\t\"992\": \"\n font-size: 55px;\n\t\",\n\t\"1200\": \"\n    font-size: 55px;\n\t\"\n}",
-              "description": "",
-              "font_description": "poppins_n4",
-              "responsive_item_description": "{\n\t\"0\": \"\ntext-transform: uppercase;\nfont-weight: 600;\nfont-size: 14px;\nmargin-bottom:20px;\nfont-style: normal;\n\t\",\n\t\"480\": \"\n font-size: 16px;\n\t\",\n\t\"768\": \"\n font-size: 18px;\n\t\",\n\t\"992\": \"\n font-size: 24px;\n\t\",\n\t\"1200\": \"\n    font-size: 24px;\n\t\"\n}",
-              "link": "",
-              "textBtn": "",
-              "text_alignment": "center",
-              "text_alignment_top": 16,
+              "text_alignment_top": 50,
               "text_alignment_left": 16,
               "text_alignment_right": 0,
               "turnoff": false,
@@ -716,16 +571,14 @@
           }
         },
         "block_order": [
-          "1523268329616-0",
-          "1523268420749",
-          "1523268468684"
+          "1523268420749"
         ],
         "settings": {
           "title": "Simple slideshow",
-          "width_section": true,
+          "width_section": false,
           "number_items": "1",
           "margin_items": "",
-          "nav_style": "1",
+          "nav_style": "",
           "nav_position": "nav-default",
           "autoplay": true,
           "fullscreen": false,
@@ -741,7 +594,7 @@
             "type": "item",
             "settings": {
               "image": "",
-              "text": "Boutique is a reflection of you! A sexy and confident woman that radiates through his daring wardrobe. We bring you the best of all things glam and sexy while keeping in mind that high quality doesn’t have to come at a high price."
+              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud"
             }
           }
         },
@@ -756,64 +609,9 @@
           "section_padding": ""
         }
       },
-      "1523268620230": {
-        "type": "bt_banner_products",
-        "blocks": {
-          "1523268636970": {
-            "type": "item",
-            "settings": {
-              "align_right": false,
-              "image": "",
-              "banner_call_to_action": "",
-              "collection": "",
-              "product_1": "",
-              "product_2": "",
-              "product_3": "",
-              "product_4": ""
-            }
-          }
-        },
-        "block_order": [
-          "1523268636970"
-        ],
-        "settings": {
-          "title": "Products with banner",
-          "width_section": true,
-          "section_margin_top": "40px",
-          "section_margin_bottom": "",
-          "section_padding": ""
-        }
-      },
-      "1523268862686": {
-        "type": "bt_banner_products",
-        "blocks": {
-          "1523268872609": {
-            "type": "item",
-            "settings": {
-              "align_right": true,
-              "image": "",
-              "banner_call_to_action": "",
-              "collection": "",
-              "product_1": "",
-              "product_2": "",
-              "product_3": "",
-              "product_4": ""
-            }
-          }
-        },
-        "block_order": [
-          "1523268872609"
-        ],
-        "settings": {
-          "title": "Products with banner",
-          "width_section": true,
-          "section_margin_top": "50px",
-          "section_margin_bottom": "",
-          "section_padding": ""
-        }
-      },
       "1523268964370": {
         "type": "bt_shipping_text",
+        "disabled": true,
         "blocks": {
           "1523268964370-0": {
             "type": "item",
@@ -838,6 +636,7 @@
       },
       "1523269058920": {
         "type": "bt_blog",
+        "disabled": true,
         "blocks": {
           "1523269078169": {
             "type": "item",
@@ -871,6 +670,7 @@
       },
       "1523269106917": {
         "type": "bt_brand",
+        "disabled": true,
         "blocks": {
           "1523269125005": {
             "type": "item",
@@ -939,47 +739,20 @@
       "1523269355277": {
         "type": "bt_newsleter",
         "settings": {
-          "title": "Home newsletter",
+          "title": "Newsletter",
           "width_section": true,
           "section_margin_top": "60px",
           "section_margin_bottom": "",
           "section_padding": "",
-          "image": "",
-          "video_url": "https:\/\/vimeo.com\/134060140",
-          "titlex": "NEWSLETTER",
+          "image": "shopify:\/\/shop_images\/anchor.jpg",
+          "video_url": "",
+          "titlex": "JOIN OUR NEWSLETTER",
           "s_title": "Sign up for Our Newsletter & Promotions"
         }
       },
       "1523269411694": {
         "type": "bt_shipping_icon",
-        "blocks": {
-          "1523269411694-0": {
-            "type": "item_1",
-            "settings": {
-              "image": "",
-              "shipping_info_content": "FREE SHIPPING WORLD WIDE"
-            }
-          },
-          "1523269411694-1": {
-            "type": "item_1",
-            "settings": {
-              "image": "",
-              "shipping_info_content": "FREE SHIPPING WORLD WIDE"
-            }
-          },
-          "1523269411694-2": {
-            "type": "item_1",
-            "settings": {
-              "image": "",
-              "shipping_info_content": "FREE SHIPPING WORLD WIDE"
-            }
-          }
-        },
-        "block_order": [
-          "1523269411694-0",
-          "1523269411694-1",
-          "1523269411694-2"
-        ],
+        "disabled": true,
         "settings": {
           "title": "Shipping icon",
           "width_section": true,
@@ -1102,66 +875,14 @@
       },
       "collection-template": {
         "type": "collection-template",
-        "blocks": {
-          "1523275047068": {
-            "type": "item",
-            "settings": {
-              "title": "Filter By Color",
-              "tags": "",
-              "key": "Color",
-              "block_width": "3",
-              "block_style": "4",
-              "use_split": true
-            }
-          },
-          "1523275062242": {
-            "type": "item",
-            "settings": {
-              "title": "Filter By Size",
-              "tags": "",
-              "key": "Size",
-              "block_width": "3",
-              "block_style": "3",
-              "use_split": false
-            }
-          },
-          "1523275327032": {
-            "type": "item",
-            "settings": {
-              "title": "Filter By Price",
-              "tags": "",
-              "key": "Price",
-              "block_width": "3",
-              "block_style": "1",
-              "use_split": false
-            }
-          },
-          "1523414639203": {
-            "type": "item",
-            "settings": {
-              "title": "Filter By Brand",
-              "tags": "",
-              "key": "Vendor",
-              "block_width": "3",
-              "block_style": "6",
-              "use_split": false
-            }
-          }
-        },
-        "block_order": [
-          "1523275047068",
-          "1523275062242",
-          "1523275327032",
-          "1523414639203"
-        ],
         "settings": {
           "width_section": true,
           "sidebar_layout": "",
-          "grid": "4",
+          "grid": "3",
           "masonry": false,
           "collection_layout": "infinity",
-          "limit": 16,
-          "product_grid_layout": "7",
+          "limit": 30,
+          "product_grid_layout": "1",
           "color_groups": "Color",
           "brands_icon": "\/\/cdn.shopify.com\/s\/files\/1\/2336\/5331\/files\/H_M.jpg?10824931485256389037, \/\/cdn.shopify.com\/s\/files\/1\/2336\/5331\/files\/Adidas.jpg?10824931485256389037, \/\/cdn.shopify.com\/s\/files\/1\/2336\/5331\/files\/Demo-boutique-plus.jpg?16977313188032881222"
         }
@@ -1580,18 +1301,229 @@
           "image": "",
           "video": "https:\/\/teathemes.net\/mazano\/password.mp4"
         }
+      },
+      "1552276023979": {
+        "type": "bt_banner_collection",
+        "disabled": true,
+        "blocks": {
+          "1552276049140": {
+            "type": "item",
+            "settings": {
+              "title": "Featured items",
+              "stitle": "Our Featured today!",
+              "align_right": false,
+              "image": "",
+              "banner_call_to_action": "",
+              "text_button": "Shop more items",
+              "collection": "",
+              "limit_prd": 8,
+              "product_grid_layout": "",
+              "nav_style": "2",
+              "nav_position": "nav-center-center",
+              "responsive": "{\n\t\"0\": {\n\t\t\"items\": 1,\n\t\t\"margin\": 30\n\t},\n\t\"480\": {\n\t\t\"items\": 1,\n\t\t\"margin\": 30\n\t},\n\t\"768\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t},\n\t\"992\": {\n\t\t\"items\": 2,\n\t\t\"margin\": 30\n\t},\n\t\"1200\": {\n\t\t\"items\": 3,\n\t\t\"margin\": 30\n\t}\n}"
+            }
+          }
+        },
+        "block_order": [
+          "1552276049140"
+        ],
+        "settings": {
+          "title": "Collection with banner",
+          "width_section": true,
+          "section_margin_top": "",
+          "section_margin_bottom": "",
+          "section_padding": ""
+        }
+      },
+      "1552276214814": {
+        "type": "bt_banner_customize",
+        "blocks": {
+          "1552276311753": {
+            "type": "item",
+            "settings": {
+              "open_col": false,
+              "end_col": false,
+              "turnoff": false,
+              "banner_width": "6",
+              "nopadding": false,
+              "hide_medium": false,
+              "hide_small": false,
+              "hide_extra_small": false,
+              "image": "shopify:\/\/shop_images\/IMG_2391.jpg",
+              "image_link": "",
+              "titlex": "The Fresh Collection",
+              "color_title": "#e5e5e5",
+              "stitle": "",
+              "color_stitle": "#e5e5e5",
+              "name_btn": "Shop Now",
+              "color_text": "#fff",
+              "color_bg_text": "#333333"
+            }
+          },
+          "1552276396631": {
+            "type": "item",
+            "settings": {
+              "open_col": false,
+              "end_col": false,
+              "turnoff": false,
+              "banner_width": "6",
+              "nopadding": false,
+              "hide_medium": false,
+              "hide_small": false,
+              "hide_extra_small": false,
+              "image": "shopify:\/\/shop_images\/IMG_2391.jpg",
+              "image_link": "",
+              "titlex": "Spring Special Bundles",
+              "color_title": "#e5e5e5",
+              "stitle": "",
+              "color_stitle": "#e5e5e5",
+              "name_btn": "See Bundles",
+              "color_text": "#be2727",
+              "color_bg_text": "#333333"
+            }
+          }
+        },
+        "block_order": [
+          "1552276311753",
+          "1552276396631"
+        ],
+        "settings": {
+          "turnoff": false,
+          "title": "Banner customize",
+          "width_section": true,
+          "section_margin_top": "",
+          "section_margin_bottom": "",
+          "section_padding": ""
+        }
+      },
+      "1552277460728": {
+        "type": "bt_products_section",
+        "blocks": {
+          "1552277478450": {
+            "type": "1",
+            "settings": {
+              "title": "Featured products",
+              "products": "all",
+              "grid": "3",
+              "limit": 8,
+              "range_row": 0
+            }
+          }
+        },
+        "block_order": [
+          "1552277478450"
+        ],
+        "settings": {
+          "title": "Products section",
+          "width_section": true,
+          "section_margin_top": "",
+          "section_margin_bottom": "",
+          "section_padding": "",
+          "product_grid_layout": "1"
+        }
+      },
+      "1552277645381": {
+        "type": "bt_categories3",
+        "disabled": true,
+        "settings": {
+          "title": "Featured categories",
+          "width_section": true,
+          "section_margin_top": "",
+          "section_margin_bottom": "",
+          "section_padding": "",
+          "border_top": false,
+          "border_bottom": false
+        }
+      },
+      "1552279966348": {
+        "type": "bt_products_section",
+        "disabled": true,
+        "settings": {
+          "title": "Products section",
+          "width_section": true,
+          "section_margin_top": "",
+          "section_margin_bottom": "",
+          "section_padding": "",
+          "product_grid_layout": "1"
+        }
+      },
+      "1552280058793": {
+        "type": "bt_testimonials",
+        "blocks": {
+          "1552280058793-0": {
+            "type": "1",
+            "settings": {
+              "testimonial_avatar": "",
+              "testimonial_content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
+              "testimonial_name": "John Brown"
+            }
+          },
+          "1552280058793-1": {
+            "type": "1",
+            "settings": {
+              "testimonial_avatar": "",
+              "testimonial_content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
+              "testimonial_name": "John Brown"
+            }
+          },
+          "1552280058793-2": {
+            "type": "1",
+            "settings": {
+              "testimonial_avatar": "",
+              "testimonial_content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
+              "testimonial_name": "John Brown"
+            }
+          }
+        },
+        "block_order": [
+          "1552280058793-0",
+          "1552280058793-1",
+          "1552280058793-2"
+        ],
+        "settings": {
+          "title": "Testimonials",
+          "width_section": true,
+          "section_margin_top": "",
+          "section_margin_bottom": "",
+          "section_padding": "",
+          "text_head": "FE",
+          "title_section": "Testimonials",
+          "testimonial_background": "shopify:\/\/shop_images\/IMG_2391_dce0746a-11d5-4696-8230-64a561f62915.jpg"
+        }
+      },
+      "1552280392290": {
+        "type": "kt_instagram",
+        "settings": {
+          "width_section": false,
+          "section_margin_top": "60px",
+          "section_margin_bottom": "60px",
+          "section_padding": "",
+          "instagramUser": "freshemblem",
+          "images_limit": "12"
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "cart_notes_enable": true
+        }
       }
     },
     "content_for_index": [
       "1523268329616",
+      "1552276023979",
+      "1552276214814",
       "1523268522053",
-      "1523268620230",
       "1523268964370",
-      "1523268862686",
+      "1552277460728",
       "1523269058920",
+      "1523269411694",
       "1523269106917",
+      "1552280058793",
       "1523269355277",
-      "1523269411694"
+      "1552277645381",
+      "1552279966348",
+      "1552280392290"
     ]
   }
 }
