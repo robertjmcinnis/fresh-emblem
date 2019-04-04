@@ -168,9 +168,35 @@
     {% endif -%}
     <script type="text/javascript">var ryviu_user_settings = {{shop.metafields.ryviu.user_settings|json}};</script>
 </head>
-  
+
 
   <body class="{% if template contains 'index' %} home{% endif %}{% if customer %} customer-logged-in {% endif %} template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" id="{{ page_title | handle }}">
+
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v3.2'
+        });
+      };
+
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+      attribution=setup_tool
+      page_id="507029989317670"
+      theme_color="#47BFC9">
+    </div>
+
     <img style="opacity: 0; visibility: hidden;z-index: -11;position: absolute;left: 0 !important;max-height: 100vh;" src="{{'bt_placeholder.svg'|asset_url}}">
     {%- if template contains 'collection' -%}
       {%-for imgPrd in collection.products limit: 4-%}
@@ -194,12 +220,12 @@
     {% endunless %}
     <div class="page-container" id="PageContainer" style="float:left;width:100%;">
       <main class="main-content" id="MainContent" role="main">
-        
+
         {%if template contains 'index' %}
         {%- capture check_sidebar -%}{{ content_for_layout | strip_newlines }}{%- endcapture -%}
-        {% if check_sidebar contains '<!-- START SIDEBAR INDEX -->' and admin_shopify == false %}  
+        {% if check_sidebar contains '<!-- START SIDEBAR INDEX -->' and admin_shopify == false %}
         {{check_sidebar|split: '<!-- START SIDEBAR INDEX -->'|first|append:'</div>'|html}}
-        
+
         <div class="clearfix"></div>
         <div class="container">
           <div class="row left-sidebar">
@@ -269,7 +295,7 @@
       </div>
     {%-endif-%}
     <a href="#" class="scroll_top" title="Scroll to Top"><i class="fa fa-arrow-up"></i></a>
-    
+
     <script src="{{ 'api.jquery.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'custom.min.js' | asset_url }}" defer="defer"></script>
     {%- if settings.review_app == 'ryviu' -%}
@@ -281,7 +307,7 @@
       <script>(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/5SyMaw47YkHv19ipX1Dt7XSY4ADnSj8DnTZi34sB/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script>
       <!--End of Yotpo Automatic Installation-->
     {%- endif -%}
-    
+
     {%- include 'kt_stockCountdownJS' -%}
     {%- include 'googleRich' -%}
 </body>
