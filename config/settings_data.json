@@ -1507,6 +1507,15 @@
         "settings": {
           "cart_notes_enable": true
         }
+      },
+      "article-template": {
+        "type": "article-template",
+        "settings": {
+          "blog_show_author": true,
+          "blog_show_date": true,
+          "show_share_buttons": true,
+          "recent_posts": false
+        }
       }
     },
     "content_for_index": [
