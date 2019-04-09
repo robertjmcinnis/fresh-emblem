@@ -10,7 +10,7 @@
 		    		font-size: 18px;
 		    	}
 			}
-		    
+
 
 		}
 	}
@@ -28,8 +28,30 @@
 		    		font-size: 18px;
 		    	}
 			}
-		    
+
 
 		}
+	}
+}
+
+
+
+#accordion {
+	.panel.panel-default {
+		border-color: transparent;
+	}
+
+	.panel-title {
+		font-weight: 700;
+		font-size: 16px;
+	}
+
+	.panel-default>.panel-heading+.panel-collapse>.panel-body {
+		border-top: none;
+		margin-left: 20px;
+	}
+
+	.section-faqs div.panel-heading h4.panel-title:before {
+		position: relative;
 	}
 }
