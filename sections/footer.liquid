@@ -18,7 +18,7 @@
     <div class="{%- if section.settings.width_section -%}container{%- else -%}container-fluid{%- endif -%}">
       <div class="footer-service">
         <div class="row">
-          {%-for i in (1..3)-%}          
+          {%-for i in (1..3)-%}
           {%-assign service_icon = 'service_icon_'| append: i -%}
           {%-assign service_text = 'service_text_'| append: i -%}
           {%-if block.settings[service_icon] != blank or block.settings[service_text] != blank -%}
@@ -162,7 +162,7 @@
             {%- assign justify_content = 'center' -%}
             {%-endif-%}
             <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
-              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">  
+              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">
                 <div class="content">
                   <span class="text-primary PlayfairDisplay">{{block.settings.stitle}}</span>
                   <h3 class="widget-title">{{block.settings.title}}</h3>
@@ -180,7 +180,7 @@
             {%- assign justify_content = 'center' -%}
             {%-endif-%}
             <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
-              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">  
+              <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">
                 <div class="content">
                   <h3 class="widget-title">{{block.settings.title}}</h3>
                   {%- assign social_grid =  'dp-flex flex-nowrap justify-content-' | append: justify_content -%}
@@ -188,10 +188,10 @@
                 </div>
               </div>
               <div class="widget widget_text text-{{block.settings.content_align}} margin-bottom-25">
-                <h3 class="widget-title">{{block.settings.title2}}</h3> 
-                <div class="content">             
+                <h3 class="widget-title">{{block.settings.title2}}</h3>
+                <div class="content">
                   <img src="{{block.settings.footer_payment|img_url: '300x'}}" alt="">
-                </div> 
+                </div>
               </div>
             </div>
           {%- elsif block.type == 'item_7' -%}
@@ -203,7 +203,7 @@
             {%- assign justify_content = 'center' -%}
             {%-endif-%}
             <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
-              <div class="widget fick_photo {{block.settings.block_design}} text-{{block.settings.content_align}}">             
+              <div class="widget fick_photo {{block.settings.block_design}} text-{{block.settings.content_align}}">
                 <h3 class="widget-title">{{block.settings.title}}</h3>
                 <div id="flickr_badge_wrapper" class="fick-photo">
                   <script type="text/javascript" src="{{settings.badge_code}}"></script>
@@ -219,9 +219,9 @@
             {%- assign justify_content = 'center' -%}
             {%-endif-%}
             <div class="footer-sidebar {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
-              <div class="widget fick_photo {{block.settings.block_design}} text-{{block.settings.content_align}}">             
+              <div class="widget fick_photo {{block.settings.block_design}} text-{{block.settings.content_align}}">
                 <h3 class="widget-title">{{block.settings.title}}</h3>
-                <ul id="instafeed" class="fick-photo hidden"></ul>          
+                <ul id="instafeed" class="fick-photo hidden"></ul>
                 <script type="text/javascript">
                   {%- assign instafeed_img = '{{image}}' -%}
                   {%- assign instafeed_link = '{{link}}' -%}
@@ -297,7 +297,11 @@
             <div class="footer-sidebar style_5 {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
               <div class="widget widget_newletter {{block.settings.newsletter_design}} text-{{block.settings.content_align}}">
                 <h3 class="widget-title">{{block.settings.title}}</h3>
-                {%- if block.settings.text_newsletter != blank -%}<p>{{block.settings.text_newsletter}}</p>{%- endif -%}
+
+
+                        <div class="klaviyo-form-PryZBa"></div>
+
+<!--                 {%- if block.settings.text_newsletter != blank -%}<p>{{block.settings.text_newsletter}}</p>{%- endif -%}
                 {%- if settings.newslatter_mailchimp_url != "" -%}
                   <form method="post" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form{{section.id}}" class="newletter" name="mc-embedded-subscribe-form" target="_blank">
                     <input type="email"
@@ -324,7 +328,7 @@
                   <span><button class="button" type="submit" title="{{ 'general.newsletter_form.submit' | t }}">{{'general.newsletter_form.submit'|t}}</button></span>
                   {%-endif-%}
                   {%-endform-%}
-                {%- endif -%}
+                {%- endif -%} -->
               </div>
               <div class="widget widget_social {{block.settings.socials_design}} text-{{block.settings.content_align}}">
                 <div class="content">
@@ -341,7 +345,7 @@
             {%- assign justify_content = 'center' -%}
             {%-endif-%}
             <div class="footer-sidebar style_5 {{block.settings.block_style}} {{block_width | strip_newlines | remove: '   '}}" {{ block.shopify_attributes }}>
-              <div class="widget our-service {{block.settings.newsletter_design}} text-{{block.settings.content_align}}">             
+              <div class="widget our-service {{block.settings.newsletter_design}} text-{{block.settings.content_align}}">
                 <h3 class="widget-title">{{block.settings.title}}</h3>
                 <div class="content">
                   <div class="tagcloud">
@@ -400,7 +404,7 @@
     </div>
     {%- elsif block.type == 'footer_bottom_2' -%}
     <div class="footer-bottom">
-      <div class="payment" style="{%- if block.settings.section_padding != blank -%}padding: {{block.settings.section_padding | replace : '-',' '}};{%- endif -%}border-top-color: {{block.settings.border_color|default:'#e0e0e0' | color_modify: 'alpha', 0.9 }}">   
+      <div class="payment" style="{%- if block.settings.section_padding != blank -%}padding: {{block.settings.section_padding | replace : '-',' '}};{%- endif -%}border-top-color: {{block.settings.border_color|default:'#e0e0e0' | color_modify: 'alpha', 0.9 }}">
         {%-if block.settings.copyright != blank-%}
         <p style="margin: 0;">{{block.settings.copyright|html}}</p>
         {%-else-%}
@@ -417,7 +421,7 @@
         <div class="">
           <div class="row">
             <div class="col-sm-6 text-left">
-              <div class="coppyright"> 
+              <div class="coppyright">
                 {%-if block.settings.copyright != blank-%}
                 <p style="margin: 0;">{{section.settings.copyright|html}}</p>
                 {%-else-%}
