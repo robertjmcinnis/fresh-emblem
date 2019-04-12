@@ -9,7 +9,13 @@
         <div class="popup-title">
           {{settings.popup_newsletter_description|html}}
         </div>
-        {%- if settings.newslatter_mailchimp_url != "" -%}
+
+        <div class="klaviyo-form-HWZxCB"></div>
+        <button class="button" aria-label="Close" data-dismiss="modal" type="button" value="{{'general.newsletter_form.cancel_popup'|t}}">{{'general.newsletter_form.cancel_popup'|t}}</button>
+
+
+        <!-- Old Mailchimp form -->
+        <!-- {%- if settings.newslatter_mailchimp_url != "" -%}
         <form method="get" action="{{ settings.newslatter_mailchimp_url | default: '#' }}" id="mc-embedded-subscribe-form-{{section.id|default: 'kiti'}}" class="form-subscribe" name="mc-embedded-subscribe-form-{{section.id|default: 'kiti'}}" data-kt="{{settings.popup_newsletter_coupon_code}}">
           <input type="email" name="EMAIL" id="mce-EMAIL-{{section.id|default: 'kiti'}}"
                  class="email-text required-entry validate-email"
@@ -36,7 +42,10 @@
             {%-endif-%}
             {%-endform-%}
           </div>
-        {%- endif -%}
+        {%- endif -%} -->
+        <!-- End: Old Mailchimp form -->
+
+
         <div class="checkbox">
           <label><input id="hideforever" type="checkbox" value="">{{'general.newsletter_form.checkbox_popup'|t}}</label>
         </div>
