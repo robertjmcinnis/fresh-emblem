@@ -1,4 +1,9 @@
 
+// Variables
+$fresh-blue:    #bee5ef;
+$teal:          #5ebfb7;
+
+
 
 @media (min-width: 1200px) {
 	.template-page {
@@ -33,6 +38,9 @@
 		}
 	}
 }
+
+
+
 
 // Accordion
 #accordion {
@@ -87,8 +95,114 @@
 	}
 }
 
+// Main Navigation
+.main-menu > li > a:hover {
+	@media only screen and (max-width: 767px) {
+		color: #fff;
+	}
+}
 
 
+// Homepage hero banner
+.home {
+	#MainContent {
+		.banner-text {
+			&:hover {
 
+    			.banner-opacity {
+    				&:before {
+    					opacity: 0;
+    				}
+    			}
+
+				img {
+					transform: scale(1);
+				}
+			}
+
+			.button {
+				background-color: $teal;
+			}
+
+			.title {
+				font-size: 30px;
+
+				@media only screen and (min-width: 768px) {
+					font-size: 60px;
+				}
+				@media only screen and (min-width: 1024px) {
+					font-size: 80px;
+				}
+				@media only screen and (min-width: 1200px) {
+					font-size: 100px;
+				}
+			}
+
+			img {
+				@media only screen and (max-width: 768px) {
+					width: 170%;
+					max-width: 170%;
+				}
+			}
+
+		}
+	}
+}
+
+// Testimonial section
+.section-title.style5 h3:before {
+	border-color: #fff !important;
+}
+
+
+//
+.home {
+	.box-product-featured .box-content {
+		margin-left: 0;
+	}
+
+	.title,
+	.sub-title {
+		text-shadow: 0px 0px 10px rgba(0,0,0,.5);
+	}
+}
+
+// Remove the black horizontal bar on text
+.section-title h3:before {
+	display: none;
+}
+
+.klaviyo-container {
+	max-width: 330px;
+	margin: 0 auto;
+
+	.FormComponent__StyledFormComponentWrapper-e0xun6-0.ResetElements__Div-sc-8e6zl9-0 {
+		height: 100%;
+	}
+
+	button {
+		padding: 13px !important;
+	}
+}
+
+.main-header {
+	@media only screen and (max-width: 991px) {
+
+		padding: 20px 0 30px !important;
+
+		.site-header__logo {
+			img {
+				max-width: 50px;
+			}
+		}
+	}
+}
+
+.header.style2 .logo {
+	margin-bottom: 20px;
+	@media only screen and (max-width: 991px) {
+		margin-bottom: 0;
+	}
+}
 
 

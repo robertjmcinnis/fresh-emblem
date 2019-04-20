@@ -16,7 +16,13 @@
       <span><button class="newsletter-submit" name="subscribe" id="subscribe{{section.id}}" type="submit">{{ 'general.newsletter_form.submit' | t }}</button></span>
     </form>
     {%- else -%}
-    {%-form 'customer', class: 'form-newsletter'-%}
+
+    <div class="klaviyo-container">
+      <div class="klaviyo-form-J7a3YW"></div>
+    </div>
+
+    <!-- HIDE THE OLD MAILCHIMP FORM  -->
+    <!-- {%-form 'customer', class: 'form-newsletter'-%}
     {{ form.errors | default_errors }}
     {%-if form.posted_successfully?-%}
     <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
@@ -30,7 +36,8 @@
            placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}">
     <span><button type="submit" title="{{ 'general.newsletter_form.submit' | t }}" class="newsletter-submit">{{ 'general.newsletter_form.submit' | t }}</button></span>
     {%-endif-%}
-    {%-endform-%}
+    {%-endform-%} -->
+    <!-- END MAIL CHIMP FORM -->
     {%- endif -%}
   </div>
 </div>
