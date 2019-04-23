@@ -197,7 +197,7 @@
                   <div class="shortcode-content ">
                     <div class="banner-image banner-effect6">
                       {% if block.settings.image_2-%}{{block.settings.image_2|img_url:'559x', format: 'pjpg'|img_tag}}{%-else %}
-                      <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/10.jpg" alt="">{%-endif-%}            
+                      <img src="https://cdn.shopify.com/s/files/1/1553/6143/files/10.jpg" alt="">{%-endif-%}
                     </div>
                     <div class="banner-content">
                       {% if block.settings.titlexx != blank %}<h4 class="title">{{block.settings.titlexx}}</h4>{% endif %}
@@ -504,7 +504,7 @@
                 {% if block.settings[image]-%}{{block.settings[image]|img_url:'530x', format: 'pjpg'|img_tag}}{%-else %}
                 <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/11-1_7678ccde-f1d3-4b8b-aa46-cb72ece6ee0a.png?2701408454371084438" alt="">{%-endif-%}
                 </a>
-              </div>  
+              </div>
               <div class="content-text">
                 {% if block.settings[text]-%}{{block.settings[text]}}{%-endif-%}
                 <a class="shop-now" href="{{block.settings[image_link]}}">{{block.settings[name_btn]}}</a>
@@ -528,7 +528,7 @@
                 {% if block.settings[image]-%}{{block.settings[image]|img_url:'530x', format: 'pjpg'|img_tag}}{%-else %}
                 <img src="https://cdn.shopify.com/s/files/1/2336/5331/files/11-1_7678ccde-f1d3-4b8b-aa46-cb72ece6ee0a.png?2701408454371084438" alt="">{%-endif-%}
                 </a>
-              </div>  
+              </div>
               <div class="content-text{% cycle '',' hidden' %}">
                 <div class="inner">
                   {% if block.settings[icon]-%}{{block.settings[icon]|img_url:'200x'|img_tag}}{%-else %}
@@ -547,7 +547,7 @@
             <div class="col-sm-9">
               <div class="butique-banner">
                 <div class="image">
-                  {% if block.settings.banner_description_image-%}                    
+                  {% if block.settings.banner_description_image-%}
                   <picture>
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 1920px)">
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 768px)">
@@ -582,8 +582,8 @@
             </div>
             <div class="col-sm-3">
               <div class="butique-banner style2">
-                <div class="image">                    
-                  {% if block.settings.banner_description_image_2-%}               
+                <div class="image">
+                  {% if block.settings.banner_description_image_2-%}
                   <picture>
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 1920px)">
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 768px)">
@@ -616,14 +616,14 @@
           <div class="row">
             <div class="col-sm-3">
               <div class="butique-banner style2 left">
-                <div class="image">                    
-                  {% if block.settings.banner_description_image_2-%}               
+                <div class="image">
+                  {% if block.settings.banner_description_image_2-%}
                   <picture>
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 1920px)">
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '270x' %}" media="(min-width: 768px)">
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '322x' %}">
                     <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_description_image_2.src, size: '480x' %}" style="max-width: {{ 270 | times: block.settings.banner_description_image_2.aspect_ratio }}px;" alt="{{block.settings.banner_description_image_2.alt}}">
-                  </picture>                    
+                  </picture>
                   {%-else %}
                   <picture>
                     <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/31_270x.jpg?14931048610077463760" media="(min-width: 1920px)">
@@ -646,7 +646,7 @@
             <div class="col-sm-9">
               <div class="butique-banner left">
                 <div class="image">
-                  {% if block.settings.banner_description_image-%}                    
+                  {% if block.settings.banner_description_image-%}
                   <picture>
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 1920px)">
                     <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_description_image.src, size: '322x' %}" media="(min-width: 768px)">
@@ -688,13 +688,13 @@
               <div class="block-banner-text style2">
                 <div class="image">
                   <a href="{{block.settings.banner_1_link}}">
-                    {% if block.settings.banner_1_img-%}               
+                    {% if block.settings.banner_1_img-%}
                     <picture>
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '380x' %}" media="(min-width: 1200px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '270x' %}" media="(min-width: 768px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '322x' %}">
                       <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
-                    </picture>                    
+                    </picture>
                     {%-else %}
                     <picture>
                       <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/48_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
@@ -714,14 +714,14 @@
               </div>
             </div>
             <div class="col-sm-4 item">
-              <a class="banner-border margin-bottom-30" href="{{block.settings.banner_2_link}}">                
-                {% if block.settings.banner_2_img-%}               
+              <a class="banner-border margin-bottom-30" href="{{block.settings.banner_2_link}}">
+                {% if block.settings.banner_2_img-%}
                 <picture>
                   <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '380x' %}" media="(min-width: 1200px)">
                   <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '270x' %}" media="(min-width: 768px)">
                   <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '322x' %}">
                   <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '480x' %}" alt="{{block.settings.banner_2_img.alt}}">
-                </picture>                    
+                </picture>
                 {%-else %}
                 <picture>
                   <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/50_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
@@ -736,13 +736,13 @@
               <div class="block-banner-text style2">
                 <div class="image">
                   <a href="{{block.settings.banner_3_link}}">
-                    {% if block.settings.banner_3_img-%}               
+                    {% if block.settings.banner_3_img-%}
                     <picture>
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '380x' %}" media="(min-width: 1200px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '270x' %}" media="(min-width: 768px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '322x' %}">
                       <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '480x' %}" alt="{{block.settings.banner_3_img.alt}}">
-                    </picture>                    
+                    </picture>
                     {%-else %}
                     <picture>
                       <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/49_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
@@ -770,13 +770,13 @@
               <div class="block-banner-horizontal" data-color="#f1d8ae">
                 <div class="image">
                   <a href="{block.settings.banner_1_link}}">
-                    {% if block.settings.banner_1_img-%}               
+                    {% if block.settings.banner_1_img-%}
                     <picture>
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '380x' %}" media="(min-width: 1200px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '270x' %}" media="(min-width: 768px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '322x' %}">
                       <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
-                    </picture>                    
+                    </picture>
                     {%-else %}
                     <picture>
                       <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/51_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
@@ -799,14 +799,14 @@
             <div class="col-sm-6 item">
               <div class="block-banner-horizontal gray" data-color="#eaeaea">
                 <div class="image">
-                  <a href="{{block.settings.banner_2_link}}">                    
-                    {% if block.settings.banner_2_img-%}               
+                  <a href="{{block.settings.banner_2_link}}">
+                    {% if block.settings.banner_2_img-%}
                     <picture>
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '380x' %}" media="(min-width: 1200px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '270x' %}" media="(min-width: 768px)">
                       <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '322x' %}">
                       <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '480x' %}" alt="{{block.settings.banner_2_img.alt}}">
-                    </picture>                    
+                    </picture>
                     {%-else %}
                     <picture>
                       <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/52_380x.jpg?5932670546860663904" media="(min-width: 1200px)">
@@ -840,13 +840,13 @@
                 <div class="col-sm-4">
                   <div class="banner-item">
                     <a class="banner-border" href="{{block.settings.banner_1_link}}">
-                      {% if block.settings.banner_1_img-%}               
+                      {% if block.settings.banner_1_img-%}
                       <picture>
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '380x' %}" media="(min-width: 1200px)">
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '270x' %}" media="(min-width: 768px)">
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '322x' %}">
                         <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_1_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
-                      </picture>                    
+                      </picture>
                       {%-else %}
                       <picture>
                         <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/65_380x.jpg?16052433451080034991" media="(min-width: 1200px)">
@@ -861,13 +861,13 @@
                 <div class="col-sm-4">
                   <div class="banner-item center">
                     <a href="{{block.settings.banner_2_link}}">
-                      {% if block.settings.banner_2_img-%}               
+                      {% if block.settings.banner_2_img-%}
                       <picture>
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '380x' %}" media="(min-width: 1200px)">
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '270x' %}" media="(min-width: 768px)">
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '322x' %}">
                         <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_2_img.src, size: '480x' %}" alt="{{block.settings.banner_2_img.alt}}">
-                      </picture>                    
+                      </picture>
                       {%-else %}
                       <picture>
                         <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/67_380x.jpg?16052433451080034991" media="(min-width: 1200px)">
@@ -882,13 +882,13 @@
                 <div class="col-sm-4">
                   <div class="banner-item">
                     <a class="banner-border" href="{{block.settings.banner_3_link}}">
-                      {% if block.settings.banner_3_img-%}               
+                      {% if block.settings.banner_3_img-%}
                       <picture>
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '380x' %}" media="(min-width: 1200px)">
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '270x' %}" media="(min-width: 768px)">
                         <source data-srcset="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '322x' %}">
                         <img class="lazyload" src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '100x' %}" data-src="{% include 'kt_image_format',src: block.settings.banner_3_img.src, size: '480x' %}" alt="{{block.settings.banner_1_img.alt}}">
-                      </picture>                    
+                      </picture>
                       {%-else %}
                       <picture>
                         <source data-srcset="https://cdn.shopify.com/s/files/1/2336/5331/files/66_380x.jpg?16052433451080034991" media="(min-width: 1200px)">

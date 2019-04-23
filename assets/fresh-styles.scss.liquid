@@ -161,9 +161,11 @@ $teal:          #5ebfb7;
 		margin-left: 0;
 	}
 
-	.title,
-	.sub-title {
-		text-shadow: 0px 0px 10px rgba(0,0,0,.5);
+	.banner-text {
+		.title,
+		.sub-title {
+			text-shadow: 0px 0px 10px rgba(0,0,0,.5);
+		}
 	}
 }
 
@@ -206,3 +208,24 @@ $teal:          #5ebfb7;
 }
 
 
+// Carousel tweaks
+.owl-carousel.nav-center-center .owl-prev,
+.owl-carousel.nav-center-center .owl-next  {
+	visibility: visible;
+	opacity: 1;
+	border: 1px solid black;
+}
+
+.owl-carousel.nav-style2 .owl-prev:before, .owl-carousel.nav-style3 .owl-prev:before, .owl-carousel.nav-style4 .owl-prev:before, .owl-carousel.nav-style5 .owl-prev:before, .owl-carousel.nav-style6 .owl-prev:before, .owl-carousel.nav-style7 .owl-prev:before, .owl-carousel.nav-style8 .owl-prev:before {
+	content: "<";
+    font-size: 18px;
+    color: #000;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.owl-carousel.nav-style2 .owl-next:before, .owl-carousel.nav-style3 .owl-next:before, .owl-carousel.nav-style4 .owl-next:before, .owl-carousel.nav-style5 .owl-next:before, .owl-carousel.nav-style6 .owl-next:before, .owl-carousel.nav-style7 .owl-next:before, .owl-carousel.nav-style8 .owl-next:before {
+	content: ">";
+    font-size: 18px;
+    color: #000;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
