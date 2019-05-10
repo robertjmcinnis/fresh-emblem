@@ -29,11 +29,11 @@
             {%-endif-%}
               <div class="banner-text{% if block.settings.stitle == "" %} style2{%endif%}">
                 <div class="image">
-                  <a class="banner-opacity" href="{{ block.settings.image_link | default: '#' }}">
+                  <div class="banner-opacity">
                     {%- if block.settings.image != blank -%}
                       <img src="{{block.settings.image|img_url:'550x'}}" alt="{{block.settings.image.alt}}">
                     {%- endif -%}
-                  </a>
+                  </div>
                 </div>
                 {%- if block.settings.titlex != blank or block.settings.name_btn != blank -%}
                 <div class="content-text">
